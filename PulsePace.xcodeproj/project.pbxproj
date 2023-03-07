@@ -14,6 +14,7 @@
 		C7CD9BE629B7514F00ABEE8F /* PulsePaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BE529B7514F00ABEE8F /* PulsePaceTests.swift */; };
 		C7CD9BF029B7514F00ABEE8F /* PulsePaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BEF29B7514F00ABEE8F /* PulsePaceUITests.swift */; };
 		C7CD9BF229B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */; };
+		C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7F6B00A29B7C12800D97E5F /* swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		C7CD9BEF29B7514F00ABEE8F /* PulsePaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceUITests.swift; sourceTree = "<group>"; };
 		C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C7F6B00529B7BF7F00D97E5F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C7F6B00A29B7C12800D97E5F /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				C7F6B00529B7BF7F00D97E5F /* README.md */,
+				C7F6B00829B7C0F800D97E5F /* .github */,
 				C7CD9BD329B7514900ABEE8F /* PulsePace */,
 				C7CD9BE429B7514F00ABEE8F /* PulsePaceTests */,
 				C7CD9BEE29B7514F00ABEE8F /* PulsePaceUITests */,
@@ -127,6 +130,22 @@
 				C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */,
 			);
 			path = PulsePaceUITests;
+			sourceTree = "<group>";
+		};
+		C7F6B00829B7C0F800D97E5F /* .github */ = {
+			isa = PBXGroup;
+			children = (
+				C7F6B00929B7C0F800D97E5F /* workflows */,
+			);
+			path = .github;
+			sourceTree = SOURCE_ROOT;
+		};
+		C7F6B00929B7C0F800D97E5F /* workflows */ = {
+			isa = PBXGroup;
+			children = (
+				C7F6B00A29B7C12800D97E5F /* swiftlint.yml */,
+			);
+			path = workflows;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7CD9BDC29B7514E00ABEE8F /* Preview Assets.xcassets in Resources */,
+				C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */,
 				C7CD9BD929B7514E00ABEE8F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
