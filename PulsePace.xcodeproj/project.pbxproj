@@ -44,6 +44,7 @@
 		C7CD9BEB29B7514F00ABEE8F /* PulsePaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PulsePaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD9BEF29B7514F00ABEE8F /* PulsePaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceUITests.swift; sourceTree = "<group>"; };
 		C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C7F6B00529B7BF7F00D97E5F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +75,7 @@
 		C7CD9BC829B7514900ABEE8F = {
 			isa = PBXGroup;
 			children = (
+				C7F6B00529B7BF7F00D97E5F /* README.md */,
 				C7CD9BD329B7514900ABEE8F /* PulsePace */,
 				C7CD9BE429B7514F00ABEE8F /* PulsePaceTests */,
 				C7CD9BEE29B7514F00ABEE8F /* PulsePaceUITests */,
@@ -137,6 +139,7 @@
 				C7CD9BCD29B7514900ABEE8F /* Sources */,
 				C7CD9BCE29B7514900ABEE8F /* Frameworks */,
 				C7CD9BCF29B7514900ABEE8F /* Resources */,
+				C7F6B00329B7BF2100D97E5F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -251,6 +254,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C7F6B00329B7BF2100D97E5F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C7CD9BCD29B7514900ABEE8F /* Sources */ = {
