@@ -9,5 +9,5 @@ import SwiftUI
 
 class TapInput: TouchInput {
     typealias InputGesture = SpatialTapGesture
-    var gesture = SpatialTapGesture(count: 1)
+    var gesture = SpatialTapGesture(count: 1, coordinateSpace: .global)
 }

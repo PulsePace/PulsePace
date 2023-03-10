@@ -9,5 +9,5 @@ import SwiftUI
 
 struct SlideInput: TouchInput {
     typealias InputGesture = DragGesture
-    var gesture = DragGesture(minimumDistance: 10)
+    var gesture = DragGesture(minimumDistance: 10, coordinateSpace: .global)
 }
