@@ -40,6 +40,9 @@ struct BeatmapDesignerView: View {
         .onAppear {
             viewModel.audioManager.startPlayer(track: "test")
         }
+        .onDisappear {
+            viewModel.audioManager.togglePlayer()
+        }
     }
 
     func renderSlider(player: AVAudioPlayer) -> some View {
