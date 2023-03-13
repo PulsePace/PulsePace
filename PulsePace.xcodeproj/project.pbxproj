@@ -29,6 +29,13 @@
 		C7CD9BF029B7514F00ABEE8F /* PulsePaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BEF29B7514F00ABEE8F /* PulsePaceUITests.swift */; };
 		C7CD9BF229B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */; };
 		C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7F6B00A29B7C12800D97E5F /* swiftlint.yml */; };
+		D00235B929BEF7BD006858D3 /* PlaybackControlButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */; };
+		D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235BB29BEF9A1006858D3 /* AudioManager.swift */; };
+		D00235BE29BEFB02006858D3 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D00235BD29BEFB02006858D3 /* test.mp3 */; };
+		D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235C029BF0115006858D3 /* BeatmapDesignerViewModel.swift */; };
+		D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012FF1129BCC6DE00E3CC2E /* BeatmapDesignerView.swift */; };
+		D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012FF1529BE00CA00E3CC2E /* HitObject.swift */; };
+		D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012FF1929BE011B00E3CC2E /* TapHitObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +82,13 @@
 		C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C7F6B00529B7BF7F00D97E5F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7F6B00A29B7C12800D97E5F /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
+		D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlButtonView.swift; sourceTree = "<group>"; };
+		D00235BB29BEF9A1006858D3 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		D00235BD29BEFB02006858D3 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
+		D00235C029BF0115006858D3 /* BeatmapDesignerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDesignerViewModel.swift; sourceTree = "<group>"; };
+		D012FF1129BCC6DE00E3CC2E /* BeatmapDesignerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDesignerView.swift; sourceTree = "<group>"; };
+		D012FF1529BE00CA00E3CC2E /* HitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitObject.swift; sourceTree = "<group>"; };
+		D012FF1929BE011B00E3CC2E /* TapHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapHitObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,8 +220,10 @@
 			isa = PBXGroup;
 			children = (
 				C7908E2C29B7C8E7006F7423 /* Gameplay */,
+				D012FF0F29BCC6B700E3CC2E /* BeatmapDesigner */,
 				C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */,
 				C7CD9BD829B7514E00ABEE8F /* Assets.xcassets */,
+				D00235BD29BEFB02006858D3 /* test.mp3 */,
 				C7CD9BDA29B7514E00ABEE8F /* Preview Content */,
 			);
 			path = PulsePace;
@@ -254,6 +270,51 @@
 			path = workflows;
 			sourceTree = "<group>";
 		};
+		D00235BA29BEF999006858D3 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D00235BB29BEF9A1006858D3 /* AudioManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		D00235BF29BF0108006858D3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D00235C029BF0115006858D3 /* BeatmapDesignerViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D012FF0F29BCC6B700E3CC2E /* BeatmapDesigner */ = {
+			isa = PBXGroup;
+			children = (
+				D00235BF29BF0108006858D3 /* ViewModels */,
+				D00235BA29BEF999006858D3 /* Managers */,
+				D012FF1429BE008200E3CC2E /* Models */,
+				D012FF1029BCC6CF00E3CC2E /* Views */,
+			);
+			path = BeatmapDesigner;
+			sourceTree = "<group>";
+		};
+		D012FF1029BCC6CF00E3CC2E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D012FF1129BCC6DE00E3CC2E /* BeatmapDesignerView.swift */,
+				D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D012FF1429BE008200E3CC2E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D012FF1529BE00CA00E3CC2E /* HitObject.swift */,
+				D012FF1929BE011B00E3CC2E /* TapHitObject.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -261,10 +322,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7CD9BF529B7514F00ABEE8F /* Build configuration list for PBXNativeTarget "PulsePace" */;
 			buildPhases = (
+				C7F6B00329B7BF2100D97E5F /* Run SwiftLint */,
 				C7CD9BCD29B7514900ABEE8F /* Sources */,
 				C7CD9BCE29B7514900ABEE8F /* Frameworks */,
 				C7CD9BCF29B7514900ABEE8F /* Resources */,
-				C7F6B00329B7BF2100D97E5F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -361,6 +422,7 @@
 			files = (
 				C7CD9BDC29B7514E00ABEE8F /* Preview Assets.xcassets in Resources */,
 				C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */,
+				D00235BE29BEFB02006858D3 /* test.mp3 in Resources */,
 				C7CD9BD929B7514E00ABEE8F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,7 +444,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C7F6B00329B7BF2100D97E5F /* ShellScript */ = {
+		C7F6B00329B7BF2100D97E5F /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -392,13 +454,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Run SwiftLint";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n  swiftlint --fix && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -419,10 +482,17 @@
 				C7908E4529B92D5F006F7423 /* HoldCommand.swift in Sources */,
 				C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
+				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
+				C7CD9BD729B7514900ABEE8F /* ContentView.swift in Sources */,
+				D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */,
+				D00235B929BEF7BD006858D3 /* PlaybackControlButtonView.swift in Sources */,
 				C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */,
 				C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */,
 				C7908E4129B92D30006F7423 /* TapCommand.swift in Sources */,
 				C7908E2E29B7C986006F7423 /* Command.swift in Sources */,
+				D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */,
+				D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */,
+				D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,7 +651,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				DEVELOPMENT_TEAM = X77GX48L42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
@@ -590,6 +660,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -615,7 +687,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				DEVELOPMENT_TEAM = X77GX48L42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
@@ -624,6 +696,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
