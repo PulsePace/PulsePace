@@ -2,10 +2,12 @@
 //  PriorityQueue.swift
 //  PulsePace
 //
+//  Referenced from:
+//  https://www.kodeco.com/books/data-structures-algorithms-in-swift/v3.0/chapters/24-priority-queue
 //  Created by Charisma Kausar on 14/3/23.
 //
 
-public struct PriorityQueue<T: Equatable>: Queue {
+public struct PriorityQueue<T>: Queue {
     private var heap: Heap<T>
 
     public mutating func enqueue(_item: T) {
