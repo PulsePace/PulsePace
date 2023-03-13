@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct PulsePaceApp: App {
+    @StateObject var audioManager = AudioManager()
+
     var body: some Scene {
         WindowGroup {
             GameView()
+            BeatmapDesignerView(viewModel: BeatmapDesignerViewModel())
+                .environmentObject(audioManager)
         }
     }
 }
