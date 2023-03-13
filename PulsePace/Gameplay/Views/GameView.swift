@@ -9,24 +9,25 @@ import SwiftUI
 
 struct GameView: View {
     var body: some View {
-        VStack {
-            Text("GameView")
-                .font(.largeTitle)
-            HStack {
-                Circle()
-                    .foregroundColor(.purple)
-                    .modifier(GestureModifier(input: TapInput(), command: TapCommand()))
-                Circle()
-                    .foregroundColor(.mint)
-                    .modifier(GestureModifier(input: SlideInput(), command: SlideCommand()))
-                Circle()
-                    .foregroundColor(.pink)
-                    .modifier(GestureModifier(input: HoldInput(), command: HoldCommand()))
-                Circle()
-                    .foregroundColor(.blue)
-                    .modifier(GestureModifier(input: SpinInput(), command: SpinCommand()))
+            VStack {
+                Text("Score")
+                    .font(.largeTitle)
+                HStack {
+                    Circle()
+                        .foregroundColor(.purple)
+                        .modifier(GestureModifier(input: TapInput(), command: TapCommand()))
+                    Circle()
+                        .foregroundColor(.blue)
+                        .modifier(GestureModifier(input: SlideInput(), command: SlideCommand()))
+                    Circle()
+                        .foregroundColor(.mint)
+                        .modifier(GestureModifier(input: HoldInput(), command: HoldCommand()))
+                    Circle()
+                        .foregroundColor(.indigo)
+                        .modifier(GestureModifier(input: SpinInput(), command: SpinCommand()))
+                }
             }
-        }
+            .fullBackground(imageName: "game-background")
     }
 }
 

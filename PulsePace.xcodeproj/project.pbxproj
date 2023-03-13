@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
+		C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77572E929BDE4C100367053 /* View+FullBackground.swift */; };
 		C7908E2E29B7C986006F7423 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E2D29B7C986006F7423 /* Command.swift */; };
 		C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3129B7D8CD006F7423 /* TapInput.swift */; };
 		C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3329B7D8D6006F7423 /* SlideInput.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
+		C77572E929BDE4C100367053 /* View+FullBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+FullBackground.swift"; sourceTree = "<group>"; };
 		C7908E2D29B7C986006F7423 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C7908E3129B7D8CD006F7423 /* TapInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInput.swift; sourceTree = "<group>"; };
 		C7908E3329B7D8D6006F7423 /* SlideInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInput.swift; sourceTree = "<group>"; };
@@ -124,10 +126,19 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		C77572EB29BDEAD700367053 /* ViewExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				C77572E929BDE4C100367053 /* View+FullBackground.swift */,
+			);
+			path = ViewExtensions;
+			sourceTree = "<group>";
+		};
 		C7908E2C29B7C8E7006F7423 /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
 				C7908E4A29B9310F006F7423 /* Views */,
+				C77572EB29BDEAD700367053 /* ViewExtensions */,
 				C748C9E829B9E71C00CB8C7A /* ViewModifiers */,
 				C7908E3029B7D8C0006F7423 /* Inputs */,
 				C7908E3F29B92BF7006F7423 /* Commands */,
@@ -398,6 +409,7 @@
 			files = (
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
 				C7908E4729B92D71006F7423 /* SpinCommand.swift in Sources */,
+				C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */,
 				C7908E4329B92D49006F7423 /* SlideCommand.swift in Sources */,
 				C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
