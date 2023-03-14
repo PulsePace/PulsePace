@@ -8,16 +8,13 @@
 
 import SwiftUI
 
-class Command {
-    typealias Action = (InputData) -> Void
+/// Command to checks input against state of game hit object and maintain some macro data on input related state
+/// e.g. for slider the aggregate proximity to the expected position
+protocol Command {
+    // If the above mentioned is acceptable archi perhaps Command is not the most suitable name?
+    associatedtype GameHOType: GameHO
+    var shouldExecute: Bool { get set }
+    var currInput: InputData? { get set }
 
-    private let action: Action
-
-    init(action: @escaping Action) {
-        self.action = action
-    }
-
-    func execute(inputData: InputData) {
-        action(inputData)
-    }
+    func execute(gameHO: GameHOType, deltaTime: Double)
 }
