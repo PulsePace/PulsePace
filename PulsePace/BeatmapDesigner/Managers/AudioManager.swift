@@ -25,6 +25,13 @@ final class AudioManager: ObservableObject {
         }
     }
 
+    func stopPlayer() {
+        guard let player = player else {
+            return
+        }
+        player.stop()
+    }
+
     func togglePlayer() {
         guard let player = player else {
             return
