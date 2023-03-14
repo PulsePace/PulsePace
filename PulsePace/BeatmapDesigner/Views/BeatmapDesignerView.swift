@@ -23,7 +23,7 @@ struct BeatmapDesignerView: View {
             }
 
             ZStack {
-                ForEach(viewModel.hitObjects, id: \.id) { hitObject in
+                ForEach(viewModel.hitObjects.toArray(), id: \.id) { hitObject in
                     renderHitObject(hitObject)
                 }
             }
@@ -34,7 +34,7 @@ struct BeatmapDesignerView: View {
             )
             .background(.black)
             .onTapGesture { position in
-                viewModel.hitObjects.append(TapHitObject(position: position, beat: viewModel.sliderValue))
+                viewModel.hitObjects.enqueue(TapHitObject(position: position, beat: viewModel.sliderValue))
             }
         }
         .onAppear {
