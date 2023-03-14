@@ -19,6 +19,9 @@ final class AudioManager: ObservableObject {
 
         do {
             player = try AVAudioPlayer(contentsOf: url)
+            player?.enableRate = true
+            player?.prepareToPlay()
+            player?.rate = 1
             player?.play()
         } catch {
             print("Failed to initialise player", error)
