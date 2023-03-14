@@ -33,6 +33,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     init() {
+        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority )
         createDisplayLink()
     }
 
@@ -66,5 +67,9 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.append(hitObject)
         previewHitObject = nil
+    }
+
+    static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {
+        firstHitObject.beat < secondHitObject.beat
     }
 }
