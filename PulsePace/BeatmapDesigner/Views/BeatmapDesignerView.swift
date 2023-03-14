@@ -41,7 +41,7 @@ struct BeatmapDesignerView: View {
             viewModel.audioManager.startPlayer(track: "test")
         }
         .onDisappear {
-            viewModel.audioManager.togglePlayer()
+            viewModel.audioManager.stopPlayer()
         }
     }
 
