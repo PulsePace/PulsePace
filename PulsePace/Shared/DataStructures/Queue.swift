@@ -7,7 +7,7 @@
 
 public protocol Queue {
     associatedtype T
-    mutating func enqueue(_item: T)
+    mutating func enqueue(_ item: T)
     mutating func dequeue() -> T?
     mutating func removeAll()
     func peek() -> T?
