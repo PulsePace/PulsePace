@@ -5,7 +5,7 @@
 //  Created by Charisma Kausar on 9/3/23.
 //
 
-class HoldCommand: Command {
+class HoldCommand: InputCommand {
     convenience init() {
         self.init { _ in
             print("Hold")

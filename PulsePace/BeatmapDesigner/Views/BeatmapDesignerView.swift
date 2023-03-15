@@ -33,9 +33,7 @@ struct BeatmapDesignerView: View {
                 alignment: .topLeading
             )
             .background(.black)
-            .onTapGesture { position in
-                viewModel.hitObjects.append(TapHitObject(position: position, beat: viewModel.sliderValue))
-            }
+            .modifier(GestureModifier(input: CanvasTapInput(), command: AddTapHitObjectCommand(receiver: viewModel)))
         }
         .onAppear {
             viewModel.audioManager.startPlayer(track: "test")
@@ -51,19 +49,9 @@ struct BeatmapDesignerView: View {
                 .foregroundColor(.blue)
                 .frame(width: 2 * player.duration, height: 20)
                 .offset(x: player.duration - 2 * viewModel.sliderValue)
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            viewModel.sliderValue = player.currentTime - gesture.translation.width / 2
-                            viewModel.isEditing = true
-                            player.pause()
-                        }
-                        .onEnded { _ in
-                            player.currentTime = viewModel.sliderValue
-                            viewModel.isEditing = false
-                            player.play()
-                        }
-                )
+                .modifier(GestureModifier(input: DragInput(),
+                                          command: RepositionSongCommand(receiver: viewModel,
+                                                                         player: player)))
             Rectangle()
                 .foregroundColor(.black)
                 .frame(width: 5, height: 40)
