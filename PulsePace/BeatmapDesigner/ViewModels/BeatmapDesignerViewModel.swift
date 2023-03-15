@@ -46,8 +46,6 @@ class BeatmapDesignerViewModel: ObservableObject {
         guard let player = player, !isEditing else {
             return
         }
-//        print(offset)
-//        print(sliderValue)
         sliderValue = player.currentTime
     }
 

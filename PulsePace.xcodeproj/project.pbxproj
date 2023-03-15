@@ -57,6 +57,11 @@
 		D081DDBC29C31F7E006B11B4 /* CGPoint+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBB29C31F7E006B11B4 /* CGPoint+Utility.swift */; };
 		D081DDBE29C32AF2006B11B4 /* CGVector+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBD29C32AF2006B11B4 /* CGVector+Utility.swift */; };
 		D081DDC029C32C76006B11B4 /* SlideHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBF29C32C76006B11B4 /* SlideHitObject.swift */; };
+		D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDA829C2060E006B11B4 /* TimelineView.swift */; };
+		D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */; };
+		D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */; };
+		D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAE29C21842006B11B4 /* CanvasView.swift */; };
+		D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +136,11 @@
 		D081DDBB29C31F7E006B11B4 /* CGPoint+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utility.swift"; sourceTree = "<group>"; };
 		D081DDBD29C32AF2006B11B4 /* CGVector+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGVector+Utility.swift"; sourceTree = "<group>"; };
 		D081DDBF29C32C76006B11B4 /* SlideHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideHitObject.swift; sourceTree = "<group>"; };
+		D081DDA829C2060E006B11B4 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisorSliderView.swift; sourceTree = "<group>"; };
+		D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomButtonsView.swift; sourceTree = "<group>"; };
+		D081DDAE29C21842006B11B4 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -591,6 +601,7 @@
 				D081DDC029C32C76006B11B4 /* SlideHitObject.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
 				D081DDB429C2BB91006B11B4 /* HitObjectViewFactory.swift in Sources */,
+				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
 				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
 				C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */,
 				C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */,
