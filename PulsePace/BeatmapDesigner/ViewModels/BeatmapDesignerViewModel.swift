@@ -12,10 +12,21 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
     @Published var hitObjects: PriorityQueue<any HitObject>
     @Published var isEditing = false
-    @Published var bpm: Double = 123.482 // TODO: parameterise + add offset + add divider
+    @Published var bpm: Double = 123.482 // TODO: parameterise + add divider
     @Published var offset: Double = 0
-    var audioManager = AudioManager()
+    @Published var zoom: Double = 128
+    @Published var divisorIndex: Double = 0
+    let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
+    let audioManager = AudioManager()
     private var displayLink: CADisplayLink?
+
+    var divisor: Double {
+        divisorList[Int(divisorIndex)]
+    }
+
+    var bps: Double {
+        bpm / 60
+    }
 
     init() {
         hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority )

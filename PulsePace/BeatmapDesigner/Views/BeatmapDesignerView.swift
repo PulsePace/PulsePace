@@ -17,11 +17,16 @@ struct BeatmapDesignerView: View {
 
     var body: some View {
         VStack {
-            Slider(value: $viewModel.offset, in: 0...10)
-            if let player = viewModel.audioManager.player {
-                renderSlider(player: player)
-                renderPlaybackButtons(player: player)
+            VStack {
+                Slider(value: $viewModel.offset, in: 0...10)
+                Slider(value: $viewModel.zoom, in: 0...1_000)
+                Slider(value: $viewModel.divisorIndex, in: 0...Double(viewModel.divisorList.count - 1), step: 1)
+                if let player = viewModel.audioManager.player {
+                    renderSlider(player: player)
+                    renderPlaybackButtons(player: player)
+                }
             }
+            .zIndex(.infinity)
 
             ZStack {
                 ForEach(viewModel.hitObjects.toArray(), id: \.id) { hitObject in
@@ -35,7 +40,7 @@ struct BeatmapDesignerView: View {
             )
             .background(.black)
             .onTapGesture { position in
-                let interval = 60 / viewModel.bpm
+                let interval = 1 / (viewModel.bps * viewModel.divisor)
                 let beat = ((viewModel.sliderValue - viewModel.offset) / interval).rounded()
                 viewModel.hitObjects.enqueue(TapHitObject(position: position, beat: beat * interval))
             }
@@ -51,13 +56,14 @@ struct BeatmapDesignerView: View {
     func renderSlider(player: AVAudioPlayer) -> some View {
         ZStack {
             GeometryReader { geometry in
-                let cols: CGFloat = 400
+                let numberOfBeats: CGFloat = player.duration * viewModel.bps
                 let height = geometry.size.height
-                let xSpacing = 512 * 60 / viewModel.bpm
+                let mainBeatSpacing = viewModel.zoom / viewModel.bps
+                let subBeatSpacing = mainBeatSpacing / viewModel.divisor
 
                 Path { path in
-                    for index in 0...Int(cols) {
-                        let vOffset = 128 * viewModel.offset + CGFloat(index) * xSpacing / 4
+                    for index in 0...Int(numberOfBeats * viewModel.divisor) {
+                        let vOffset = viewModel.zoom * viewModel.offset + CGFloat(index) * subBeatSpacing
                         path.move(to: CGPoint(x: vOffset, y: 0))
                         path.addLine(to: CGPoint(x: vOffset, y: height))
                     }
@@ -65,10 +71,11 @@ struct BeatmapDesignerView: View {
                 .stroke(.blue)
 
                 Path { path in
-                    for index in 0...Int(cols) {
-                        let vOffset = 128 * viewModel.offset + CGFloat(index) * xSpacing
-                        path.move(to: CGPoint(x: vOffset, y: 0))
-                        path.addLine(to: CGPoint(x: vOffset, y: height))
+                    for index in 0...Int(numberOfBeats) {
+                        let mainBeatOffset = viewModel.zoom * viewModel.offset + CGFloat(index) * mainBeatSpacing
+
+                        path.move(to: CGPoint(x: mainBeatOffset, y: 0))
+                        path.addLine(to: CGPoint(x: mainBeatOffset, y: height))
                     }
                 }
                 .stroke(.white)
@@ -76,16 +83,16 @@ struct BeatmapDesignerView: View {
                 ForEach(viewModel.hitObjects, id: \.id) { hitObject in
                     Circle()
                         .fill(.white)
-                        .offset(x: 128 * viewModel.offset + hitObject.beat * 64 * 2 - 20)
+                        .offset(x: (viewModel.offset + hitObject.beat) * viewModel.zoom - 20)
                 }
             }
             .background(.red)
-            .frame(width: 64 * 2 * player.duration, height: 40)
-            .offset(x: 64 * (player.duration - 2 * viewModel.sliderValue))
+            .frame(width: viewModel.zoom * player.duration, height: 40)
+            .offset(x: viewModel.zoom * (player.duration / 2 - viewModel.sliderValue))
             .gesture(
                 DragGesture()
                     .onChanged { gesture in
-                        viewModel.sliderValue = player.currentTime - gesture.translation.width / 128
+                        viewModel.sliderValue = player.currentTime - gesture.translation.width / viewModel.zoom
                         viewModel.isEditing = true
                         player.pause()
                     }
@@ -104,17 +111,17 @@ struct BeatmapDesignerView: View {
 
     func renderPlaybackButtons(player: AVAudioPlayer) -> some View {
         HStack {
-            PlaybackControlButtonView(systemName: "gobackward.10") {
-
-            }
-
             PlaybackControlButtonView(systemName: player.isPlaying ? "pause.circle.fill" : "play.circle.fill",
                                       fontSize: 44) {
                 viewModel.audioManager.togglePlayer()
             }
 
-            PlaybackControlButtonView(systemName: "goforward.10") {
+            PlaybackControlButtonView(systemName: "plus.circle.fill") {
+                viewModel.audioManager.increasePlaybackRate()
+            }
 
+            PlaybackControlButtonView(systemName: "minus.circle.fill") {
+                viewModel.audioManager.decreasePlaybackRate()
             }
         }
     }
@@ -144,6 +151,5 @@ struct BeatmapDesignerView_Previews: PreviewProvider {
     static var previews: some View {
         BeatmapDesignerView(viewModel: BeatmapDesignerViewModel())
             .previewInterfaceOrientation(.landscapeLeft)
-            .environmentObject(AudioManager())
     }
 }
