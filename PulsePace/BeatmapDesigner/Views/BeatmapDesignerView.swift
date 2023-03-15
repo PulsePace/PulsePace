@@ -23,6 +23,7 @@ struct BeatmapDesignerView: View {
                 TimelineView()
                 DivisorSliderView()
             }
+            .zIndex(.infinity)
 
             CanvasView()
 
