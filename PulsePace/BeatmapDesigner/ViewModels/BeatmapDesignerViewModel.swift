@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import AVKit
 
 class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
@@ -16,8 +17,10 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var offset: Double = 0
     @Published var zoom: Double = 128
     @Published var divisorIndex: Double = 0
+    @Published var playbackRateIndex: Double = 3
+    let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
-    let audioManager = AudioManager()
+    private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
 
     var divisor: Double {
@@ -38,11 +41,21 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     @objc func step(displaylink: CADisplayLink) {
-        guard let player = audioManager.player, !isEditing else {
+        guard let player = player, !isEditing else {
             return
         }
-//        print(offset)
-//        print(sliderValue)
         sliderValue = player.currentTime
+    }
+
+    func initialisePlayer(player: AVAudioPlayer) {
+        self.player = player
+    }
+
+    func increaseZoom() {
+        zoom = min(1_024, zoom * 2)
+    }
+
+    func decreaseZoom() {
+        zoom = max(64, zoom / 2)
     }
 }
