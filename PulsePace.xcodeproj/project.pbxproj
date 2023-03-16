@@ -7,19 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A96AAB429C124FF00FAA79E /* MyQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB329C124FF00FAA79E /* MyQueue.swift */; };
+		6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB629C1254D00FAA79E /* GameHO.swift */; };
+		6A96AAB929C1254D00FAA79E /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB729C1254D00FAA79E /* Entity.swift */; };
+		6A96AABB29C1255400FAA79E /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AABA29C1255400FAA79E /* GameEngine.swift */; };
+		6A96AABE29C1257D00FAA79E /* Lerper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AABC29C1257D00FAA79E /* Lerper.swift */; };
+		6A96AABF29C1257D00FAA79E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AABD29C1257D00FAA79E /* Math.swift */; };
+		6A96AAC529C1259900FAA79E /* TapCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAC129C1259900FAA79E /* TapCommand.swift */; };
+		6A96AAC629C1259900FAA79E /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAC229C1259900FAA79E /* Command.swift */; };
+		6A96AAC729C1259900FAA79E /* HoldCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAC329C1259900FAA79E /* HoldCommand.swift */; };
+		6A96AAC829C1259900FAA79E /* SlideCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAC429C1259900FAA79E /* SlideCommand.swift */; };
+		6A96AACF29C125CA00FAA79E /* HoldGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACA29C125CA00FAA79E /* HoldGameHO.swift */; };
+		6A96AAD029C125CA00FAA79E /* SlideGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACB29C125CA00FAA79E /* SlideGameHO.swift */; };
+		6A96AAD129C125CA00FAA79E /* SpinGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACC29C125CA00FAA79E /* SpinGameHO.swift */; };
+		6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */; };
+		6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACE29C125CA00FAA79E /* TapGameHO.swift */; };
+		6A96AAD529C1272500FAA79E /* SlideHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD429C1272500FAA79E /* SlideHitObject.swift */; };
+		6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD629C1273900FAA79E /* HoldHitObject.swift */; };
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
 		C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77572E929BDE4C100367053 /* View+FullBackground.swift */; };
-		C7908E2E29B7C986006F7423 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E2D29B7C986006F7423 /* Command.swift */; };
 		C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3129B7D8CD006F7423 /* TapInput.swift */; };
 		C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3329B7D8D6006F7423 /* SlideInput.swift */; };
 		C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3729B7D8E9006F7423 /* HoldInput.swift */; };
 		C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3929B7DD74006F7423 /* SpinInput.swift */; };
 		C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3D29B92657006F7423 /* TouchInput.swift */; };
-		C7908E4129B92D30006F7423 /* TapCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4029B92D30006F7423 /* TapCommand.swift */; };
-		C7908E4329B92D49006F7423 /* SlideCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4229B92D49006F7423 /* SlideCommand.swift */; };
-		C7908E4529B92D5F006F7423 /* HoldCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4429B92D5F006F7423 /* HoldCommand.swift */; };
-		C7908E4729B92D71006F7423 /* SpinCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4629B92D71006F7423 /* SpinCommand.swift */; };
 		C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4829B92E4E006F7423 /* GestureModifier.swift */; };
 		C7908E4E29B93137006F7423 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4D29B93137006F7423 /* GameView.swift */; };
 		C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */; };
@@ -66,19 +78,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A96AAB329C124FF00FAA79E /* MyQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyQueue.swift; sourceTree = "<group>"; };
+		6A96AAB629C1254D00FAA79E /* GameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHO.swift; sourceTree = "<group>"; };
+		6A96AAB729C1254D00FAA79E /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		6A96AABA29C1255400FAA79E /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+		6A96AABC29C1257D00FAA79E /* Lerper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lerper.swift; sourceTree = "<group>"; };
+		6A96AABD29C1257D00FAA79E /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		6A96AAC129C1259900FAA79E /* TapCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCommand.swift; sourceTree = "<group>"; };
+		6A96AAC229C1259900FAA79E /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		6A96AAC329C1259900FAA79E /* HoldCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoldCommand.swift; sourceTree = "<group>"; };
+		6A96AAC429C1259900FAA79E /* SlideCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideCommand.swift; sourceTree = "<group>"; };
+		6A96AACA29C125CA00FAA79E /* HoldGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoldGameHO.swift; sourceTree = "<group>"; };
+		6A96AACB29C125CA00FAA79E /* SlideGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideGameHO.swift; sourceTree = "<group>"; };
+		6A96AACC29C125CA00FAA79E /* SpinGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinGameHO.swift; sourceTree = "<group>"; };
+		6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitObjectManager.swift; sourceTree = "<group>"; };
+		6A96AACE29C125CA00FAA79E /* TapGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapGameHO.swift; sourceTree = "<group>"; };
+		6A96AAD429C1272500FAA79E /* SlideHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideHitObject.swift; sourceTree = "<group>"; };
+		6A96AAD629C1273900FAA79E /* HoldHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldHitObject.swift; sourceTree = "<group>"; };
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		C77572E929BDE4C100367053 /* View+FullBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+FullBackground.swift"; sourceTree = "<group>"; };
-		C7908E2D29B7C986006F7423 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C7908E3129B7D8CD006F7423 /* TapInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInput.swift; sourceTree = "<group>"; };
 		C7908E3329B7D8D6006F7423 /* SlideInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInput.swift; sourceTree = "<group>"; };
 		C7908E3729B7D8E9006F7423 /* HoldInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldInput.swift; sourceTree = "<group>"; };
 		C7908E3929B7DD74006F7423 /* SpinInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinInput.swift; sourceTree = "<group>"; };
 		C7908E3D29B92657006F7423 /* TouchInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchInput.swift; sourceTree = "<group>"; };
-		C7908E4029B92D30006F7423 /* TapCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapCommand.swift; sourceTree = "<group>"; };
-		C7908E4229B92D49006F7423 /* SlideCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideCommand.swift; sourceTree = "<group>"; };
-		C7908E4429B92D5F006F7423 /* HoldCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldCommand.swift; sourceTree = "<group>"; };
-		C7908E4629B92D71006F7423 /* SpinCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinCommand.swift; sourceTree = "<group>"; };
 		C7908E4829B92E4E006F7423 /* GestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModifier.swift; sourceTree = "<group>"; };
 		C7908E4D29B93137006F7423 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		C7CD9BD129B7514900ABEE8F /* PulsePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulsePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +160,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A96AAB529C1250800FAA79E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				6A96AABC29C1257D00FAA79E /* Lerper.swift */,
+				6A96AABD29C1257D00FAA79E /* Math.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		6A96AAC029C1258E00FAA79E /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				6A96AAC229C1259900FAA79E /* Command.swift */,
+				6A96AAC329C1259900FAA79E /* HoldCommand.swift */,
+				6A96AAC429C1259900FAA79E /* SlideCommand.swift */,
+				6A96AAC129C1259900FAA79E /* TapCommand.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
+		6A96AAC929C125A800FAA79E /* GameHitObjects */ = {
+			isa = PBXGroup;
+			children = (
+				6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */,
+				6A96AACA29C125CA00FAA79E /* HoldGameHO.swift */,
+				6A96AACB29C125CA00FAA79E /* SlideGameHO.swift */,
+				6A96AACC29C125CA00FAA79E /* SpinGameHO.swift */,
+				6A96AACE29C125CA00FAA79E /* TapGameHO.swift */,
+			);
+			path = GameHitObjects;
+			sourceTree = "<group>";
+		};
 		C748C9E829B9E71C00CB8C7A /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +203,7 @@
 		C748C9ED29BB03D300CB8C7A /* DataStructures */ = {
 			isa = PBXGroup;
 			children = (
+				6A96AAB329C124FF00FAA79E /* MyQueue.swift */,
 				C748C9EB29BB039600CB8C7A /* InputData.swift */,
 			);
 			path = DataStructures;
@@ -155,6 +212,8 @@
 		C748C9EE29BB03E200CB8C7A /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				6A96AAB729C1254D00FAA79E /* Entity.swift */,
+				6A96AAB629C1254D00FAA79E /* GameHO.swift */,
 				C748C9E929BB036F00CB8C7A /* Locatable.swift */,
 			);
 			path = Protocols;
@@ -171,11 +230,13 @@
 		C7908E2C29B7C8E7006F7423 /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
+				6A96AAC929C125A800FAA79E /* GameHitObjects */,
+				6A96AAC029C1258E00FAA79E /* Commands */,
+				6A96AABA29C1255400FAA79E /* GameEngine.swift */,
 				C7908E4A29B9310F006F7423 /* Views */,
 				C77572EB29BDEAD700367053 /* ViewExtensions */,
 				C748C9E829B9E71C00CB8C7A /* ViewModifiers */,
 				C7908E3029B7D8C0006F7423 /* Inputs */,
-				C7908E3F29B92BF7006F7423 /* Commands */,
 				C748C9EE29BB03E200CB8C7A /* Protocols */,
 				C748C9ED29BB03D300CB8C7A /* DataStructures */,
 			);
@@ -192,18 +253,6 @@
 				C7908E3929B7DD74006F7423 /* SpinInput.swift */,
 			);
 			path = Inputs;
-			sourceTree = "<group>";
-		};
-		C7908E3F29B92BF7006F7423 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				C7908E2D29B7C986006F7423 /* Command.swift */,
-				C7908E4029B92D30006F7423 /* TapCommand.swift */,
-				C7908E4229B92D49006F7423 /* SlideCommand.swift */,
-				C7908E4429B92D5F006F7423 /* HoldCommand.swift */,
-				C7908E4629B92D71006F7423 /* SpinCommand.swift */,
-			);
-			path = Commands;
 			sourceTree = "<group>";
 		};
 		C7908E4A29B9310F006F7423 /* Views */ = {
@@ -280,6 +329,7 @@
 		C7D1AF2229BF842D00244EF5 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6A96AAB529C1250800FAA79E /* Utils */,
 				C7D1AF2329BF843200244EF5 /* DataStructures */,
 			);
 			path = Shared;
@@ -373,6 +423,8 @@
 			children = (
 				D012FF1529BE00CA00E3CC2E /* HitObject.swift */,
 				D012FF1929BE011B00E3CC2E /* TapHitObject.swift */,
+				6A96AAD429C1272500FAA79E /* SlideHitObject.swift */,
+				6A96AAD629C1273900FAA79E /* HoldHitObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -534,35 +586,47 @@
 			files = (
 				C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */,
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
-				C7908E4729B92D71006F7423 /* SpinCommand.swift in Sources */,
+				6A96AAD029C125CA00FAA79E /* SlideGameHO.swift in Sources */,
+				6A96AAB929C1254D00FAA79E /* Entity.swift in Sources */,
 				C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */,
-				C7908E4329B92D49006F7423 /* SlideCommand.swift in Sources */,
+				6A96AAB429C124FF00FAA79E /* MyQueue.swift in Sources */,
+				6A96AAD129C125CA00FAA79E /* SpinGameHO.swift in Sources */,
+				6A96AAC829C1259900FAA79E /* SlideCommand.swift in Sources */,
+				6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */,
 				C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */,
+				6A96AAC529C1259900FAA79E /* TapCommand.swift in Sources */,
+				6A96AAD529C1272500FAA79E /* SlideHitObject.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
 				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
 				C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */,
 				C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */,
+				6A96AACF29C125CA00FAA79E /* HoldGameHO.swift in Sources */,
 				C7908E4E29B93137006F7423 /* GameView.swift in Sources */,
-				C7908E4529B92D5F006F7423 /* HoldCommand.swift in Sources */,
 				C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
 				D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */,
 				D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */,
 				D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */,
+				6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */,
 				D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */,
 				D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */,
+				6A96AAC629C1259900FAA79E /* Command.swift in Sources */,
 				C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */,
+				6A96AABB29C1255400FAA79E /* GameEngine.swift in Sources */,
 				C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */,
-				C7908E4129B92D30006F7423 /* TapCommand.swift in Sources */,
 				C7D1AF2529BF844A00244EF5 /* PriorityQueue.swift in Sources */,
 				C7D1AF2729BF895D00244EF5 /* Queue.swift in Sources */,
-				C7908E2E29B7C986006F7423 /* Command.swift in Sources */,
 				C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */,
+				6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */,
+				6A96AABE29C1257D00FAA79E /* Lerper.swift in Sources */,
 				D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */,
 				D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */,
 				D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */,
 				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,
+				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
+				6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */,
+				6A96AAC729C1259900FAA79E /* HoldCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
