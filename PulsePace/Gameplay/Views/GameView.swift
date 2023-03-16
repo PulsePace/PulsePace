@@ -8,36 +8,43 @@
 import SwiftUI
 
 struct GameView: View {
-    @ObservedObject var gameViewModel: GameViewModel
+    @StateObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
 
-    var body: some View {
-        VStack {
-            HStack {
-                Text(gameViewModel.score)
-                    .font(.largeTitle)
-            }
-
-            GameplayAreaView()
-        }
-        .fullBackground(imageName: gameViewModel.gameBackground)
+    init(viewModel: GameViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
-    @ViewBuilder
-    private func renderPlaybackButtons() -> some View {
-        if let player = audioManager.player {
-            HStack {
-                PlaybackControlButtonView(systemName: player.isPlaying
-                                     ? "pause.circle.fill" : "play.circle.fill", fontSize: 44) {
-                    audioManager.togglePlayer()
-                }
+    var body: some View {
+        ZStack(alignment: .top) {
+            GameplayAreaView()
+            .overlay(alignment: .topTrailing) {
+                ScoreView()
+            }
+            .overlay(alignment: .top) {
+                GameControlView()
             }
         }
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
+        .onAppear {
+            audioManager.startPlayer(track: "test")
+            viewModel.startGameplay()
+        }
+        .onDisappear {
+            audioManager.stopPlayer()
+            viewModel.stopGameplay()
+        }
+        .environmentObject(viewModel)
+        .fullBackground(imageName: viewModel.gameBackground)
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView(gameViewModel: GameViewModel())
+        GameView(viewModel: GameViewModel())
     }
 }

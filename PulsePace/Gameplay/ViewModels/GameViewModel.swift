@@ -10,9 +10,8 @@ import QuartzCore
 import AVKit
 
 class GameViewModel: ObservableObject {
-    private var songPlayer: AVAudioPlayer?
     private var displayLink: CADisplayLink?
-//    private var gameEngine: GameEngine
+    private var gameEngine: GameEngine?
 
     var score: String {
         String(format: "%06d", 71_143)
@@ -31,19 +30,20 @@ class GameViewModel: ObservableObject {
     }
 
 //    var hitObjects: PriorityQueue<any GameHO> {
-//        PriorityQueue<any HitObject>()
+//        PriorityQueue<any GameHO>(sortBy: <)
 //    }
 
     var gameBackground: String {
-        ""
-    }
-
-    init() {
-        createDisplayLink()
+        "game-background"
     }
 
     @objc func step(displaylink: CADisplayLink) {
+        gameEngine?.step(60)
+    }
 
+    func startGameplay() {
+        gameEngine = GameEngine()
+        createDisplayLink()
     }
 
     func stopGameplay() {

@@ -16,7 +16,7 @@ struct MenuView: View {
                 Text("PulsePace")
                     .font(.largeTitle)
 
-                NavigationLink(destination: GameView(gameViewModel: GameViewModel()).environmentObject(audioManager)) {
+                NavigationLink(destination: GameView(viewModel: GameViewModel()).environmentObject(audioManager)) {
                     Text("Gameplay")
                 }
 
