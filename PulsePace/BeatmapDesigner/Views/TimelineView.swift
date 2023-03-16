@@ -72,7 +72,7 @@ struct TimelineView: View {
 
     private func renderBeats() -> some View {
         let beatOffset = beatmapDesigner.offset - beatmapDesigner.sliderValue
-        return ForEach(beatmapDesigner.hitObjects, id: \.id) { hitObject in
+        return ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
             Circle()
                 .strokeBorder(.black, lineWidth: 2)
                 .background(Circle().fill(.white))

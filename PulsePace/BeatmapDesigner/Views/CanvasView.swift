@@ -12,7 +12,7 @@ struct CanvasView: View {
 
     var body: some View {
         ZStack {
-            ForEach(beatmapDesigner.hitObjects, id: \.id) { hitObject in
+            ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
                 renderHitObject(hitObject)
             }
         }
@@ -25,7 +25,7 @@ struct CanvasView: View {
         .onTapGesture { position in
             let interval = 1 / (beatmapDesigner.bps * beatmapDesigner.divisor)
             let beat = ((beatmapDesigner.sliderValue - beatmapDesigner.offset) / interval).rounded()
-            beatmapDesigner.hitObjects.append(TapHitObject(position: position, beat: beat * interval))
+            beatmapDesigner.hitObjects.enqueue(TapHitObject(position: position, beat: beat * interval))
         }
     }
 
