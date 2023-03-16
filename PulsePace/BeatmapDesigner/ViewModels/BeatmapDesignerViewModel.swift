@@ -12,7 +12,7 @@ import AVKit
 class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
     @Published var isEditing = false
-    @Published var hitObjects: [any HitObject] = []
+    @Published var hitObjects: PriorityQueue<any HitObject>
     @Published var bpm: Double = 123.482 // TODO: parameterise
     @Published var offset: Double = 0
     @Published var zoom: Double = 128
@@ -33,7 +33,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     init() {
-        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority )
+        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
         createDisplayLink()
     }
 
@@ -65,7 +65,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         guard let hitObject = previewHitObject else {
             return
         }
-        hitObjects.append(hitObject)
+        hitObjects.enqueue(hitObject)
         previewHitObject = nil
     }
 

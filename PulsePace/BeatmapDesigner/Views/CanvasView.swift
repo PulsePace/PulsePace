@@ -12,7 +12,7 @@ struct CanvasView: View {
 
     var body: some View {
         ZStack {
-            ForEach(beatmapDesigner.hitObjects, id: \.id) { hitObject in
+            ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
                 renderHitObject(hitObject)
             }
             if let hitObject = beatmapDesigner.previewHitObject {
