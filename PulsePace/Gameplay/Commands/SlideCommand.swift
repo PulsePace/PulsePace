@@ -11,21 +11,10 @@ class SlideCommand: InputCommand {
         self.init { _ in
             print("Slide")
         }
-        let error = simd_length(SIMD2(
-            x: currInput.location.x - gameHO.expectedPosition.x,
-            y: currInput.location.y - gameHO.expectedPosition.y
-        ))
-        let clampedError = Math.clamp(num: error, minimum: 0, maximum: minimumProximity) / minimumProximity
-        // compare expected position to currInput
-        proximityScore = Math.clamp(
-            num: proximityScore + (1 - clampedError) * deltaTime / gameHO.optimalLife,
-            minimum: 0,
-            maximum: 1
-        )
     }
 }
 
-class SlideCommand: CommandHO {
+class SlideCommandHO: CommandHO {
     typealias GameHOType = SlideGameHO
     var shouldExecute = false
     var currInput: InputData?

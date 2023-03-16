@@ -11,7 +11,7 @@ import simd
 // Straight slider
 class SlideGameHO: GameHO {
     typealias Vector2 = SIMD2<Double>
-    typealias CommandType = SlideCommand
+    typealias CommandType = SlideCommandHO
     let wrappingObject: Entity
 
     let lifeStart: Double
@@ -26,7 +26,7 @@ class SlideGameHO: GameHO {
     var expectedPosition: CGPoint
     let endPosition: CGPoint
 
-    var command: SlideCommand
+    var command: SlideCommandHO
 
     init(slideHO: SlideHitObject, wrappingObject: Entity, preSpawnInterval: Double, slideSpeed: Double) {
         self.wrappingObject = wrappingObject
@@ -43,7 +43,7 @@ class SlideGameHO: GameHO {
         self.endPosition = slideHO.endPosition
         self.expectedPosition = slideHO.position
 
-        self.command = SlideCommand()
+        self.command = SlideCommandHO()
     }
 
     func updateState(currBeat: Double) {

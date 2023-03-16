@@ -10,15 +10,10 @@ class TapCommand: InputCommand {
         self.init { _ in
             print("Tap")
         }
-
-        isHit = true
-        hitStage = gameHO.lifeStage
-        // TODO: Animation after destroying entity object
-        gameHO.destroyObject()
     }
 }
 
-class TapCommand: CommandHO {
+class TapCommandHO: CommandHO {
     typealias GameHOType = TapGameHO
 
     var shouldExecute = false
@@ -38,4 +33,3 @@ class TapCommand: CommandHO {
         gameHO.destroyObject()
     }
 }
-

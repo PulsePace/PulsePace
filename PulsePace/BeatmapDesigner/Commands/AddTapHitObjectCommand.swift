@@ -7,9 +7,10 @@
 
 class AddTapHitObjectCommand: InputCommand {
     convenience init(receiver: BeatmapDesignerViewModel) {
-        self.init { inputData in
-            receiver.hitObjects.append(TapHitObject(position: inputData.location, beat: receiver.sliderValue))
-            print("Tap Hit Object at \(inputData.location)")
-        }
+        self.init(action: { inputData in
+            let interval = 1 / (receiver.bps * receiver.divisor)
+            let beat = ((receiver.sliderValue - receiver.offset) / interval).rounded()
+            receiver.hitObjects.enqueue(TapHitObject(position: inputData.location, beat: beat * interval))
+        })
     }
 }

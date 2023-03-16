@@ -11,7 +11,8 @@ class RepositionSongCommand: InputCommand {
     convenience init(receiver: BeatmapDesignerViewModel, player: AVAudioPlayer) {
         self.init(
             action: { inputData in
-                receiver.sliderValue = player.currentTime - inputData.translation.width / 2
+                let timeTranslated = inputData.translation.width / receiver.zoom
+                receiver.sliderValue = player.currentTime - timeTranslated
                 receiver.isEditing = true
                 player.pause()
             },

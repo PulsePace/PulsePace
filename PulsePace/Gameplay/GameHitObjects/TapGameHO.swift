@@ -8,7 +8,7 @@
 import Foundation
 
 class TapGameHO: GameHO {
-    typealias CommandType = TapCommand
+    typealias CommandType = TapCommandHO
 
     let wrappingObject: Entity
 
@@ -19,14 +19,14 @@ class TapGameHO: GameHO {
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(TapGameHO) -> Void] = []
 
-    var command: TapCommand
+    var command: TapCommandHO
 
     init(tapHO: TapHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.wrappingObject = wrappingObject
         self.lifeStart = tapHO.beat - preSpawnInterval
         self.lifeOptimal = tapHO.beat
         self.lifeTime = preSpawnInterval * 2
-        self.command = TapCommand()
+        self.command = TapCommandHO()
     }
 
     func updateState(currBeat: Double) {

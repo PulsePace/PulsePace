@@ -27,7 +27,6 @@
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
 		C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77572E929BDE4C100367053 /* View+FullBackground.swift */; };
-		C7908E2E29B7C986006F7423 /* InputCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E2D29B7C986006F7423 /* InputCommand.swift */; };
 		C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3129B7D8CD006F7423 /* TapInput.swift */; };
 		C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3329B7D8D6006F7423 /* SlideInput.swift */; };
 		C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3729B7D8E9006F7423 /* HoldInput.swift */; };
@@ -46,13 +45,13 @@
 		C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2829BF8A9300244EF5 /* Heap.swift */; };
 		C7D1AF2C29BF902B00244EF5 /* PriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2B29BF902B00244EF5 /* PriorityQueueTests.swift */; };
 		C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2D29BF947B00244EF5 /* MenuView.swift */; };
-		C7D1AF3129C10E3400244EF5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF3029C10E3400244EF5 /* Command.swift */; };
 		C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7F6B00A29B7C12800D97E5F /* swiftlint.yml */; };
 		C7FD9A4329C22D5A00191F03 /* AddTapHitObjectCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4229C22D5A00191F03 /* AddTapHitObjectCommand.swift */; };
 		C7FD9A4629C2356800191F03 /* CanvasTapInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4529C2356800191F03 /* CanvasTapInput.swift */; };
 		C7FD9A4829C2358700191F03 /* DragInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4729C2358700191F03 /* DragInput.swift */; };
 		C7FD9A4A29C23ABA00191F03 /* RepositionSongCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4929C23ABA00191F03 /* RepositionSongCommand.swift */; };
 		C7FD9A4C29C2413900191F03 /* Translatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4B29C2413900191F03 /* Translatable.swift */; };
+		C7FD9A5429C35BF000191F03 /* InputCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5329C35BF000191F03 /* InputCommand.swift */; };
 		D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */; };
 		D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235BB29BEF9A1006858D3 /* AudioManager.swift */; };
 		D00235BE29BEFB02006858D3 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D00235BD29BEFB02006858D3 /* test.mp3 */; };
@@ -105,7 +104,6 @@
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		C77572E929BDE4C100367053 /* View+FullBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+FullBackground.swift"; sourceTree = "<group>"; };
-		C7908E2D29B7C986006F7423 /* InputCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCommand.swift; sourceTree = "<group>"; };
 		C7908E3129B7D8CD006F7423 /* TapInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInput.swift; sourceTree = "<group>"; };
 		C7908E3329B7D8D6006F7423 /* SlideInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInput.swift; sourceTree = "<group>"; };
 		C7908E3729B7D8E9006F7423 /* HoldInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldInput.swift; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 		C7D1AF2829BF8A9300244EF5 /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
 		C7D1AF2B29BF902B00244EF5 /* PriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueueTests.swift; sourceTree = "<group>"; };
 		C7D1AF2D29BF947B00244EF5 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		C7D1AF3029C10E3400244EF5 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C7F6B00529B7BF7F00D97E5F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7F6B00A29B7C12800D97E5F /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
 		C7FD9A4229C22D5A00191F03 /* AddTapHitObjectCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTapHitObjectCommand.swift; sourceTree = "<group>"; };
@@ -135,6 +132,7 @@
 		C7FD9A4729C2358700191F03 /* DragInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInput.swift; sourceTree = "<group>"; };
 		C7FD9A4929C23ABA00191F03 /* RepositionSongCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositionSongCommand.swift; sourceTree = "<group>"; };
 		C7FD9A4B29C2413900191F03 /* Translatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translatable.swift; sourceTree = "<group>"; };
+		C7FD9A5329C35BF000191F03 /* InputCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputCommand.swift; sourceTree = "<group>"; };
 		D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemIconButtonView.swift; sourceTree = "<group>"; };
 		D00235BB29BEF9A1006858D3 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		D00235BD29BEFB02006858D3 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
@@ -187,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				6A96AAC229C1259900FAA79E /* Command.swift */,
+				C7FD9A5329C35BF000191F03 /* InputCommand.swift */,
 				6A96AAC329C1259900FAA79E /* HoldCommand.swift */,
 				6A96AAC429C1259900FAA79E /* SlideCommand.swift */,
 				6A96AAC129C1259900FAA79E /* TapCommand.swift */,
@@ -268,19 +267,6 @@
 				C7908E3929B7DD74006F7423 /* SpinInput.swift */,
 			);
 			path = Inputs;
-			sourceTree = "<group>";
-		};
-		C7908E3F29B92BF7006F7423 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				C7D1AF3029C10E3400244EF5 /* Command.swift */,
-				C7908E2D29B7C986006F7423 /* InputCommand.swift */,
-				C7908E4029B92D30006F7423 /* TapCommand.swift */,
-				C7908E4229B92D49006F7423 /* SlideCommand.swift */,
-				C7908E4429B92D5F006F7423 /* HoldCommand.swift */,
-				C7908E4629B92D71006F7423 /* SpinCommand.swift */,
-			);
-			path = Commands;
 			sourceTree = "<group>";
 		};
 		C7908E4A29B9310F006F7423 /* Views */ = {
@@ -636,6 +622,7 @@
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
 				6A96AAD029C125CA00FAA79E /* SlideGameHO.swift in Sources */,
 				6A96AAB929C1254D00FAA79E /* Entity.swift in Sources */,
+				C7FD9A5429C35BF000191F03 /* InputCommand.swift in Sources */,
 				C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */,
 				6A96AAB429C124FF00FAA79E /* MyQueue.swift in Sources */,
 				6A96AAD129C125CA00FAA79E /* SpinGameHO.swift in Sources */,
@@ -650,7 +637,6 @@
 				C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */,
 				6A96AACF29C125CA00FAA79E /* HoldGameHO.swift in Sources */,
 				C7908E4E29B93137006F7423 /* GameView.swift in Sources */,
-				C7908E4529B92D5F006F7423 /* HoldCommand.swift in Sources */,
 				C7FD9A4829C2358700191F03 /* DragInput.swift in Sources */,
 				C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
@@ -671,13 +657,12 @@
 				C7FD9A4A29C23ABA00191F03 /* RepositionSongCommand.swift in Sources */,
 				C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */,
 				6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */,
-				6A96AABE29C1257D00FAA79E /* InputLerper.swift in Sources */,
+				6A96AABE29C1257D00FAA79E /* Lerper.swift in Sources */,
 				D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */,
 				D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */,
 				D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */,
 				C7FD9A4329C22D5A00191F03 /* AddTapHitObjectCommand.swift in Sources */,
 				C7FD9A4629C2356800191F03 /* CanvasTapInput.swift in Sources */,
-				C7D1AF3129C10E3400244EF5 /* Command.swift in Sources */,
 				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,
 				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
 				6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */,
@@ -841,7 +826,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = X77GX48L42;
+				DEVELOPMENT_TEAM = P3QLTH5V5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
@@ -907,7 +892,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P3QLTH5V5D;
@@ -916,9 +900,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePaceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PulsePace.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PulsePace";
 			};
 			name = Debug;
@@ -927,7 +914,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P3QLTH5V5D;
@@ -936,9 +922,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePaceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PulsePace.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PulsePace";
 			};
 			name = Release;
@@ -954,9 +943,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePaceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 				TEST_TARGET_NAME = PulsePace;
 			};
 			name = Debug;
@@ -972,9 +965,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePaceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 				TEST_TARGET_NAME = PulsePace;
 			};
 			name = Release;

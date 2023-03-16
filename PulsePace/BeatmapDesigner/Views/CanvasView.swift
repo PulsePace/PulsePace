@@ -22,11 +22,7 @@ struct CanvasView: View {
             alignment: .topLeading
         )
         .background(.black)
-        .onTapGesture { position in
-            let interval = 1 / (beatmapDesigner.bps * beatmapDesigner.divisor)
-            let beat = ((beatmapDesigner.sliderValue - beatmapDesigner.offset) / interval).rounded()
-            beatmapDesigner.hitObjects.enqueue(TapHitObject(position: position, beat: beat * interval))
-        }
+        .modifier(GestureModifier(input: CanvasTapInput(), command: AddTapHitObjectCommand(receiver: beatmapDesigner)))
     }
 
     private func renderHitObject(_ hitObject: any HitObject) -> some View {

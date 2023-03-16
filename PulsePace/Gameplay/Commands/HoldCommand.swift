@@ -10,11 +10,10 @@ class HoldCommand: InputCommand {
         self.init { _ in
             print("Hold")
         }
-        normalizedHoldTime += deltaTime / gameHO.lifeOptimal
     }
 }
 
-class HoldCommand: CommandHO {
+class HoldCommandHO: CommandHO {
     typealias GameHOType = HoldGameHO
     var shouldExecute = false
     var currInput: InputData?
