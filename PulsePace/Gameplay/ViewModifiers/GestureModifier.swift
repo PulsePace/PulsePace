@@ -10,15 +10,18 @@ import SwiftUI
 struct GestureModifier<T: TouchInput>: ViewModifier where T.InputGesture.Value: Equatable,
                                                             T.InputGesture.Value: Locatable {
     var input: T
+    var command: InputCommand
 
     func body(content: Content) -> some View {
         content
             .simultaneousGesture(input.gesture
                 .onChanged { value in
                     let inputData = InputData(value: value)
+                    command.execute(inputData: inputData)
                 }
                 .onEnded { value in
                     let inputData = InputData(value: value)
+                    command.executeOnEnded(inputData: inputData)
                     print("Ended")
                 }
             )

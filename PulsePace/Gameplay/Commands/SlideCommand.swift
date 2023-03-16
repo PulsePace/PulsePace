@@ -6,7 +6,19 @@
 //
 import simd
 
-class SlideCommand: Command {
+class SlideCommand: InputCommand {
+    override private init(action: @escaping InputCommand.Action, completion: InputCommand.Action? = nil) {
+        super.init(action: action, completion: completion)
+    }
+
+    convenience init() {
+        self.init { _ in
+            print("Slide")
+        }
+    }
+}
+
+class SlideCommandHO: CommandHO {
     typealias GameHOType = SlideGameHO
     var shouldExecute = false
     var currInput: InputData?

@@ -8,7 +8,7 @@
 import Foundation
 
 class HoldGameHO: GameHO {
-    typealias CommandType = HoldCommand
+    typealias CommandType = HoldCommandHO
 
     let wrappingObject: Entity
 
@@ -19,14 +19,14 @@ class HoldGameHO: GameHO {
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(HoldGameHO) -> Void] = []
 
-    var command: HoldCommand
+    var command: HoldCommandHO
 
     init(holdHO: HoldHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.wrappingObject = wrappingObject
         self.lifeStart = holdHO.beat - preSpawnInterval
         self.lifeOptimal = holdHO.duration
         self.lifeTime = preSpawnInterval * 2 + holdHO.duration
-        self.command = HoldCommand()
+        self.command = HoldCommandHO()
     }
 
     func updateState(currBeat: Double) {

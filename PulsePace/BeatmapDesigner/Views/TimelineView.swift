@@ -35,20 +35,8 @@ struct TimelineView: View {
             .frame(height: 60)
             .background(.black)
             .clipped()
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        let timeTranslated = gesture.translation.width / beatmapDesigner.zoom
-                        beatmapDesigner.sliderValue = player.currentTime - timeTranslated
-                        beatmapDesigner.isEditing = true
-                        player.pause()
-                    }
-                    .onEnded { _ in
-                        player.currentTime = beatmapDesigner.sliderValue
-                        beatmapDesigner.isEditing = false
-                        player.play()
-                    }
-            )
+            .modifier(GestureModifier(input: DragInput(),
+                                      command: RepositionSongCommand(receiver: beatmapDesigner, player: player)))
         }
     }
 

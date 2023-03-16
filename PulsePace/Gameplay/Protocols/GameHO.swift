@@ -9,7 +9,7 @@ import Foundation
 
 /// Independent from input state, the command holds the
 protocol GameHO: Component, AnyObject {
-    associatedtype CommandType: Command
+    associatedtype CommandType: CommandHO
     var command: CommandType { get set }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
