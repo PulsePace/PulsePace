@@ -28,8 +28,8 @@ extension GameHO {
         command.shouldExecute = true
         command.currInput = inputData
     }
-//
-//    // Used for like onDragEnd, onTapEnd etc.
+
+    // Used for like onDragEnd, onTapEnd etc.
     func onInputCease() {
         command.shouldExecute = false
         command.currInput = nil

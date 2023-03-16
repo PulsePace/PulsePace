@@ -26,6 +26,10 @@ class SlideCommand: Command {
         ))
         let clampedError = Math.clamp(num: error, minimum: 0, maximum: minimumProximity) / minimumProximity
         // compare expected position to currInput
-        proximityScore += (1 - clampedError) * deltaTime / gameHO.optimalLife
+        proximityScore = Math.clamp(
+            num: proximityScore + (1 - clampedError) * deltaTime / gameHO.optimalLife,
+            minimum: 0,
+            maximum: 1
+        )
     }
 }
