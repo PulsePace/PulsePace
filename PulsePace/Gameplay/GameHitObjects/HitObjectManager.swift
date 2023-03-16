@@ -10,7 +10,7 @@ import Foundation
 final class HitObjectManager {
     private static var counter: Int64 = 0
     let remover: (Entity) -> Void
-    var queuedHitObjects: Queue<any HitObject>
+    var queuedHitObjects: MyQueue<any HitObject>
     let preSpawnInterval: Double
     let slideSpeed: Double
 
@@ -23,7 +23,7 @@ final class HitObjectManager {
         self.remover = remover
         self.preSpawnInterval = preSpawnInterval
         self.slideSpeed = slideSpeed
-        self.queuedHitObjects = Queue()
+        self.queuedHitObjects = MyQueue()
         hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
     }
 

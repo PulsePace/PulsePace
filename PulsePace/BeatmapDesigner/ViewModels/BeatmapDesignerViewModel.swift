@@ -10,14 +10,13 @@ import SwiftUI
 
 class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
-    @Published var hitObjects: [any HitObject] = []
+    @Published var hitObjects: PriorityQueue<any HitObject>
     @Published var isEditing = false
-    @Published var bpm: Double = 123.482 // TODO: parameterise + add offset + add divider
-    @Published var offset: Double = 0
     var audioManager = AudioManager()
     private var displayLink: CADisplayLink?
 
     init() {
+        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority )
         createDisplayLink()
     }
 
@@ -30,8 +29,10 @@ class BeatmapDesignerViewModel: ObservableObject {
         guard let player = audioManager.player, !isEditing else {
             return
         }
-//        print(offset)
-//        print(sliderValue)
         sliderValue = player.currentTime
+    }
+
+    static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {
+        firstHitObject.beat < secondHitObject.beat
     }
 }

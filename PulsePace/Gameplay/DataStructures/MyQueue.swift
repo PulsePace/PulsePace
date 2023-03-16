@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Queue<T> {
+struct MyQueue<T> {
     private var items: [T] = []
     private var frontPointer = 0
     private var backPointer = 0
