@@ -13,11 +13,12 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
     @Published var hitObjects: [any HitObject] = []
     @Published var isEditing = false
-    @Published var bpm: Double = 123.482 // TODO: parameterise + add divider
+    @Published var bpm: Double = 123.482 // TODO: parameterise
     @Published var offset: Double = 0
     @Published var zoom: Double = 128
     @Published var divisorIndex: Double = 0
     @Published var playbackRateIndex: Double = 3
+    @Published var previewHitObject: (any HitObject)?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     private var player: AVAudioPlayer?
@@ -52,10 +53,18 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     func increaseZoom() {
-        zoom = min(1_024, zoom * 2)
+        zoom = min(1_024, zoom * 2) // TODO: constants
     }
 
     func decreaseZoom() {
         zoom = max(64, zoom / 2)
+    }
+
+    func registerPreviewHitObject() {
+        guard let hitObject = previewHitObject else {
+            return
+        }
+        hitObjects.append(hitObject)
+        previewHitObject = nil
     }
 }
