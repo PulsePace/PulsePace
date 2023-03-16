@@ -6,6 +6,10 @@
 //
 
 class AddTapHitObjectCommand: InputCommand {
+    override private init(action: @escaping InputCommand.Action, completion: InputCommand.Action? = nil) {
+        super.init(action: action, completion: completion)
+    }
+
     convenience init(receiver: BeatmapDesignerViewModel) {
         self.init(action: { inputData in
             let interval = 1 / (receiver.bps * receiver.divisor)

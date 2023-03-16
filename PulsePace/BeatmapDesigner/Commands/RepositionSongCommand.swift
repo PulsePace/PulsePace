@@ -8,6 +8,10 @@
 import AVFoundation
 
 class RepositionSongCommand: InputCommand {
+    override private init(action: @escaping InputCommand.Action, completion: InputCommand.Action? = nil) {
+        super.init(action: action, completion: completion)
+    }
+
     convenience init(receiver: BeatmapDesignerViewModel, player: AVAudioPlayer) {
         self.init(
             action: { inputData in

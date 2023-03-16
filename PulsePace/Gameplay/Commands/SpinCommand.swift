@@ -6,6 +6,10 @@
 //
 
 class SpinCommand: InputCommand {
+    override private init(action: @escaping InputCommand.Action, completion: InputCommand.Action? = nil) {
+        super.init(action: action, completion: completion)
+    }
+
     convenience init() {
         self.init { _ in
             print("Spin")
