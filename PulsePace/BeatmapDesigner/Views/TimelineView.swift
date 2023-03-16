@@ -21,8 +21,9 @@ struct TimelineView: View {
                     let mainBeatSpacing = beatmapDesigner.zoom / beatmapDesigner.bps
                     let subBeatSpacing = mainBeatSpacing / beatmapDesigner.divisor
 
-                    renderLines(spacing: subBeatSpacing, color: .blue)
-                    renderLines(spacing: mainBeatSpacing, color: .white)
+                    renderBeatLines(spacing: subBeatSpacing, color: .blue)
+                    renderBeatLines(spacing: mainBeatSpacing, color: .white)
+                    renderStartLine(color: .red)
                     renderBeats()
                     renderCursor()
                 }
@@ -40,7 +41,7 @@ struct TimelineView: View {
         }
     }
 
-    private func renderLines(spacing: CGFloat, color: Color) -> some View {
+    private func renderBeatLines(spacing: CGFloat, color: Color) -> some View {
         Path { path in
             for index in 0...Int(width / (2 * spacing)) {
                 let position = CGFloat(index) * spacing
@@ -56,6 +57,15 @@ struct TimelineView: View {
         }
         .stroke(color)
         .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue).remainder(dividingBy: spacing))
+    }
+
+    private func renderStartLine(color: Color) -> some View {
+        Path { path in
+            path.move(to: CGPoint(x: 0, y: 0))
+            path.addLine(to: CGPoint(x: 0, y: height))
+        }
+        .stroke(.red)
+        .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue))
     }
 
     private func renderBeats() -> some View {

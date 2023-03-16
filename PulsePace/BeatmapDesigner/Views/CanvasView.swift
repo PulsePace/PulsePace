@@ -15,6 +15,9 @@ struct CanvasView: View {
             ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
                 renderHitObject(hitObject)
             }
+            if let hitObject = beatmapDesigner.previewHitObject {
+                renderHitObject(hitObject)
+            }
         }
         .frame(
             maxWidth: .infinity,
@@ -26,23 +29,8 @@ struct CanvasView: View {
     }
 
     private func renderHitObject(_ hitObject: any HitObject) -> some View {
-        let absoluteTime = hitObject.beat - beatmapDesigner.sliderValue + beatmapDesigner.offset
-        return ZStack {
-            Circle()
-                .strokeBorder(.white, lineWidth: 4)
-                .frame(width: min(800, max(100, 100 + 200 * absoluteTime)),
-                       height: min(800, max(100, 100 + 200 * absoluteTime)))
-                .position(x: hitObject.position.x,
-                          y: hitObject.position.y)
-
-            Circle()
-                .fill(.white)
-                .frame(width: 100, height: 100)
-                .position(x: hitObject.position.x,
-                          y: hitObject.position.y) // TODO: constants
-
-        }
-        .opacity(max(0, 1 - 0.5 * abs(absoluteTime)))
+        let cursorTime = beatmapDesigner.sliderValue + beatmapDesigner.offset
+        return ViewFactoryCreator().createCanvasView(for: hitObject, at: cursorTime)
     }
 }
 
