@@ -18,6 +18,7 @@ struct GameControlView: View {
                 audioManager.togglePlayer()
                 isPlaying = player.isPlaying
             }
+                                 .padding(.all, 20)
         }
     }
 }
