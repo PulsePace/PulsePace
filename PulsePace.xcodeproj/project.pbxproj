@@ -30,6 +30,8 @@
 		C7CD9BF229B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */; };
 		C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2D29BF947B00244EF5 /* MenuView.swift */; };
 		C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7F6B00A29B7C12800D97E5F /* swiftlint.yml */; };
+		C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */; };
+		C7FD9A5129C336CE00191F03 /* GameplayAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */; };
 		D00235B929BEF7BD006858D3 /* PlaybackControlButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */; };
 		D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235BB29BEF9A1006858D3 /* AudioManager.swift */; };
 		D00235BE29BEFB02006858D3 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D00235BD29BEFB02006858D3 /* test.mp3 */; };
@@ -84,6 +86,8 @@
 		C7D1AF2D29BF947B00244EF5 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C7F6B00529B7BF7F00D97E5F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7F6B00A29B7C12800D97E5F /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
+		C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayAreaView.swift; sourceTree = "<group>"; };
 		D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlButtonView.swift; sourceTree = "<group>"; };
 		D00235BB29BEF9A1006858D3 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		D00235BD29BEFB02006858D3 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 				C7908E4A29B9310F006F7423 /* Views */,
 				C77572EB29BDEAD700367053 /* ViewExtensions */,
 				C748C9E829B9E71C00CB8C7A /* ViewModifiers */,
+				C7FD9A4D29C269BA00191F03 /* ViewModels */,
 				C7908E3029B7D8C0006F7423 /* Inputs */,
 				C7908E3F29B92BF7006F7423 /* Commands */,
 				C748C9EE29BB03E200CB8C7A /* Protocols */,
@@ -192,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				C7908E4D29B93137006F7423 /* GameView.swift */,
+				C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,6 +277,14 @@
 				C7F6B00A29B7C12800D97E5F /* swiftlint.yml */,
 			);
 			path = workflows;
+			sourceTree = "<group>";
+		};
+		C7FD9A4D29C269BA00191F03 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		D00235BA29BEF999006858D3 /* Managers */ = {
@@ -481,10 +495,12 @@
 				C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
 				C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */,
+				C7FD9A5129C336CE00191F03 /* GameplayAreaView.swift in Sources */,
 				C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */,
 				C7908E4E29B93137006F7423 /* GameView.swift in Sources */,
 				C7908E4529B92D5F006F7423 /* HoldCommand.swift in Sources */,
 				C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */,
+				C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
 				D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */,

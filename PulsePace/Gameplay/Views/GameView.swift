@@ -8,31 +8,36 @@
 import SwiftUI
 
 struct GameView: View {
+    @ObservedObject var gameViewModel: GameViewModel
+    @EnvironmentObject var audioManager: AudioManager
+
     var body: some View {
-            VStack {
-                Text("Score")
+        VStack {
+            HStack {
+                Text(gameViewModel.score)
                     .font(.largeTitle)
-                HStack {
-                    Circle()
-                        .foregroundColor(.purple)
-                        .modifier(GestureModifier(input: TapInput(), command: TapCommand()))
-                    Circle()
-                        .foregroundColor(.blue)
-                        .modifier(GestureModifier(input: SlideInput(), command: SlideCommand()))
-                    Circle()
-                        .foregroundColor(.mint)
-                        .modifier(GestureModifier(input: HoldInput(), command: HoldCommand()))
-                    Circle()
-                        .foregroundColor(.indigo)
-                        .modifier(GestureModifier(input: SpinInput(), command: SpinCommand()))
+            }
+
+            GameplayAreaView()
+        }
+        .fullBackground(imageName: gameViewModel.gameBackground)
+    }
+
+    @ViewBuilder
+    private func renderPlaybackButtons() -> some View {
+        if let player = audioManager.player {
+            HStack {
+                PlaybackControlButtonView(systemName: player.isPlaying
+                                     ? "pause.circle.fill" : "play.circle.fill", fontSize: 44) {
+                    audioManager.togglePlayer()
                 }
             }
-            .fullBackground(imageName: "game-background")
+        }
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        GameView(gameViewModel: GameViewModel())
     }
 }
