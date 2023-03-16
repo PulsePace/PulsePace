@@ -10,7 +10,7 @@ import SwiftUI
 struct GestureModifier<T: TouchInput>: ViewModifier where T.InputGesture.Value: Equatable,
                                                             T.InputGesture.Value: Locatable {
     var input: T
-    var command: Command
+    var command: InputCommand
 
     func body(content: Content) -> some View {
         content
@@ -21,7 +21,7 @@ struct GestureModifier<T: TouchInput>: ViewModifier where T.InputGesture.Value: 
                 }
                 .onEnded { value in
                     let inputData = InputData(value: value)
-                    command.execute(inputData: inputData)
+                    command.executeOnEnded(inputData: inputData)
                     print("Ended")
                 }
             )

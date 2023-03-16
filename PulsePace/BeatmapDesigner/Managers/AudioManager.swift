@@ -19,10 +19,41 @@ final class AudioManager: ObservableObject {
 
         do {
             player = try AVAudioPlayer(contentsOf: url)
-            player?.play()
+            initialisePlayer(player: player)
         } catch {
             print("Failed to initialise player", error)
         }
+    }
+
+    func increasePlaybackRate() {
+        guard let player = player else {
+            return
+        }
+        player.rate = min(1, player.rate + 0.25)
+    }
+
+    func decreasePlaybackRate() {
+        guard let player = player else {
+            return
+        }
+        player.rate = max(0.25, player.rate - 0.25)
+    }
+
+    private func initialisePlayer(player: AVAudioPlayer?) {
+        guard let player = player else {
+            return
+        }
+        player.enableRate = true
+        player.prepareToPlay()
+        player.rate = 1
+        player.play()
+    }
+
+    func stopPlayer() {
+        guard let player = player else {
+            return
+        }
+        player.stop()
     }
 
     func togglePlayer() {

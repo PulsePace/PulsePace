@@ -1,5 +1,5 @@
 //
-//  PlaybackControlButtonView.swift
+//  SystemIconButtonView.swift
 //  PulsePace
 //
 //  Created by Peter Jung on 2023/03/11.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlaybackControlButtonView: View {
+struct SystemIconButtonView: View {
     var systemName: String = "play"
     var fontSize: CGFloat = 24
     var color: Color = .accentColor
@@ -24,8 +24,8 @@ struct PlaybackControlButtonView: View {
     }
 }
 
-struct PlaybackControlButtonView_Previews: PreviewProvider {
+struct SystemIconButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        PlaybackControlButtonView(action: {})
+        SystemIconButtonView(action: {})
     }
 }
