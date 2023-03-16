@@ -28,6 +28,10 @@
 		C7CD9BE629B7514F00ABEE8F /* PulsePaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BE529B7514F00ABEE8F /* PulsePaceTests.swift */; };
 		C7CD9BF029B7514F00ABEE8F /* PulsePaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BEF29B7514F00ABEE8F /* PulsePaceUITests.swift */; };
 		C7CD9BF229B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */; };
+		C7D1AF2529BF844A00244EF5 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2429BF844A00244EF5 /* PriorityQueue.swift */; };
+		C7D1AF2729BF895D00244EF5 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2629BF895D00244EF5 /* Queue.swift */; };
+		C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2829BF8A9300244EF5 /* Heap.swift */; };
+		C7D1AF2C29BF902B00244EF5 /* PriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2B29BF902B00244EF5 /* PriorityQueueTests.swift */; };
 		C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2D29BF947B00244EF5 /* MenuView.swift */; };
 		C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7F6B00A29B7C12800D97E5F /* swiftlint.yml */; };
 		D00235B929BEF7BD006858D3 /* PlaybackControlButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */; };
@@ -81,6 +85,10 @@
 		C7CD9BEB29B7514F00ABEE8F /* PulsePaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PulsePaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD9BEF29B7514F00ABEE8F /* PulsePaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceUITests.swift; sourceTree = "<group>"; };
 		C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C7D1AF2429BF844A00244EF5 /* PriorityQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
+		C7D1AF2629BF895D00244EF5 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		C7D1AF2829BF8A9300244EF5 /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
+		C7D1AF2B29BF902B00244EF5 /* PriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueueTests.swift; sourceTree = "<group>"; };
 		C7D1AF2D29BF947B00244EF5 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C7F6B00529B7BF7F00D97E5F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7F6B00A29B7C12800D97E5F /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
@@ -221,6 +229,7 @@
 		C7CD9BD329B7514900ABEE8F /* PulsePace */ = {
 			isa = PBXGroup;
 			children = (
+				C7D1AF2229BF842D00244EF5 /* Shared */,
 				C7908E2C29B7C8E7006F7423 /* Gameplay */,
 				D012FF0F29BCC6B700E3CC2E /* BeatmapDesigner */,
 				C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */,
@@ -243,6 +252,7 @@
 		C7CD9BE429B7514F00ABEE8F /* PulsePaceTests */ = {
 			isa = PBXGroup;
 			children = (
+				C7D1AF2F29BF999D00244EF5 /* Shared */,
 				C7CD9BE529B7514F00ABEE8F /* PulsePaceTests.swift */,
 			);
 			path = PulsePaceTests;
@@ -255,6 +265,40 @@
 				C7CD9BF129B7514F00ABEE8F /* PulsePaceUITestsLaunchTests.swift */,
 			);
 			path = PulsePaceUITests;
+			sourceTree = "<group>";
+		};
+		C7D1AF2229BF842D00244EF5 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				C7D1AF2329BF843200244EF5 /* DataStructures */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		C7D1AF2329BF843200244EF5 /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				C7D1AF2629BF895D00244EF5 /* Queue.swift */,
+				C7D1AF2429BF844A00244EF5 /* PriorityQueue.swift */,
+				C7D1AF2829BF8A9300244EF5 /* Heap.swift */,
+			);
+			path = DataStructures;
+			sourceTree = "<group>";
+		};
+		C7D1AF2A29BF900500244EF5 /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				C7D1AF2B29BF902B00244EF5 /* PriorityQueueTests.swift */,
+			);
+			path = DataStructures;
+			sourceTree = "<group>";
+		};
+		C7D1AF2F29BF999D00244EF5 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				C7D1AF2A29BF900500244EF5 /* DataStructures */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		C7F6B00829B7C0F800D97E5F /* .github */ = {
@@ -492,7 +536,10 @@
 				C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */,
 				C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */,
 				C7908E4129B92D30006F7423 /* TapCommand.swift in Sources */,
+				C7D1AF2529BF844A00244EF5 /* PriorityQueue.swift in Sources */,
+				C7D1AF2729BF895D00244EF5 /* Queue.swift in Sources */,
 				C7908E2E29B7C986006F7423 /* Command.swift in Sources */,
+				C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */,
 				D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */,
 				D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */,
 				D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */,
@@ -504,6 +551,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7CD9BE629B7514F00ABEE8F /* PulsePaceTests.swift in Sources */,
+				C7D1AF2C29BF902B00244EF5 /* PriorityQueueTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,7 +737,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = X77GX48L42;
+				DEVELOPMENT_TEAM = P3QLTH5V5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
