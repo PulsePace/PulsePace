@@ -12,6 +12,7 @@ struct PulsePaceApp: App {
     var body: some Scene {
         WindowGroup {
             MenuView()
+                .preferredColorScheme(.light)
         }
     }
 }
