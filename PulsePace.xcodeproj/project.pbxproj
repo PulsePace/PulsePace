@@ -46,13 +46,18 @@
 		C7D1AF2C29BF902B00244EF5 /* PriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2B29BF902B00244EF5 /* PriorityQueueTests.swift */; };
 		C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D1AF2D29BF947B00244EF5 /* MenuView.swift */; };
 		C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7F6B00A29B7C12800D97E5F /* swiftlint.yml */; };
-		D00235B929BEF7BD006858D3 /* PlaybackControlButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */; };
+		D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */; };
 		D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235BB29BEF9A1006858D3 /* AudioManager.swift */; };
 		D00235BE29BEFB02006858D3 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D00235BD29BEFB02006858D3 /* test.mp3 */; };
 		D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235C029BF0115006858D3 /* BeatmapDesignerViewModel.swift */; };
 		D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012FF1129BCC6DE00E3CC2E /* BeatmapDesignerView.swift */; };
 		D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012FF1529BE00CA00E3CC2E /* HitObject.swift */; };
 		D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012FF1929BE011B00E3CC2E /* TapHitObject.swift */; };
+		D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDA829C2060E006B11B4 /* TimelineView.swift */; };
+		D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */; };
+		D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */; };
+		D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAE29C21842006B11B4 /* CanvasView.swift */; };
+		D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,13 +121,18 @@
 		C7D1AF2D29BF947B00244EF5 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C7F6B00529B7BF7F00D97E5F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7F6B00A29B7C12800D97E5F /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
-		D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlButtonView.swift; sourceTree = "<group>"; };
+		D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemIconButtonView.swift; sourceTree = "<group>"; };
 		D00235BB29BEF9A1006858D3 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		D00235BD29BEFB02006858D3 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		D00235C029BF0115006858D3 /* BeatmapDesignerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDesignerViewModel.swift; sourceTree = "<group>"; };
 		D012FF1129BCC6DE00E3CC2E /* BeatmapDesignerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDesignerView.swift; sourceTree = "<group>"; };
 		D012FF1529BE00CA00E3CC2E /* HitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitObject.swift; sourceTree = "<group>"; };
 		D012FF1929BE011B00E3CC2E /* TapHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapHitObject.swift; sourceTree = "<group>"; };
+		D081DDA829C2060E006B11B4 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisorSliderView.swift; sourceTree = "<group>"; };
+		D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomButtonsView.swift; sourceTree = "<group>"; };
+		D081DDAE29C21842006B11B4 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,7 +408,12 @@
 			isa = PBXGroup;
 			children = (
 				D012FF1129BCC6DE00E3CC2E /* BeatmapDesignerView.swift */,
-				D00235B829BEF7BD006858D3 /* PlaybackControlButtonView.swift */,
+				D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */,
+				D081DDA829C2060E006B11B4 /* TimelineView.swift */,
+				D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */,
+				D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */,
+				D081DDAE29C21842006B11B4 /* CanvasView.swift */,
+				D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -582,6 +597,7 @@
 				6A96AAC529C1259900FAA79E /* TapCommand.swift in Sources */,
 				6A96AAD529C1272500FAA79E /* SlideHitObject.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
+				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
 				C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */,
 				C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */,
 				6A96AACF29C125CA00FAA79E /* HoldGameHO.swift in Sources */,
@@ -589,9 +605,12 @@
 				C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
+				D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */,
+				D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */,
+				D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */,
 				6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */,
 				D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */,
-				D00235B929BEF7BD006858D3 /* PlaybackControlButtonView.swift in Sources */,
+				D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */,
 				6A96AAC629C1259900FAA79E /* Command.swift in Sources */,
 				C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */,
 				6A96AABB29C1255400FAA79E /* GameEngine.swift in Sources */,
@@ -604,6 +623,7 @@
 				D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */,
 				D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */,
 				D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */,
+				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,
 				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
 				6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */,
 				6A96AAC729C1259900FAA79E /* HoldCommand.swift in Sources */,
@@ -766,7 +786,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				DEVELOPMENT_TEAM = X77GX48L42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
