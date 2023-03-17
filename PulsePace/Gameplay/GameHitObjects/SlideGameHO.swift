@@ -25,8 +25,11 @@ class SlideGameHO: GameHO {
     let startPosition: CGPoint
     var expectedPosition: CGPoint
     let endPosition: CGPoint
+    var minimumProximity: Double = 30
+    var proximityScore: Double = 0
 
     var command: SlideCommandHO
+    var isHit = false
 
     init(slideHO: SlideHitObject, wrappingObject: Entity, preSpawnInterval: Double, slideSpeed: Double) {
         self.wrappingObject = wrappingObject
@@ -57,5 +60,38 @@ class SlideGameHO: GameHO {
         if currBeat - lifeStart >= lifeTime {
             destroyObject()
         }
+    }
+
+    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
+        // TODO: define how slider hit is determined.
+        // 1) hit count is proportional to slider length.
+        // Eg, 3 beat long slider, if user hit the first two, it will be 2 hit and one miss
+        // may not be possible since it seems fractional beats are allowed
+        // 2) whole slider is one hit or miss.
+            // 2.1) if user finger digress too far, it will be an immediate miss.
+            // Accumulate proximityScore then at the end of the slider life, determine perfect or good.
+            // 2.2) Accumulate proximityScore then at the end of the slider life, determine perfect, good, or miss.
+//        let locationError = simd_length(SIMD2(
+//            x: input.location.x - self.expectedPosition.x,
+//            y: input.location.y - self.expectedPosition.y
+//        ))
+//        let clampedLocationError = Math.clamp(num: locationError,
+//                                              minimum: 0,
+//                                              maximum: minimumProximity) / minimumProximity
+//        proximityScore += clampedLocationError
+    }
+
+    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+
+        // TODO: define proper checking rule and scoring rule
+//        if (proximityScore < 0.5) {
+//            // perfect
+//            scoreManager.perfetHitCount += 1
+//            scoreManager.score += 2
+//        } else {
+//            // good
+//            scoreManager.goodHitCount += 1
+//            scoreManager.score += 1
+//        }
     }
 }

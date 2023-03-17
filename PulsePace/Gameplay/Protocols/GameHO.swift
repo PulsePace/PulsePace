@@ -8,7 +8,7 @@
 import Foundation
 
 /// Independent from input state, the command holds the
-protocol GameHO: Component, AnyObject {
+protocol GameHO: Component, AnyObject, ScoreManagable {
     associatedtype CommandType: CommandHO
     var command: CommandType { get set }
     var lifeStart: Double { get }

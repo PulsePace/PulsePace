@@ -9,13 +9,20 @@ import Foundation
 
 // TODO: Add conductor
 class GameEngine {
+    var conductor: Conductor
+    var scoreManager: ScoreManager
     var allObjects: Set<Entity>
     var gameHOTable: [Entity: any GameHO]
     var hitObjectManager: HitObjectManager?
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         self?.allObjects.remove(removedObject)
-        self?.gameHOTable.removeValue(forKey: removedObject)
+        guard let removedGameHO = self?.gameHOTable.removeValue(forKey: removedObject) else {
+            return
+        }
+        if !removedGameHO.isHit {
+            self?.scoreManager.missCount += 1
+        }
     }
 
     lazy var gameHOAdder: (any GameHO) -> Void = { [weak self] gameHO in
@@ -26,6 +33,9 @@ class GameEngine {
     init() {
         self.allObjects = Set()
         self.gameHOTable = [:]
+        // TODO: Should load from beatmap
+        self.conductor = Conductor(songPosition: 0, bpm: 0)
+        self.scoreManager = ScoreManager()
     }
 
     // TODO: Should load from beatmap data structure
@@ -45,8 +55,8 @@ class GameEngine {
     }
 
     func step(_ deltaTime: Double) {
-        // TODO: swap currBeat with conductor reading
-        if let spawnGameHOs = hitObjectManager?.checkBeatMap(0) {
+        let currBeat = conductor.currBeat
+        if let spawnGameHOs = hitObjectManager?.checkBeatMap(currBeat) {
             spawnGameHOs.forEach { gameHOAdder($0) }
         }
 
@@ -56,8 +66,7 @@ class GameEngine {
         /// -> delegate responses to respective system -> delegate UI display to renderer
         allObjects.forEach { object in
             if let gameHO = gameHOTable[object] {
-                // TODO: Use actual conductor for currBeat
-                gameHO.updateState(currBeat: 0)
+                gameHO.updateState(currBeat: currBeat)
                 if gameHO.shouldExecute {
                     engagedHOs.append(gameHO)
                 }
@@ -66,8 +75,18 @@ class GameEngine {
             }
         }
 
-        engagedHOs.forEach { engagedHO in
-            engagedHO.processInput(deltaTime: deltaTime)
-        }
+//        engagedHOs.forEach { engagedHO in
+//            engagedHO.processInput(deltaTime: deltaTime)
+//        }
+
+        conductor.songPosition += deltaTime
+    }
+
+    func processInput(gameHO: any GameHO, inputData: InputData) {
+        gameHO.checkOnInput(input: inputData, scoreManager: self.scoreManager)
+    }
+
+    func processInputEnd(gameHO: any GameHO, inputData: InputData) {
+        gameHO.checkOnInputEnd(input: inputData, scoreManager: self.scoreManager)
     }
 }
