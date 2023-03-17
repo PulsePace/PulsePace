@@ -17,13 +17,14 @@ struct TimelineView: View {
     var body: some View {
         if let player = audioManager.player {
             GeometryReader { geometry in
-                ZStack {
+                ZStack(alignment: .leading) {
                     let mainBeatSpacing = beatmapDesigner.zoom / beatmapDesigner.bps
                     let subBeatSpacing = mainBeatSpacing / beatmapDesigner.divisor
 
                     renderBeatLines(spacing: subBeatSpacing, color: .blue)
                     renderBeatLines(spacing: mainBeatSpacing, color: .white)
                     renderStartLine(color: .red)
+                    renderPreviewBeat()
                     renderBeats()
                     renderCursor()
                 }
@@ -80,21 +81,36 @@ struct TimelineView: View {
         .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue))
     }
 
+    @ViewBuilder
+    private func renderPreviewBeat() -> some View {
+        let beatOffset = beatmapDesigner.offset - beatmapDesigner.sliderValue
+        if let previewHitObject = beatmapDesigner.previewHitObject {
+            ViewFactoryCreator().createTimelineView(
+                for: previewHitObject,
+                with: beatOffset,
+                and: beatmapDesigner.zoom
+            )
+            .offset(x: width / 2 - 20)
+        }
+    }
+
     private func renderBeats() -> some View {
         let beatOffset = beatmapDesigner.offset - beatmapDesigner.sliderValue
         return ForEach(beatmapDesigner.hitObjects, id: \.id) { hitObject in
-            Circle()
-                .strokeBorder(.black, lineWidth: 2)
-                .background(Circle().fill(.white))
-                .frame(width: 40)
-                .offset(x: (hitObject.beat + beatOffset) * beatmapDesigner.zoom)
+            ViewFactoryCreator().createTimelineView(
+                for: hitObject,
+                with: beatOffset,
+                and: beatmapDesigner.zoom
+            )
         }
+        .offset(x: width / 2 - 20)
     }
 
     private func renderCursor() -> some View {
         Rectangle()
             .foregroundColor(.blue)
             .frame(width: 5, height: 60)
+            .offset(x: width / 2)
     }
 }
 

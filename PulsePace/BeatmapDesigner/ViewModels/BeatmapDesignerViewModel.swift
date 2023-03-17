@@ -11,8 +11,8 @@ import AVKit
 
 class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
-    @Published var hitObjects: [any HitObject] = []
     @Published var isEditing = false
+    @Published var hitObjects: [any HitObject] = []
     @Published var bpm: Double = 123.482 // TODO: parameterise
     @Published var offset: Double = 0
     @Published var zoom: Double = 128

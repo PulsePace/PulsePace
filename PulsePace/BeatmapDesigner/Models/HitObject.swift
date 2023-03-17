@@ -10,6 +10,7 @@ import Foundation
 protocol HitObject: AnyObject, Identifiable {
     var position: CGPoint { get set }
     var beat: Double { get set }
+    var endTime: Double { get set }
 }
 
 // MARK: - Identifiable

@@ -25,7 +25,7 @@ struct CanvasView: View {
             alignment: .topLeading
         )
         .background(.black)
-        .modifier(TapEditModeModifier())
+        .modifier(SlideEditModeModifier())
     }
 
     private func renderHitObject(_ hitObject: any HitObject) -> some View {
