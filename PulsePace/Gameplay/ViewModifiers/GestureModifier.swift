@@ -22,7 +22,7 @@ struct GestureModifier<T: TouchInput>: ViewModifier where T.InputGesture.Value: 
                 .onEnded { value in
                     let inputData = InputData(value: value)
                     command.executeOnEnded(inputData: inputData)
-                    print("Ended")
+                    print("Input Ended")
                 }
             )
     }
