@@ -19,12 +19,13 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var divisorIndex: Double = 0
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
+    @Published var gestureHandler: any GestureHandler
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
 
-    let editModeModifierList: [any EditModeModifier] = [TapEditModeModifier(), HoldEditModeModifier()]
+    var gestureHandlerList: [any GestureHandler] = []
 
     var divisor: Double {
         divisorList[Int(divisorIndex)]
@@ -34,8 +35,18 @@ class BeatmapDesignerViewModel: ObservableObject {
         bpm / 60
     }
 
+    var beatmap: Beatmap {
+        Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjects.toArray())
+    }
+
     init() {
         hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
+        gestureHandler = TapGestureHandler()
+        gestureHandlerList = [
+            TapGestureHandler(),
+            HoldGestureHandler(),
+            SlideGestureHandler()
+        ]
         createDisplayLink()
     }
 

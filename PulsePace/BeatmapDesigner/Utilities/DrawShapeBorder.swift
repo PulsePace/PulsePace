@@ -13,8 +13,10 @@ struct DrawShapeBorder: Shape {
     func stroked() -> some View {
         // TODO: parameterise
         ZStack {
-            self.stroke(Color.blue, style: StrokeStyle(lineWidth: 110, lineCap: .round, lineJoin: .round))
-            self.stroke(Color.black, style: StrokeStyle(lineWidth: 100, lineCap: .round, lineJoin: .round))
+            self.stroke(.blue, style: StrokeStyle(lineWidth: 110, lineCap: .round, lineJoin: .round))
+            self.stroke(.white.opacity(0.5), style: StrokeStyle(lineWidth: 100, lineCap: .round, lineJoin: .round))
+                .compositingGroup()
+                .blendMode(.difference)
         }
     }
 
