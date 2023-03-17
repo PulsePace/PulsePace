@@ -9,5 +9,5 @@ import SwiftUI
 
 class DragInput: TouchInput {
     typealias InputGesture = DragGesture
-    var gesture = DragGesture(coordinateSpace: .local)
+    var gesture = DragGesture(minimumDistance: 0)
 }
