@@ -9,16 +9,16 @@ import Foundation
 
 class HoldHitObject: HitObject {
     var position: CGPoint
-    var beat: Double
+    var startTime: Double
     var endTime: Double
 
     var duration: Double {
-        endTime - beat
+        endTime - startTime
     }
 
-    init(position: CGPoint, beat: Double, endTime: Double) {
+    init(position: CGPoint, startTime: Double, endTime: Double) {
         self.position = position
-        self.beat = beat
+        self.startTime = startTime
         self.endTime = endTime
     }
 }

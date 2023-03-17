@@ -23,8 +23,8 @@ class TapGameHO: GameHO {
 
     init(tapHO: TapHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.wrappingObject = wrappingObject
-        self.lifeStart = tapHO.beat - preSpawnInterval
-        self.lifeOptimal = tapHO.beat
+        self.lifeStart = tapHO.startTime - preSpawnInterval
+        self.lifeOptimal = tapHO.startTime
         self.lifeTime = preSpawnInterval * 2
         self.command = TapCommandHO()
     }

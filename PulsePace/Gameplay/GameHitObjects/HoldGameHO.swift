@@ -23,7 +23,7 @@ class HoldGameHO: GameHO {
 
     init(holdHO: HoldHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.wrappingObject = wrappingObject
-        self.lifeStart = holdHO.beat - preSpawnInterval
+        self.lifeStart = holdHO.startTime - preSpawnInterval
         self.lifeOptimal = holdHO.duration
         self.lifeTime = preSpawnInterval * 2 + holdHO.duration
         self.command = HoldCommandHO()

@@ -30,8 +30,8 @@ class SlideGameHO: GameHO {
 
     init(slideHO: SlideHitObject, wrappingObject: Entity, preSpawnInterval: Double, slideSpeed: Double) {
         self.wrappingObject = wrappingObject
-        self.lifeStart = slideHO.beat - preSpawnInterval
-        self.optimalStart = slideHO.beat
+        self.lifeStart = slideHO.startTime - preSpawnInterval
+        self.optimalStart = slideHO.startTime
         let optimalLife = simd_length(
             Vector2(x: slideHO.position.x, y: slideHO.position.y)
                 - Vector2(x: slideHO.endPosition.x, y: slideHO.endPosition.y)
