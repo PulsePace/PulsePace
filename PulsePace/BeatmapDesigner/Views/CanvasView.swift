@@ -27,7 +27,7 @@ struct CanvasView: View {
                 alignment: .topLeading
             )
             .background(.black)
-            .modifier(beatmapDesigner.editModeModifierList[0])
+            .modifier(TapEditModeModifier())
         }
     }
 

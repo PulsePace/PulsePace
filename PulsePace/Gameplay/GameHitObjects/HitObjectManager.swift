@@ -10,7 +10,8 @@ import Foundation
 final class HitObjectManager {
     private static var counter: Int64 = 0
     let remover: (Entity) -> Void
-    var queuedHitObjects: MyQueue<any HitObject>
+    private var queuedHitObjects: MyQueue<any HitObject>
+    let offset: Double
     let preSpawnInterval: Double
     let slideSpeed: Double
 
@@ -18,10 +19,12 @@ final class HitObjectManager {
         hitObjects: [any HitObject],
         preSpawnInterval: Double,
         remover: @escaping (Entity) -> Void,
+        offset: Double,
         slideSpeed: Double
     ) {
         self.remover = remover
         self.preSpawnInterval = preSpawnInterval
+        self.offset = offset
         self.slideSpeed = slideSpeed
         self.queuedHitObjects = MyQueue()
         hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
@@ -31,7 +34,7 @@ final class HitObjectManager {
     func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned: [any GameHO] = []
         while let firstInQueue = queuedHitObjects.peek() {
-            if firstInQueue.beat - preSpawnInterval < currBeat {
+            if firstInQueue.beat - preSpawnInterval + offset < currBeat {
                 return gameHOSpawned
             }
 

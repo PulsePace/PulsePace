@@ -9,10 +9,16 @@ import Foundation
 import QuartzCore
 import AVKit
 
-class GameViewModel: ObservableObject {
+protocol RenderSystem {
+    var sceneAdaptor: (any Collection<any GameHO>) -> Void { get }
+}
+
+class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
     private var gameEngine: GameEngine?
-
+    @Published var slideGameHOs: [SlideGameHO] = []
+    @Published var holdGameHOs: [HoldGameHO] = []
+    @Published var tapGameHOs: [TapGameHO] = []
     var score: String {
         String(format: "%06d", 71_143)
     }
@@ -29,9 +35,26 @@ class GameViewModel: ObservableObject {
         50
     }
 
-//    var hitObjects: PriorityQueue<any GameHO> {
-//        PriorityQueue<any GameHO>(sortBy: <)
-//    }
+    lazy var sceneAdaptor: (any Collection<any GameHO>) -> Void = { [weak self] gameHOs in
+        self?.clear()
+        gameHOs.forEach { gameHO in
+            if let slideGameHO = gameHO as? SlideGameHO {
+                self?.slideGameHOs.append(slideGameHO)
+            } else if let holdGameHO = gameHO as? HoldGameHO {
+                self?.holdGameHOs.append(holdGameHO)
+            } else if let tapGameHO = gameHO as? TapGameHO {
+                self?.tapGameHOs.append(tapGameHO)
+            } else {
+                print("Unidentified game HO type")
+            }
+        }
+    }
+
+    private func clear() {
+        slideGameHOs.removeAll()
+        holdGameHOs.removeAll()
+        tapGameHOs.removeAll()
+    }
 
     var gameBackground: String {
         "game-background"

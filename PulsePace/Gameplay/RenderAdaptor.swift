@@ -39,7 +39,3 @@ class RenderAdaptor: ObservableObject, RenderSystem {
         gameEngine.onStepComplete.append(sceneAdaptor)
     }
 }
-
-protocol RenderSystem {
-    var sceneAdaptor: (any Collection<any GameHO>) -> Void { get }
-}

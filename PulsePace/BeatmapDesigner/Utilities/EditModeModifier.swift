@@ -95,7 +95,7 @@ struct SlideEditModeModifier: EditModeModifier {
                         beatmapDesigner.previewHitObject = SlideHitObject(
                             position: startPosition,
                             beat: startBeat,
-                            endTime: endTime + quantisedTime,
+                            endBeat: endTime + quantisedTime,
                             vertices: vertices + [quantisedPosition]
                         )
                     }
@@ -145,7 +145,7 @@ struct HoldEditModeModifier: EditModeModifier {
                             beatmapDesigner.previewHitObject = HoldHitObject(
                                 position: value.location,
                                 beat: beat * interval,
-                                endTime: beat * interval
+                                endBeat: beat * interval
                             )
                         }
                     }
@@ -156,7 +156,7 @@ struct HoldEditModeModifier: EditModeModifier {
                         beatmapDesigner.previewHitObject = HoldHitObject(
                             position: value.location,
                             beat: startTime,
-                            endTime: beat * interval
+                            endBeat: beat * interval
                         )
                         beatmapDesigner.registerPreviewHitObject()
                         isHolding = false

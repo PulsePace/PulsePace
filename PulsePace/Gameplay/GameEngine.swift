@@ -9,10 +9,9 @@ import Foundation
 
 // TODO: Add conductor
 class GameEngine {
-    var allObjects: Set<Entity>
-    var gameHOTable: [Entity: any GameHO]
-    var hitObjectManager: HitObjectManager?
-    var onStepComplete: [(any Collection<any GameHO>) -> Void]
+    private var allObjects: Set<Entity>
+    private var gameHOTable: [Entity: any GameHO]
+    private var hitObjectManager: HitObjectManager?
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         self?.allObjects.remove(removedObject)
@@ -27,22 +26,21 @@ class GameEngine {
     init() {
         self.allObjects = Set()
         self.gameHOTable = [:]
-        self.onStepComplete = []
     }
 
     // TODO: Should load from beatmap data structure
-    func load(_ beatMap: [any HitObject]) {
+    func load(_ beatmap: Beatmap) {
         reset()
         self.hitObjectManager = HitObjectManager(
-            hitObjects: beatMap,
-            preSpawnInterval: 0,
+            hitObjects: beatmap.hitObjects,
+            preSpawnInterval: beatmap.preSpawnInterval,
             remover: objRemover,
-            slideSpeed: 100
+            offset: beatmap.offset,
+            slideSpeed: beatmap.sliderSpeed
         )
     }
 
     func reset() {
-        self.onStepComplete.removeAll()
         self.allObjects.removeAll()
         self.gameHOTable.removeAll()
         self.hitObjectManager = nil
@@ -73,7 +71,5 @@ class GameEngine {
         engagedHOs.forEach { engagedHO in
             engagedHO.processInput(deltaTime: deltaTime)
         }
-
-        onStepComplete.forEach { consumer in consumer(gameHOTable.values) }
     }
 }

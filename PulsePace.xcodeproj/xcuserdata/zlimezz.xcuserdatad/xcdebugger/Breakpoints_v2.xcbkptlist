@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "5516CCE8-A91A-4F35-9EE0-6CAD732E228F"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FCB63E59-911C-4A5D-B397-C272E8043891"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PulsePace/BeatmapDesigner/Views/CanvasView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "FCB63E59-911C-4A5D-B397-C272E8043891 - 4e596b6872d6b2d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.ForEach&lt;Swift.Array&lt;PulsePace.HitObject&gt;, Swift.ObjectIdentifier, &lt;&lt;opaque return type of PulsePace.CanvasView.renderHitObject(PulsePace.HitObject) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of PulsePace.CanvasView.renderHitObject(PulsePace.HitObject) -&gt; some&gt;&gt;.0&gt;)&gt; in PulsePace.CanvasView.body.getter : some"
+                  moduleName = "PulsePace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zlimezz/Desktop/NUS%20Schoolwork/CS3217/PulsePace/PulsePace/BeatmapDesigner/Views/CanvasView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "1088">
+               </Location>
+               <Location
+                  uuid = "FCB63E59-911C-4A5D-B397-C272E8043891 - 4e596b6872d6b2d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.ForEach&lt;Swift.Array&lt;PulsePace.HitObject&gt;, Swift.ObjectIdentifier, &lt;&lt;opaque return type of PulsePace.CanvasView.renderHitObject(PulsePace.HitObject) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of PulsePace.CanvasView.renderHitObject(PulsePace.HitObject) -&gt; some&gt;&gt;.0&gt;)&gt; in PulsePace.CanvasView.body.getter : some"
+                  moduleName = "PulsePace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zlimezz/Desktop/NUS%20Schoolwork/CS3217/PulsePace/PulsePace/BeatmapDesigner/Views/CanvasView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "1440">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -71,7 +71,7 @@ struct TapHitObjectTimelineView: HitObjectTimelineView {
 
     init(object: TapHitObject, beatOffset: Double, zoom: Double) {
         self.startTime = object.beat
-        self.endTime = object.endTime
+        self.endTime = object.endBeat
         self.beatOffset = beatOffset
         self.zoom = zoom
     }
@@ -95,7 +95,7 @@ struct SlideHitObjectCanvasView: HitObjectCanvasView {
     init(object: SlideHitObject, cursorTime: Double) {
         self.position = object.position
         self.startTime = object.beat
-        self.endTime = object.endTime
+        self.endTime = object.endBeat
         self.vertices = object.vertices
         self.cursorTime = cursorTime
     }
@@ -155,7 +155,7 @@ struct SlideHitObjectTimelineView: HitObjectTimelineView {
 
     init(object: SlideHitObject, beatOffset: Double, zoom: Double) {
         self.startTime = object.beat
-        self.endTime = object.endTime
+        self.endTime = object.endBeat
         self.beatOffset = beatOffset
         self.zoom = zoom
     }
@@ -190,7 +190,7 @@ struct HoldHitObjectCanvasView: HitObjectCanvasView {
     init(object: HoldHitObject, cursorTime: Double) {
         self.position = object.position
         self.startTime = object.beat
-        self.endTime = object.endTime
+        self.endTime = object.endBeat
         self.cursorTime = cursorTime
     }
 
@@ -232,7 +232,7 @@ struct HoldHitObjectTimelineView: HitObjectTimelineView {
 
     init(object: HoldHitObject, beatOffset: Double, zoom: Double) {
         self.startTime = object.beat
-        self.endTime = object.endTime
+        self.endTime = object.endBeat
         self.beatOffset = beatOffset
         self.zoom = zoom
     }

@@ -7,14 +7,11 @@
 
 import Foundation
 
-class Beatmap {
+struct Beatmap {
+    /// All the "time units" are in beats
     let bpm: Double
-    let offset: Double
+    let offset: Double = 0.0
+    let preSpawnInterval: Double
+    let sliderSpeed: Double
     var hitObjects: [any HitObject]
-
-    init(bpm: Double, offset: Double, hitObjects: [any HitObject]) {
-        self.bpm = bpm
-        self.offset = offset
-        self.hitObjects = hitObjects
-    }
 }
