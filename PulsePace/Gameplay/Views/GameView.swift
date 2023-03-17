@@ -8,31 +8,44 @@
 import SwiftUI
 
 struct GameView: View {
+    @StateObject var viewModel: GameViewModel
+    @EnvironmentObject var audioManager: AudioManager
+
+    init(viewModel: GameViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+
     var body: some View {
-            VStack {
-                Text("Score")
-                    .font(.largeTitle)
-                HStack {
-                    Circle()
-                        .foregroundColor(.purple)
-                        .modifier(GestureModifier(input: TapInput(), command: TapCommand()))
-                    Circle()
-                        .foregroundColor(.blue)
-                        .modifier(GestureModifier(input: SlideInput(), command: SlideCommand()))
-                    Circle()
-                        .foregroundColor(.mint)
-                        .modifier(GestureModifier(input: HoldInput(), command: HoldCommand()))
-                    Circle()
-                        .foregroundColor(.indigo)
-                        .modifier(GestureModifier(input: SpinInput(), command: SpinCommand()))
-                }
+        ZStack(alignment: .top) {
+            GameplayAreaView()
+            .overlay(alignment: .topTrailing) {
+                ScoreView()
+                    .ignoresSafeArea()
             }
-            .fullBackground(imageName: "game-background")
+            .overlay(alignment: .bottomTrailing) {
+                GameControlView()
+            }
+        }
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
+        .onAppear {
+            audioManager.startPlayer(track: "test")
+            viewModel.startGameplay()
+        }
+        .onDisappear {
+            audioManager.stopPlayer()
+            viewModel.stopGameplay()
+        }
+        .environmentObject(viewModel)
+        .fullBackground(imageName: viewModel.gameBackground)
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        GameView(viewModel: GameViewModel())
     }
 }

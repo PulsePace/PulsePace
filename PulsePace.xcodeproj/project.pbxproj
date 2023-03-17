@@ -53,8 +53,13 @@
 		C7FD9A4829C2358700191F03 /* DragInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4729C2358700191F03 /* DragInput.swift */; };
 		C7FD9A4A29C23ABA00191F03 /* RepositionSongCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4929C23ABA00191F03 /* RepositionSongCommand.swift */; };
 		C7FD9A4C29C2413900191F03 /* Translatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4B29C2413900191F03 /* Translatable.swift */; };
+		C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */; };
+		C7FD9A5129C336CE00191F03 /* GameplayAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */; };
 		C7FD9A5429C35BF000191F03 /* InputCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5329C35BF000191F03 /* InputCommand.swift */; };
 		C7FD9A5629C36B3200191F03 /* SpinCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5529C36B3200191F03 /* SpinCommand.swift */; };
+		C7FD9A5829C39ECB00191F03 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5729C39ECB00191F03 /* ScoreView.swift */; };
+		C7FD9A5C29C3ACE200191F03 /* GameControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */; };
+		C7FD9A5E29C3AF7700191F03 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5D29C3AF7700191F03 /* Fonts.swift */; };
 		D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */; };
 		D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235BB29BEF9A1006858D3 /* AudioManager.swift */; };
 		D00235BE29BEFB02006858D3 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D00235BD29BEFB02006858D3 /* test.mp3 */; };
@@ -137,8 +142,13 @@
 		C7FD9A4729C2358700191F03 /* DragInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInput.swift; sourceTree = "<group>"; };
 		C7FD9A4929C23ABA00191F03 /* RepositionSongCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositionSongCommand.swift; sourceTree = "<group>"; };
 		C7FD9A4B29C2413900191F03 /* Translatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translatable.swift; sourceTree = "<group>"; };
+		C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayAreaView.swift; sourceTree = "<group>"; };
 		C7FD9A5329C35BF000191F03 /* InputCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputCommand.swift; sourceTree = "<group>"; };
 		C7FD9A5529C36B3200191F03 /* SpinCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinCommand.swift; sourceTree = "<group>"; };
+		C7FD9A5729C39ECB00191F03 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
+		C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControlView.swift; sourceTree = "<group>"; };
+		C7FD9A5D29C3AF7700191F03 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemIconButtonView.swift; sourceTree = "<group>"; };
 		D00235BB29BEF9A1006858D3 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		D00235BD29BEFB02006858D3 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
@@ -183,6 +193,7 @@
 			children = (
 				6A96AABC29C1257D00FAA79E /* Lerper.swift */,
 				6A96AABD29C1257D00FAA79E /* Math.swift */,
+				C7FD9A5D29C3AF7700191F03 /* Fonts.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -258,6 +269,7 @@
 				C7908E4A29B9310F006F7423 /* Views */,
 				C77572EB29BDEAD700367053 /* ViewExtensions */,
 				C748C9E829B9E71C00CB8C7A /* ViewModifiers */,
+				C7FD9A4D29C269BA00191F03 /* ViewModels */,
 				C7908E3029B7D8C0006F7423 /* Inputs */,
 				C748C9EE29BB03E200CB8C7A /* Protocols */,
 				C748C9ED29BB03D300CB8C7A /* DataStructures */,
@@ -282,6 +294,9 @@
 			isa = PBXGroup;
 			children = (
 				C7908E4D29B93137006F7423 /* GameView.swift */,
+				C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */,
+				C7FD9A5729C39ECB00191F03 /* ScoreView.swift */,
+				C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -416,6 +431,14 @@
 				C7FD9A4729C2358700191F03 /* DragInput.swift */,
 			);
 			path = Inputs;
+			sourceTree = "<group>";
+		};
+		C7FD9A4D29C269BA00191F03 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		D00235BA29BEF999006858D3 /* Managers */ = {
@@ -644,15 +667,18 @@
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
 				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
 				C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */,
+				C7FD9A5129C336CE00191F03 /* GameplayAreaView.swift in Sources */,
 				C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */,
 				6A96AACF29C125CA00FAA79E /* HoldGameHO.swift in Sources */,
 				C7908E4E29B93137006F7423 /* GameView.swift in Sources */,
 				C7FD9A4829C2358700191F03 /* DragInput.swift in Sources */,
 				C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */,
+				C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
 				6A83A67629C4B21B0024D4DF /* Conductor.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
 				D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */,
+				C7FD9A5829C39ECB00191F03 /* ScoreView.swift in Sources */,
 				D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */,
 				D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */,
 				6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */,
@@ -665,7 +691,9 @@
 				C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */,
 				C7D1AF2529BF844A00244EF5 /* PriorityQueue.swift in Sources */,
 				C7D1AF2729BF895D00244EF5 /* Queue.swift in Sources */,
+				C7FD9A5C29C3ACE200191F03 /* GameControlView.swift in Sources */,
 				C7FD9A4C29C2413900191F03 /* Translatable.swift in Sources */,
+				C7FD9A5E29C3AF7700191F03 /* Fonts.swift in Sources */,
 				C7FD9A4A29C23ABA00191F03 /* RepositionSongCommand.swift in Sources */,
 				C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */,
 				6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */,
