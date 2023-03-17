@@ -84,7 +84,7 @@ struct TimelineView: View {
 
     private func renderBeats() -> some View {
         let beatOffset = beatmapDesigner.offset - beatmapDesigner.sliderValue
-        return ForEach(beatmapDesigner.hitObjects, id: \.id) { hitObject in
+        return ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
             ViewFactoryCreator().createTimelineView(
                 for: hitObject,
                 with: beatOffset,

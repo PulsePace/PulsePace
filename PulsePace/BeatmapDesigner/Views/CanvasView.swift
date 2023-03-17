@@ -8,24 +8,27 @@
 import SwiftUI
 
 struct CanvasView: View {
+    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
 
     var body: some View {
-        ZStack {
-            ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
-                renderHitObject(hitObject)
+        if let player = audioManager.player {
+            ZStack {
+                ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
+                    renderHitObject(hitObject)
+                }
+                if let hitObject = beatmapDesigner.previewHitObject {
+                    renderHitObject(hitObject)
+                }
             }
-            if let hitObject = beatmapDesigner.previewHitObject {
-                renderHitObject(hitObject)
-            }
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
+            .background(.black)
+            .modifier(beatmapDesigner.editModeModifierList[0])
         }
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .topLeading
-        )
-        .background(.black)
-        .modifier(GestureModifier(input: CanvasTapInput(), command: AddTapHitObjectCommand(receiver: beatmapDesigner)))
     }
 
     private func renderHitObject(_ hitObject: any HitObject) -> some View {

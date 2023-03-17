@@ -13,6 +13,10 @@ class SlideHitObject: HitObject {
     var endTime: Double
     var vertices: [CGPoint]
 
+    var endPosition: CGPoint {
+        vertices.last ?? .zero // TODO: hacky
+    }
+
     init(position: CGPoint, beat: Double, endTime: Double, vertices: [CGPoint]) {
         self.position = position
         self.beat = beat

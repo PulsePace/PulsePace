@@ -12,6 +12,10 @@ class HoldHitObject: HitObject {
     var beat: Double
     var endTime: Double
 
+    var duration: Double {
+        endTime - beat
+    }
+
     init(position: CGPoint, beat: Double, endTime: Double) {
         self.position = position
         self.beat = beat

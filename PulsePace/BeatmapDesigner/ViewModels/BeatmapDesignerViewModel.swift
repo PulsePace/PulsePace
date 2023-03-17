@@ -23,6 +23,8 @@ class BeatmapDesignerViewModel: ObservableObject {
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
+    
+    let editModeModifierList: [any EditModeModifier] = [TapEditModeModifier(), HoldEditModeModifier()]
 
     var divisor: Double {
         divisorList[Int(divisorIndex)]
@@ -33,7 +35,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     init() {
-        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority )
+        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
         createDisplayLink()
     }
 
@@ -65,7 +67,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         guard let hitObject = previewHitObject else {
             return
         }
-        hitObjects.append(hitObject)
+        hitObjects.enqueue(hitObject)
         previewHitObject = nil
     }
 
