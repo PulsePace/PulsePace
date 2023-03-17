@@ -12,6 +12,7 @@ class GameEngine {
     var allObjects: Set<Entity>
     var gameHOTable: [Entity: any GameHO]
     var hitObjectManager: HitObjectManager?
+    var onStepComplete: [(any Collection<any GameHO>) -> Void]
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         self?.allObjects.remove(removedObject)
@@ -26,10 +27,12 @@ class GameEngine {
     init() {
         self.allObjects = Set()
         self.gameHOTable = [:]
+        self.onStepComplete = []
     }
 
     // TODO: Should load from beatmap data structure
     func load(_ beatMap: [any HitObject]) {
+        reset()
         self.hitObjectManager = HitObjectManager(
             hitObjects: beatMap,
             preSpawnInterval: 0,
@@ -39,6 +42,7 @@ class GameEngine {
     }
 
     func reset() {
+        self.onStepComplete.removeAll()
         self.allObjects.removeAll()
         self.gameHOTable.removeAll()
         self.hitObjectManager = nil
@@ -69,5 +73,7 @@ class GameEngine {
         engagedHOs.forEach { engagedHO in
             engagedHO.processInput(deltaTime: deltaTime)
         }
+
+        onStepComplete.forEach { consumer in consumer(gameHOTable.values) }
     }
 }
