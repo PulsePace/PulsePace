@@ -10,10 +10,12 @@ import SwiftUI
 
 protocol EditModeModifier: ViewModifier {
     var beatmapDesigner: BeatmapDesignerViewModel { get }
+    var title: String { get }
 }
 
 struct TapEditModeModifier: EditModeModifier {
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
+    let title = "Tap"
 
     func body(content: Content) -> some View {
         content
@@ -34,6 +36,7 @@ struct TapEditModeModifier: EditModeModifier {
 struct SlideEditModeModifier: EditModeModifier {
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
+    let title = "Slide"
     @State var lastPosition: CGPoint?
     @State var quantisedPosition: CGPoint?
     @State var quantisedTime: Double?
@@ -118,6 +121,46 @@ struct SlideEditModeModifier: EditModeModifier {
                             self.endTime? += quantisedTime
                             vertices.append(quantisedPosition)
                         }
+                    }
+            )
+    }
+}
+
+struct HoldEditModeModifier: EditModeModifier {
+    @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
+    let title = "Hold"
+    @State var startTime: Double?
+    @State var isHolding = false
+
+    func body(content: Content) -> some View {
+        let interval = 1 / (beatmapDesigner.bps * beatmapDesigner.divisor)
+        let beat = ((beatmapDesigner.sliderValue - beatmapDesigner.offset) / interval).rounded()
+        content
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        if !isHolding {
+                            isHolding = true
+                            startTime = beat * interval
+                            beatmapDesigner.previewHitObject = HoldHitObject(
+                                position: value.location,
+                                beat: beat * interval,
+                                endTime: beat * interval
+                            )
+                        }
+                    }
+                    .onEnded { value in
+                        guard let startTime = startTime else {
+                            return
+                        }
+                        beatmapDesigner.previewHitObject = HoldHitObject(
+                            position: value.location,
+                            beat: startTime,
+                            endTime: beat * interval
+                        )
+                        beatmapDesigner.registerPreviewHitObject()
+                        isHolding = false
+                        self.startTime = nil
                     }
             )
     }

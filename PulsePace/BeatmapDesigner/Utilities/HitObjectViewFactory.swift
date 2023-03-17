@@ -181,6 +181,83 @@ struct SlideHitObjectTimelineView: HitObjectTimelineView {
     }
 }
 
+struct HoldHitObjectCanvasView: HitObjectCanvasView {
+    let position: CGPoint
+    let startTime: Double
+    let endTime: Double
+    let cursorTime: Double
+
+    init(object: HoldHitObject, cursorTime: Double) {
+        self.position = object.position
+        self.startTime = object.beat
+        self.endTime = object.endTime
+        self.cursorTime = cursorTime
+    }
+
+    var timeDifference: Double {
+        if cursorTime >= startTime && cursorTime <= endTime {
+            return 0
+        } else {
+            let diffFromStart = startTime - cursorTime
+            let diffFromEnd = endTime - cursorTime
+            return cursorTime < startTime ? diffFromStart : diffFromEnd
+        }
+    }
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .strokeBorder(.white, lineWidth: 4)
+                .frame(width: min(800, max(100, 100 + 200 * timeDifference)),
+                       height: min(800, max(100, 100 + 200 * timeDifference)))
+                .position(x: position.x,
+                          y: position.y)
+
+            Circle()
+                .fill(.white)
+                .frame(width: 100, height: 100)
+                .position(x: position.x,
+                          y: position.y) // TODO: constants
+
+        }
+        .opacity(max(0, 1 - 0.5 * abs(timeDifference)))
+    }
+}
+
+struct HoldHitObjectTimelineView: HitObjectTimelineView {
+    let startTime: Double
+    let endTime: Double
+    let beatOffset: Double
+    let zoom: Double
+
+    init(object: HoldHitObject, beatOffset: Double, zoom: Double) {
+        self.startTime = object.beat
+        self.endTime = object.endTime
+        self.beatOffset = beatOffset
+        self.zoom = zoom
+    }
+
+    var body: some View {
+        Rectangle()
+            .strokeBorder(.black, lineWidth: 2)
+            .background(.white.opacity(0.5))
+            .frame(width: (endTime - startTime) * zoom, height: 40)
+            .offset(x: (startTime + beatOffset) * zoom + 20)
+
+        Circle()
+            .strokeBorder(.black, lineWidth: 2)
+            .background(Circle().fill(.white))
+            .frame(width: 40, height: 40)
+            .offset(x: (startTime + beatOffset) * zoom)
+
+        Circle()
+            .strokeBorder(.black, lineWidth: 2)
+            .background(Circle().fill(.white))
+            .frame(width: 40, height: 40)
+            .offset(x: (endTime + beatOffset) * zoom)
+    }
+}
+
 class TapHitObjectViewFactory: HitObjectViewFactory {
     func createTimelineView(
         for object: TapHitObject,
@@ -209,6 +286,20 @@ class SlideHitObjectViewFactory: HitObjectViewFactory {
     }
 }
 
+class HoldHitObjectViewFactory: HitObjectViewFactory {
+    func createTimelineView(
+        for object: HoldHitObject,
+        with beatOffset: Double,
+        and zoom: Double
+    ) -> HoldHitObjectTimelineView {
+        HoldHitObjectTimelineView(object: object, beatOffset: beatOffset, zoom: zoom)
+    }
+
+    func createCanvasView(for object: HoldHitObject, at cursorTime: Double) -> HoldHitObjectCanvasView {
+        HoldHitObjectCanvasView(object: object, cursorTime: cursorTime)
+    }
+}
+
 class ViewFactoryCreator {
     func createTimelineView(for object: any HitObject, with beatOffset: Double, and zoom: Double) -> some View {
         if let tapHitObject = object as? TapHitObject {
@@ -219,6 +310,10 @@ class ViewFactoryCreator {
             return AnyView(SlideHitObjectViewFactory()
                 .createTimelineView(for: slideHitObject, with: beatOffset, and: zoom)
             )
+        } else if let holdHitObject = object as? HoldHitObject {
+            return AnyView(HoldHitObjectViewFactory()
+                .createTimelineView(for: holdHitObject, with: beatOffset, and: zoom)
+            )
         }
         fatalError("Unknown hit object type")
     }
@@ -228,6 +323,8 @@ class ViewFactoryCreator {
             return AnyView(TapHitObjectViewFactory().createCanvasView(for: tapHitObject, at: cursorTime))
         } else if let slideHitObject = object as? SlideHitObject {
             return AnyView(SlideHitObjectViewFactory().createCanvasView(for: slideHitObject, at: cursorTime))
+        } else if let holdHitObject = object as? HoldHitObject {
+            return AnyView(HoldHitObjectViewFactory().createCanvasView(for: holdHitObject, at: cursorTime))
         }
         fatalError("Unknown hit object type")
     }
