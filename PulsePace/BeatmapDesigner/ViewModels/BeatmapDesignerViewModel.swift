@@ -35,6 +35,10 @@ class BeatmapDesignerViewModel: ObservableObject {
         bpm / 60
     }
 
+    var beatmap: Beatmap {
+        Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjects.toArray())
+    }
+
     init() {
         hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
         gestureHandler = TapGestureHandler()
