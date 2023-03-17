@@ -24,7 +24,19 @@ struct BeatmapDesignerView: View {
                 DivisorSliderView()
             }
 
-            CanvasView()
+            HStack {
+                VStack {
+                    ForEach(viewModel.gestureHandlerList, id: \.title) { gestureHandler in
+                        Button(action: {
+                            viewModel.gestureHandler = gestureHandler
+                        }) {
+                            Text(gestureHandler.title)
+                        }
+                    }
+                }
+
+                CanvasView()
+            }
 
             PlaybackControlView()
         }

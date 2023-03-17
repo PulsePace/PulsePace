@@ -42,6 +42,7 @@ struct TimelineView: View {
         }
     }
 
+    @ViewBuilder
     private func renderBeatLines(spacing: CGFloat, color: Color) -> some View {
         Path { path in
             for index in 0...Int(width / (2 * spacing)) {
@@ -60,6 +61,7 @@ struct TimelineView: View {
         .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue).remainder(dividingBy: spacing))
     }
 
+    @ViewBuilder
     private func renderStartLine(color: Color) -> some View {
         Path { path in
             path.move(to: CGPoint(x: 0, y: 0))
@@ -82,9 +84,10 @@ struct TimelineView: View {
         }
     }
 
+    @ViewBuilder
     private func renderBeats() -> some View {
         let beatOffset = beatmapDesigner.offset - beatmapDesigner.sliderValue
-        return ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
+        ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
             ViewFactoryCreator().createTimelineView(
                 for: hitObject,
                 with: beatOffset,
@@ -94,6 +97,7 @@ struct TimelineView: View {
         .offset(x: width / 2 - 20)
     }
 
+    @ViewBuilder
     private func renderCursor() -> some View {
         Rectangle()
             .foregroundColor(.blue)

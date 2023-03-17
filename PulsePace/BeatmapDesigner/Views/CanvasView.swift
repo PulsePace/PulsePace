@@ -12,23 +12,24 @@ struct CanvasView: View {
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
 
     var body: some View {
-        if let player = audioManager.player {
-            ZStack {
-                ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
-                    renderHitObject(hitObject)
-                }
-                if let hitObject = beatmapDesigner.previewHitObject {
-                    renderHitObject(hitObject)
-                }
+        ZStack {
+            ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
+                renderHitObject(hitObject)
             }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .topLeading
-            )
-            .background(.black)
-            .modifier(beatmapDesigner.editModeModifierList[0])
+            if let hitObject = beatmapDesigner.previewHitObject {
+                renderHitObject(hitObject)
+            }
         }
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
+        .background(.orange)
+        .modifier(EditModeModifier(
+            beatmapDesigner: beatmapDesigner,
+            gestureHandler: beatmapDesigner.gestureHandler
+        ))
     }
 
     private func renderHitObject(_ hitObject: any HitObject) -> some View {
