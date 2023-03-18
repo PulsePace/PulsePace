@@ -33,12 +33,12 @@ class SlideGameHO: GameHO {
 
     let startPosition: CGPoint
     var expectedPosition: CGPoint
-    let endPosition: CGPoint
+    private var reachedEnd = false
 
     var command: SlideCommandHO
 
     init(slideHO: SlideHitObject, wrappingObject: Entity, preSpawnInterval: Double, slideSpeed: Double) {
-        guard let lastVertice = slideHO.vertices.last else {
+        if slideHO.vertices.count < 1 {
             fatalError("Each slider hit object should at least have two vertices")
         }
 
@@ -68,7 +68,6 @@ class SlideGameHO: GameHO {
         self.optimalStageEnd = LifeStage(1 - normSpawnInterval)
 
         self.startPosition = slideHO.position
-        self.endPosition = lastVertice
         self.expectedPosition = slideHO.position
 
         self.command = SlideCommandHO()
@@ -84,6 +83,10 @@ class SlideGameHO: GameHO {
     }
 
     private func setExpectedPosition(currBeat: Double) {
+        if reachedEnd {
+            return
+        }
+
         let startBeat = verticeBeatpoints[currEdgeIndex]
         let endBeat = verticeBeatpoints[currEdgeIndex + 1]
         var edgeProgress = (currBeat - startBeat) / (endBeat - startBeat)
@@ -94,6 +97,7 @@ class SlideGameHO: GameHO {
         }
 
         if currEdgeIndex >= vertices.count {
+            reachedEnd = true
             return
         }
 

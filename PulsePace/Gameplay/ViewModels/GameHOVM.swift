@@ -68,7 +68,7 @@ class SlideGameHOVM: GameHOVM<SlideGameHO> {
 
     var opacity: Double {
         if gameHO.lifeStage.value >= gameHO.optimalStageStart.value
-            || gameHO.lifeStage.value <= gameHO.optimalStageEnd.value {
+            && gameHO.lifeStage.value <= gameHO.optimalStageEnd.value {
             return 1
         }
 
