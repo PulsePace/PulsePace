@@ -23,7 +23,8 @@ class TapGameHOVM: GameHOVM<TapGameHO> {
     }
 
     var opacity: Double {
-        max(0, 1 - 2 * abs(fromOptimal))
+        print("opacity \(max(0, 1 - 2 * abs(fromOptimal)))")
+        return max(0, 1 - 2 * abs(fromOptimal))
     }
 
     // Between 0 and 0.5

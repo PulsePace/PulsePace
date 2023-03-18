@@ -9,12 +9,8 @@ import SwiftUI
 
 // TODO: Attach Gesture Modifiers to each rendered GameHO
 struct GameView: View {
-    @StateObject var viewModel: GameViewModel
+    @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
-
-    init(viewModel: GameViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -43,30 +39,6 @@ struct GameView: View {
         .environmentObject(viewModel)
         .fullBackground(imageName: viewModel.gameBackground)
     }
-
-    func renderSlideGameHO(slideGameHOVMs: [SlideGameHOVM]) -> some View {
-        ZStack {
-            ForEach(slideGameHOVMs) { slideGameHOVM in
-                SlideGameHOView(slideGameHOVM: slideGameHOVM)
-            }
-        }
-    }
-
-    func renderHoldGameHO(holdGameHOVMs: [HoldGameHOVM]) -> some View {
-        ZStack {
-            ForEach(holdGameHOVMs) { holdGameHOVM in
-                HoldGameHOView(holdGameHOVM: holdGameHOVM)
-            }
-        }
-    }
-
-    func renderTapGameHO(tapGameHOVMs: [TapGameHOVM]) -> some View {
-        ZStack {
-            ForEach(tapGameHOVMs) { tapGameHOVM in
-               TapGameHOView(tapGameHOVM: tapGameHOVM)
-            }
-        }
-    }
 }
 
 struct SlideGameHOView: View {
@@ -75,6 +47,7 @@ struct SlideGameHOView: View {
     var body: some View {
         let slideGameHO = slideGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * slideGameHOVM.ringScale))
+        print("Slide object id \(slideGameHOVM.id)")
 
         return ZStack {
             DrawShapeBorder(points: [slideGameHO.position] + slideGameHO.vertices).stroked()
@@ -117,6 +90,7 @@ struct HoldGameHOView: View {
     var body: some View {
         let holdGameHO = holdGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * holdGameHOVM.ringScale))
+        print("Hold object id \(holdGameHOVM.id)")
 
         return ZStack {
             Circle()
@@ -141,6 +115,7 @@ struct TapGameHOView: View {
     var body: some View {
         let tapGameHO = tapGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * tapGameHOVM.ringScale))
+        print("Tap object id \(tapGameHOVM.id)")
 
         return ZStack {
             Circle()
@@ -159,8 +134,8 @@ struct TapGameHOView: View {
     }
 }
 
-struct GameView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameView(viewModel: GameViewModel())
-    }
-}
+// struct GameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GameView()
+//    }
+// }

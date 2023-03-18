@@ -65,13 +65,24 @@ class GameViewModel: ObservableObject, RenderSystem {
             print("No active display link")
             return
         }
+
+        guard let gameEngine = gameEngine else {
+            print("No game engine running")
+            return
+        }
+
         let deltaTime = displayLink.targetTimestamp - displayLink.timestamp
 
-        gameEngine?.step(deltaTime)
+        gameEngine.step(deltaTime)
+        sceneAdaptor(gameEngine.gameHOTable)
+    }
+
+    func initEngineWithBeatmap(_ beatmap: Beatmap) {
+        gameEngine = GameEngine()
+        gameEngine?.load(beatmap)
     }
 
     func startGameplay() {
-        gameEngine = GameEngine()
         createDisplayLink()
     }
 

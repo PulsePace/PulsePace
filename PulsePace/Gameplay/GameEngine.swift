@@ -10,7 +10,7 @@ import Foundation
 // TODO: Add conductor
 class GameEngine {
     private var allObjects: Set<Entity>
-    private var gameHOTable: [Entity: any GameHO]
+    var gameHOTable: [Entity: any GameHO]
     private var hitObjectManager: HitObjectManager?
     private var conductor: Conductor?
 

@@ -34,7 +34,7 @@ final class HitObjectManager {
     func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned: [any GameHO] = []
         while let firstInQueue = queuedHitObjects.peek() {
-            if firstInQueue.beat - preSpawnInterval + offset < currBeat {
+            if firstInQueue.beat - preSpawnInterval + offset >= currBeat {
                 return gameHOSpawned
             }
 
@@ -57,6 +57,12 @@ final class HitObjectManager {
                 wrappingObject: entity,
                 preSpawnInterval: preSpawnInterval,
                 slideSpeed: slideSpeed
+            )
+        } else if let holdHO = hitObject as? HoldHitObject {
+            newGameHO = HoldGameHO(
+                holdHO: holdHO,
+                wrappingObject: entity,
+                preSpawnInterval: preSpawnInterval
             )
         } else {
             fatalError("Hit object type not found")
