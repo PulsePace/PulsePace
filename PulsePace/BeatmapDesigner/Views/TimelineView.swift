@@ -18,11 +18,8 @@ struct TimelineView: View {
         if let player = audioManager.player {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    let mainBeatSpacing = beatmapDesigner.zoom / beatmapDesigner.bps
-                    let subBeatSpacing = mainBeatSpacing / beatmapDesigner.divisor
-
-                    renderBeatLines(spacing: subBeatSpacing, color: .blue)
-                    renderBeatLines(spacing: mainBeatSpacing, color: .white)
+                    renderBeatLines(spacing: beatmapDesigner.subBeatSpacing, color: .blue)
+                    renderBeatLines(spacing: beatmapDesigner.mainBeatSpacing, color: .white)
                     renderStartLine(color: .red)
                     renderPreviewBeat()
                     renderBeats()
@@ -47,7 +44,8 @@ struct TimelineView: View {
         Path { path in
             for index in 0...Int(width / (2 * spacing)) {
                 let position = CGFloat(index) * spacing
-                let offset = (beatmapDesigner.zoom * beatmapDesigner.offset).remainder(dividingBy: spacing)
+                let offset = (beatmapDesigner.zoom * beatmapDesigner.offset)
+                    .remainder(dividingBy: spacing)
                 let rightPosition = offset + position
                 let leftPosition = offset - position
 
@@ -58,7 +56,8 @@ struct TimelineView: View {
             }
         }
         .stroke(color)
-        .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue).remainder(dividingBy: spacing))
+        .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue)
+            .remainder(dividingBy: spacing))
     }
 
     @ViewBuilder

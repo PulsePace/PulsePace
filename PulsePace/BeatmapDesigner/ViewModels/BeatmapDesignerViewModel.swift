@@ -31,6 +31,14 @@ class BeatmapDesignerViewModel: ObservableObject {
         divisorList[Int(divisorIndex)]
     }
 
+    var mainBeatSpacing: Double {
+        zoom / bps
+    }
+
+    var subBeatSpacing: Double {
+        mainBeatSpacing / divisor
+    }
+
     var bps: Double {
         bpm / 60
     }
