@@ -31,8 +31,28 @@ class BeatmapDesignerViewModel: ObservableObject {
         divisorList[Int(divisorIndex)]
     }
 
+    var mainBeatSpacing: Double {
+        zoom / bps
+    }
+
+    var subBeatSpacing: Double {
+        mainBeatSpacing / divisor
+    }
+
     var bps: Double {
         bpm / 60
+    }
+
+    var interval: Double {
+        1 / (bps * divisor)
+    }
+
+    var quantisedBeat: Double {
+        ((sliderValue - offset) / interval).rounded()
+    }
+
+    var quantisedTime: Double {
+        interval * quantisedBeat
     }
 
     var beatmap: Beatmap {
@@ -83,6 +103,6 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {
-        firstHitObject.beat < secondHitObject.beat
+        firstHitObject.startTime < secondHitObject.startTime
     }
 }

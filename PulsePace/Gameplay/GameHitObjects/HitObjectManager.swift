@@ -34,7 +34,7 @@ final class HitObjectManager {
     func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned: [any GameHO] = []
         while let firstInQueue = queuedHitObjects.peek() {
-            if firstInQueue.beat - preSpawnInterval + offset >= currBeat {
+            if firstInQueue.startTime - preSpawnInterval + offset >= currBeat {
                 return gameHOSpawned
             }
 

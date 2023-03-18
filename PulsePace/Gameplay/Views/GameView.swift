@@ -50,7 +50,9 @@ struct SlideGameHOView: View {
         print("Slide object id \(slideGameHOVM.id)")
 
         return ZStack {
-            DrawShapeBorder(points: [slideGameHO.position] + slideGameHO.vertices).stroked()
+            DrawShapeBorder(points: [slideGameHO.position] + slideGameHO.vertices).stroked(
+                strokeColor: .blue, strokeWidth: 100, borderWidth: 10
+            )
 
             Circle()
                 .strokeBorder(.white, lineWidth: 4)

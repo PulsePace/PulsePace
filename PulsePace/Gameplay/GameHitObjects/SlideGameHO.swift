@@ -46,19 +46,19 @@ class SlideGameHO: GameHO {
         self.vertices = slideHO.vertices
         self.wrappingObject = wrappingObject
 
-        self.lifeStart = slideHO.beat - preSpawnInterval
-        self.optimalStart = slideHO.beat
+        self.lifeStart = slideHO.startTime - preSpawnInterval
+        self.optimalStart = slideHO.startTime
 
         let waypointData = SlideGameHO.populateWaypoints(
             slideSpeed: slideSpeed,
-            optimalStart: slideHO.beat,
+            optimalStart: slideHO.startTime,
             position: slideHO.position,
             vertices: slideHO.vertices
         )
         self.optimalLife = waypointData.0
         self.verticeBeatpoints = waypointData.1
-        self.optimalEnd = slideHO.beat + optimalLife
-        self.lifeEnd = slideHO.beat + optimalLife + preSpawnInterval
+        self.optimalEnd = slideHO.startTime + optimalLife
+        self.lifeEnd = slideHO.startTime + optimalLife + preSpawnInterval
         let normSpawnInterval = Lerper.linearFloat(
             from: 0,
             to: 1,
@@ -88,8 +88,8 @@ class SlideGameHO: GameHO {
         }
 
         let startBeat = verticeBeatpoints[currEdgeIndex]
-        let endBeat = verticeBeatpoints[currEdgeIndex + 1]
-        var edgeProgress = (currBeat - startBeat) / (endBeat - startBeat)
+        let endTime = verticeBeatpoints[currEdgeIndex + 1]
+        var edgeProgress = (currBeat - startBeat) / (endTime - startBeat)
 
         while edgeProgress >= 1 {
             edgeProgress -= 1

@@ -30,8 +30,8 @@ class HoldGameHO: GameHO {
     init(holdHO: HoldHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = holdHO.position
         self.wrappingObject = wrappingObject
-        self.lifeStart = holdHO.beat - preSpawnInterval
-        self.optimalStart = holdHO.beat
+        self.lifeStart = holdHO.startTime - preSpawnInterval
+        self.optimalStart = holdHO.startTime
 
         let normSpawnInterval = Lerper.linearFloat(
             from: 0,
@@ -39,10 +39,10 @@ class HoldGameHO: GameHO {
             t: preSpawnInterval / (holdHO.duration + preSpawnInterval * 2)
         )
         self.optimalStageStart = LifeStage(normSpawnInterval)
-        self.optimalEnd = holdHO.endBeat
+        self.optimalEnd = holdHO.endTime
         self.optimalStageEnd = LifeStage(1 - normSpawnInterval)
-        self.optimalLife = holdHO.endBeat - holdHO.beat
-        self.lifeEnd = holdHO.endBeat + preSpawnInterval
+        self.optimalLife = holdHO.endTime - holdHO.startTime
+        self.lifeEnd = holdHO.endTime + preSpawnInterval
         self.command = HoldCommandHO()
     }
 

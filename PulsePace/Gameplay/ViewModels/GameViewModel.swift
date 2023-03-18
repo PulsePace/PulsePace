@@ -51,9 +51,9 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     private func clear() {
-        slideGameHOs.removeAll()
-        holdGameHOs.removeAll()
-        tapGameHOs.removeAll()
+        slideGameHOs = []
+        holdGameHOs = []
+        tapGameHOs = []
     }
 
     var gameBackground: String {

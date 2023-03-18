@@ -10,17 +10,18 @@ import Foundation
 import SwiftUI
 
 struct DrawShapeBorder: Shape {
-    func stroked() -> some View {
-        // TODO: parameterise
+    var points: [CGPoint]
+
+    func stroked(strokeColor: Color, strokeWidth: Double, borderWidth: Double) -> some View {
         ZStack {
-            self.stroke(.blue, style: StrokeStyle(lineWidth: 110, lineCap: .round, lineJoin: .round))
-            self.stroke(.white.opacity(0.5), style: StrokeStyle(lineWidth: 100, lineCap: .round, lineJoin: .round))
+            self.stroke(.blue,
+                        style: StrokeStyle(lineWidth: strokeWidth + borderWidth * 2, lineCap: .round, lineJoin: .round))
+            self.stroke(.white,
+                        style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round, lineJoin: .round))
                 .compositingGroup()
                 .blendMode(.difference)
         }
     }
-
-    var points: [CGPoint]
 
     func path(in rect: CGRect) -> Path {
         var path = Path()

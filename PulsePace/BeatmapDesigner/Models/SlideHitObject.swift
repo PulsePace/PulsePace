@@ -9,18 +9,18 @@ import Foundation
 
 class SlideHitObject: HitObject {
     var position: CGPoint
-    var beat: Double
-    var endBeat: Double
+    var startTime: Double
+    var endTime: Double
     var vertices: [CGPoint]
 
     var endPosition: CGPoint {
         vertices.last ?? .zero // TODO: hacky
     }
 
-    init(position: CGPoint, beat: Double, endBeat: Double, vertices: [CGPoint]) {
+    init(position: CGPoint, startTime: Double, endTime: Double, vertices: [CGPoint]) {
         self.position = position
-        self.beat = beat
-        self.endBeat = endBeat
+        self.startTime = startTime
+        self.endTime = endTime
         self.vertices = vertices
     }
 }
