@@ -29,6 +29,6 @@ class HoldCommandHO: CommandHO {
         if holdStart == nil {
             holdStart = gameHO.lifeStage
         }
-        normalizedHoldTime += deltaTime / gameHO.lifeOptimal
+        normalizedHoldTime += deltaTime / gameHO.optimalLife
     }
 }

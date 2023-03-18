@@ -14,7 +14,7 @@ class AddTapHitObjectCommand: InputCommand {
         self.init(action: { inputData in
             let interval = 1 / (receiver.bps * receiver.divisor)
             let beat = ((receiver.sliderValue - receiver.offset) / interval).rounded()
-            receiver.hitObjects.enqueue(TapHitObject(position: inputData.location, beat: beat * interval))
+            receiver.hitObjects.enqueue(TapHitObject(position: inputData.location, startTime: beat * interval))
         })
     }
 }

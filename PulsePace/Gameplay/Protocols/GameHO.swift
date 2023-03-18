@@ -7,19 +7,24 @@
 
 import Foundation
 
-/// Independent from input state, the command holds the
+/// Add a parent class from HO that is not instantaneous to increase code reusability
 protocol GameHO: Component, AnyObject {
     associatedtype CommandType: CommandHO
     var command: CommandType { get set }
+    var position: CGPoint { get }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage: LifeStage { get }
-    var lifeTime: Double { get }
+    var lifeEnd: Double { get }
 
     func updateState(currBeat: Double)
 }
 
 extension GameHO {
+    var lifeTime: Double {
+        lifeEnd - lifeStart
+    }
+
     var shouldExecute: Bool {
         command.shouldExecute
     }
@@ -60,12 +65,9 @@ extension Component {
 struct LifeStage {
     static let endStage = LifeStage(1.0)
     static let startStage = LifeStage(0.0)
-    let stage: Double
-    var isOptimal: Bool {
-        stage == 0.5
-    }
+    let value: Double
 
     init(_ stage: Double) {
-        self.stage = Math.clamp(num: stage, minimum: 0, maximum: 1)
+        self.value = Math.clamp(num: stage, minimum: 0, maximum: 1)
     }
 }

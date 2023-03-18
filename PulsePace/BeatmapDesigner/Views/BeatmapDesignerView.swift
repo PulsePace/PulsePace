@@ -8,13 +8,26 @@
 import SwiftUI
 import AVKit
 
+struct StartButtonView: View {
+    @Binding var path: [Page]
+    @EnvironmentObject var gameVM: GameViewModel
+    @EnvironmentObject var designerVM: BeatmapDesignerViewModel
+
+    var body: some View {
+        Button(action: {
+            path.append(Page.playPage)
+            gameVM.initEngineWithBeatmap(designerVM.beatmap)
+        }) {
+            Text("Start")
+                .font(.title2)
+        }
+    }
+}
+
 struct BeatmapDesignerView: View {
     @EnvironmentObject var audioManager: AudioManager
-    @StateObject var viewModel: BeatmapDesignerViewModel
-
-    init(viewModel: BeatmapDesignerViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+    @StateObject var viewModel = BeatmapDesignerViewModel()
+    @Binding var path: [Page]
 
     var body: some View {
         VStack {
@@ -22,9 +35,22 @@ struct BeatmapDesignerView: View {
                 ZoomButtonsView()
                 TimelineView()
                 DivisorSliderView()
+                StartButtonView(path: $path)
             }
 
-            CanvasView()
+            HStack {
+                VStack {
+                    ForEach(viewModel.gestureHandlerList, id: \.title) { gestureHandler in
+                        Button(action: {
+                            viewModel.gestureHandler = gestureHandler
+                        }) {
+                            Text(gestureHandler.title)
+                        }
+                    }
+                }
+
+                CanvasView()
+            }
 
             PlaybackControlView()
         }
@@ -41,9 +67,9 @@ struct BeatmapDesignerView: View {
     }
 }
 
-struct BeatmapDesignerView_Previews: PreviewProvider {
-    static var previews: some View {
-        BeatmapDesignerView(viewModel: BeatmapDesignerViewModel())
-            .previewInterfaceOrientation(.landscapeLeft)
-    }
-}
+// struct BeatmapDesignerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BeatmapDesignerView(viewModel: BeatmapDesignerViewModel())
+//            .previewInterfaceOrientation(.landscapeLeft)
+//    }
+// }

@@ -9,10 +9,12 @@ import Foundation
 
 class TapHitObject: HitObject {
     var position: CGPoint
-    var beat: Double
+    var startTime: Double
+    var endTime: Double
 
-    init(position: CGPoint, beat: Double) {
+    init(position: CGPoint, startTime: Double) {
         self.position = position
-        self.beat = beat
+        self.startTime = startTime
+        self.endTime = startTime
     }
 }

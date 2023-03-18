@@ -8,35 +8,44 @@
 import SwiftUI
 
 struct GameplayAreaView: View {
+    @EnvironmentObject var gameVM: GameViewModel
     var body: some View {
         ZStack {
-            Circle()
-                .foregroundColor(.purple)
-                .modifier(GestureModifier(input: TapInput(), command: TapCommand()))
-                .frame(width: 150, height: 150)
-                .position(x: 200, y: 90)
-            Circle()
-                .foregroundColor(.blue)
-                .modifier(GestureModifier(input: SlideInput(), command: SlideCommand()))
-                .frame(width: 150, height: 150)
-                .position(x: 400, y: 480)
-            Circle()
-                .foregroundColor(.mint)
-                .modifier(GestureModifier(input: HoldInput(), command: HoldCommand()))
-                .frame(width: 150, height: 150)
-                .position(x: 750, y: 210)
-            Circle()
-                .foregroundColor(.indigo)
-                .modifier(GestureModifier(input: SpinInput(), command: SpinCommand()))
-                .frame(width: 150, height: 150)
-                .position(x: 800, y: 500)
+            renderSlideGameHO(slideGameHOVMs: gameVM.slideGameHOs)
+            renderTapGameHO(tapGameHOVMs: gameVM.tapGameHOs)
+            renderHoldGameHO(holdGameHOVMs: gameVM.holdGameHOs)
         }
+        .zIndex(100)
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity,
             alignment: .topLeading
         )
         .background(.black)
+    }
+
+    func renderSlideGameHO(slideGameHOVMs: [SlideGameHOVM]) -> some View {
+        ZStack {
+            ForEach(slideGameHOVMs) { slideGameHOVM in
+                SlideGameHOView(slideGameHOVM: slideGameHOVM)
+            }
+        }
+    }
+
+    func renderHoldGameHO(holdGameHOVMs: [HoldGameHOVM]) -> some View {
+        ZStack {
+            ForEach(holdGameHOVMs) { holdGameHOVM in
+                HoldGameHOView(holdGameHOVM: holdGameHOVM)
+            }
+        }
+    }
+
+    func renderTapGameHO(tapGameHOVMs: [TapGameHOVM]) -> some View {
+        ZStack {
+            ForEach(tapGameHOVMs) { tapGameHOVM in
+               TapGameHOView(tapGameHOVM: tapGameHOVM)
+            }
+        }
     }
 }
 

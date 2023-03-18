@@ -10,7 +10,7 @@ import Foundation
 final class Lerper {
     static func linearFloat(from: Double, to: Double, t: Double) -> Double {
         let clampedT = Math.clamp(num: t, minimum: 0, maximum: 1)
-        return from + (from - to) * clampedT
+        return from + (to - from) * clampedT
     }
 
     static func cubicFloat(from: Double, to: Double, t: Double) -> Double {
