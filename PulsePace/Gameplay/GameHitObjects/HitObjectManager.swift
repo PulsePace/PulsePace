@@ -8,7 +8,7 @@
 import Foundation
 
 final class HitObjectManager {
-    private static var counter: Int64 = 0
+    private var counter = 0
     let remover: (Entity) -> Void
     private var queuedHitObjects: MyQueue<any HitObject>
     let offset: Double
@@ -47,7 +47,7 @@ final class HitObjectManager {
 
     private func spawnGameHitObject(_ hitObject: any HitObject) -> any GameHO {
         // TODO: HitObject differentiation
-        let entity = Entity(id: HitObjectManager.counter, remover: remover)
+        let entity = Entity(id: counter, remover: remover)
         let newGameHO: any GameHO
         if let tapHO = hitObject as? TapHitObject {
             newGameHO = TapGameHO(tapHO: tapHO, wrappingObject: entity, preSpawnInterval: preSpawnInterval)
@@ -68,7 +68,7 @@ final class HitObjectManager {
             fatalError("Hit object type not found")
         }
 
-        HitObjectManager.counter += 1
+        counter += 1
         return newGameHO
     }
 }

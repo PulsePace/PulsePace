@@ -9,9 +9,9 @@ import Foundation
 
 class GameHOVM<T: GameHO>: Identifiable {
     let gameHO: T
-    let id: Int64
+    let id: Int
 
-    init(gameHO: T, id: Int64) {
+    init(gameHO: T, id: Int) {
         self.gameHO = gameHO
         self.id = id
     }
@@ -44,7 +44,7 @@ class HoldGameHOVM: GameHOVM<HoldGameHO> {
 
     var opacity: Double {
         if gameHO.lifeStage.value >= gameHO.optimalStageStart.value
-            || gameHO.lifeStage.value <= gameHO.optimalStageEnd.value {
+            && gameHO.lifeStage.value <= gameHO.optimalStageEnd.value {
             return 1
         }
 
