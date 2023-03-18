@@ -10,15 +10,15 @@ import QuartzCore
 import AVKit
 
 protocol RenderSystem {
-    var sceneAdaptor: (any Collection<any GameHO>) -> Void { get }
+    var sceneAdaptor: ([Entity: any GameHO]) -> Void { get }
 }
 
 class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
     private var gameEngine: GameEngine?
-    @Published var slideGameHOs: [SlideGameHO] = []
-    @Published var holdGameHOs: [HoldGameHO] = []
-    @Published var tapGameHOs: [TapGameHO] = []
+    @Published var slideGameHOs: [SlideGameHOVM] = []
+    @Published var holdGameHOs: [HoldGameHOVM] = []
+    @Published var tapGameHOs: [TapGameHOVM] = []
     var score: String {
         String(format: "%06d", 71_143)
     }
@@ -35,15 +35,15 @@ class GameViewModel: ObservableObject, RenderSystem {
         50
     }
 
-    lazy var sceneAdaptor: (any Collection<any GameHO>) -> Void = { [weak self] gameHOs in
+    lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
-        gameHOs.forEach { gameHO in
-            if let slideGameHO = gameHO as? SlideGameHO {
-                self?.slideGameHOs.append(slideGameHO)
-            } else if let holdGameHO = gameHO as? HoldGameHO {
-                self?.holdGameHOs.append(holdGameHO)
-            } else if let tapGameHO = gameHO as? TapGameHO {
-                self?.tapGameHOs.append(tapGameHO)
+        gameHOTable.forEach { gameHOEntity in
+            if let slideGameHO = gameHOEntity.value as? SlideGameHO {
+                self?.slideGameHOs.append(SlideGameHOVM(gameHO: slideGameHO, id: gameHOEntity.key.id))
+            } else if let holdGameHO = gameHOEntity.value as? HoldGameHO {
+                self?.holdGameHOs.append(HoldGameHOVM(gameHO: holdGameHO, id: gameHOEntity.key.id))
+            } else if let tapGameHO = gameHOEntity.value as? TapGameHO {
+                self?.tapGameHOs.append(TapGameHOVM(gameHO: tapGameHO, id: gameHOEntity.key.id))
             } else {
                 print("Unidentified game HO type")
             }
@@ -60,8 +60,14 @@ class GameViewModel: ObservableObject, RenderSystem {
         "game-background"
     }
 
-    @objc func step(displaylink: CADisplayLink) {
-        gameEngine?.step(60)
+    @objc func step() {
+        guard let displayLink = displayLink else {
+            print("No active display link")
+            return
+        }
+        let deltaTime = displayLink.targetTimestamp - displayLink.timestamp
+
+        gameEngine?.step(deltaTime)
     }
 
     func startGameplay() {
@@ -75,6 +81,7 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     private func createDisplayLink() {
         self.displayLink = CADisplayLink(target: self, selector: #selector(step))
+        displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 75, maximum: 150, __preferred: 90)
         displayLink?.add(to: .current, forMode: .default)
     }
 

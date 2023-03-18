@@ -6,14 +6,18 @@
 //
 
 class Conductor {
+    // song position in beats
     var songPosition: Double
     var bpm: Double
-    var currBeat: Double {
-        songPosition * bpm
+    var playbackScale: Double
+
+    init(bpm: Double, playbackScale: Double = 1) {
+        self.songPosition = 0
+        self.playbackScale = playbackScale
+        self.bpm = bpm
     }
 
-    init(songPosition: Double, bpm: Double) {
-        self.songPosition = songPosition
-        self.bpm = bpm
+    func step(_ deltaTime: Double) {
+        songPosition += deltaTime / 60 * bpm * playbackScale
     }
 }

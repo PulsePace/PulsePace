@@ -73,7 +73,7 @@ class HoldGestureHandler: GestureHandler {
                     beatmapDesigner.previewHitObject = HoldHitObject(
                         position: value.location,
                         beat: beat * interval,
-                        endTime: beat * interval
+                        endBeat: beat * interval
                     )
                 }
             }
@@ -89,7 +89,7 @@ class HoldGestureHandler: GestureHandler {
                 beatmapDesigner.previewHitObject = HoldHitObject(
                     position: value.location,
                     beat: startTime,
-                    endTime: beat * interval
+                    endBeat: beat * interval
                 )
                 beatmapDesigner.registerPreviewHitObject()
                 isHolding = false
@@ -127,7 +127,7 @@ class SlideGestureHandler: GestureHandler {
                     beatmapDesigner.previewHitObject = SlideHitObject(
                         position: value.location,
                         beat: beat * interval,
-                        endTime: beat * interval,
+                        endBeat: beat * interval,
                         vertices: vertices
                     )
                     return
@@ -141,7 +141,7 @@ class SlideGestureHandler: GestureHandler {
                     beatmapDesigner.previewHitObject = SlideHitObject(
                         position: startPosition,
                         beat: startBeat,
-                        endTime: endTime,
+                        endBeat: endTime,
                         vertices: vertices
                     )
                     return
@@ -160,7 +160,7 @@ class SlideGestureHandler: GestureHandler {
                 beatmapDesigner.previewHitObject = SlideHitObject(
                     position: startPosition,
                     beat: startBeat,
-                    endTime: endTime + quantisedTime,
+                    endBeat: endTime + quantisedTime,
                     vertices: vertices + [quantisedPosition]
                 )
             }

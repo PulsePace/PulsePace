@@ -12,6 +12,7 @@ class GameEngine {
     private var allObjects: Set<Entity>
     private var gameHOTable: [Entity: any GameHO]
     private var hitObjectManager: HitObjectManager?
+    private var conductor: Conductor?
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         self?.allObjects.remove(removedObject)
@@ -38,6 +39,7 @@ class GameEngine {
             offset: beatmap.offset,
             slideSpeed: beatmap.sliderSpeed
         )
+        self.conductor = Conductor(bpm: beatmap.bpm)
     }
 
     func reset() {
@@ -47,8 +49,13 @@ class GameEngine {
     }
 
     func step(_ deltaTime: Double) {
+        guard let conductor = conductor else {
+            print("Cannot advance engine state without conductor")
+            return
+        }
+        conductor.step(deltaTime)
         // TODO: swap currBeat with conductor reading
-        if let spawnGameHOs = hitObjectManager?.checkBeatMap(0) {
+        if let spawnGameHOs = hitObjectManager?.checkBeatMap(conductor.songPosition) {
             spawnGameHOs.forEach { gameHOAdder($0) }
         }
 
@@ -59,7 +66,7 @@ class GameEngine {
         allObjects.forEach { object in
             if let gameHO = gameHOTable[object] {
                 // TODO: Use actual conductor for currBeat
-                gameHO.updateState(currBeat: 0)
+                gameHO.updateState(currBeat: conductor.songPosition)
                 if gameHO.shouldExecute {
                     engagedHOs.append(gameHO)
                 }

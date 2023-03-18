@@ -11,10 +11,11 @@ class TapGameHO: GameHO {
     typealias CommandType = TapCommandHO
 
     let wrappingObject: Entity
+    let position: CGPoint
 
     let lifeStart: Double
-    let lifeOptimal: Double
-    let lifeTime: Double
+    let lifeOptimal = LifeStage(0.5)
+    let lifeEnd: Double
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(TapGameHO) -> Void] = []
@@ -22,10 +23,10 @@ class TapGameHO: GameHO {
     var command: TapCommandHO
 
     init(tapHO: TapHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
+        self.position = tapHO.position
         self.wrappingObject = wrappingObject
         self.lifeStart = tapHO.beat - preSpawnInterval
-        self.lifeOptimal = tapHO.beat
-        self.lifeTime = preSpawnInterval * 2
+        self.lifeEnd = tapHO.beat + preSpawnInterval
         self.command = TapCommandHO()
     }
 
