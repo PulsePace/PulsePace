@@ -17,7 +17,7 @@ class InputCommand: Command {
         self.completion = completion ?? action
     }
 
-    func onEnded(inputData: InputData) {
+    func executeCompletion(inputData: InputData) {
         (completion ?? action)(inputData)
     }
 }

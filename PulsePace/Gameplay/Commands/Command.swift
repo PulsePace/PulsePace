@@ -12,11 +12,11 @@ protocol Command {
     associatedtype ActionArguments
     typealias Action = (ActionArguments) -> Void
     var action: Action { get }
-    func onChanged(inputData: ActionArguments)
+    func executeAction(inputData: ActionArguments)
 }
 
 extension Command {
-    func onChanged(inputData: ActionArguments) {
+    func executeAction(inputData: ActionArguments) {
         action(inputData)
     }
 }
