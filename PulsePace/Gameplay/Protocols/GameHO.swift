@@ -7,10 +7,7 @@
 
 import Foundation
 
-/// Independent from input state, the command holds the
 protocol GameHO: Component, AnyObject, ScoreManagable {
-    associatedtype CommandType: CommandHO
-    var command: CommandType { get set }
     var position: CGPoint { get }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
@@ -23,29 +20,6 @@ protocol GameHO: Component, AnyObject, ScoreManagable {
 extension GameHO {
     var lifeTime: Double {
         lifeEnd - lifeStart
-    }
-
-    var shouldExecute: Bool {
-        command.shouldExecute
-    }
-
-    func prepToProcessInput(inputData: InputData) {
-        command.shouldExecute = true
-        command.currInput = inputData
-    }
-
-    // Used for like onDragEnd, onTapEnd etc.
-    func onInputCease() {
-        command.shouldExecute = false
-        command.currInput = nil
-    }
-
-    func processInput(deltaTime: Double) {
-        guard let selfHO = self as? Self.CommandType.GameHOType else {
-            print("Command type and hit object type should form an  enclosed pair")
-            return
-        }
-        command.execute(gameHO: selfHO, deltaTime: deltaTime)
     }
 }
 

@@ -27,7 +27,9 @@ struct GameplayAreaView: View {
     func renderSlideGameHO(slideGameHOVMs: [SlideGameHOVM]) -> some View {
         ZStack {
             ForEach(slideGameHOVMs) { slideGameHOVM in
-                SlideGameHOView(slideGameHOVM: slideGameHOVM)
+                if slideGameHOVM.opacity > 0 {
+                    SlideGameHOView(slideGameHOVM: slideGameHOVM)
+                }
             }
         }
     }
@@ -35,7 +37,9 @@ struct GameplayAreaView: View {
     func renderHoldGameHO(holdGameHOVMs: [HoldGameHOVM]) -> some View {
         ZStack {
             ForEach(holdGameHOVMs) { holdGameHOVM in
-                HoldGameHOView(holdGameHOVM: holdGameHOVM)
+                if holdGameHOVM.opacity > 0 {
+                    HoldGameHOView(holdGameHOVM: holdGameHOVM)
+                }
             }
         }
     }
@@ -43,7 +47,9 @@ struct GameplayAreaView: View {
     func renderTapGameHO(tapGameHOVMs: [TapGameHOVM]) -> some View {
         ZStack {
             ForEach(tapGameHOVMs) { tapGameHOVM in
-               TapGameHOView(tapGameHOVM: tapGameHOVM)
+                if tapGameHOVM.opacity > 0 {
+                    TapGameHOView(tapGameHOVM: tapGameHOVM)
+                }
             }
         }
     }

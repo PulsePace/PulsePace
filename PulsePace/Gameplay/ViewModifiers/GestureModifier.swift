@@ -17,11 +17,12 @@ struct GestureModifier<T: TouchInput>: ViewModifier where T.InputGesture.Value: 
             .simultaneousGesture(input.gesture
                 .onChanged { value in
                     let inputData = InputData(value: value)
-                    command.onChanged(inputData: inputData)
+                    command.executeAction(inputData: inputData)
                 }
                 .onEnded { value in
                     let inputData = InputData(value: value)
-                    command.onEnded(inputData: inputData)
+                    command.executeCompletion(inputData: inputData)
+                    print("Ended")
                 }
             )
     }

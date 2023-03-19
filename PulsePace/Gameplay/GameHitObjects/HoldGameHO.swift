@@ -8,8 +8,6 @@
 import Foundation
 
 class HoldGameHO: GameHO {
-    typealias CommandType = HoldCommandHO
-
     let wrappingObject: Entity
     let position: CGPoint
 
@@ -31,8 +29,6 @@ class HoldGameHO: GameHO {
     var lastCheckedSongPosition: Double?
     var isHit = false
 
-    var command: HoldCommandHO
-
     init(holdHO: HoldHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = holdHO.position
         self.wrappingObject = wrappingObject
@@ -49,7 +45,6 @@ class HoldGameHO: GameHO {
         self.optimalStageEnd = LifeStage(1 - normSpawnInterval)
         self.optimalLife = holdHO.endTime - holdHO.startTime
         self.lifeEnd = holdHO.endTime + preSpawnInterval
-        self.command = HoldCommandHO()
     }
 
     func updateState(currBeat: Double) {

@@ -11,7 +11,6 @@ import simd
 // Straight slider
 class SlideGameHO: GameHO {
     typealias Vector2 = SIMD2<Double>
-    typealias CommandType = SlideCommandHO
 
     let wrappingObject: Entity
     let position: CGPoint
@@ -41,8 +40,6 @@ class SlideGameHO: GameHO {
     var proximityScoreThresholds: [Double] = [0.2, 1, 1]
     var lastCheckedSongPosition: Double?
     var isHit = false
-
-    var command: SlideCommandHO
 
     init(slideHO: SlideHitObject, wrappingObject: Entity, preSpawnInterval: Double, slideSpeed: Double) {
         if slideHO.vertices.count < 1 {
@@ -76,8 +73,6 @@ class SlideGameHO: GameHO {
 
         self.startPosition = slideHO.position
         self.expectedPosition = slideHO.position
-
-        self.command = SlideCommandHO()
     }
 
     func updateState(currBeat: Double) {

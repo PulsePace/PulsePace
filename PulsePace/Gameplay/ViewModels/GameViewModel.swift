@@ -16,9 +16,12 @@ protocol RenderSystem {
 class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
     private var gameEngine: GameEngine?
+    private var audioPlayer: AVAudioPlayer?
     @Published var slideGameHOs: [SlideGameHOVM] = []
     @Published var holdGameHOs: [HoldGameHOVM] = []
     @Published var tapGameHOs: [TapGameHOVM] = []
+    @Published var songPosition: Double = 0
+
     var score: String {
         String(format: "%06d", 71_143)
     }
@@ -75,6 +78,13 @@ class GameViewModel: ObservableObject, RenderSystem {
 
         gameEngine.step(deltaTime)
         sceneAdaptor(gameEngine.gameHOTable)
+
+        guard let audioPlayer = audioPlayer else {
+            print("No song player")
+            return
+        }
+
+        songPosition = audioPlayer.currentTime
     }
 
     func initEngineWithBeatmap(_ beatmap: Beatmap) {
@@ -88,6 +98,10 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     func stopGameplay() {
         displayLink?.invalidate()
+    }
+
+    func initialisePlayer(audioPlayer: AVAudioPlayer) {
+        self.audioPlayer = audioPlayer
     }
 
     private func createDisplayLink() {

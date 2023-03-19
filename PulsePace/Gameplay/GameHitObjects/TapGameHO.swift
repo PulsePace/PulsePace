@@ -8,8 +8,6 @@
 import Foundation
 
 class TapGameHO: GameHO {
-    typealias CommandType = TapCommandHO
-
     let wrappingObject: Entity
 
     let position: CGPoint
@@ -24,14 +22,11 @@ class TapGameHO: GameHO {
     var proximityScore: Double = 0
     var proximityScoreThresholds: [Double] = [0.2, 1, 1]
 
-    var command: TapCommandHO
-
     init(tapHO: TapHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = tapHO.position
         self.wrappingObject = wrappingObject
         self.lifeStart = tapHO.startTime - preSpawnInterval
         self.lifeEnd = tapHO.startTime + preSpawnInterval
-        self.command = TapCommandHO()
     }
 
     func updateState(currBeat: Double) {
