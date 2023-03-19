@@ -1,5 +1,5 @@
 //
-//  ConductorTest.swift
+//  ConductorTests.swift
 //  PulsePaceTests
 //
 //  Created by James Chiu on 19/3/23.
