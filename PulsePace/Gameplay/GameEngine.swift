@@ -10,6 +10,7 @@ import Foundation
 class GameEngine {
     private var allObjects: Set<Entity>
     var gameHOTable: [Entity: any GameHO]
+    private var inputManager: InputManager?
     private var hitObjectManager: HitObjectManager?
     private var conductor: Conductor?
 
@@ -38,12 +39,15 @@ class GameEngine {
             slideSpeed: beatmap.sliderSpeed
         )
         self.conductor = Conductor(bpm: beatmap.bpm)
+        self.inputManager = InputManager()
+//        inputManager.addHandler(scoreManager)
     }
 
     func reset() {
         self.allObjects.removeAll()
         self.gameHOTable.removeAll()
         self.hitObjectManager = nil
+        self.inputManager = nil
     }
 
     func step(_ deltaTime: Double) {
