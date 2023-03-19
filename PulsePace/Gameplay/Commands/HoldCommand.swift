@@ -10,13 +10,17 @@ class HoldCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init(receiver: HoldGameHO) {
+    convenience init(receiver: HoldGameHO, timeReceived: Double) {
         self.init(
-            action: { _ in
+            action: { inputData in
+                var inputData = inputData
+                inputData.timeReceived = timeReceived
                 print("Hold")
 //                receiver.checkOnInput(inputData: inputData)
             },
-            completion: { _ in
+            completion: { inputData in
+                var inputData = inputData
+                inputData.timeReceived = timeReceived
 //                receiver.checkOnInputEnd(inputData: inputData)
             }
         )

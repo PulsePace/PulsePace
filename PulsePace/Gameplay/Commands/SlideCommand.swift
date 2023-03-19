@@ -11,13 +11,17 @@ class SlideCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init(receiver: SlideGameHO) {
+    convenience init(receiver: SlideGameHO, timeReceived: Double) {
         self.init(
-            action: { _ in
+            action: { inputData in
+                var inputData = inputData
+                inputData.timeReceived = timeReceived
                 print("Slide")
 //                receiver.checkOnInput(inputData: inputData)
             },
-            completion: { _ in
+            completion: { inputData in
+                var inputData = inputData
+                inputData.timeReceived = timeReceived
 //                receiver.checkOnInputEnd(inputData: inputData)
             }
         )

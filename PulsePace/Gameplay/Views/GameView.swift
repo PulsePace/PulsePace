@@ -30,6 +30,9 @@ struct GameView: View {
         .onAppear {
             audioManager.startPlayer(track: "test")
             viewModel.startGameplay()
+            if let audioPlayer = audioManager.player {
+                viewModel.initialisePlayer(audioPlayer: audioPlayer)
+            }
         }
         .onDisappear {
             audioManager.stopPlayer()
@@ -41,6 +44,7 @@ struct GameView: View {
 }
 
 struct TapGameHOView: View {
+    @EnvironmentObject var viewModel: GameViewModel
     let tapGameHOVM: TapGameHOVM
 
     var body: some View {
@@ -61,11 +65,14 @@ struct TapGameHOView: View {
                           y: tapGameHO.position.y)
         }
         .opacity(tapGameHOVM.opacity)
-        .modifier(GestureModifier(input: TapInput(), command: TapCommand(receiver: tapGameHO)))
+        .modifier(GestureModifier(input: TapInput(),
+                                  command: TapCommand(receiver: tapGameHO,
+                                                      timeReceived: viewModel.songPosition)))
     }
 }
 
 struct SlideGameHOView: View {
+    @EnvironmentObject var viewModel: GameViewModel
     let slideGameHOVM: SlideGameHOVM
 
     var body: some View {
@@ -106,11 +113,14 @@ struct SlideGameHOView: View {
             }
         }
         .opacity(slideGameHOVM.opacity)
-        .modifier(GestureModifier(input: SlideInput(), command: SlideCommand(receiver: slideGameHO)))
+        .modifier(GestureModifier(input: SlideInput(),
+                                  command: SlideCommand(receiver: slideGameHO,
+                                                        timeReceived: viewModel.songPosition)))
     }
 }
 
 struct HoldGameHOView: View {
+    @EnvironmentObject var viewModel: GameViewModel
     let holdGameHOVM: HoldGameHOVM
 
     var body: some View {
@@ -131,7 +141,9 @@ struct HoldGameHOView: View {
                           y: holdGameHO.position.y)
         }
         .opacity(holdGameHOVM.opacity)
-        .modifier(GestureModifier(input: HoldInput(), command: HoldCommand(receiver: holdGameHO)))
+        .modifier(GestureModifier(input: HoldInput(),
+                                  command: HoldCommand(receiver: holdGameHO,
+                                                       timeReceived: viewModel.songPosition)))
     }
 }
 
