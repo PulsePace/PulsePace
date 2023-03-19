@@ -11,8 +11,14 @@ class SpinCommand: InputCommand {
     }
 
     convenience init() {
-        self.init { _ in
-            print("Spin")
-        }
+        self.init(
+            action: { _ in
+                print("Spin")
+//                receiver.checkOnInput(inputData: inputData)
+            },
+            completion: { _ in
+//                receiver.checkOnInputEnd(inputData: inputData)
+            }
+        )
     }
 }

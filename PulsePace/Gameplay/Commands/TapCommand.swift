@@ -10,9 +10,10 @@ class TapCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init() {
+    convenience init(receiver: TapGameHO) {
         self.init { _ in
             print("Tap")
+//            receiver.checkOnInput(inputData: inputData)
         }
     }
 }

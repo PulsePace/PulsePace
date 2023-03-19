@@ -10,9 +10,15 @@ class HoldCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init() {
-        self.init { _ in
-            print("Hold")
-        }
+    convenience init(receiver: HoldGameHO) {
+        self.init(
+            action: { _ in
+                print("Hold")
+//                receiver.checkOnInput(inputData: inputData)
+            },
+            completion: { _ in
+//                receiver.checkOnInputEnd(inputData: inputData)
+            }
+        )
     }
 }
