@@ -9,11 +9,11 @@ import Foundation
 
 // TODO: Add conductor
 class GameEngine {
-    var conductor: Conductor
     var scoreManager: ScoreManager
-    var allObjects: Set<Entity>
+    private var allObjects: Set<Entity>
     var gameHOTable: [Entity: any GameHO]
-    var hitObjectManager: HitObjectManager?
+    private var hitObjectManager: HitObjectManager?
+    private var conductor: Conductor?
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         self?.allObjects.remove(removedObject)
@@ -33,19 +33,20 @@ class GameEngine {
     init() {
         self.allObjects = Set()
         self.gameHOTable = [:]
-        // TODO: Should load from beatmap
-        self.conductor = Conductor(songPosition: 0, bpm: 0)
         self.scoreManager = ScoreManager()
     }
 
     // TODO: Should load from beatmap data structure
-    func load(_ beatMap: [any HitObject]) {
+    func load(_ beatmap: Beatmap) {
+        reset()
         self.hitObjectManager = HitObjectManager(
-            hitObjects: beatMap,
-            preSpawnInterval: 0,
+            hitObjects: beatmap.hitObjects,
+            preSpawnInterval: beatmap.preSpawnInterval,
             remover: objRemover,
-            slideSpeed: 100
+            offset: beatmap.offset,
+            slideSpeed: beatmap.sliderSpeed
         )
+        self.conductor = Conductor(bpm: beatmap.bpm)
     }
 
     func reset() {
@@ -55,8 +56,13 @@ class GameEngine {
     }
 
     func step(_ deltaTime: Double) {
-        let currBeat = conductor.currBeat
-        if let spawnGameHOs = hitObjectManager?.checkBeatMap(currBeat) {
+        guard let conductor = conductor else {
+            print("Cannot advance engine state without conductor")
+            return
+        }
+        conductor.step(deltaTime)
+        // TODO: swap currBeat with conductor reading
+        if let spawnGameHOs = hitObjectManager?.checkBeatMap(conductor.songPosition) {
             spawnGameHOs.forEach { gameHOAdder($0) }
         }
 
@@ -66,7 +72,8 @@ class GameEngine {
         /// -> delegate responses to respective system -> delegate UI display to renderer
         allObjects.forEach { object in
             if let gameHO = gameHOTable[object] {
-                gameHO.updateState(currBeat: currBeat)
+                // TODO: Use actual conductor for currBeat
+                gameHO.updateState(currBeat: conductor.songPosition)
                 if gameHO.shouldExecute {
                     engagedHOs.append(gameHO)
                 }
@@ -83,12 +90,20 @@ class GameEngine {
     }
 
     func processInput(gameHO: any GameHO, inputData: InputData) {
+        guard let conductor = conductor else {
+            print("Cannot advance engine state without conductor")
+            return
+        }
         gameHO.checkOnInput(input: GameInputData(location: inputData.location,
                                                  songPositionReceived: conductor.songPosition),
                             scoreManager: self.scoreManager)
     }
 
     func processInputEnd(gameHO: any GameHO, inputData: InputData) {
+        guard let conductor = conductor else {
+            print("Cannot advance engine state without conductor")
+            return
+        }
         gameHO.checkOnInputEnd(input: GameInputData(location: inputData.location,
                                                     songPositionReceived: conductor.songPosition),
                                scoreManager: self.scoreManager)

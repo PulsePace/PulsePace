@@ -14,8 +14,8 @@ class TapGameHO: GameHO {
 
     let position: CGPoint
     let lifeStart: Double
-    let lifeOptimal: Double
-    let lifeTime: Double
+    let lifeOptimal = LifeStage(0.5)
+    let lifeEnd: Double
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(TapGameHO) -> Void] = []
@@ -29,9 +29,8 @@ class TapGameHO: GameHO {
     init(tapHO: TapHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = tapHO.position
         self.wrappingObject = wrappingObject
-        self.lifeStart = tapHO.beat - preSpawnInterval
-        self.lifeOptimal = tapHO.beat
-        self.lifeTime = preSpawnInterval * 2
+        self.lifeStart = tapHO.startTime - preSpawnInterval
+        self.lifeEnd = tapHO.startTime + preSpawnInterval
         self.command = TapCommandHO()
     }
 
@@ -52,7 +51,7 @@ class TapGameHO: GameHO {
         }
 
         isHit = true
-        proximityScore += abs(input.songPositionReceived - lifeOptimal) / lifeTime
+        proximityScore += abs(input.songPositionReceived - lifeEnd) / lifeTime
 
         // TODO: refine scoring rule
         if proximityScore < proximityScoreThresholds[0] {

@@ -9,10 +9,10 @@ import Foundation
 
 // Since we are only going to have hitObjects as gameObjects bounding T by GameHO should be fine
 class Entity: Identifiable, Hashable {
-    let id: Int64
+    let id: Int
     let remover: (Entity) -> Void
 
-    init(id: Int64, remover: @escaping (Entity) -> Void) {
+    init(id: Int, remover: @escaping (Entity) -> Void) {
         self.id = id
         self.remover = remover
     }

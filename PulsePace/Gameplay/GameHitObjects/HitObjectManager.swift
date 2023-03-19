@@ -8,9 +8,10 @@
 import Foundation
 
 final class HitObjectManager {
-    private static var counter: Int64 = 0
+    private var counter = 0
     let remover: (Entity) -> Void
-    var queuedHitObjects: MyQueue<any HitObject>
+    private var queuedHitObjects: MyQueue<any HitObject>
+    let offset: Double
     let preSpawnInterval: Double
     let slideSpeed: Double
 
@@ -18,10 +19,12 @@ final class HitObjectManager {
         hitObjects: [any HitObject],
         preSpawnInterval: Double,
         remover: @escaping (Entity) -> Void,
+        offset: Double,
         slideSpeed: Double
     ) {
         self.remover = remover
         self.preSpawnInterval = preSpawnInterval
+        self.offset = offset
         self.slideSpeed = slideSpeed
         self.queuedHitObjects = MyQueue()
         hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
@@ -31,7 +34,7 @@ final class HitObjectManager {
     func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned: [any GameHO] = []
         while let firstInQueue = queuedHitObjects.peek() {
-            if firstInQueue.beat - preSpawnInterval < currBeat {
+            if firstInQueue.startTime - preSpawnInterval + offset >= currBeat {
                 return gameHOSpawned
             }
 
@@ -44,7 +47,7 @@ final class HitObjectManager {
 
     private func spawnGameHitObject(_ hitObject: any HitObject) -> any GameHO {
         // TODO: HitObject differentiation
-        let entity = Entity(id: HitObjectManager.counter, remover: remover)
+        let entity = Entity(id: counter, remover: remover)
         let newGameHO: any GameHO
         if let tapHO = hitObject as? TapHitObject {
             newGameHO = TapGameHO(tapHO: tapHO, wrappingObject: entity, preSpawnInterval: preSpawnInterval)
@@ -55,11 +58,17 @@ final class HitObjectManager {
                 preSpawnInterval: preSpawnInterval,
                 slideSpeed: slideSpeed
             )
+        } else if let holdHO = hitObject as? HoldHitObject {
+            newGameHO = HoldGameHO(
+                holdHO: holdHO,
+                wrappingObject: entity,
+                preSpawnInterval: preSpawnInterval
+            )
         } else {
             fatalError("Hit object type not found")
         }
 
-        HitObjectManager.counter += 1
+        counter += 1
         return newGameHO
     }
 }

@@ -39,8 +39,8 @@ struct PlaybackControlView: View {
     private func renderPlaybackButtons() -> some View {
         if let player = audioManager.player {
             HStack {
-                SystemIconButtonView(systemName: player.isPlaying
-                                     ? "pause.circle.fill" : "play.circle.fill", fontSize: 44) {
+                let iconSystemName = player.isPlaying ? "pause.circle.fill" : "play.circle.fill"
+                SystemIconButtonView(systemName: iconSystemName, fontSize: 44) {
                     audioManager.togglePlayer()
                 }
             }

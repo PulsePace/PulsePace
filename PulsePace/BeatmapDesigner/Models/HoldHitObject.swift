@@ -2,19 +2,23 @@
 //  HoldHitObject.swift
 //  PulsePace
 //
-//  Created by James Chiu on 15/3/23.
+//  Created by Peter Jung on 2023/03/17.
 //
 
 import Foundation
 
 class HoldHitObject: HitObject {
     var position: CGPoint
-    var beat: Double
-    var duration: Double
+    var startTime: Double
+    var endTime: Double
 
-    init(position: CGPoint, beat: Double, duration: Double) {
+    var duration: Double {
+        endTime - startTime
+    }
+
+    init(position: CGPoint, startTime: Double, endTime: Double) {
         self.position = position
-        self.beat = beat
-        self.duration = duration
+        self.startTime = startTime
+        self.endTime = endTime
     }
 }

@@ -1,20 +1,26 @@
 //
-//  SlideHitObjec.swift
+//  SlideHitObject.swift
 //  PulsePace
 //
-//  Created by James Chiu on 15/3/23.
+//  Created by Peter Jung on 2023/03/16.
 //
 
 import Foundation
 
 class SlideHitObject: HitObject {
     var position: CGPoint
-    var beat: Double
-    var endPosition: CGPoint
+    var startTime: Double
+    var endTime: Double
+    var vertices: [CGPoint]
 
-    init(position: CGPoint, beat: Double, endPosition: CGPoint) {
+    var endPosition: CGPoint {
+        vertices.last ?? .zero // TODO: hacky
+    }
+
+    init(position: CGPoint, startTime: Double, endTime: Double, vertices: [CGPoint]) {
         self.position = position
-        self.beat = beat
-        self.endPosition = endPosition
+        self.startTime = startTime
+        self.endTime = endTime
+        self.vertices = vertices
     }
 }

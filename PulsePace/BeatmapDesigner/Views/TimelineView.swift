@@ -17,12 +17,11 @@ struct TimelineView: View {
     var body: some View {
         if let player = audioManager.player {
             GeometryReader { geometry in
-                ZStack {
-                    let mainBeatSpacing = beatmapDesigner.zoom / beatmapDesigner.bps
-                    let subBeatSpacing = mainBeatSpacing / beatmapDesigner.divisor
-
-                    renderLines(spacing: subBeatSpacing, color: .blue)
-                    renderLines(spacing: mainBeatSpacing, color: .white)
+                ZStack(alignment: .leading) {
+                    renderBeatLines(spacing: beatmapDesigner.subBeatSpacing, color: .blue)
+                    renderBeatLines(spacing: beatmapDesigner.mainBeatSpacing, color: .white)
+                    renderStartLine(color: .red)
+                    renderPreviewBeat()
                     renderBeats()
                     renderCursor()
                 }
@@ -40,11 +39,13 @@ struct TimelineView: View {
         }
     }
 
-    private func renderLines(spacing: CGFloat, color: Color) -> some View {
+    @ViewBuilder
+    private func renderBeatLines(spacing: CGFloat, color: Color) -> some View {
         Path { path in
             for index in 0...Int(width / (2 * spacing)) {
                 let position = CGFloat(index) * spacing
-                let offset = (beatmapDesigner.zoom * beatmapDesigner.offset).remainder(dividingBy: spacing)
+                let offset = (beatmapDesigner.zoom * beatmapDesigner.offset)
+                    .remainder(dividingBy: spacing)
                 let rightPosition = offset + position
                 let leftPosition = offset - position
 
@@ -55,24 +56,52 @@ struct TimelineView: View {
             }
         }
         .stroke(color)
-        .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue).remainder(dividingBy: spacing))
+        .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue)
+            .remainder(dividingBy: spacing))
     }
 
-    private func renderBeats() -> some View {
+    @ViewBuilder
+    private func renderStartLine(color: Color) -> some View {
+        Path { path in
+            path.move(to: CGPoint(x: 0, y: 0))
+            path.addLine(to: CGPoint(x: 0, y: height))
+        }
+        .stroke(.red)
+        .offset(x: width / 2 - (beatmapDesigner.zoom * beatmapDesigner.sliderValue))
+    }
+
+    @ViewBuilder
+    private func renderPreviewBeat() -> some View {
         let beatOffset = beatmapDesigner.offset - beatmapDesigner.sliderValue
-        return ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
-            Circle()
-                .strokeBorder(.black, lineWidth: 2)
-                .background(Circle().fill(.white))
-                .frame(width: 40)
-                .offset(x: (hitObject.beat + beatOffset) * beatmapDesigner.zoom)
+        if let previewHitObject = beatmapDesigner.previewHitObject {
+            ViewFactoryCreator().createTimelineView(
+                for: previewHitObject,
+                with: beatOffset,
+                and: beatmapDesigner.zoom
+            )
+            .offset(x: width / 2 - 20)
         }
     }
 
+    @ViewBuilder
+    private func renderBeats() -> some View {
+        let beatOffset = beatmapDesigner.offset - beatmapDesigner.sliderValue
+        ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
+            ViewFactoryCreator().createTimelineView(
+                for: hitObject,
+                with: beatOffset,
+                and: beatmapDesigner.zoom
+            )
+        }
+        .offset(x: width / 2 - 20)
+    }
+
+    @ViewBuilder
     private func renderCursor() -> some View {
         Rectangle()
             .foregroundColor(.blue)
             .frame(width: 5, height: 60)
+            .offset(x: width / 2)
     }
 }
 

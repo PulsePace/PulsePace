@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct CanvasView: View {
+    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
 
     var body: some View {
         ZStack {
             ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
+                renderHitObject(hitObject)
+            }
+            if let hitObject = beatmapDesigner.previewHitObject {
                 renderHitObject(hitObject)
             }
         }
@@ -21,28 +25,16 @@ struct CanvasView: View {
             maxHeight: .infinity,
             alignment: .topLeading
         )
-        .background(.black)
-        .modifier(GestureModifier(input: CanvasTapInput(), command: AddTapHitObjectCommand(receiver: beatmapDesigner)))
+        .background(.orange)
+        .modifier(EditModeModifier(
+            beatmapDesigner: beatmapDesigner,
+            gestureHandler: beatmapDesigner.gestureHandler
+        ))
     }
 
     private func renderHitObject(_ hitObject: any HitObject) -> some View {
-        let absoluteTime = hitObject.beat - beatmapDesigner.sliderValue + beatmapDesigner.offset
-        return ZStack {
-            Circle()
-                .strokeBorder(.white, lineWidth: 4)
-                .frame(width: min(800, max(100, 100 + 200 * absoluteTime)),
-                       height: min(800, max(100, 100 + 200 * absoluteTime)))
-                .position(x: hitObject.position.x,
-                          y: hitObject.position.y)
-
-            Circle()
-                .fill(.white)
-                .frame(width: 100, height: 100)
-                .position(x: hitObject.position.x,
-                          y: hitObject.position.y) // TODO: constants
-
-        }
-        .opacity(max(0, 1 - 0.5 * abs(absoluteTime)))
+        let cursorTime = beatmapDesigner.sliderValue + beatmapDesigner.offset
+        return ViewFactoryCreator().createCanvasView(for: hitObject, at: cursorTime)
     }
 }
 
