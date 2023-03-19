@@ -19,8 +19,13 @@ class HoldGameHO: GameHO {
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(HoldGameHO) -> Void] = []
 
-    var command: HoldCommandHO
+    var proximityScore: Double = 0
+    var minimumProximity: Double = 30
+    var proximityScoreThresholds: [Double] = [0.2, 0.5, 1]
+    var lastCheckedSongPosition: Double?
     var isHit = false
+
+    var command: HoldCommandHO
 
     init(holdHO: HoldHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.wrappingObject = wrappingObject
@@ -37,15 +42,34 @@ class HoldGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
-
+    func checkOnInput(input: GameInputData, scoreManager: ScoreManager) {
+        guard let lastCheckedSongPosition = lastCheckedSongPosition else {
+            proximityScore += abs(input.songPositionReceived - lifeStart) / lifeOptimal
+            lastCheckedSongPosition = input.songPositionReceived
+            return
+        }
+        guard input.songPositionReceived != lastCheckedSongPosition else {
+            return
+        }
+        self.lastCheckedSongPosition = input.songPositionReceived
     }
 
-    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
-        // TODO: Possible ways to determine hit status:
-        // 1) if input end before lifeStage completes, should be an immediate miss.
-            // 1.1) if the time holding already passes some threshold, could be a good or perfect as well.
-        // 2) allow user to lift finger in the middle then contine pressing,
-        // determine perfect, good, miss solely based on the total time holding
+    func checkOnInputEnd(input: GameInputData, scoreManager: ScoreManager) {
+        proximityScore += abs(input.songPositionReceived - lifeStart) / lifeOptimal
+
+        // TODO: define proper scoring rule
+        if proximityScore < proximityScoreThresholds[0] {
+            // perfect
+            scoreManager.perfetHitCount += 1
+            scoreManager.score += 2
+        } else if proximityScore < proximityScoreThresholds[1] {
+            // good
+            scoreManager.goodHitCount += 1
+            scoreManager.score += 1
+        } else {
+            // miss
+            scoreManager.missCount += 1
+            destroyObject()
+        }
     }
 }

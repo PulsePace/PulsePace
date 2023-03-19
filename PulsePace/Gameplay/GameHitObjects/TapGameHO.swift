@@ -19,7 +19,10 @@ class TapGameHO: GameHO {
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(TapGameHO) -> Void] = []
+
     var isHit = false
+    var proximityScore: Double = 0
+    var proximityScoreThresholds: [Double] = [0.2, 1, 1]
 
     var command: TapCommandHO
 
@@ -39,20 +42,20 @@ class TapGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
+    func checkOnInput(input: GameInputData, scoreManager: ScoreManager) {
         checkOnInputEnd(input: input, scoreManager: scoreManager)
     }
 
-    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+    func checkOnInputEnd(input: GameInputData, scoreManager: ScoreManager) {
         if isHit {
             return
         }
 
         isHit = true
-        self.destroyObject()
+        proximityScore += abs(input.songPositionReceived - lifeOptimal) / lifeTime
 
-        // TODO: define proper checking rule and scoring rule
-        if input.location == self.position {
+        // TODO: refine scoring rule
+        if proximityScore < proximityScoreThresholds[0] {
             // perfect
             scoreManager.perfetHitCount += 1
             scoreManager.score += 2
@@ -61,5 +64,6 @@ class TapGameHO: GameHO {
             scoreManager.goodHitCount += 1
             scoreManager.score += 1
         }
+        self.destroyObject()
     }
 }

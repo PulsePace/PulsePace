@@ -11,6 +11,7 @@
 		175B3F0C29C4719700DE715D /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0B29C4719700DE715D /* ScoreManager.swift */; };
 		175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0D29C471BA00DE715D /* Conductor.swift */; };
 		175B3F1229C48B4800DE715D /* ScoreManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F1129C48B4800DE715D /* ScoreManagable.swift */; };
+		17C05AA429C5D48700EAFFD0 /* GameInputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C05AA329C5D48700EAFFD0 /* GameInputData.swift */; };
 		6A96AAB429C124FF00FAA79E /* MyQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB329C124FF00FAA79E /* MyQueue.swift */; };
 		6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB629C1254D00FAA79E /* GameHO.swift */; };
 		6A96AAB929C1254D00FAA79E /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB729C1254D00FAA79E /* Entity.swift */; };
@@ -98,6 +99,7 @@
 		175B3F0B29C4719700DE715D /* ScoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
 		175B3F0D29C471BA00DE715D /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
 		175B3F1129C48B4800DE715D /* ScoreManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManagable.swift; sourceTree = "<group>"; };
+		17C05AA329C5D48700EAFFD0 /* GameInputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInputData.swift; sourceTree = "<group>"; };
 		6A96AAB329C124FF00FAA79E /* MyQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyQueue.swift; sourceTree = "<group>"; };
 		6A96AAB629C1254D00FAA79E /* GameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHO.swift; sourceTree = "<group>"; };
 		6A96AAB729C1254D00FAA79E /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			children = (
 				6A96AAB329C124FF00FAA79E /* MyQueue.swift */,
 				C748C9EB29BB039600CB8C7A /* InputData.swift */,
+				17C05AA329C5D48700EAFFD0 /* GameInputData.swift */,
 			);
 			path = DataStructures;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */,
 				C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
+				17C05AA429C5D48700EAFFD0 /* GameInputData.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
 				D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */,
 				C7FD9A5829C39ECB00191F03 /* ScoreView.swift in Sources */,

@@ -25,11 +25,15 @@ class SlideGameHO: GameHO {
     let startPosition: CGPoint
     var expectedPosition: CGPoint
     let endPosition: CGPoint
+
+    let maxPositionError: Double = 20
     var minimumProximity: Double = 30
     var proximityScore: Double = 0
+    var proximityScoreThresholds: [Double] = [0.2, 1, 1]
+    var lastCheckedSongPosition: Double?
+    var isHit = false
 
     var command: SlideCommandHO
-    var isHit = false
 
     init(slideHO: SlideHitObject, wrappingObject: Entity, preSpawnInterval: Double, slideSpeed: Double) {
         self.wrappingObject = wrappingObject
@@ -62,36 +66,56 @@ class SlideGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
-        // TODO: define how slider hit is determined.
-        // 1) hit count is proportional to slider length.
-        // Eg, 3 beat long slider, if user hit the first two, it will be 2 hit and one miss
-        // may not be possible since it seems fractional beats are allowed
-        // 2) whole slider is one hit or miss.
-            // 2.1) if user finger digress too far, it will be an immediate miss.
-            // Accumulate proximityScore then at the end of the slider life, determine perfect or good.
-            // 2.2) Accumulate proximityScore then at the end of the slider life, determine perfect, good, or miss.
-//        let locationError = simd_length(SIMD2(
-//            x: input.location.x - self.expectedPosition.x,
-//            y: input.location.y - self.expectedPosition.y
-//        ))
-//        let clampedLocationError = Math.clamp(num: locationError,
-//                                              minimum: 0,
-//                                              maximum: minimumProximity) / minimumProximity
-//        proximityScore += clampedLocationError
+    func checkOnInput(input: GameInputData, scoreManager: ScoreManager) {
+        guard let lastCheckedSongPosition = lastCheckedSongPosition else {
+            lastCheckedSongPosition = input.songPositionReceived
+            return
+        }
+        guard input.songPositionReceived != lastCheckedSongPosition else {
+            return
+        }
+
+        let locationError = simd_length(SIMD2(
+            x: input.location.x - self.expectedPosition.x,
+            y: input.location.y - self.expectedPosition.y
+        ))
+
+        // if drag too far away
+        if locationError > maxPositionError {
+            scoreManager.missCount += 1
+            destroyObject()
+            return
+        }
+
+        let clampedLocationError = Math.clamp(num: locationError,
+                                              minimum: 0,
+                                              maximum: minimumProximity) / minimumProximity
+        let deltaTime = input.songPositionReceived - lastCheckedSongPosition
+        proximityScore += (1 - clampedLocationError) * deltaTime / optimalLife
+        self.lastCheckedSongPosition = input.songPositionReceived
     }
 
-    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+    func checkOnInputEnd(input: GameInputData, scoreManager: ScoreManager) {
+        // if drag ended too early
+        let locationError = simd_length(SIMD2(
+            x: input.location.x - self.endPosition.x,
+            y: input.location.y - self.endPosition.y
+        ))
+        if locationError > maxPositionError {
+            scoreManager.missCount += 1
+            destroyObject()
+        }
 
-        // TODO: define proper checking rule and scoring rule
-//        if (proximityScore < 0.5) {
-//            // perfect
-//            scoreManager.perfetHitCount += 1
-//            scoreManager.score += 2
-//        } else {
-//            // good
-//            scoreManager.goodHitCount += 1
-//            scoreManager.score += 1
-//        }
+        isHit = true
+        // TODO: define proper scoring rule
+        if proximityScore < proximityScoreThresholds[0] {
+            // perfect
+            scoreManager.perfetHitCount += 1
+            scoreManager.score += 2
+        } else {
+            // good
+            scoreManager.goodHitCount += 1
+            scoreManager.score += 1
+        }
     }
 }

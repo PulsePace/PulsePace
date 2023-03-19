@@ -7,11 +7,27 @@
 
 class ScoreManager {
     var score: Int = 0
-    var perfetHitCount: Int = 0
-    var goodHitCount: Int = 0
-    var missCount: Int = 0
+    var perfetHitCount: Int {
+        didSet {
+            comboCount += perfetHitCount - oldValue
+        }
+    }
+    var goodHitCount: Int {
+        didSet {
+            comboCount += goodHitCount - oldValue
+        }
+    }
+    var missCount: Int {
+        didSet {
+            comboCount = 0
+        }
+    }
 
-    // multiplier for continuous perfect hit
-    var perfectComboCount: Int = 0
-//    var multiplier: Int = 1
+    var comboCount: Int = 0
+
+    init() {
+        perfetHitCount = 0
+        goodHitCount = 0
+        missCount = 0
+    }
 }

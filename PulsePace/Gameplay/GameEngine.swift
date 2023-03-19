@@ -83,10 +83,14 @@ class GameEngine {
     }
 
     func processInput(gameHO: any GameHO, inputData: InputData) {
-        gameHO.checkOnInput(input: inputData, scoreManager: self.scoreManager)
+        gameHO.checkOnInput(input: GameInputData(location: inputData.location,
+                                                 songPositionReceived: conductor.songPosition),
+                            scoreManager: self.scoreManager)
     }
 
     func processInputEnd(gameHO: any GameHO, inputData: InputData) {
-        gameHO.checkOnInputEnd(input: inputData, scoreManager: self.scoreManager)
+        gameHO.checkOnInputEnd(input: GameInputData(location: inputData.location,
+                                                    songPositionReceived: conductor.songPosition),
+                               scoreManager: self.scoreManager)
     }
 }
