@@ -96,6 +96,15 @@ class GameViewModel: ObservableObject, RenderSystem {
         createDisplayLink()
     }
 
+    func toggleGameplay() {
+        guard let isPaused = displayLink?.isPaused else {
+            print("No active display link")
+            return
+        }
+
+        displayLink?.isPaused = !isPaused
+    }
+
     func stopGameplay() {
         displayLink?.invalidate()
     }
