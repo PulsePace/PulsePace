@@ -8,8 +8,6 @@
 import Foundation
 
 class TapGameHO: GameHO {
-    typealias CommandType = TapCommandHO
-
     let wrappingObject: Entity
     let position: CGPoint
 
@@ -20,14 +18,11 @@ class TapGameHO: GameHO {
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(TapGameHO) -> Void] = []
 
-    var command: TapCommandHO
-
     init(tapHO: TapHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = tapHO.position
         self.wrappingObject = wrappingObject
         self.lifeStart = tapHO.startTime - preSpawnInterval
         self.lifeEnd = tapHO.startTime + preSpawnInterval
-        self.command = TapCommandHO()
     }
 
     func updateState(currBeat: Double) {

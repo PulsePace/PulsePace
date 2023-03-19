@@ -18,6 +18,7 @@ final class AudioManager: ObservableObject {
         }
 
         do {
+            stopPlayer()
             player = try AVAudioPlayer(contentsOf: url)
             initialisePlayer(player: player)
         } catch {

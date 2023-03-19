@@ -10,7 +10,7 @@ import CoreGraphics
 
 struct InputData {
     var location: CGPoint
-    var timeReceived: Date
+    var timeReceived: Double = 0
     var translation = CGSize.zero
 
     init(value: any Locatable) {
@@ -18,6 +18,5 @@ struct InputData {
             translation = translatedValue.translation
         }
         location = value.location
-        timeReceived = Date.now
     }
 }

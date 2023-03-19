@@ -26,6 +26,7 @@
 		6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACE29C125CA00FAA79E /* TapGameHO.swift */; };
 		6A96AAD529C1272500FAA79E /* SlideHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD429C1272500FAA79E /* SlideHitObject.swift */; };
 		6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD629C1273900FAA79E /* HoldHitObject.swift */; };
+		C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73CF95229C6797000C3E017 /* View+Conditional.swift */; };
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
 		C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77572E929BDE4C100367053 /* View+FullBackground.swift */; };
@@ -36,6 +37,8 @@
 		C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3D29B92657006F7423 /* TouchInput.swift */; };
 		C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4829B92E4E006F7423 /* GestureModifier.swift */; };
 		C7908E4E29B93137006F7423 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4D29B93137006F7423 /* GameView.swift */; };
+		C7A1D85629C6B4C100340BEE /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A1D85529C6B4C100340BEE /* InputManager.swift */; };
+		C7A1D85829C6B7A400340BEE /* InputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A1D85729C6B7A400340BEE /* InputHandler.swift */; };
 		C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */; };
 		C7CD9BD929B7514E00ABEE8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7CD9BD829B7514E00ABEE8F /* Assets.xcassets */; };
 		C7CD9BDC29B7514E00ABEE8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7CD9BDB29B7514E00ABEE8F /* Preview Assets.xcassets */; };
@@ -136,6 +139,7 @@
 		6A96AACE29C125CA00FAA79E /* TapGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapGameHO.swift; sourceTree = "<group>"; };
 		6A96AAD429C1272500FAA79E /* SlideHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideHitObject.swift; sourceTree = "<group>"; };
 		6A96AAD629C1273900FAA79E /* HoldHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldHitObject.swift; sourceTree = "<group>"; };
+		C73CF95229C6797000C3E017 /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		C77572E929BDE4C100367053 /* View+FullBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+FullBackground.swift"; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 		C7908E3D29B92657006F7423 /* TouchInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchInput.swift; sourceTree = "<group>"; };
 		C7908E4829B92E4E006F7423 /* GestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModifier.swift; sourceTree = "<group>"; };
 		C7908E4D29B93137006F7423 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		C7A1D85529C6B4C100340BEE /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
+		C7A1D85729C6B7A400340BEE /* InputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputHandler.swift; sourceTree = "<group>"; };
 		C7CD9BD129B7514900ABEE8F /* PulsePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulsePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceApp.swift; sourceTree = "<group>"; };
 		C7CD9BD829B7514E00ABEE8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -305,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				C77572E929BDE4C100367053 /* View+FullBackground.swift */,
+				C73CF95229C6797000C3E017 /* View+Conditional.swift */,
 			);
 			path = ViewExtensions;
 			sourceTree = "<group>";
@@ -323,6 +330,8 @@
 				C7908E3029B7D8C0006F7423 /* Inputs */,
 				C748C9EE29BB03E200CB8C7A /* Protocols */,
 				C748C9ED29BB03D300CB8C7A /* DataStructures */,
+				C7A1D85529C6B4C100340BEE /* InputManager.swift */,
+				C7A1D85729C6B7A400340BEE /* InputHandler.swift */,
 			);
 			path = Gameplay;
 			sourceTree = "<group>";
@@ -760,6 +769,7 @@
 				D0D7D12429C4F39D00676F12 /* HitObjectTimelineView.swift in Sources */,
 				C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */,
 				D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */,
+				C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */,
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
 				D070B47129C4497900E55693 /* HoldHitObject.swift in Sources */,
 				6A96AAD029C125CA00FAA79E /* SlideGameHO.swift in Sources */,
@@ -775,6 +785,7 @@
 				D0D7D13229C4F60300676F12 /* TapHitObjectViewFactory.swift in Sources */,
 				D0D7D12829C4F41000676F12 /* TapHitObjectTimelineView.swift in Sources */,
 				6A96AAC829C1259900FAA79E /* SlideCommand.swift in Sources */,
+				C7A1D85829C6B7A400340BEE /* InputHandler.swift in Sources */,
 				6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */,
 				D070B46D29C41A9400E55693 /* DrawShapeBorder.swift in Sources */,
 				C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */,
@@ -838,6 +849,7 @@
 				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,
 				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
 				D0D7D12C29C4F4AA00676F12 /* SlideHitObjectTimelineView.swift in Sources */,
+				C7A1D85629C6B4C100340BEE /* InputManager.swift in Sources */,
 				6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */,
 				6A96AAC729C1259900FAA79E /* HoldCommand.swift in Sources */,
 				D0D7D13429C4F61200676F12 /* SlideHitObjectViewFactory.swift in Sources */,
@@ -1000,41 +1012,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = X77GX48L42;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music-games";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePace;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
-			};
-			name = Debug;
-		};
-		C7CD9BF729B7514F00ABEE8F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
@@ -1054,8 +1032,46 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePace;
+				PRODUCT_BUNDLE_IDENTIFIER = PulsePace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		C7CD9BF729B7514F00ABEE8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
+				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music-games";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = PulsePace;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

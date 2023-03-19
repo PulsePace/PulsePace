@@ -10,30 +10,12 @@ class TapCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init() {
-        self.init { _ in
+    convenience init(receiver: TapGameHO, timeReceived: Double) {
+        self.init { inputData in
+            var inputData = inputData
+            inputData.timeReceived = timeReceived
             print("Tap")
+//            receiver.checkOnInput(inputData: inputData)
         }
-    }
-}
-
-class TapCommandHO: CommandHO {
-    typealias GameHOType = TapGameHO
-
-    var shouldExecute = false
-    var currInput: InputData?
-    var isHit = false
-    var hitStage = LifeStage.startStage
-
-    func execute(gameHO: TapGameHO, deltaTime: Double) {
-        // Only first tap registers
-        if isHit {
-            return
-        }
-
-        isHit = true
-        hitStage = gameHO.lifeStage
-        // TODO: Animation after destroying entity object
-        gameHO.destroyObject()
     }
 }

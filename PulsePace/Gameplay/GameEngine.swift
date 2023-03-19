@@ -7,10 +7,10 @@
 
 import Foundation
 
-// TODO: Add conductor
 class GameEngine {
     private var allObjects: Set<Entity>
     var gameHOTable: [Entity: any GameHO]
+    private var inputManager: InputManager?
     private var hitObjectManager: HitObjectManager?
     private var conductor: Conductor?
 
@@ -29,7 +29,6 @@ class GameEngine {
         self.gameHOTable = [:]
     }
 
-    // TODO: Should load from beatmap data structure
     func load(_ beatmap: Beatmap) {
         reset()
         self.hitObjectManager = HitObjectManager(
@@ -40,12 +39,15 @@ class GameEngine {
             slideSpeed: beatmap.sliderSpeed
         )
         self.conductor = Conductor(bpm: beatmap.bpm)
+        self.inputManager = InputManager()
+//        inputManager.addHandler(scoreManager)
     }
 
     func reset() {
         self.allObjects.removeAll()
         self.gameHOTable.removeAll()
         self.hitObjectManager = nil
+        self.inputManager = nil
     }
 
     func step(_ deltaTime: Double) {
@@ -54,29 +56,18 @@ class GameEngine {
             return
         }
         conductor.step(deltaTime)
-        // TODO: swap currBeat with conductor reading
         if let spawnGameHOs = hitObjectManager?.checkBeatMap(conductor.songPosition) {
             spawnGameHOs.forEach { gameHOAdder($0) }
         }
 
-        // Should contain all hitobjects that have been "touched" this frame
-        var engagedHOs: [any GameHO] = []
-        /// Update state of gameHO -> process all inputs on HO
-        /// -> delegate responses to respective system -> delegate UI display to renderer
+        // Update state of gameHO -> process all inputs on HO
+        // -> delegate responses to respective system -> delegate UI display to renderer
         allObjects.forEach { object in
             if let gameHO = gameHOTable[object] {
-                // TODO: Use actual conductor for currBeat
                 gameHO.updateState(currBeat: conductor.songPosition)
-                if gameHO.shouldExecute {
-                    engagedHOs.append(gameHO)
-                }
             } else {
                 print("By game design params, all objects should have a hit object component")
             }
-        }
-
-        engagedHOs.forEach { engagedHO in
-            engagedHO.processInput(deltaTime: deltaTime)
         }
     }
 }

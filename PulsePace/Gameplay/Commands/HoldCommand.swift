@@ -10,25 +10,19 @@ class HoldCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init() {
-        self.init { _ in
-            print("Hold")
-        }
-    }
-}
-
-class HoldCommandHO: CommandHO {
-    typealias GameHOType = HoldGameHO
-    var shouldExecute = false
-    var currInput: InputData?
-    var normalizedHoldTime: Double = 0
-    var isHit = false
-    var holdStart: LifeStage?
-
-    func execute(gameHO: HoldGameHO, deltaTime: Double) {
-        if holdStart == nil {
-            holdStart = gameHO.lifeStage
-        }
-        normalizedHoldTime += deltaTime / gameHO.optimalLife
+    convenience init(receiver: HoldGameHO, timeReceived: Double) {
+        self.init(
+            action: { inputData in
+                var inputData = inputData
+                inputData.timeReceived = timeReceived
+                print("Hold")
+//                receiver.checkOnInput(inputData: inputData)
+            },
+            completion: { inputData in
+                var inputData = inputData
+                inputData.timeReceived = timeReceived
+//                receiver.checkOnInputEnd(inputData: inputData)
+            }
+        )
     }
 }
