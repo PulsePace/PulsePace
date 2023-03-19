@@ -36,17 +36,17 @@ class TapGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: GameInputData, scoreManager: ScoreManager) {
+    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
         checkOnInputEnd(input: input, scoreManager: scoreManager)
     }
 
-    func checkOnInputEnd(input: GameInputData, scoreManager: ScoreManager) {
+    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
         if isHit {
             return
         }
 
         isHit = true
-        proximityScore += abs(input.songPositionReceived - lifeEnd) / lifeTime
+        proximityScore += abs(input.timeReceived - lifeEnd) / lifeTime
 
         // TODO: refine scoring rule
         if proximityScore < proximityScoreThresholds[0] {

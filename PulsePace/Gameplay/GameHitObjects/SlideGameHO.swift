@@ -84,12 +84,12 @@ class SlideGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: GameInputData, scoreManager: ScoreManager) {
+    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
         guard let lastCheckedSongPosition = lastCheckedSongPosition else {
-            lastCheckedSongPosition = input.songPositionReceived
+            lastCheckedSongPosition = input.timeReceived
             return
         }
-        guard input.songPositionReceived != lastCheckedSongPosition else {
+        guard input.timeReceived != lastCheckedSongPosition else {
             return
         }
 
@@ -108,12 +108,12 @@ class SlideGameHO: GameHO {
         let clampedLocationError = Math.clamp(num: locationError,
                                               minimum: 0,
                                               maximum: minimumProximity) / minimumProximity
-        let deltaTime = input.songPositionReceived - lastCheckedSongPosition
+        let deltaTime = input.timeReceived - lastCheckedSongPosition
         proximityScore += (1 - clampedLocationError) * deltaTime / optimalLife
-        self.lastCheckedSongPosition = input.songPositionReceived
+        self.lastCheckedSongPosition = input.timeReceived
     }
 
-    func checkOnInputEnd(input: GameInputData, scoreManager: ScoreManager) {
+    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
         // if drag ended too early
         if currEdgeIndex < vertices.count - 1 {
             scoreManager.missCount += 1

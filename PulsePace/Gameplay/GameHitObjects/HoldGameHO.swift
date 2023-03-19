@@ -54,20 +54,20 @@ class HoldGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: GameInputData, scoreManager: ScoreManager) {
+    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
         guard let lastCheckedSongPosition = lastCheckedSongPosition else {
-            proximityScore += abs(input.songPositionReceived - lifeStart) / optimalLife
-            lastCheckedSongPosition = input.songPositionReceived
+            proximityScore += abs(input.timeReceived - lifeStart) / optimalLife
+            lastCheckedSongPosition = input.timeReceived
             return
         }
-        guard input.songPositionReceived != lastCheckedSongPosition else {
+        guard input.timeReceived != lastCheckedSongPosition else {
             return
         }
-        self.lastCheckedSongPosition = input.songPositionReceived
+        self.lastCheckedSongPosition = input.timeReceived
     }
 
-    func checkOnInputEnd(input: GameInputData, scoreManager: ScoreManager) {
-        proximityScore += abs(input.songPositionReceived - lifeStart) / optimalLife
+    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+        proximityScore += abs(input.timeReceived - lifeStart) / optimalLife
 
         // TODO: define proper scoring rule
         if proximityScore < proximityScoreThresholds[0] {

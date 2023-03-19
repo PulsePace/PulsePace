@@ -31,3 +31,12 @@ class ScoreManager {
         missCount = 0
     }
 }
+
+extension ScoreManager: InputHandler {
+    func onInputChanged(gameHO: any GameHO, input: InputData) {
+        gameHO.checkOnInput(input: input, scoreManager: self)
+    }
+    func onInputEnded(gameHO: any GameHO, input: InputData) {
+        gameHO.checkOnInputEnd(input: input, scoreManager: self)
+    }
+}

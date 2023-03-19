@@ -7,7 +7,6 @@
 
 protocol ScoreManagable {
     var isHit: Bool { get }
-    func checkOnInput(input: GameInputData, scoreManager: ScoreManager)
-
-    func checkOnInputEnd(input: GameInputData, scoreManager: ScoreManager)
+    func checkOnInput(input: InputData, scoreManager: ScoreManager)
+    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager)
 }
