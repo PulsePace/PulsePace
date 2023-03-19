@@ -26,6 +26,7 @@
 		6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACE29C125CA00FAA79E /* TapGameHO.swift */; };
 		6A96AAD529C1272500FAA79E /* SlideHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD429C1272500FAA79E /* SlideHitObject.swift */; };
 		6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD629C1273900FAA79E /* HoldHitObject.swift */; };
+		C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73CF95229C6797000C3E017 /* View+Conditional.swift */; };
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
 		C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77572E929BDE4C100367053 /* View+FullBackground.swift */; };
@@ -136,6 +137,7 @@
 		6A96AACE29C125CA00FAA79E /* TapGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapGameHO.swift; sourceTree = "<group>"; };
 		6A96AAD429C1272500FAA79E /* SlideHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideHitObject.swift; sourceTree = "<group>"; };
 		6A96AAD629C1273900FAA79E /* HoldHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldHitObject.swift; sourceTree = "<group>"; };
+		C73CF95229C6797000C3E017 /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		C77572E929BDE4C100367053 /* View+FullBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+FullBackground.swift"; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				C77572E929BDE4C100367053 /* View+FullBackground.swift */,
+				C73CF95229C6797000C3E017 /* View+Conditional.swift */,
 			);
 			path = ViewExtensions;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				D0D7D12429C4F39D00676F12 /* HitObjectTimelineView.swift in Sources */,
 				C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */,
 				D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */,
+				C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */,
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
 				D070B47129C4497900E55693 /* HoldHitObject.swift in Sources */,
 				6A96AAD029C125CA00FAA79E /* SlideGameHO.swift in Sources */,
