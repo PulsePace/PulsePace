@@ -11,7 +11,7 @@ struct Beatmap {
     /// All the "time units" are in beats
     let bpm: Double
     let offset: Double
-    let preSpawnInterval: Double = 5
+    let preSpawnInterval: Double = 2
     let sliderSpeed: Double = 50
     var hitObjects: [any HitObject]
 }
