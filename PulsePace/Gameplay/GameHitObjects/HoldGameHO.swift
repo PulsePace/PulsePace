@@ -8,8 +8,6 @@
 import Foundation
 
 class HoldGameHO: GameHO {
-    typealias CommandType = HoldCommandHO
-
     let wrappingObject: Entity
     let position: CGPoint
 
@@ -24,8 +22,6 @@ class HoldGameHO: GameHO {
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(HoldGameHO) -> Void] = []
-
-    var command: HoldCommandHO
 
     init(holdHO: HoldHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = holdHO.position
@@ -43,7 +39,6 @@ class HoldGameHO: GameHO {
         self.optimalStageEnd = LifeStage(1 - normSpawnInterval)
         self.optimalLife = holdHO.endTime - holdHO.startTime
         self.lifeEnd = holdHO.endTime + preSpawnInterval
-        self.command = HoldCommandHO()
     }
 
     func updateState(currBeat: Double) {
