@@ -33,6 +33,13 @@ class SlideGameHO: GameHO {
     var expectedPosition: CGPoint
     private var reachedEnd = false
 
+    let maxPositionError: Double = 20
+    var minimumProximity: Double = 30
+    var proximityScore: Double = 0
+    var proximityScoreThresholds: [Double] = [0.2, 1, 1]
+    var lastCheckedSongPosition: Double?
+    var isHit = false
+
     init(slideHO: SlideHitObject, wrappingObject: Entity, preSpawnInterval: Double, slideSpeed: Double) {
         if slideHO.vertices.count < 1 {
             fatalError("Each slider hit object should at least have two vertices")
@@ -72,6 +79,55 @@ class SlideGameHO: GameHO {
         lifeStage = LifeStage(Lerper.linearFloat(from: 0, to: 1, t: abs(currBeat - lifeStart) / lifeTime))
         if currBeat - lifeStart >= lifeTime {
             destroyObject()
+        }
+    }
+
+    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
+        guard let lastCheckedSongPosition = lastCheckedSongPosition else {
+            lastCheckedSongPosition = input.timeReceived
+            return
+        }
+        guard input.timeReceived != lastCheckedSongPosition else {
+            return
+        }
+
+        let locationError = simd_length(SIMD2(
+            x: input.location.x - self.expectedPosition.x,
+            y: input.location.y - self.expectedPosition.y
+        ))
+
+        // if drag too far away
+        if locationError > maxPositionError {
+            scoreManager.missCount += 1
+            destroyObject()
+            return
+        }
+
+        let clampedLocationError = Math.clamp(num: locationError,
+                                              minimum: 0,
+                                              maximum: minimumProximity) / minimumProximity
+        let deltaTime = input.timeReceived - lastCheckedSongPosition
+        proximityScore += (1 - clampedLocationError) * deltaTime / optimalLife
+        self.lastCheckedSongPosition = input.timeReceived
+    }
+
+    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+        // if drag ended too early
+        if currEdgeIndex < vertices.count - 1 {
+            scoreManager.missCount += 1
+            destroyObject()
+        }
+
+        isHit = true
+        // TODO: define proper scoring rule
+        if proximityScore < proximityScoreThresholds[0] {
+            // perfect
+            scoreManager.perfetHitCount += 1
+            scoreManager.score += 2
+        } else {
+            // good
+            scoreManager.goodHitCount += 1
+            scoreManager.score += 1
         }
     }
 

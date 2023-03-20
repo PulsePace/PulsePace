@@ -8,6 +8,7 @@
 import Foundation
 
 class GameEngine {
+    var scoreManager: ScoreManager
     private var allObjects: Set<Entity>
     var gameHOTable: [Entity: any GameHO]
     private var inputManager: InputManager?
@@ -16,7 +17,12 @@ class GameEngine {
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         self?.allObjects.remove(removedObject)
-        self?.gameHOTable.removeValue(forKey: removedObject)
+        guard let removedGameHO = self?.gameHOTable.removeValue(forKey: removedObject) else {
+            return
+        }
+        if !removedGameHO.isHit {
+            self?.scoreManager.missCount += 1
+        }
     }
 
     lazy var gameHOAdder: (any GameHO) -> Void = { [weak self] gameHO in
@@ -27,6 +33,7 @@ class GameEngine {
     init() {
         self.allObjects = Set()
         self.gameHOTable = [:]
+        self.scoreManager = ScoreManager()
     }
 
     func load(_ beatmap: Beatmap) {

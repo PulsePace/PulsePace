@@ -19,33 +19,33 @@ class InputManager {
         inputHandlers.remove(at: handlerIndex)
     }
 
-    func handleTap() {
+    func handleTap(gameHO: any GameHO, input: InputData) {
         for handler in inputHandlers {
-            handler.onTap()
+            handler.onTap(gameHO: gameHO, input: input)
         }
     }
 
-    func handleSlideChanged() {
+    func handleSlideChanged(gameHO: any GameHO, input: InputData) {
         for handler in inputHandlers {
-            handler.onSlideChanged()
+            handler.onSlideChanged(gameHO: gameHO, input: input)
         }
     }
 
-    func handleSlideEnded() {
+    func handleSlideEnded(gameHO: any GameHO, input: InputData) {
         for handler in inputHandlers {
-            handler.onSlideEnded()
+            handler.onSlideEnded(gameHO: gameHO, input: input)
         }
     }
 
-    func handleHoldChanged() {
+    func handleHoldChanged(gameHO: any GameHO, input: InputData) {
         for handler in inputHandlers {
-            handler.onHoldChanged()
+            handler.onHoldChanged(gameHO: gameHO, input: input)
         }
     }
 
-    func handleHoldEnded() {
+    func handleHoldEnded(gameHO: any GameHO, input: InputData) {
         for handler in inputHandlers {
-            handler.onHoldEnded()
+            handler.onHoldEnded(gameHO: gameHO, input: input)
         }
     }
 }

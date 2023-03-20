@@ -23,6 +23,12 @@ class HoldGameHO: GameHO {
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(HoldGameHO) -> Void] = []
 
+    var proximityScore: Double = 0
+    var minimumProximity: Double = 30
+    var proximityScoreThresholds: [Double] = [0.2, 0.5, 1]
+    var lastCheckedSongPosition: Double?
+    var isHit = false
+
     init(holdHO: HoldHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = holdHO.position
         self.wrappingObject = wrappingObject
@@ -44,6 +50,37 @@ class HoldGameHO: GameHO {
     func updateState(currBeat: Double) {
         lifeStage = LifeStage(Lerper.linearFloat(from: 0, to: 1, t: abs(currBeat - lifeStart) / lifeTime))
         if currBeat - lifeStart >= lifeTime {
+            destroyObject()
+        }
+    }
+
+    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
+        guard let lastCheckedSongPosition = lastCheckedSongPosition else {
+            proximityScore += abs(input.timeReceived - lifeStart) / optimalLife
+            lastCheckedSongPosition = input.timeReceived
+            return
+        }
+        guard input.timeReceived != lastCheckedSongPosition else {
+            return
+        }
+        self.lastCheckedSongPosition = input.timeReceived
+    }
+
+    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+        proximityScore += abs(input.timeReceived - lifeStart) / optimalLife
+
+        // TODO: define proper scoring rule
+        if proximityScore < proximityScoreThresholds[0] {
+            // perfect
+            scoreManager.perfetHitCount += 1
+            scoreManager.score += 2
+        } else if proximityScore < proximityScoreThresholds[1] {
+            // good
+            scoreManager.goodHitCount += 1
+            scoreManager.score += 1
+        } else {
+            // miss
+            scoreManager.missCount += 1
             destroyObject()
         }
     }

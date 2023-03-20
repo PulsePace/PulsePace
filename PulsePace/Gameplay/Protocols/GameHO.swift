@@ -7,8 +7,7 @@
 
 import Foundation
 
-/// Add a parent class from HO that is not instantaneous to increase code reusability
-protocol GameHO: Component, AnyObject {
+protocol GameHO: Component, AnyObject, ScoreManagable {
     var position: CGPoint { get }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal

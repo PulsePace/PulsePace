@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		175B3F0A29C4717B00DE715D /* HitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0929C4717B00DE715D /* HitStatus.swift */; };
+		175B3F0C29C4719700DE715D /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0B29C4719700DE715D /* ScoreManager.swift */; };
+		175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0D29C471BA00DE715D /* Conductor.swift */; };
+		175B3F1229C48B4800DE715D /* ScoreManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F1129C48B4800DE715D /* ScoreManagable.swift */; };
 		6A413AD229C741B20042013E /* MyQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413AD129C741B20042013E /* MyQueueTests.swift */; };
 		6A413AD829C743950042013E /* LerperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413AD729C743950042013E /* LerperTests.swift */; };
 		6A413ADC29C746F20042013E /* ConductorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413ADB29C746F20042013E /* ConductorTests.swift */; };
 		6A413ADE29C74F650042013E /* MathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413ADD29C74F650042013E /* MathTests.swift */; };
-		6A83A67629C4B21B0024D4DF /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A83A67529C4B21B0024D4DF /* Conductor.swift */; };
 		6A83A67829C504E60024D4DF /* GameHOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A83A67729C504E60024D4DF /* GameHOVM.swift */; };
 		6A96AAB429C124FF00FAA79E /* MyQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB329C124FF00FAA79E /* MyQueue.swift */; };
 		6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB629C1254D00FAA79E /* GameHO.swift */; };
@@ -124,11 +127,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		175B3F0929C4717B00DE715D /* HitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitStatus.swift; sourceTree = "<group>"; };
+		175B3F0B29C4719700DE715D /* ScoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
+		175B3F0D29C471BA00DE715D /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
+		175B3F1129C48B4800DE715D /* ScoreManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManagable.swift; sourceTree = "<group>"; };
 		6A413AD129C741B20042013E /* MyQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQueueTests.swift; sourceTree = "<group>"; };
 		6A413AD729C743950042013E /* LerperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LerperTests.swift; sourceTree = "<group>"; };
 		6A413ADB29C746F20042013E /* ConductorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConductorTests.swift; sourceTree = "<group>"; };
 		6A413ADD29C74F650042013E /* MathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTests.swift; sourceTree = "<group>"; };
-		6A83A67529C4B21B0024D4DF /* Conductor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
 		6A83A67729C504E60024D4DF /* GameHOVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHOVM.swift; sourceTree = "<group>"; };
 		6A96AAB329C124FF00FAA79E /* MyQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyQueue.swift; sourceTree = "<group>"; };
 		6A96AAB629C1254D00FAA79E /* GameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHO.swift; sourceTree = "<group>"; };
@@ -326,6 +332,7 @@
 			children = (
 				6A96AAB729C1254D00FAA79E /* Entity.swift */,
 				6A96AAB629C1254D00FAA79E /* GameHO.swift */,
+				175B3F1129C48B4800DE715D /* ScoreManagable.swift */,
 				C748C9E929BB036F00CB8C7A /* Locatable.swift */,
 				C7FD9A4B29C2413900191F03 /* Translatable.swift */,
 			);
@@ -344,7 +351,6 @@
 		C7908E2C29B7C8E7006F7423 /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
-				6A83A67529C4B21B0024D4DF /* Conductor.swift */,
 				6A96AAC929C125A800FAA79E /* GameHitObjects */,
 				6A96AAC029C1258E00FAA79E /* Commands */,
 				6A96AABA29C1255400FAA79E /* GameEngine.swift */,
@@ -355,6 +361,9 @@
 				C7908E3029B7D8C0006F7423 /* Inputs */,
 				C748C9EE29BB03E200CB8C7A /* Protocols */,
 				C748C9ED29BB03D300CB8C7A /* DataStructures */,
+				175B3F0929C4717B00DE715D /* HitStatus.swift */,
+				175B3F0B29C4719700DE715D /* ScoreManager.swift */,
+				175B3F0D29C471BA00DE715D /* Conductor.swift */,
 				C7A1D85529C6B4C100340BEE /* InputManager.swift */,
 				C7A1D85729C6B7A400340BEE /* InputHandler.swift */,
 			);
@@ -801,6 +810,8 @@
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
 				D070B47129C4497900E55693 /* HoldHitObject.swift in Sources */,
 				6A96AAD029C125CA00FAA79E /* SlideGameHO.swift in Sources */,
+				175B3F1229C48B4800DE715D /* ScoreManagable.swift in Sources */,
+				175B3F0A29C4717B00DE715D /* HitStatus.swift in Sources */,
 				6A96AAB929C1254D00FAA79E /* Entity.swift in Sources */,
 				D0D7D13829C4F63800676F12 /* ViewFactoryCreator.swift in Sources */,
 				D0D7D14229C4F6EA00676F12 /* HoldGestureHandler.swift in Sources */,
@@ -836,7 +847,6 @@
 				D070B47329C4521E00E55693 /* CGPoint+Hashable.swift in Sources */,
 				C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
-				6A83A67629C4B21B0024D4DF /* Conductor.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
 				D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */,
 				D0D7D14029C4F6CC00676F12 /* TapGestureHandler.swift in Sources */,
@@ -858,6 +868,7 @@
 				C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */,
 				D0D7D12629C4F3BC00676F12 /* TapHitObjectCanvasView.swift in Sources */,
 				C7D1AF2529BF844A00244EF5 /* PriorityQueue.swift in Sources */,
+				175B3F0C29C4719700DE715D /* ScoreManager.swift in Sources */,
 				C7D1AF2729BF895D00244EF5 /* Queue.swift in Sources */,
 				C7FD9A5C29C3ACE200191F03 /* GameControlView.swift in Sources */,
 				C7FD9A4C29C2413900191F03 /* Translatable.swift in Sources */,
@@ -874,6 +885,7 @@
 				D0D7D13629C4F62400676F12 /* HoldHitObjectViewFactory.swift in Sources */,
 				C7FD9A4329C22D5A00191F03 /* AddTapHitObjectCommand.swift in Sources */,
 				C7FD9A4629C2356800191F03 /* CanvasTapInput.swift in Sources */,
+				175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */,
 				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,
 				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
 				D0D7D12C29C4F4AA00676F12 /* SlideHitObjectTimelineView.swift in Sources */,
