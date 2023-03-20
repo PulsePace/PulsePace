@@ -11,6 +11,10 @@
 		175B3F0C29C4719700DE715D /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0B29C4719700DE715D /* ScoreManager.swift */; };
 		175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0D29C471BA00DE715D /* Conductor.swift */; };
 		175B3F1229C48B4800DE715D /* ScoreManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F1129C48B4800DE715D /* ScoreManagable.swift */; };
+		6A413AD229C741B20042013E /* MyQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413AD129C741B20042013E /* MyQueueTests.swift */; };
+		6A413AD829C743950042013E /* LerperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413AD729C743950042013E /* LerperTests.swift */; };
+		6A413ADC29C746F20042013E /* ConductorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413ADB29C746F20042013E /* ConductorTests.swift */; };
+		6A413ADE29C74F650042013E /* MathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A413ADD29C74F650042013E /* MathTests.swift */; };
 		6A83A67829C504E60024D4DF /* GameHOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A83A67729C504E60024D4DF /* GameHOVM.swift */; };
 		6A96AAB429C124FF00FAA79E /* MyQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB329C124FF00FAA79E /* MyQueue.swift */; };
 		6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAB629C1254D00FAA79E /* GameHO.swift */; };
@@ -127,6 +131,10 @@
 		175B3F0B29C4719700DE715D /* ScoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
 		175B3F0D29C471BA00DE715D /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
 		175B3F1129C48B4800DE715D /* ScoreManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManagable.swift; sourceTree = "<group>"; };
+		6A413AD129C741B20042013E /* MyQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQueueTests.swift; sourceTree = "<group>"; };
+		6A413AD729C743950042013E /* LerperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LerperTests.swift; sourceTree = "<group>"; };
+		6A413ADB29C746F20042013E /* ConductorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConductorTests.swift; sourceTree = "<group>"; };
+		6A413ADD29C74F650042013E /* MathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTests.swift; sourceTree = "<group>"; };
 		6A83A67729C504E60024D4DF /* GameHOVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHOVM.swift; sourceTree = "<group>"; };
 		6A96AAB329C124FF00FAA79E /* MyQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyQueue.swift; sourceTree = "<group>"; };
 		6A96AAB629C1254D00FAA79E /* GameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHO.swift; sourceTree = "<group>"; };
@@ -250,6 +258,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A413AD929C743A20042013E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				6A413AD729C743950042013E /* LerperTests.swift */,
+				6A413ADD29C74F650042013E /* MathTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		6A413ADA29C746CD0042013E /* Gameplay */ = {
+			isa = PBXGroup;
+			children = (
+				6A413ADB29C746F20042013E /* ConductorTests.swift */,
+			);
+			path = Gameplay;
+			sourceTree = "<group>";
+		};
 		6A96AAB529C1250800FAA79E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +441,8 @@
 		C7CD9BE429B7514F00ABEE8F /* PulsePaceTests */ = {
 			isa = PBXGroup;
 			children = (
+				6A413ADA29C746CD0042013E /* Gameplay */,
+				6A413AD929C743A20042013E /* Utils */,
 				C7D1AF2F29BF999D00244EF5 /* Shared */,
 				C7CD9BE529B7514F00ABEE8F /* PulsePaceTests.swift */,
 			);
@@ -453,6 +480,7 @@
 		C7D1AF2A29BF900500244EF5 /* DataStructures */ = {
 			isa = PBXGroup;
 			children = (
+				6A413AD129C741B20042013E /* MyQueueTests.swift */,
 				C7D1AF2B29BF902B00244EF5 /* PriorityQueueTests.swift */,
 			);
 			path = DataStructures;
@@ -875,6 +903,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A413AD229C741B20042013E /* MyQueueTests.swift in Sources */,
+				6A413ADC29C746F20042013E /* ConductorTests.swift in Sources */,
+				6A413AD829C743950042013E /* LerperTests.swift in Sources */,
+				6A413ADE29C74F650042013E /* MathTests.swift in Sources */,
 				C7CD9BE629B7514F00ABEE8F /* PulsePaceTests.swift in Sources */,
 				C7D1AF2C29BF902B00244EF5 /* PriorityQueueTests.swift in Sources */,
 			);
@@ -1097,6 +1129,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P3QLTH5V5D;
@@ -1119,6 +1152,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P3QLTH5V5D;

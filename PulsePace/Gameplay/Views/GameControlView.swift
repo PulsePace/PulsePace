@@ -20,6 +20,7 @@ struct GameControlView: View {
                                      ? "pause.circle.fill" : "play.circle.fill", fontSize: 44) {
                     audioManager.togglePlayer()
                     isPlaying = player.isPlaying
+                    viewModel.toggleGameplay()
                 }.padding(.all, 20)
             }
         }

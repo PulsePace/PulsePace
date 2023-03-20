@@ -30,7 +30,6 @@ class SlideGameHO: GameHO {
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(SlideGameHO) -> Void] = []
 
-    let startPosition: CGPoint
     var expectedPosition: CGPoint
     private var reachedEnd = false
 
@@ -71,7 +70,6 @@ class SlideGameHO: GameHO {
         self.optimalStageStart = LifeStage(normSpawnInterval)
         self.optimalStageEnd = LifeStage(1 - normSpawnInterval)
 
-        self.startPosition = slideHO.position
         self.expectedPosition = slideHO.position
     }
 

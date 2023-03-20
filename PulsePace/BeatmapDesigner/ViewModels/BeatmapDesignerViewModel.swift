@@ -56,7 +56,29 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     var beatmap: Beatmap {
-        Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjects.toArray())
+        // TODO: Assumes beatmap retrieved only once
+        var hitObjectS2B: [any HitObject] = []
+        let spb = 60 / bpm
+        hitObjects.toArray().forEach { hitObject in
+
+            if hitObject is TapHitObject {
+                hitObjectS2B.append(TapHitObject(position: hitObject.position, startTime: hitObject.startTime / spb))
+            } else if hitObject is HoldHitObject {
+                hitObjectS2B.append(HoldHitObject(
+                    position: hitObject.position,
+                    startTime: hitObject.startTime / spb,
+                    endTime: hitObject.endTime / spb)
+                )
+            } else if let slideHitObject = hitObject as? SlideHitObject {
+                hitObjectS2B.append(SlideHitObject(
+                    position: hitObject.position,
+                    startTime: hitObject.startTime / spb,
+                    endTime: hitObject.endTime / spb,
+                    vertices: slideHitObject.vertices)
+                )
+            }
+        }
+        return Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjectS2B)
     }
 
     init() {
