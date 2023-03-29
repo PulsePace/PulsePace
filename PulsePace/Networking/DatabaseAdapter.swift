@@ -5,9 +5,13 @@
 //  Created by Charisma Kausar on 26/3/23.
 //
 
-protocol DatabaseAdapter {
+import FirebaseDatabase
+
+protocol DatabaseAdapter<Data> {
     associatedtype Data
     func saveData(path: String, data: Data, completion: @escaping (Result<Void, Error>) -> Void)
     func fetchData(path: String, completion: @escaping (Result<Data, Error>) -> Void)
     func deleteData(path: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func runTransactionBlock(path: String, updateBlock: @escaping (MutableData) -> TransactionResult,
+                             completion: @escaping (Result<Void, Error>) -> Void)
 }
