@@ -31,8 +31,6 @@
 		6A96AAD129C125CA00FAA79E /* SpinGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACC29C125CA00FAA79E /* SpinGameHO.swift */; };
 		6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */; };
 		6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACE29C125CA00FAA79E /* TapGameHO.swift */; };
-		6A96AAD529C1272500FAA79E /* SlideHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD429C1272500FAA79E /* SlideHitObject.swift */; };
-		6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AAD629C1273900FAA79E /* HoldHitObject.swift */; };
 		C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73CF95229C6797000C3E017 /* View+Conditional.swift */; };
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
@@ -70,7 +68,6 @@
 		C7FD9A5829C39ECB00191F03 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5729C39ECB00191F03 /* ScoreView.swift */; };
 		C7FD9A5C29C3ACE200191F03 /* GameControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */; };
 		C7FD9A5E29C3AF7700191F03 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5D29C3AF7700191F03 /* Fonts.swift */; };
-		D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */; };
 		D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235BB29BEF9A1006858D3 /* AudioManager.swift */; };
 		D00235BE29BEFB02006858D3 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D00235BD29BEFB02006858D3 /* test.mp3 */; };
 		D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00235C029BF0115006858D3 /* BeatmapDesignerViewModel.swift */; };
@@ -79,15 +76,16 @@
 		D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012FF1929BE011B00E3CC2E /* TapHitObject.swift */; };
 		D06820CC29D4A32700C96BB7 /* TotalBeatmapDesignerOpenedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06820CB29D4A32700C96BB7 /* TotalBeatmapDesignerOpenedProperty.swift */; };
 		D06820CE29D4A51600C96BB7 /* BeatmapDesignerOpenedFiveTimesConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06820CD29D4A51600C96BB7 /* BeatmapDesignerOpenedFiveTimesConstraint.swift */; };
+		D06820D329D4AA5100C96BB7 /* ZoomButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06820D229D4AA5100C96BB7 /* ZoomButtonsView.swift */; };
+		D06820D529D4AA6800C96BB7 /* DivisorSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06820D429D4AA6800C96BB7 /* DivisorSliderView.swift */; };
+		D06820D729D4AA8000C96BB7 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06820D629D4AA8000C96BB7 /* CanvasView.swift */; };
+		D06820D929D4AA9B00C96BB7 /* SystemIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06820D829D4AA9B00C96BB7 /* SystemIconButtonView.swift */; };
+		D06820DB29D4AAB300C96BB7 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06820DA29D4AAB300C96BB7 /* PlaybackControlView.swift */; };
 		D070B46D29C41A9400E55693 /* DrawShapeBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B46C29C41A9400E55693 /* DrawShapeBorder.swift */; };
 		D070B46F29C434ED00E55693 /* Beatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B46E29C434ED00E55693 /* Beatmap.swift */; };
 		D070B47129C4497900E55693 /* HoldHitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B47029C4497900E55693 /* HoldHitObject.swift */; };
 		D070B47329C4521E00E55693 /* CGPoint+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B47229C4521E00E55693 /* CGPoint+Hashable.swift */; };
 		D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDA829C2060E006B11B4 /* TimelineView.swift */; };
-		D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */; };
-		D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */; };
-		D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDAE29C21842006B11B4 /* CanvasView.swift */; };
-		D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */; };
 		D081DDB429C2BB91006B11B4 /* HitObjectViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDB329C2BB91006B11B4 /* HitObjectViewFactory.swift */; };
 		D081DDBC29C31F7E006B11B4 /* CGPoint+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBB29C31F7E006B11B4 /* CGPoint+Utility.swift */; };
 		D081DDBE29C32AF2006B11B4 /* CGVector+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBD29C32AF2006B11B4 /* CGVector+Utility.swift */; };
@@ -164,8 +162,6 @@
 		6A96AACC29C125CA00FAA79E /* SpinGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinGameHO.swift; sourceTree = "<group>"; };
 		6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HitObjectManager.swift; sourceTree = "<group>"; };
 		6A96AACE29C125CA00FAA79E /* TapGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapGameHO.swift; sourceTree = "<group>"; };
-		6A96AAD429C1272500FAA79E /* SlideHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideHitObject.swift; sourceTree = "<group>"; };
-		6A96AAD629C1273900FAA79E /* HoldHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldHitObject.swift; sourceTree = "<group>"; };
 		C73CF95229C6797000C3E017 /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
@@ -207,7 +203,6 @@
 		C7FD9A5729C39ECB00191F03 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControlView.swift; sourceTree = "<group>"; };
 		C7FD9A5D29C3AF7700191F03 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemIconButtonView.swift; sourceTree = "<group>"; };
 		D00235BB29BEF9A1006858D3 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		D00235BD29BEFB02006858D3 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		D00235C029BF0115006858D3 /* BeatmapDesignerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDesignerViewModel.swift; sourceTree = "<group>"; };
@@ -216,15 +211,16 @@
 		D012FF1929BE011B00E3CC2E /* TapHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapHitObject.swift; sourceTree = "<group>"; };
 		D06820CB29D4A32700C96BB7 /* TotalBeatmapDesignerOpenedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBeatmapDesignerOpenedProperty.swift; sourceTree = "<group>"; };
 		D06820CD29D4A51600C96BB7 /* BeatmapDesignerOpenedFiveTimesConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDesignerOpenedFiveTimesConstraint.swift; sourceTree = "<group>"; };
+		D06820D229D4AA5100C96BB7 /* ZoomButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomButtonsView.swift; sourceTree = "<group>"; };
+		D06820D429D4AA6800C96BB7 /* DivisorSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisorSliderView.swift; sourceTree = "<group>"; };
+		D06820D629D4AA8000C96BB7 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		D06820D829D4AA9B00C96BB7 /* SystemIconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemIconButtonView.swift; sourceTree = "<group>"; };
+		D06820DA29D4AAB300C96BB7 /* PlaybackControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 		D070B46C29C41A9400E55693 /* DrawShapeBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawShapeBorder.swift; sourceTree = "<group>"; };
 		D070B46E29C434ED00E55693 /* Beatmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beatmap.swift; sourceTree = "<group>"; };
 		D070B47029C4497900E55693 /* HoldHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldHitObject.swift; sourceTree = "<group>"; };
 		D070B47229C4521E00E55693 /* CGPoint+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Hashable.swift"; sourceTree = "<group>"; };
 		D081DDA829C2060E006B11B4 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
-		D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisorSliderView.swift; sourceTree = "<group>"; };
-		D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomButtonsView.swift; sourceTree = "<group>"; };
-		D081DDAE29C21842006B11B4 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
-		D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlView.swift; sourceTree = "<group>"; };
 		D081DDB329C2BB91006B11B4 /* HitObjectViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitObjectViewFactory.swift; sourceTree = "<group>"; };
 		D081DDBB29C31F7E006B11B4 /* CGPoint+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utility.swift"; sourceTree = "<group>"; };
 		D081DDBD29C32AF2006B11B4 /* CGVector+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGVector+Utility.swift"; sourceTree = "<group>"; };
@@ -601,12 +597,12 @@
 			isa = PBXGroup;
 			children = (
 				D012FF1129BCC6DE00E3CC2E /* BeatmapDesignerView.swift */,
-				D00235B829BEF7BD006858D3 /* SystemIconButtonView.swift */,
+				D06820D829D4AA9B00C96BB7 /* SystemIconButtonView.swift */,
 				D081DDA829C2060E006B11B4 /* TimelineView.swift */,
-				D081DDAA29C21782006B11B4 /* DivisorSliderView.swift */,
-				D081DDAC29C217FD006B11B4 /* ZoomButtonsView.swift */,
-				D081DDAE29C21842006B11B4 /* CanvasView.swift */,
-				D081DDB029C222A4006B11B4 /* PlaybackControlView.swift */,
+				D06820D429D4AA6800C96BB7 /* DivisorSliderView.swift */,
+				D06820D229D4AA5100C96BB7 /* ZoomButtonsView.swift */,
+				D06820D629D4AA8000C96BB7 /* CanvasView.swift */,
+				D06820DA29D4AAB300C96BB7 /* PlaybackControlView.swift */,
 				D0D7D12129C4F37300676F12 /* HitObjectCanvasView.swift */,
 				D0D7D12329C4F39D00676F12 /* HitObjectTimelineView.swift */,
 				D0D7D12529C4F3BC00676F12 /* TapHitObjectCanvasView.swift */,
@@ -626,8 +622,6 @@
 				D012FF1929BE011B00E3CC2E /* TapHitObject.swift */,
 				D081DDBF29C32C76006B11B4 /* SlideHitObject.swift */,
 				D070B47029C4497900E55693 /* HoldHitObject.swift */,
-				6A96AAD429C1272500FAA79E /* SlideHitObject.swift */,
-				6A96AAD629C1273900FAA79E /* HoldHitObject.swift */,
 				D070B46E29C434ED00E55693 /* Beatmap.swift */,
 			);
 			path = Models;
@@ -875,6 +869,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0D7D12429C4F39D00676F12 /* HitObjectTimelineView.swift in Sources */,
+				D06820D729D4AA8000C96BB7 /* CanvasView.swift in Sources */,
 				C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */,
 				D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */,
 				C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */,
@@ -896,6 +891,7 @@
 				D0D7D12229C4F37300676F12 /* HitObjectCanvasView.swift in Sources */,
 				D0D7D13229C4F60300676F12 /* TapHitObjectViewFactory.swift in Sources */,
 				D0D7D12829C4F41000676F12 /* TapHitObjectTimelineView.swift in Sources */,
+				D06820DB29D4AAB300C96BB7 /* PlaybackControlView.swift in Sources */,
 				6A96AAC829C1259900FAA79E /* SlideCommand.swift in Sources */,
 				C7A1D85829C6B7A400340BEE /* InputHandler.swift in Sources */,
 				6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */,
@@ -905,7 +901,6 @@
 				D0CD999529D3010F00E40BFA /* NoviceBeatmapDesignerAchievement.swift in Sources */,
 				6A96AAC529C1259900FAA79E /* TapCommand.swift in Sources */,
 				D0CD999329D2FFCF00E40BFA /* TenHitObjectsPlacedConstraint.swift in Sources */,
-				6A96AAD529C1272500FAA79E /* SlideHitObject.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
 				D081DDB429C2BB91006B11B4 /* HitObjectViewFactory.swift in Sources */,
 				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
@@ -924,22 +919,15 @@
 				D0CD998B29D21CAC00E40BFA /* Constraint.swift in Sources */,
 				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
-				D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */,
 				D0D7D14029C4F6CC00676F12 /* TapGestureHandler.swift in Sources */,
+				D06820D329D4AA5100C96BB7 /* ZoomButtonsView.swift in Sources */,
 				C7FD9A5829C39ECB00191F03 /* ScoreView.swift in Sources */,
-				D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */,
 				D0CD999B29D30C5C00E40BFA /* ExpertBeatmapDesignerAchievement.swift in Sources */,
-				D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */,
 				6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */,
 				C7FD9A5629C36B3200191F03 /* SpinCommand.swift in Sources */,
-				D081DDAD29C217FD006B11B4 /* ZoomButtonsView.swift in Sources */,
 				D0CD999129D2FF4C00E40BFA /* TotalHitObjectsPlacedProperty.swift in Sources */,
-				D081DDAB29C21782006B11B4 /* DivisorSliderView.swift in Sources */,
-				D081DDAF29C21842006B11B4 /* CanvasView.swift in Sources */,
 				D00235BC29BEF9A1006858D3 /* AudioManager.swift in Sources */,
-				D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */,
 				6A96AAC629C1259900FAA79E /* Command.swift in Sources */,
-				D00235B929BEF7BD006858D3 /* SystemIconButtonView.swift in Sources */,
 				C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */,
 				D081DDBC29C31F7E006B11B4 /* CGPoint+Utility.swift in Sources */,
 				6A96AABB29C1255400FAA79E /* GameEngine.swift in Sources */,
@@ -956,6 +944,7 @@
 				C7FD9A4A29C23ABA00191F03 /* RepositionSongCommand.swift in Sources */,
 				D0D7D12E29C4F58500676F12 /* HoldHitObjectCanvasView.swift in Sources */,
 				C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */,
+				D06820D529D4AA6800C96BB7 /* DivisorSliderView.swift in Sources */,
 				D06820CC29D4A32700C96BB7 /* TotalBeatmapDesignerOpenedProperty.swift in Sources */,
 				6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */,
 				D0CD998529D21A0B00E40BFA /* Observable.swift in Sources */,
@@ -970,16 +959,14 @@
 				C7FD9A4329C22D5A00191F03 /* AddTapHitObjectCommand.swift in Sources */,
 				C7FD9A4629C2356800191F03 /* CanvasTapInput.swift in Sources */,
 				175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */,
-				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,
 				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
 				D0D7D12C29C4F4AA00676F12 /* SlideHitObjectTimelineView.swift in Sources */,
 				C7A1D85629C6B4C100340BEE /* InputManager.swift in Sources */,
-				6A96AAD729C1273900FAA79E /* HoldHitObject.swift in Sources */,
 				6A96AAC729C1259900FAA79E /* HoldCommand.swift in Sources */,
 				D0D7D13429C4F61200676F12 /* SlideHitObjectViewFactory.swift in Sources */,
 				D0D7D13E29C4F6BA00676F12 /* EditModeModifier.swift in Sources */,
 				D0D7D13C29C4F68500676F12 /* GestureHandler.swift in Sources */,
-				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,
+				D06820D929D4AA9B00C96BB7 /* SystemIconButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
