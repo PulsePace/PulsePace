@@ -23,7 +23,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     @Published var songPosition: Double = 0
 
     var score: String {
-        String(format: "%06d", 71_143)
+        String(format: "%06d", gameEngine?.scoreManager.score ?? 0)
     }
 
     var accuracy: String {
@@ -31,7 +31,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     var combo: String {
-        String(14) + "x"
+        String(gameEngine?.scoreManager.comboCount ?? 0) + "x"
     }
 
     var health: Double {
@@ -40,13 +40,19 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
+        guard let gameEngine = self?.gameEngine else {
+            return
+        }
         gameHOTable.forEach { gameHOEntity in
             if let slideGameHO = gameHOEntity.value as? SlideGameHO {
-                self?.slideGameHOs.append(SlideGameHOVM(gameHO: slideGameHO, id: gameHOEntity.key.id))
+                self?.slideGameHOs.append(SlideGameHOVM(gameHO: slideGameHO, id: gameHOEntity.key.id,
+                                                        eventManager: gameEngine.eventManager))
             } else if let holdGameHO = gameHOEntity.value as? HoldGameHO {
-                self?.holdGameHOs.append(HoldGameHOVM(gameHO: holdGameHO, id: gameHOEntity.key.id))
+                self?.holdGameHOs.append(HoldGameHOVM(gameHO: holdGameHO, id: gameHOEntity.key.id,
+                                                      eventManager: gameEngine.eventManager))
             } else if let tapGameHO = gameHOEntity.value as? TapGameHO {
-                self?.tapGameHOs.append(TapGameHOVM(gameHO: tapGameHO, id: gameHOEntity.key.id))
+                self?.tapGameHOs.append(TapGameHOVM(gameHO: tapGameHO, id: gameHOEntity.key.id,
+                                                    eventManager: gameEngine.eventManager))
             } else {
                 print("Unidentified game HO type")
             }
