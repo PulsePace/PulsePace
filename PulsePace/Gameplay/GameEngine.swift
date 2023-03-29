@@ -14,6 +14,8 @@ class GameEngine {
     private var inputManager: InputManager?
     private var hitObjectManager: HitObjectManager?
     private var conductor: Conductor?
+    var eventManager = EventManager()
+    private var systems: [System] = []
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         self?.allObjects.remove(removedObject)
@@ -34,6 +36,9 @@ class GameEngine {
         self.allObjects = Set()
         self.gameHOTable = [:]
         self.scoreManager = ScoreManager()
+        self.systems.append(ScoreSystem(scoreManager: scoreManager))
+        self.systems.append(InputSystem())
+        self.systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
     }
 
     func load(_ beatmap: Beatmap) {
@@ -76,5 +81,6 @@ class GameEngine {
                 print("By game design params, all objects should have a hit object component")
             }
         }
+        eventManager.handleAllEvents()
     }
 }

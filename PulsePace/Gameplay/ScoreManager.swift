@@ -6,15 +6,15 @@
 //
 
 class ScoreManager {
-    var score: Int = 0
-    var perfetHitCount: Int {
+    var score: Int
+    var perfectCount: Int {
         didSet {
-            comboCount += perfetHitCount - oldValue
+            comboCount += perfectCount - oldValue
         }
     }
-    var goodHitCount: Int {
+    var goodCount: Int {
         didSet {
-            comboCount += goodHitCount - oldValue
+            comboCount += goodCount - oldValue
         }
     }
     var missCount: Int {
@@ -26,17 +26,9 @@ class ScoreManager {
     var comboCount: Int = 0
 
     init() {
-        perfetHitCount = 0
-        goodHitCount = 0
+        score = 0
+        perfectCount = 0
+        goodCount = 0
         missCount = 0
-    }
-}
-
-extension ScoreManager: InputHandler {
-    func onInputChanged(gameHO: any GameHO, input: InputData) {
-        gameHO.checkOnInput(input: input, scoreManager: self)
-    }
-    func onInputEnded(gameHO: any GameHO, input: InputData) {
-        gameHO.checkOnInputEnd(input: input, scoreManager: self)
     }
 }
