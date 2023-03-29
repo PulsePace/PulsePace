@@ -49,12 +49,13 @@ struct StyledMenuButton: View {
             Text(text)
                 .font(.title)
                 .foregroundColor(.white)
+                .padding()
+                .frame(minWidth: 200)
+                .background(Color.purple)
+                .cornerRadius(20)
+                .shadow(radius: 5)
         }
-        .padding()
-        .frame(minWidth: 200)
-        .background(Color.purple)
-        .cornerRadius(20)
-        .shadow(radius: 5)
+
     }
 }
 
