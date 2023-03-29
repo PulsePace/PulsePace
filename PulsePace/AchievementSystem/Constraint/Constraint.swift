@@ -12,8 +12,6 @@ protocol Constraint: AnyObject {
     var property: P? { get set }
     var value: P.T { get set }
     var isSatisfied: Bool { get }
-
-    func bindProperty(from properties: [any Property])
 }
 
 extension Constraint {
@@ -24,5 +22,14 @@ extension Constraint {
                 return
             }
         }
+        fatalError("Property \(P.self) not found for constraint \(Self.self)")
+    }
+
+    func checkProperty(property: any Property) -> Bool {
+        self.property === property
+    }
+
+    func subscribeAchievement(_ achievement: some Achievement) {
+        property?.addObserver(achievement)
     }
 }

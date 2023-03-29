@@ -10,7 +10,7 @@ import Foundation
 class TenHitObjectsPlacedConstraint: Constraint {
     typealias P = TotalHitObjectsPlacedProperty
     var property: P?
-    var value = 10
+    var value: Int = 10
 
     var isSatisfied: Bool {
         guard let property = property else {

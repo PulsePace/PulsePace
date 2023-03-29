@@ -14,13 +14,20 @@ class AchievementManager: ObservableObject {
     var achievements: [any Achievement] = []
 
     init() {
-        let property = TotalHitObjectsPlacedProperty()
-        properties = [property]
-        achievements
-            = [NoviceBeatmapDesignerAchievement(properties: properties), ExpertBeatmapDesignerAchievement(properties: properties)]
+        properties = [
+            TotalHitObjectsPlacedProperty(),
+            TotalBeatmapDesignerOpenedProperty()
+        ]
+        achievements = [
+            NoviceBeatmapDesignerAchievement(),
+            ExpertBeatmapDesignerAchievement()
+        ]
+        registerProperties()
     }
 
-//    private func registerProperties() {
-//
-//    }
+    private func registerProperties() {
+        for achievement in achievements {
+            achievement.initialiseConstraints(properties: properties)
+        }
+    }
 }

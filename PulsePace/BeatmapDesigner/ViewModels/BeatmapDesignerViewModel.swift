@@ -122,7 +122,8 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.enqueue(hitObject)
         previewHitObject = nil
-        if let property = AchievementManager.shared.properties.first as? TotalHitObjectsPlacedProperty {
+        // TODO: remove
+        if let property = AchievementManager.shared.properties[0] as? TotalHitObjectsPlacedProperty {
             property.updateValue(to: property.value + 1)
         }
     }

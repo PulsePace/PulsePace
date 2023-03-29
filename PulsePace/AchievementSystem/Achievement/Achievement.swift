@@ -10,8 +10,6 @@ import Foundation
 protocol Achievement: Observer {
     var title: String { get }
     var constraints: [any Constraint] { get }
-    var remainingConstraints: [any Constraint] { get }
-    var isUnlocked: Bool { get }
 }
 
 extension Achievement {
@@ -34,24 +32,25 @@ extension Achievement {
         guard let property = observable as? any Property else {
             return
         }
-        let hasRemainingConstraint = remainingConstraints.contains(where: { $0.property === property })
+        let hasRemainingConstraint = remainingConstraints.contains(where: {
+            $0.checkProperty(property: property)
+        })
         if !hasRemainingConstraint {
             property.removeObserver(self)
         }
         notifyUnlock()
-        print(isUnlocked)
-    }
-
-    func subscribe() {
-        var properties: [any Property] = []
-        remainingConstraints.forEach { constraint in
-            properties.removeAll(where: { $0 === constraint.property })
-            properties.append(constraint.property)
-        }
-        properties.forEach { $0.addObserver(self) }
     }
 
     func initialiseConstraints(properties: [any Property]) {
-        constraints.forEach { $0.bindProperty(from: properties) }
+        for constraint in constraints {
+            constraint.bindProperty(from: properties)
+        }
+        subscribe()
+    }
+
+    private func subscribe() {
+        for constraint in remainingConstraints {
+            constraint.subscribeAchievement(self)
+        }
     }
 }

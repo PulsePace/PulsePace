@@ -10,11 +10,7 @@ import Foundation
 class ExpertBeatmapDesignerAchievement: Achievement {
     var title: String = "Expert Beatmap Designer"
     var constraints: [any Constraint] = [
-        TwentyHitObjectsPlacedConstraint()
+        TwentyHitObjectsPlacedConstraint(),
+        BeatmapDesignerOpenedFiveTimesConstraint()
     ]
-
-    init(properties: [any Property]) {
-        initialiseConstraints(properties: properties)
-        subscribe()
-    }
 }

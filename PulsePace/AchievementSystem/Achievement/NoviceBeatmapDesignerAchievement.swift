@@ -12,9 +12,4 @@ class NoviceBeatmapDesignerAchievement: Achievement {
     var constraints: [any Constraint] = [
         TenHitObjectsPlacedConstraint()
     ]
-
-    init(properties: [any Property]) {
-        initialiseConstraints(properties: properties)
-        subscribe()
-    }
 }

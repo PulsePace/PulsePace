@@ -9,14 +9,11 @@ import Foundation
 
 protocol Observable: AnyObject {
     var observers: [Observer] { get set }
-
-    func addObserver(_ observer: Observer)
-    func removeObserver(_ observer: Observer)
-    func notifyObservers()
 }
 
 extension Observable {
     func addObserver(_ observer: Observer) {
+        removeObserver(observer)
         observers.append(observer)
     }
 
@@ -25,8 +22,6 @@ extension Observable {
     }
 
     func notifyObservers() {
-        for observer in observers {
-            observer.update(with: self)
-        }
+        observers.forEach { $0.update(with: self) }
     }
 }
