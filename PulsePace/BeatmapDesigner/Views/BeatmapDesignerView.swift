@@ -72,10 +72,3 @@ struct BeatmapDesignerView: View {
         .environmentObject(viewModel)
     }
 }
-
-// struct BeatmapDesignerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BeatmapDesignerView(viewModel: BeatmapDesignerViewModel())
-//            .previewInterfaceOrientation(.landscapeLeft)
-//    }
-// }

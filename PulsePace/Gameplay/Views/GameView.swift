@@ -149,9 +149,3 @@ struct HoldGameHOView: View {
                                                        timeReceived: viewModel.songPosition)))
     }
 }
-
-// struct GameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GameView()
-//    }
-// }
