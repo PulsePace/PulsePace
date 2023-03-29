@@ -18,15 +18,19 @@ struct MenuView: View {
                 Text("PulsePace")
                     .font(.largeTitle)
 
-                StyledMenuButton(path: $path, page: Page.playPage, text: "Play")
+                StyledMenuButton(path: $path, page: Page.gameModesPage, text: "Play")
 
                 StyledMenuButton(path: $path, page: Page.designPage, text: "Design")
             }
             .navigationDestination(for: Page.self) { page in
                 if page == Page.designPage {
                     BeatmapDesignerView(path: $path)
+                } else if page == Page.gameModesPage {
+                    GameModesView(path: $path)
                 } else if page == Page.playPage {
                     GameView()
+                } else {
+                    EmptyView()
                 }
             }
         }
@@ -55,8 +59,10 @@ struct StyledMenuButton: View {
 }
 
 struct Page: Hashable {
-    static let playPage = Page(name: "play")
     static let designPage = Page(name: "design")
+    static let gameModesPage = Page(name: "gameModes")
+    static let lobbyPage = Page(name: "lobby")
+    static let playPage = Page(name: "play")
     let name: String
 }
 
