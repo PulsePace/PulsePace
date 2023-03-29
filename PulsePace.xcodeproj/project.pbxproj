@@ -61,6 +61,7 @@
 		C77A7D8929D084090082458E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8829D084090082458E /* Player.swift */; };
 		C77A7D8B29D0881C0082458E /* GameConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8A29D0881C0082458E /* GameConfig.swift */; };
 		C77A7D8D29D089180082458E /* UserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8C29D089180082458E /* UserConfig.swift */; };
+		C77A7D9029D377BF0082458E /* DatabasePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8F29D377BF0082458E /* DatabasePath.swift */; };
 		C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3129B7D8CD006F7423 /* TapInput.swift */; };
 		C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3329B7D8D6006F7423 /* SlideInput.swift */; };
 		C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3729B7D8E9006F7423 /* HoldInput.swift */; };
@@ -213,6 +214,7 @@
 		C77A7D8829D084090082458E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		C77A7D8A29D0881C0082458E /* GameConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfig.swift; sourceTree = "<group>"; };
 		C77A7D8C29D089180082458E /* UserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConfig.swift; sourceTree = "<group>"; };
+		C77A7D8F29D377BF0082458E /* DatabasePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePath.swift; sourceTree = "<group>"; };
 		C7908E3129B7D8CD006F7423 /* TapInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInput.swift; sourceTree = "<group>"; };
 		C7908E3329B7D8D6006F7423 /* SlideInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInput.swift; sourceTree = "<group>"; };
 		C7908E3729B7D8E9006F7423 /* HoldInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldInput.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 		C77A7D7A29D033220082458E /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				C77A7D8F29D377BF0082458E /* DatabasePath.swift */,
 				C77A7D7B29D046700082458E /* DatabaseAdapter.swift */,
 				C77A7D7F29D04AE70082458E /* DatabaseError.swift */,
 				C77A7D7D29D047A10082458E /* FirebaseDatabase.swift */,
@@ -1116,6 +1119,7 @@
 				6A96AAC729C1259900FAA79E /* HoldCommand.swift in Sources */,
 				D0D7D13429C4F61200676F12 /* SlideHitObjectViewFactory.swift in Sources */,
 				D0D7D13E29C4F6BA00676F12 /* EditModeModifier.swift in Sources */,
+				C77A7D9029D377BF0082458E /* DatabasePath.swift in Sources */,
 				D0D7D13C29C4F68500676F12 /* GestureHandler.swift in Sources */,
 				17A4828B29D1C9FC006C5DB9 /* System.swift in Sources */,
 				D081DDB129C222A4006B11B4 /* PlaybackControlView.swift in Sources */,

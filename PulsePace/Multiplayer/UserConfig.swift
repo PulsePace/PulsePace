@@ -8,5 +8,6 @@
 import UIKit
 
 struct UserConfig {
-    var id: String = UIDevice.current.identifierForVendor?.uuidString ?? "default"
+    var userId: String = UIDevice.current.identifierForVendor?.uuidString ?? "default"
+    var name: String = "Zuckerberg"
 }

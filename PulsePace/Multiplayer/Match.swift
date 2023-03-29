@@ -8,3 +8,5 @@
 struct Match {
 //    var gameEvents: [GameEvent] = []
 }
+
+extension Match: Codable {}
