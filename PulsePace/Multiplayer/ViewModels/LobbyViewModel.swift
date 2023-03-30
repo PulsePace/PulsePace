@@ -8,8 +8,14 @@
 import Foundation
 
 class LobbyViewModel: ObservableObject {
-    var lobby: Lobby?
-    func createLobby() {
-        lobby = Lobby()
+    @Published var lobby: Lobby?
+
+    @Published var lobbyPlayers: [Player] = []
+
+    func onLobbyDataChanged() {
+        guard let lobby = lobby else {
+            return
+        }
+        lobbyPlayers = Array(lobby.players.values)
     }
 }

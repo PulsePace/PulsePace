@@ -21,7 +21,7 @@ class CreateLobbyCommand: ButtonCommand {
 
     convenience init(receiver: LobbyViewModel) {
         self.init { _ in
-            receiver.lobby = Lobby()
+            receiver.lobby = Lobby(lobbyDataChangeHandler: receiver.onLobbyDataChanged)
         }
     }
 }
@@ -33,7 +33,21 @@ class JoinLobbyCommand: ButtonCommand {
 
     convenience init(receiver: LobbyViewModel, lobbyCode: String) {
         self.init { _ in
-            receiver.lobby = Lobby(lobbyId: lobbyCode)
+            receiver.lobby = Lobby(lobbyId: lobbyCode, lobbyDataChangeHandler: receiver.onLobbyDataChanged)
         }
     }
 }
+
+// class StartMatchCommand: ButtonCommand {
+//    @Binding var path: [Page]
+//    
+//    override private init(action: @escaping ButtonCommand.Action) {
+//        super.init(action: action)
+//    }
+//
+//    convenience init() {
+//        self.init { [weak self] _ in
+//            self?.path.append(Page.playPage)
+//        }
+//    }
+// }
