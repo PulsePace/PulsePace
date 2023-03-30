@@ -7,14 +7,20 @@
 
 import Foundation
 
-protocol GameHO: Component, AnyObject, ScoreManagable {
+protocol GameHO: Component, AnyObject {
     var position: CGPoint { get }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage: LifeStage { get }
     var lifeEnd: Double { get }
 
+    var isHit: Bool { get }
+    var proximityScore: Double { get }
+
     func updateState(currBeat: Double)
+
+    func checkOnInput(input: InputData)
+    func checkOnInputEnd(input: InputData)
 }
 
 extension GameHO {

@@ -20,7 +20,6 @@ class TapGameHO: GameHO {
 
     var isHit = false
     var proximityScore: Double = 0
-    var proximityScoreThresholds: [Double] = [0.2, 1, 1]
 
     init(tapHO: TapHitObject, wrappingObject: Entity, preSpawnInterval: Double) {
         self.position = tapHO.position
@@ -36,28 +35,17 @@ class TapGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
-        checkOnInputEnd(input: input, scoreManager: scoreManager)
+    func checkOnInput(input: InputData) {
+        checkOnInputEnd(input: input)
     }
 
-    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+    func checkOnInputEnd(input: InputData) {
         if isHit {
             return
         }
 
         isHit = true
-        proximityScore += abs(input.timeReceived - lifeEnd) / lifeTime
-
-        // TODO: refine scoring rule
-        if proximityScore < proximityScoreThresholds[0] {
-            // perfect
-            scoreManager.perfetHitCount += 1
-            scoreManager.score += 2
-        } else {
-            // good
-            scoreManager.goodHitCount += 1
-            scoreManager.score += 1
-        }
-        self.destroyObject()
+        proximityScore += abs(lifeStage.value - lifeOptimal.value) * 2
+        // self.destroyObject()
     }
 }

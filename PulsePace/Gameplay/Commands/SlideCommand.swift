@@ -11,7 +11,7 @@ class SlideCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init(receiver: SlideGameHO, timeReceived: Double) {
+    convenience init(receiver: SlideGameHO, eventManager: EventManager, timeReceived: Double) {
         self.init(
             action: { inputData in
                 var inputData = inputData
