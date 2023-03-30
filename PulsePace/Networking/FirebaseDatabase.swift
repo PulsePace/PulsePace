@@ -58,13 +58,19 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
         }
     }
 
-    func getValue(path: String, completion: @escaping (Result<AnyObject, Error>) -> Void) {
-        databaseReference.child(path).observeSingleEvent(of: .value, with: { snapshot in
-            guard let value = snapshot.value as? AnyObject else {
-                completion(.failure(DatabaseError.invalidData))
-                return
-            }
-            completion(.success(value))
+    func fetchAllData(path: String, completion: @escaping (Result<Data, Error>) -> Void) {
+        databaseReference.child(path).observe(.childAdded, with: { snapshot in
+            guard let value = snapshot.value as? [String: Any] else {
+                    completion(.failure(DatabaseError.invalidData))
+                    return
+                }
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
+                    let data = try JSONDecoder().decode(T.self, from: jsonData)
+                    completion(.success(data))
+                } catch {
+                    completion(.failure(error))
+                }
           }) { error in
               completion(.failure(error))
         }

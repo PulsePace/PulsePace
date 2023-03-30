@@ -28,10 +28,12 @@ struct MenuView: View {
                     BeatmapDesignerView(path: $path)
                 } else if page == Page.gameModesPage {
                     GameModesView(path: $path)
+                } else if page == Page.lobbyPage {
+                    LobbyView()
                 } else if page == Page.playPage {
                     GameView()
                 } else {
-                    EmptyView()
+                    Text("Error 404 Not Found :(`")
                 }
             }
         }

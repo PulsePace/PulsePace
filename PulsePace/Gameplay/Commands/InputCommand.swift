@@ -8,7 +8,7 @@
 import SwiftUI
 
 class InputCommand: Command {
-    typealias Action = (InputData) -> Void
+    typealias ActionArguments = InputData
     var action: Action
     var completion: Action?
 

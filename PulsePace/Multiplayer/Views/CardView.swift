@@ -28,7 +28,6 @@ struct CardView: View {
                             .font(.title)
                             .fontWeight(.black)
                             .foregroundColor(.primary)
-                            .lineLimit(3)
                         Text(cardDisplayable.caption)
                             .font(.caption)
                             .foregroundColor(.secondary)
