@@ -10,10 +10,12 @@ import Foundation
 class GameHOVM<T: GameHO>: Identifiable {
     let gameHO: T
     let id: Int
+    let eventManager: EventManager
 
-    init(gameHO: T, id: Int) {
+    init(gameHO: T, id: Int, eventManager: EventManager) {
         self.gameHO = gameHO
         self.id = id
+        self.eventManager = eventManager
     }
 }
 

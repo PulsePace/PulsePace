@@ -10,7 +10,7 @@ class HoldCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init(receiver: HoldGameHO, timeReceived: Double) {
+    convenience init(receiver: HoldGameHO, eventManager: EventManager, timeReceived: Double) {
         self.init(
             action: { inputData in
                 var inputData = inputData

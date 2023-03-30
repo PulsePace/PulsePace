@@ -67,6 +67,7 @@ struct TapGameHOView: View {
         .opacity(tapGameHOVM.opacity)
         .modifier(GestureModifier(input: TapInput(),
                                   command: TapCommand(receiver: tapGameHO,
+                                                      eventManager: tapGameHOVM.eventManager,
                                                       timeReceived: viewModel.songPosition)))
     }
 }
@@ -115,6 +116,7 @@ struct SlideGameHOView: View {
         .opacity(slideGameHOVM.opacity)
         .modifier(GestureModifier(input: SlideInput(),
                                   command: SlideCommand(receiver: slideGameHO,
+                                                        eventManager: slideGameHOVM.eventManager,
                                                         timeReceived: viewModel.songPosition)))
     }
 }
@@ -143,6 +145,7 @@ struct HoldGameHOView: View {
         .opacity(holdGameHOVM.opacity)
         .modifier(GestureModifier(input: HoldInput(),
                                   command: HoldCommand(receiver: holdGameHO,
+                                                       eventManager: holdGameHOVM.eventManager,
                                                        timeReceived: viewModel.songPosition)))
     }
 }
