@@ -9,37 +9,48 @@ import Foundation
 import FirebaseDatabase
 
 class LobbyDataManager {
-    private let databaseAdapter: any DatabaseAdapter<Lobby>
+    private let lobbyDatabase: any DatabaseAdapter<Lobby>
+    private let playerDatabase: any DatabaseAdapter<Player>
     private var lobby: Lobby?
 
     init(databaseAdapter: any DatabaseAdapter<Lobby>) {
-        self.databaseAdapter = databaseAdapter
+        self.lobbyDatabase = databaseAdapter
+        self.playerDatabase = FirebaseDatabase<Player>() // TODO: remove
     }
 
     func createLobby(lobby: Lobby) {
         self.lobby = lobby
-        databaseAdapter.saveData(path: DatabasePath.lobbies, data: lobby) { _ in }
+        let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId])
+
+        lobbyDatabase.saveData(path: lobbyPath, data: lobby) { result in
+            switch result {
+            case .success:
+                return
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     func joinLobby(lobbyId: String, player: Player) {
         setLobby(lobbyId: lobbyId)
-        guard let lobby = lobby else {
-            return
-        }
 
         let playersPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId,
                                                            DatabasePath.players])
-        databaseAdapter.runTransactionBlock(
+        let gameConfig = CompetitiveMultiplayerConfig()
+        lobbyDatabase.runTransactionBlock(
             path: playersPath,
             updateBlock: { mutablePlayers -> TransactionResult in
-                guard
-                    mutablePlayers.childrenCount >= lobby.config.maxPlayerCount,
-                    var newPlayers = mutablePlayers.value as? [String: AnyObject]
-                else {
-                    return TransactionResult.abort()
+                if mutablePlayers.childrenCount < gameConfig.maxPlayerCount,
+                   var newPlayers = mutablePlayers.value as? [String: AnyObject] { // TODO: Array type-casting
+                    do {
+                        let jsonData = try JSONEncoder().encode(player)
+                        let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+                        newPlayers[player.playerId] = dict as? AnyObject
+                        mutablePlayers.value = newPlayers
+                        return TransactionResult.success(withValue: mutablePlayers)
+                    } catch {}
                 }
-                newPlayers[player.playerId] = player as AnyObject?
-                mutablePlayers.value = newPlayers
                 return TransactionResult.success(withValue: mutablePlayers)
             },
             completion: { _ in })
@@ -47,10 +58,22 @@ class LobbyDataManager {
 
     private func setLobby(lobbyId: String) {
         let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
-        databaseAdapter.fetchData(path: lobbyPath, completion: { [weak self] result in
+        let playersPath = DatabasePath.getPath(fromPaths: [lobbyPath, DatabasePath.players])
+
+        lobbyDatabase.fetchData(path: lobbyPath, completion: { [weak self] result in
             switch result {
             case .success(let value):
                 self?.lobby = value
+            case .failure(let error):
+                print(error)
+                return
+            }
+        })
+
+        playerDatabase.fetchAllData(path: playersPath, completion: { [weak self] result in
+            switch result {
+            case .success(let player):
+                self?.lobby?.players[player.playerId] = player
             case .failure(let error):
                 print(error)
                 return
