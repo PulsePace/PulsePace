@@ -49,10 +49,19 @@ struct LobbyView: View {
     @ViewBuilder
     private func renderLobbyPlayers(players: [Player]) -> some View {
         VStack {
+            if let lobby = viewModel.lobby {
+                Text("Lobby Code: \(lobby.lobbyId)")
+                    .font(.title)
+            }
             List {
                 ForEach(players, id: \.playerId) { player in
-                    Text(player.name)
-                        .background(player.isReady ? Color.green : Color.red)
+                    HStack {
+                        Text(player.name)
+                        Spacer()
+                        Text(player.isReady ? "Ready to Play" : "Not Ready")
+                            .fontWeight(.bold)
+                            .foregroundColor(player.isReady ? Color.green : Color.gray)
+                    }
                 }
             }
         }
