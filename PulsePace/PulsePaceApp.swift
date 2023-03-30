@@ -31,6 +31,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     private func setupFirebase() {
         FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
+//        Database.database().isPersistenceEnabled = true
     }
 }

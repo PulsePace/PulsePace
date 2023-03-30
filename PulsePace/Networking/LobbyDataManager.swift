@@ -13,29 +13,35 @@ class LobbyDataManager {
     private let playerDatabase: any DatabaseAdapter<Player>
     private var lobby: Lobby?
 
-    init(databaseAdapter: any DatabaseAdapter<Lobby>) {
+    private var lobbyDataChangeHandler: (() -> Void)? = {}
+
+    init(databaseAdapter: any DatabaseAdapter<Lobby>, lobbyDataChangeHandler: (() -> Void)? = {}) {
         self.lobbyDatabase = databaseAdapter
         self.playerDatabase = FirebaseDatabase<Player>() // TODO: remove
+        self.lobbyDataChangeHandler = lobbyDataChangeHandler
     }
 
     func createLobby(lobby: Lobby) {
         self.lobby = lobby
         let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId])
 
-        lobbyDatabase.saveData(path: lobbyPath, data: lobby) { result in
+        lobbyDatabase.saveData(path: lobbyPath, data: lobby) { [weak self] result in
             switch result {
             case .success:
-                return
+                guard let changeHandler = self?.lobbyDataChangeHandler else {
+                    return
+                }
+                changeHandler()
             case .failure(let error):
                 print(error)
             }
         }
     }
 
-    func joinLobby(lobbyId: String, player: Player) {
-        setLobby(lobbyId: lobbyId)
+    func joinLobby(lobby: Lobby, player: Player) {
+        self.lobby = lobby
 
-        let playersPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId,
+        let playersPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId,
                                                            DatabasePath.players])
         let gameConfig = CompetitiveMultiplayerConfig()
         lobbyDatabase.runTransactionBlock(
@@ -53,27 +59,23 @@ class LobbyDataManager {
                 }
                 return TransactionResult.success(withValue: mutablePlayers)
             },
-            completion: { _ in })
+            completion: { [weak self] _ in
+                self?.setLobbyPlayers(lobbyId: lobby.lobbyId)
+            })
     }
 
-    private func setLobby(lobbyId: String) {
+    private func setLobbyPlayers(lobbyId: String) {
         let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
         let playersPath = DatabasePath.getPath(fromPaths: [lobbyPath, DatabasePath.players])
-
-        lobbyDatabase.fetchData(path: lobbyPath, completion: { [weak self] result in
-            switch result {
-            case .success(let value):
-                self?.lobby = value
-            case .failure(let error):
-                print(error)
-                return
-            }
-        })
 
         playerDatabase.fetchAllData(path: playersPath, completion: { [weak self] result in
             switch result {
             case .success(let player):
                 self?.lobby?.players[player.playerId] = player
+                guard let changeHandler = self?.lobbyDataChangeHandler else {
+                    return
+                }
+                changeHandler()
             case .failure(let error):
                 print(error)
                 return

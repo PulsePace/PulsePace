@@ -29,7 +29,7 @@ struct MenuView: View {
                 } else if page == Page.gameModesPage {
                     GameModesView(path: $path)
                 } else if page == Page.lobbyPage {
-                    LobbyView()
+                    LobbyView(path: $path)
                 } else if page == Page.playPage {
                     GameView()
                 } else {
@@ -47,6 +47,7 @@ struct StyledMenuButton: View {
     @Binding var path: [Page]
     var page: Page
     var text: String
+    var isDisabled = false
 
     var body: some View {
         Button(action: { path.append(page) }) {
@@ -55,11 +56,11 @@ struct StyledMenuButton: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(minWidth: 200)
-                .background(Color.purple)
+                .background(isDisabled ? Color.gray : Color.purple)
                 .cornerRadius(20)
                 .shadow(radius: 5)
         }
-
+        .disabled(isDisabled)
     }
 }
 

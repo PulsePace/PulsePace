@@ -13,6 +13,7 @@ class Lobby {
 
     let config: GameConfig
     let dataManager: LobbyDataManager
+    let lobbyDataChangeHandler: (() -> Void)?
 
     var playerCount: Int {
         players.count
@@ -30,13 +31,16 @@ class Lobby {
         true
     }
 
-    private init(lobbyId: String, hostId: String, players: [String: Player] = [:], currMatch: Match? = nil) {
+    private init(lobbyId: String, hostId: String, players: [String: Player] = [:], currMatch: Match? = nil,
+                 lobbyDataChangeHandler: (() -> Void)? = { }) {
         self.lobbyId = lobbyId
         self.hostId = hostId
         self.players = players
         self.currMatch = currMatch
+        self.lobbyDataChangeHandler = lobbyDataChangeHandler
         self.config = CompetitiveMultiplayerConfig()
-        self.dataManager = LobbyDataManager(databaseAdapter: FirebaseDatabase<Lobby>())
+        self.dataManager = LobbyDataManager(databaseAdapter: FirebaseDatabase<Lobby>(),
+                                            lobbyDataChangeHandler: lobbyDataChangeHandler)
     }
 
     required convenience init(from decoder: Decoder) throws {
@@ -48,22 +52,23 @@ class Lobby {
     /**
      Creates a new lobby and saves it in the database.
      */
-    convenience init() {
+    convenience init(lobbyDataChangeHandler: (() -> Void)? = {}) {
         let id = NanoID.new(alphabet: .numbers, size: 6)
         let user = UserConfig()
         let player = Player(playerId: user.userId, name: user.name)
-        self.init(lobbyId: id, hostId: user.userId, players: [user.userId: player])
+        self.init(lobbyId: id, hostId: user.userId, players: [user.userId: player],
+                  lobbyDataChangeHandler: lobbyDataChangeHandler)
         dataManager.createLobby(lobby: self)
     }
 
     /**
      Joins a lobby with the given `lobbyId`, if it exists.
      */
-    convenience init(lobbyId: String) {
+    convenience init(lobbyId: String, lobbyDataChangeHandler: (() -> Void)? = {}) {
         let user = UserConfig()
-        self.init(lobbyId: lobbyId, hostId: user.userId)
+        self.init(lobbyId: lobbyId, hostId: "123", lobbyDataChangeHandler: lobbyDataChangeHandler)
         let player = Player(playerId: user.userId, name: user.name)
-        dataManager.joinLobby(lobbyId: lobbyId, player: player)
+        dataManager.joinLobby(lobby: self, player: player)
     }
 }
 
@@ -71,5 +76,6 @@ extension Lobby: Codable {
     private enum CodingKeys: String, CodingKey {
         case lobbyId
         case hostId
+        case players
     }
 }
