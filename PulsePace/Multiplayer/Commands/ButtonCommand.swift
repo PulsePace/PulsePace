@@ -37,17 +37,3 @@ class JoinLobbyCommand: ButtonCommand {
         }
     }
 }
-
-// class StartMatchCommand: ButtonCommand {
-//    @Binding var path: [Page]
-//    
-//    override private init(action: @escaping ButtonCommand.Action) {
-//        super.init(action: action)
-//    }
-//
-//    convenience init() {
-//        self.init { [weak self] _ in
-//            self?.path.append(Page.playPage)
-//        }
-//    }
-// }

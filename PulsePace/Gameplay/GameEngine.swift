@@ -14,6 +14,7 @@ class GameEngine {
     private var inputManager: InputManager?
     private var hitObjectManager: HitObjectManager?
     private var conductor: Conductor?
+    var match: Match?
     var eventManager = EventManager()
     private var systems: [System] = []
 
@@ -36,8 +37,12 @@ class GameEngine {
         self.allObjects = Set()
         self.gameHOTable = [:]
         self.scoreManager = ScoreManager()
+        self.match = Match(matchId: "051181") // TODO: Remove
+        self.eventManager.setMatchEventHandler(matchEventHandler: self)
         self.systems.append(ScoreSystem(scoreManager: scoreManager))
         self.systems.append(InputSystem())
+        self.systems.append(TestSystem())
+        self.systems.append(MatchFeedSystem())
         self.systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
     }
 
@@ -52,7 +57,6 @@ class GameEngine {
         )
         self.conductor = Conductor(bpm: beatmap.bpm)
         self.inputManager = InputManager()
-//        inputManager.addHandler(scoreManager)
     }
 
     func reset() {
@@ -81,6 +85,24 @@ class GameEngine {
                 print("By game design params, all objects should have a hit object component")
             }
         }
+        // TODO: Remove
+        eventManager.add(event: TestEvent(timestamp: Date().timeIntervalSince1970,
+                                          player: Player(playerId: UserConfig().userId, name: UserConfig().name)))
         eventManager.handleAllEvents()
     }
+}
+
+extension GameEngine: MatchEventHandler {
+    func publishMatchEvent(message: MatchEventMessage) {
+        match?.dataManager.publishEvent(matchEvent: message)
+    }
+
+    func subscribeMatchEvents() {
+        match?.dataManager.subscribeEvents(eventManager: eventManager)
+    }
+}
+
+protocol MatchEventHandler: AnyObject {
+    func publishMatchEvent(message: MatchEventMessage)
+    func subscribeMatchEvents()
 }
