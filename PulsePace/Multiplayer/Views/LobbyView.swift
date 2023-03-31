@@ -52,15 +52,15 @@ struct LobbyView: View {
             if let lobby = viewModel.lobby {
                 Text("Lobby Code: \(lobby.lobbyId)")
                     .font(.title)
-            }
-            List {
-                ForEach(players, id: \.playerId) { player in
-                    HStack {
-                        Text(player.name)
-                        Spacer()
-                        Text(player.isReady ? "Ready to Play" : "Not Ready")
-                            .fontWeight(.bold)
-                            .foregroundColor(player.isReady ? Color.green : Color.gray)
+                List {
+                    ForEach(players, id: \.playerId) { player in
+                        HStack {
+                            Text(player.name)
+                            Spacer()
+                            Text(player.isReady ? "Ready to Play" : "Not Ready")
+                                .fontWeight(.bold)
+                                .foregroundColor(player.isReady ? Color.green : Color.gray)
+                        }
                     }
                 }
             }
@@ -73,8 +73,12 @@ struct LobbyView: View {
         if viewModel.lobby != nil {
             HStack {
                 Spacer()
-                StyledMenuButton(path: $path, page: Page.playPage, text: "Start Match",
-                                 isDisabled: viewModel.lobbyPlayers.count < 2)
+                StyledLobbyButton(command: StartMatchCommand(receiver: viewModel), text: "Start Match")
+            }
+            .onChange(of: viewModel.lobby?.lobbyStatus) { status in
+                if status == .matchStarted {
+                    self.path.append(Page.playPage)
+                }
             }
             .padding(20)
         }

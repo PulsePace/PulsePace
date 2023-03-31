@@ -37,3 +37,15 @@ class JoinLobbyCommand: ButtonCommand {
         }
     }
 }
+
+class StartMatchCommand: ButtonCommand {
+    override private init(action: @escaping ButtonCommand.Action) {
+        super.init(action: action)
+    }
+
+    convenience init(receiver: LobbyViewModel) {
+        self.init { _ in
+            receiver.lobby?.startMatch()
+        }
+    }
+}

@@ -85,9 +85,6 @@ class GameEngine {
                 print("By game design params, all objects should have a hit object component")
             }
         }
-        // TODO: Remove
-        eventManager.add(event: TestEvent(timestamp: Date().timeIntervalSince1970,
-                                          player: Player(playerId: UserConfig().userId, name: UserConfig().name)))
         eventManager.handleAllEvents()
     }
 }

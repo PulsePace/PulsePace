@@ -10,14 +10,16 @@ import FirebaseDatabase
 
 class LobbyDataManager {
     private let lobbyDatabase: any DatabaseAdapter<Lobby>
-    private let playerDatabase: any DatabaseListenerAdapter<Player>
+    private let lobbyListener: any DatabaseListenerAdapter<Lobby>
+    private let playersListener: any DatabaseListenerAdapter<Player>
     private var lobby: Lobby?
 
     private var lobbyDataChangeHandler: (() -> Void)? = {}
 
     init(databaseAdapter: any DatabaseAdapter<Lobby>, lobbyDataChangeHandler: (() -> Void)? = {}) {
         self.lobbyDatabase = databaseAdapter
-        self.playerDatabase = FirebaseListener<Player>() // TODO: remove
+        self.lobbyListener = FirebaseListener<Lobby>() // TODO: remove
+        self.playersListener = FirebaseListener<Player>() // TODO: remove
         self.lobbyDataChangeHandler = lobbyDataChangeHandler
     }
 
@@ -28,7 +30,7 @@ class LobbyDataManager {
         lobbyDatabase.saveData(at: lobbyPath, data: lobby) { [weak self] result in
             switch result {
             case .success:
-                self?.setLobbyPlayers(lobbyId: lobby.lobbyId)
+                self?.setupListeners()
             case .failure(let error):
                 print(error)
             }
@@ -57,12 +59,26 @@ class LobbyDataManager {
                 return TransactionResult.success(withValue: mutablePlayers)
             },
             completion: { [weak self] _ in
-                self?.setLobbyPlayers(lobbyId: lobby.lobbyId)
+                self?.setupListeners()
             })
     }
 
-    func startMatch() {
+    func startMatch(match: Match) {
+        guard let lobby = lobby else {
+            return
+        }
+        let lobbyStatusPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId,
+                                                               DatabasePath.lobbyStatus])
+        lobbyDatabase.setValue(at: lobbyStatusPath, value: LobbyStatus.matchStarted.rawValue) { _ in }
+    }
 
+    private func setupListeners() {
+        guard let lobby = lobby else {
+            return
+        }
+
+        self.setLobbyPlayers(lobbyId: lobby.lobbyId)
+        self.observeLobbyStatus(lobbyId: lobby.lobbyId)
     }
 
     private func setLobbyPlayers(lobbyId: String) {
@@ -96,8 +112,26 @@ class LobbyDataManager {
             }
         }
 
-        playerDatabase.setupAddChildListener(in: playersPath, completion: playerUpdateHandler)
-        playerDatabase.setupUpdateChildListener(in: playersPath, completion: playerUpdateHandler)
-        playerDatabase.setupRemoveChildListener(in: playersPath, completion: playerLeftHandler)
+        playersListener.setupAddChildListener(in: playersPath, completion: playerUpdateHandler)
+        playersListener.setupUpdateChildListener(in: playersPath, completion: playerUpdateHandler)
+        playersListener.setupRemoveChildListener(in: playersPath, completion: playerLeftHandler)
+    }
+
+    private func observeLobbyStatus(lobbyId: String) {
+        let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
+        let lobbyStatusChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
+            switch result {
+            case .success(let lobby):
+                self?.lobby?.lobbyStatus = lobby.lobbyStatus
+                guard let changeHandler = self?.lobbyDataChangeHandler else {
+                    return
+                }
+                changeHandler()
+            case .failure(let error):
+                print(error)
+                return
+            }
+        }
+        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyStatusChangedHandler)
     }
 }

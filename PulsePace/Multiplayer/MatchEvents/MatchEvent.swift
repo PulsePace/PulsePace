@@ -21,8 +21,8 @@ struct SampleEvent: MatchEvent {
     var sampleData: String
 }
 
-// For testing
-
+// FOR TESTING
+// Events
 struct SpawnBombDisruptorEvent: Event {
     var timestamp: Double
 }
@@ -37,7 +37,7 @@ struct AnnounceFeedEvent: Event {
     var message: String
 }
 
-// SYSTEMS
+// Systems
 class MatchFeedSystem: System {
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(announceFeedHandler)
@@ -57,6 +57,6 @@ class TestSystem: System {
         eventManager.matchEventHandler?.publishMatchEvent(message: MatchEventMessage(
             timestamp: Date().timeIntervalSince1970, sourceId: UserConfig().userId,
             event: PublishBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
-                                              destinationIds: ["123", "456"])))
+                                             destinationIds: ["123", "456"])))
     }
 }
