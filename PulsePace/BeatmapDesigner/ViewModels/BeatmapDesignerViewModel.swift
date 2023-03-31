@@ -122,10 +122,13 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.enqueue(hitObject)
         previewHitObject = nil
+        incrementHitObjectsProperty()
+    }
+
+    private func incrementHitObjectsProperty() {
         // TODO: remove
-        if let property = AchievementManager.shared.properties[0] as? TotalHitObjectsPlacedProperty {
-            property.updateValue(to: property.value + 1)
-        }
+        let updater = AchievementManager.shared.getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self)
+        updater.increment()
     }
 
     static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {

@@ -118,6 +118,9 @@
 		D0D7D14029C4F6CC00676F12 /* TapGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7D13F29C4F6CC00676F12 /* TapGestureHandler.swift */; };
 		D0D7D14229C4F6EA00676F12 /* HoldGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7D14129C4F6EA00676F12 /* HoldGestureHandler.swift */; };
 		D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7D14329C4F6FB00676F12 /* SlideGestureHandler.swift */; };
+		D0EC6EA929D7352100E457CE /* PropertyUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EC6EA829D7352100E457CE /* PropertyUpdater.swift */; };
+		D0EC6EAB29D7355300E457CE /* TotalHitObjectsPlacedPropertyUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EC6EAA29D7355300E457CE /* TotalHitObjectsPlacedPropertyUpdater.swift */; };
+		D0EC6EAD29D7356A00E457CE /* TotalBeatmapDesignerOpenedPropertyUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EC6EAC29D7356A00E457CE /* TotalBeatmapDesignerOpenedPropertyUpdater.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,6 +256,9 @@
 		D0D7D13F29C4F6CC00676F12 /* TapGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGestureHandler.swift; sourceTree = "<group>"; };
 		D0D7D14129C4F6EA00676F12 /* HoldGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldGestureHandler.swift; sourceTree = "<group>"; };
 		D0D7D14329C4F6FB00676F12 /* SlideGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideGestureHandler.swift; sourceTree = "<group>"; };
+		D0EC6EA829D7352100E457CE /* PropertyUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyUpdater.swift; sourceTree = "<group>"; };
+		D0EC6EAA29D7355300E457CE /* TotalHitObjectsPlacedPropertyUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalHitObjectsPlacedPropertyUpdater.swift; sourceTree = "<group>"; };
+		D0EC6EAC29D7356A00E457CE /* TotalBeatmapDesignerOpenedPropertyUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBeatmapDesignerOpenedPropertyUpdater.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -633,6 +639,9 @@
 				D0CD998829D21AFA00E40BFA /* Property.swift */,
 				D0CD999029D2FF4C00E40BFA /* TotalHitObjectsPlacedProperty.swift */,
 				D06820CB29D4A32700C96BB7 /* TotalBeatmapDesignerOpenedProperty.swift */,
+				D0EC6EA829D7352100E457CE /* PropertyUpdater.swift */,
+				D0EC6EAA29D7355300E457CE /* TotalHitObjectsPlacedPropertyUpdater.swift */,
+				D0EC6EAC29D7356A00E457CE /* TotalBeatmapDesignerOpenedPropertyUpdater.swift */,
 			);
 			path = Property;
 			sourceTree = "<group>";
@@ -878,6 +887,7 @@
 				D06820CE29D4A51600C96BB7 /* BeatmapDesignerOpenedFiveTimesConstraint.swift in Sources */,
 				6A96AAD029C125CA00FAA79E /* SlideGameHO.swift in Sources */,
 				175B3F1229C48B4800DE715D /* ScoreManagable.swift in Sources */,
+				D0EC6EAD29D7356A00E457CE /* TotalBeatmapDesignerOpenedPropertyUpdater.swift in Sources */,
 				175B3F0A29C4717B00DE715D /* HitStatus.swift in Sources */,
 				D0CD998329D219FB00E40BFA /* Observer.swift in Sources */,
 				6A96AAB929C1254D00FAA79E /* Entity.swift in Sources */,
@@ -902,6 +912,7 @@
 				6A96AAC529C1259900FAA79E /* TapCommand.swift in Sources */,
 				D0CD999329D2FFCF00E40BFA /* TenHitObjectsPlacedConstraint.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
+				D0EC6EA929D7352100E457CE /* PropertyUpdater.swift in Sources */,
 				D081DDB429C2BB91006B11B4 /* HitObjectViewFactory.swift in Sources */,
 				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
 				C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */,
@@ -951,6 +962,7 @@
 				6A96AABE29C1257D00FAA79E /* Lerper.swift in Sources */,
 				D012FF1629BE00CA00E3CC2E /* HitObject.swift in Sources */,
 				D0C3587F29D317E500E7D7CC /* Achievement.swift in Sources */,
+				D0EC6EAB29D7355300E457CE /* TotalHitObjectsPlacedPropertyUpdater.swift in Sources */,
 				D012FF1229BCC6DE00E3CC2E /* BeatmapDesignerView.swift in Sources */,
 				D0CD998929D21AFA00E40BFA /* Property.swift in Sources */,
 				D012FF1A29BE011B00E3CC2E /* TapHitObject.swift in Sources */,
