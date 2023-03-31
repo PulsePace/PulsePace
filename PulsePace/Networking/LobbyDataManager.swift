@@ -64,7 +64,10 @@ class LobbyDataManager {
     }
 
     func startMatch(match: Match) {
-        guard let lobby = lobby else {
+        guard let lobby = lobby,
+              lobby.isUserHost,
+              lobby.isEligibleToPlay
+        else {
             return
         }
         let lobbyStatusPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId,
@@ -79,6 +82,7 @@ class LobbyDataManager {
 
         self.setLobbyPlayers(lobbyId: lobby.lobbyId)
         self.observeLobbyStatus(lobbyId: lobby.lobbyId)
+        self.observeHostId(lobbyId: lobby.lobbyId)
     }
 
     private func setLobbyPlayers(lobbyId: String) {
@@ -133,5 +137,23 @@ class LobbyDataManager {
             }
         }
         lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyStatusChangedHandler)
+    }
+
+    private func observeHostId(lobbyId: String) {
+        let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
+        let lobbyHostChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
+            switch result {
+            case .success(let lobby):
+                self?.lobby?.hostId = lobby.hostId
+                guard let changeHandler = self?.lobbyDataChangeHandler else {
+                    return
+                }
+                changeHandler()
+            case .failure(let error):
+                print(error)
+                return
+            }
+        }
+        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyHostChangedHandler)
     }
 }

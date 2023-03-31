@@ -17,5 +17,6 @@ class LobbyViewModel: ObservableObject {
             return
         }
         lobbyPlayers = Array(lobby.players.values)
+        objectWillChange.send()
     }
 }
