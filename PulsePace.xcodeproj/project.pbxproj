@@ -84,8 +84,8 @@
 		C7CC5EF929D60D29001DB28E /* DatabaseListenerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5EF829D60D29001DB28E /* DatabaseListenerAdapter.swift */; };
 		C7CC5EFB29D60E60001DB28E /* FirebaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5EFA29D60E60001DB28E /* FirebaseListener.swift */; };
 		C7CC5EFE29D61FE4001DB28E /* MatchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5EFD29D61FE4001DB28E /* MatchDataManager.swift */; };
-		C7CC5F0229D6EEEE001DB28E /* EventEnqueuer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0129D6EEED001DB28E /* EventEnqueuer.swift */; };
-		C7CC5F0429D6EF29001DB28E /* MatchEventDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0329D6EF29001DB28E /* MatchEventDecoder.swift */; };
+		C7CC5F0229D6EEEE001DB28E /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0129D6EEED001DB28E /* MessageHandler.swift */; };
+		C7CC5F0429D6EF29001DB28E /* MatchMessageDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0329D6EF29001DB28E /* MatchMessageDecoder.swift */; };
 		C7CC5F0629D6F128001DB28E /* MatchEventMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0529D6F128001DB28E /* MatchEventMessage.swift */; };
 		C7CC5F0729D760FF001DB28E /* TotalHitObjectsPlacedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD999029D2FF4C00E40BFA /* TotalHitObjectsPlacedProperty.swift */; };
 		C7CC5F0829D760FF001DB28E /* ExpertBeatmapDesignerAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD999A29D30C5C00E40BFA /* ExpertBeatmapDesignerAchievement.swift */; };
@@ -250,8 +250,8 @@
 		C7CC5EF829D60D29001DB28E /* DatabaseListenerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListenerAdapter.swift; sourceTree = "<group>"; };
 		C7CC5EFA29D60E60001DB28E /* FirebaseListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseListener.swift; sourceTree = "<group>"; };
 		C7CC5EFD29D61FE4001DB28E /* MatchDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDataManager.swift; sourceTree = "<group>"; };
-		C7CC5F0129D6EEED001DB28E /* EventEnqueuer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEnqueuer.swift; sourceTree = "<group>"; };
-		C7CC5F0329D6EF29001DB28E /* MatchEventDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchEventDecoder.swift; sourceTree = "<group>"; };
+		C7CC5F0129D6EEED001DB28E /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
+		C7CC5F0329D6EF29001DB28E /* MatchMessageDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMessageDecoder.swift; sourceTree = "<group>"; };
 		C7CC5F0529D6F128001DB28E /* MatchEventMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchEventMessage.swift; sourceTree = "<group>"; };
 		C7CD9BD129B7514900ABEE8F /* PulsePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulsePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceApp.swift; sourceTree = "<group>"; };
@@ -457,7 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				C7069F3829D4A76F0039C906 /* CardDisplayable.swift */,
-				C7CC5F0129D6EEED001DB28E /* EventEnqueuer.swift */,
+				C7CC5F0129D6EEED001DB28E /* MessageHandler.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -618,7 +618,7 @@
 			children = (
 				C7CC5EF629D6069E001DB28E /* MatchEvent.swift */,
 				C7CC5F0529D6F128001DB28E /* MatchEventMessage.swift */,
-				C7CC5F0329D6EF29001DB28E /* MatchEventDecoder.swift */,
+				C7CC5F0329D6EF29001DB28E /* MatchMessageDecoder.swift */,
 			);
 			path = MatchEvents;
 			sourceTree = "<group>";
@@ -1100,7 +1100,7 @@
 				D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */,
 				C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */,
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
-				C7CC5F0229D6EEEE001DB28E /* EventEnqueuer.swift in Sources */,
+				C7CC5F0229D6EEEE001DB28E /* MessageHandler.swift in Sources */,
 				17A4828629D1C8E3006C5DB9 /* EventManagable.swift in Sources */,
 				C7069F3929D4A76F0039C906 /* CardDisplayable.swift in Sources */,
 				D070B47129C4497900E55693 /* HoldHitObject.swift in Sources */,
@@ -1223,7 +1223,7 @@
 				D0D7D13C29C4F68500676F12 /* GestureHandler.swift in Sources */,
 				17A4828B29D1C9FC006C5DB9 /* System.swift in Sources */,
 				D06820D929D4AA9B00C96BB7 /* SystemIconButtonView.swift in Sources */,
-				C7CC5F0429D6EF29001DB28E /* MatchEventDecoder.swift in Sources */,
+				C7CC5F0429D6EF29001DB28E /* MatchMessageDecoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@ class MatchDataManager {
     let subscriber: any DatabaseListenerAdapter<MatchEventMessage>
     let matchId: String
     let matchPath: String
+    var firstMessageHandler: MessageHandler?
 
     init(publisher: any DatabaseAdapter<MatchEventMessage>,
          subscriber: any DatabaseListenerAdapter<MatchEventMessage>,
@@ -18,7 +19,7 @@ class MatchDataManager {
         self.subscriber = subscriber
         self.matchId = matchId
         self.matchPath = DatabasePath.getPath(fromPaths: [DatabasePath.matches, matchId, DatabasePath.events])
-        deleteAllEvents()
+        setupMatchEventsConfig()
     }
 
     func publishEvent(matchEvent: MatchEventMessage) {
@@ -26,10 +27,11 @@ class MatchDataManager {
     }
 
     func subscribeEvents(eventManager: EventManager) {
-        let eventUpdateHandler: (Result<MatchEventMessage, Error>) -> Void = { result in
+        let eventUpdateHandler: (Result<MatchEventMessage, Error>) -> Void = { [weak self] result in
             switch result {
             case .success(let matchEventMessage):
-                MatchEventDecoder().addToEventQueue(eventManager: eventManager, message: matchEventMessage)
+                self?.firstMessageHandler?
+                    .addMessageToEventQueue(eventManager: eventManager, message: matchEventMessage)
             case .failure(let error):
                 print(error)
                 return
@@ -38,7 +40,24 @@ class MatchDataManager {
         subscriber.setupAddChildListener(in: matchPath, completion: eventUpdateHandler)
     }
 
-    func deleteAllEvents() {
+    private func setupMatchEventsConfig() {
+        deleteAllMatchEvents()
+        setupMessageHandlers()
+    }
+
+    private func deleteAllMatchEvents() {
         publisher.deleteData(at: matchPath) { _ in }
+    }
+
+    private func setupMessageHandlers() {
+        var baseMessageHandler = MatchMessageDecoder()
+        var sampleMessageHandler = SampleMessageDecoder()
+        var bombDisruptorMessageHandler = BombDisruptorMessageDecoder()
+
+        _ = baseMessageHandler
+            .setNext(handler: sampleMessageHandler)
+            .setNext(handler: bombDisruptorMessageHandler)
+
+        firstMessageHandler = baseMessageHandler
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MatchEventDecoder.swift
+//  MatchMessageDecoder.swift
 //  PulsePace
 //
 //  Created by Charisma Kausar on 31/3/23.
@@ -7,26 +7,32 @@
 
 import Foundation
 
-class MatchEventDecoder: EventEnqueuer {
-    func addToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        SampleMessageDecoder().addToEventQueue(eventManager: eventManager, message: message)
+class MatchMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
     }
 }
 
-class SampleMessageDecoder: EventEnqueuer {
-    func addToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+class SampleMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
         guard let data = Data(base64Encoded: message.encodedEvent),
               let event = try? JSONDecoder().decode(SampleEvent.self, from: data)
         else {
-            return BombDisruptorMessageDecoder().addToEventQueue(eventManager: eventManager, message: message)
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+            return
         }
         print(event)
         print("sample event")
     }
 }
 
-class BombDisruptorMessageDecoder: EventEnqueuer {
-    func addToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+class BombDisruptorMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
         guard let data = Data(base64Encoded: message.encodedEvent),
               let event = try? JSONDecoder().decode(PublishBombDisruptorEvent.self, from: data)
         else {
