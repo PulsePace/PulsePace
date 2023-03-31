@@ -48,6 +48,16 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
         }
     }
 
+    func setValue(at path: String, value: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        databaseReference.child(path).setValue(value) { error, _ in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
     func fetchData(at path: String, completion: @escaping (Result<T, Error>) -> Void) {
         databaseReference.child(path).observeSingleEvent(of: .value) { snapshot in
             guard let dict = snapshot.value as? [String: Any] else {
@@ -72,10 +82,6 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
                 completion(.success(()))
             }
         }
-    }
-
-    func setValue(path: String, value: String) {
-
     }
 
     func runTransactionBlock(at path: String, updateBlock: @escaping (MutableData) -> TransactionResult,

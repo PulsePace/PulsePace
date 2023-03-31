@@ -12,7 +12,7 @@ class Match {
     init(matchId: String) {
         self.matchId = matchId
         self.dataManager = MatchDataManager(publisher: FirebaseDatabase<MatchEventMessage>(),
-                                            subscriber: FirebaseListener <MatchEventMessage>(),
+                                            subscriber: FirebaseListener<MatchEventMessage>(),
                                             matchId: matchId)
     }
 

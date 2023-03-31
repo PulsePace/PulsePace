@@ -502,13 +502,6 @@
 			path = Commands;
 			sourceTree = "<group>";
 		};
-		C7069F4C29D4BF020039C906 /* ViewModifiers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModifiers;
-			sourceTree = "<group>";
-		};
 		C7069F4D29D4C1EF0039C906 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,7 +567,6 @@
 			children = (
 				C7CC5EF529D605C5001DB28E /* MatchEvents */,
 				C7069F4D29D4C1EF0039C906 /* Utils */,
-				C7069F4C29D4BF020039C906 /* ViewModifiers */,
 				C7069F4729D4AF6E0039C906 /* Commands */,
 				C7069F3F29D4A7FE0039C906 /* Models */,
 				C7069F3329D494060039C906 /* Views */,
@@ -591,7 +583,6 @@
 				17A4828229D1C874006C5DB9 /* Event */,
 				6A96AAC929C125A800FAA79E /* GameHitObjects */,
 				6A96AAC029C1258E00FAA79E /* Commands */,
-				6A96AABA29C1255400FAA79E /* GameEngine.swift */,
 				C7908E4A29B9310F006F7423 /* Views */,
 				C77572EB29BDEAD700367053 /* ViewExtensions */,
 				C748C9E829B9E71C00CB8C7A /* ViewModifiers */,
@@ -599,6 +590,7 @@
 				C7908E3029B7D8C0006F7423 /* Inputs */,
 				C748C9EE29BB03E200CB8C7A /* Protocols */,
 				C748C9ED29BB03D300CB8C7A /* DataStructures */,
+				6A96AABA29C1255400FAA79E /* GameEngine.swift */,
 				175B3F0929C4717B00DE715D /* HitStatus.swift */,
 				175B3F0B29C4719700DE715D /* ScoreManager.swift */,
 				175B3F0D29C471BA00DE715D /* Conductor.swift */,

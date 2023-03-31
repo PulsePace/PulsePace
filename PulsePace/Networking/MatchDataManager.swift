@@ -18,6 +18,7 @@ class MatchDataManager {
         self.subscriber = subscriber
         self.matchId = matchId
         self.matchPath = DatabasePath.getPath(fromPaths: [DatabasePath.matches, matchId, DatabasePath.events])
+        deleteAllEvents()
     }
 
     func publishEvent(matchEvent: MatchEventMessage) {
@@ -35,5 +36,9 @@ class MatchDataManager {
             }
         }
         subscriber.setupAddChildListener(in: matchPath, completion: eventUpdateHandler)
+    }
+
+    func deleteAllEvents() {
+        publisher.deleteData(at: matchPath) { _ in }
     }
 }
