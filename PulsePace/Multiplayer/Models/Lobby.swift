@@ -19,15 +19,15 @@ class Lobby {
         players.count
     }
 
-    var isUserLobbyHost: Bool {
+    var isUserHost: Bool {
         hostId == UserConfig().userId
     }
 
-    var isLobbyEligibleToPlay: Bool {
-        playerCount > config.minPlayerCount && playerCount <= config.maxPlayerCount
+    var isEligibleToPlay: Bool {
+        playerCount >= config.minPlayerCount && playerCount <= config.maxPlayerCount
     }
 
-    var isLobbyReadyToPlay: Bool {
+    var isReadyToPlay: Bool {
         true
     }
 
@@ -68,7 +68,7 @@ class Lobby {
      */
     convenience init(lobbyId: String, lobbyDataChangeHandler: (() -> Void)? = {}) {
         let user = UserConfig()
-        self.init(lobbyId: lobbyId, hostId: "123", lobbyDataChangeHandler: lobbyDataChangeHandler)
+        self.init(lobbyId: lobbyId, hostId: user.userId, lobbyDataChangeHandler: lobbyDataChangeHandler)
         let player = Player(playerId: user.userId, name: user.name)
         dataManager.joinLobby(lobby: self, player: player)
     }
