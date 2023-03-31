@@ -11,6 +11,8 @@ class EventManager: EventManagable {
         a.timestamp < b.timestamp
     }
 
+    weak var matchEventHandler: MatchEventHandler?
+
     func add(event: Event) {
         eventQueue.enqueue(event)
     }
@@ -27,5 +29,10 @@ class EventManager: EventManagable {
             }
             handlers.forEach({ $0.execute(eventManager: self, event: event) })
         }
+    }
+
+    func setMatchEventHandler(matchEventHandler: MatchEventHandler) {
+        self.matchEventHandler = matchEventHandler
+        matchEventHandler.subscribeMatchEvents()
     }
 }

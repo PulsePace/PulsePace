@@ -16,7 +16,7 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
         self.databaseReference = Database.database().reference()
     }
 
-    func saveData(path: String, data: T, completion: @escaping (Result<Void, Error>) -> Void) {
+    func saveData(at path: String, data: T, completion: @escaping (Result<Void, Error>) -> Void) {
         do {
             let jsonData = try JSONEncoder().encode(data)
             let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
@@ -32,7 +32,23 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
         }
     }
 
-    func fetchData(path: String, completion: @escaping (Result<T, Error>) -> Void) {
+    func saveData(in path: String, data: T, completion: @escaping (Result<Void, Error>) -> Void) {
+        do {
+            let jsonData = try JSONEncoder().encode(data)
+            let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+            databaseReference.child(path).childByAutoId().setValue(dict) { error, _ in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
+            }
+        } catch {
+            completion(.failure(error))
+        }
+    }
+
+    func fetchData(at path: String, completion: @escaping (Result<T, Error>) -> Void) {
         databaseReference.child(path).observeSingleEvent(of: .value) { snapshot in
             guard let dict = snapshot.value as? [String: Any] else {
                 completion(.failure(DatabaseError.invalidData))
@@ -48,7 +64,7 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
         }
     }
 
-    func deleteData(path: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func deleteData(at path: String, completion: @escaping (Result<Void, Error>) -> Void) {
         databaseReference.child(path).removeValue { error, _ in
             if let error = error {
                 completion(.failure(error))
@@ -58,29 +74,11 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
         }
     }
 
-    func fetchAllData(path: String, completion: @escaping (Result<Data, Error>) -> Void) {
-        databaseReference.child(path).observe(.childAdded, with: { snapshot in
-            guard let value = snapshot.value as? [String: Any] else {
-                    completion(.failure(DatabaseError.invalidData))
-                    return
-                }
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
-                    let data = try JSONDecoder().decode(T.self, from: jsonData)
-                    completion(.success(data))
-                } catch {
-                    completion(.failure(error))
-                }
-          }) { error in
-              completion(.failure(error))
-        }
-    }
-
     func setValue(path: String, value: String) {
 
     }
 
-    func runTransactionBlock(path: String, updateBlock: @escaping (MutableData) -> TransactionResult,
+    func runTransactionBlock(at path: String, updateBlock: @escaping (MutableData) -> TransactionResult,
                              completion: @escaping (Result<Void, Error>) -> Void) {
         databaseReference.child(path).runTransactionBlock(updateBlock) { error, _, _ in
             if let error = error {
@@ -89,15 +87,5 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
                 completion(.success(()))
             }
         }
-    }
-}
-
-extension FirebaseDatabase {
-    private func refBuilder(paths: [String]) -> DatabaseReference {
-        var ref = Database.database().reference()
-        for path in paths {
-            ref = ref.child(path)
-        }
-        return ref
     }
 }
