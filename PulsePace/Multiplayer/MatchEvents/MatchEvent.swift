@@ -11,6 +11,25 @@ protocol MatchEvent: Codable {
     var timestamp: Double { get }
 }
 
+// Coop limited to two player
+struct PublishMissTapEvent: MatchEvent {
+    var timestamp: Double
+    var tapHO: SerializedTapHO
+    var destinationId: String
+}
+
+struct PublishMissSlideEvent: MatchEvent {
+    var timestamp: Double
+    var slideHO: SerializedSlideHO
+    var destinationId: String
+}
+
+struct PublishMissHoldEvent: MatchEvent {
+    var timestamp: Double
+    var holdHO: SerializedHoldHO
+    var destinationId: String
+}
+
 struct PublishBombDisruptorEvent: MatchEvent {
     var timestamp: Double
     var destinationIds: [String]
@@ -25,6 +44,11 @@ struct SampleEvent: MatchEvent {
 // Events
 struct SpawnBombDisruptorEvent: Event {
     var timestamp: Double
+}
+
+struct SpawnHOEvent: Event {
+    var timestamp = 0.0
+    var hitObject: any HitObject
 }
 
 struct TestEvent: Event {
@@ -43,7 +67,7 @@ class MatchFeedSystem: System {
         eventManager.registerHandler(announceFeedHandler)
     }
 
-    private lazy var announceFeedHandler = { [self] (_: EventManagable, event: AnnounceFeedEvent) -> Void in
+    private lazy var announceFeedHandler = { (_: EventManagable, event: AnnounceFeedEvent) -> Void in
         print(event.message)
     }
 }

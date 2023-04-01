@@ -52,11 +52,17 @@ class MatchDataManager {
     private func setupMessageHandlers() {
         var baseMessageHandler = MatchMessageDecoder()
         var sampleMessageHandler = SampleMessageDecoder()
+        var missTapMessageHandler = MissTapMessageDecoder()
+        var missSlideMessageHandler = MissSlideMessageDecoder()
+        var missHoldMessageHandler = MissHoldMessageDecoder()
         var bombDisruptorMessageHandler = BombDisruptorMessageDecoder()
 
         _ = baseMessageHandler
             .setNext(handler: sampleMessageHandler)
             .setNext(handler: bombDisruptorMessageHandler)
+            .setNext(handler: missTapMessageHandler)
+            .setNext(handler: missSlideMessageHandler)
+            .setNext(handler: missHoldMessageHandler)
 
         firstMessageHandler = baseMessageHandler
     }

@@ -3,7 +3,7 @@
 //  PulsePace
 //
 //  Created by Yuanxi Zhu on 15/3/23.
-//
+import Foundation
 
 class Conductor {
     // song position in beats
@@ -19,5 +19,9 @@ class Conductor {
 
     func step(_ deltaTime: Double) {
         songPosition += deltaTime / 60 * bpm * playbackScale
+    }
+
+    func getNearestWholeBeat(offset: Double) -> Double {
+        ceil(songPosition) + offset
     }
 }

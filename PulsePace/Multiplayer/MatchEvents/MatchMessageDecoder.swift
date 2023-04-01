@@ -46,3 +46,45 @@ class BombDisruptorMessageDecoder: MessageHandler {
         print("bomb disruptor event")
     }
 }
+
+class MissTapMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let data = Data(base64Encoded: message.encodedEvent),
+              let event = try? JSONDecoder().decode(PublishMissTapEvent.self, from: data) else {
+            return
+        }
+        eventManager.add(event: SpawnHOEvent(timestamp: Date().timeIntervalSince1970, hitObject: event.tapHO.deserialize()))
+    }
+}
+
+class MissHoldMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let data = Data(base64Encoded: message.encodedEvent),
+              let event = try? JSONDecoder().decode(PublishMissHoldEvent.self, from: data) else {
+            return
+        }
+        eventManager.add(event: SpawnHOEvent(
+            timestamp: Date().timeIntervalSince1970,
+            hitObject: event.holdHO.deserialize()
+        ))
+    }
+}
+
+class MissSlideMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let data = Data(base64Encoded: message.encodedEvent),
+              let event = try? JSONDecoder().decode(PublishMissSlideEvent.self, from: data) else {
+            return
+        }
+        eventManager.add(event: SpawnHOEvent(
+            timestamp: Date().timeIntervalSince1970,
+            hitObject: event.slideHO.deserialize()
+        ))
+    }
+}
