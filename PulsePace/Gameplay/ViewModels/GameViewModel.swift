@@ -23,7 +23,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     @Published var songPosition: Double = 0
 
     var score: String {
-        guard let scoreManager = gameEngine?.scoreManager else {
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
             return String(0)
         }
         return String(format: "%06d", scoreManager.score)
@@ -34,7 +34,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     var combo: String {
-        guard let scoreManager = gameEngine?.scoreManager else {
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
             return String(0)
         }
         return String(scoreManager.comboCount) + "x"
