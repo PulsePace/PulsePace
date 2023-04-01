@@ -14,3 +14,7 @@ extension Event {
         String(describing: Self.self)
     }
 }
+
+struct NoEvent: Event {
+    let timestamp = 0.0
+}

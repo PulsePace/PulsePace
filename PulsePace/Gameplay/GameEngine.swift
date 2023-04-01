@@ -8,12 +8,14 @@
 import Foundation
 
 class GameEngine {
-    var scoreManager: ScoreManager
-    private var allObjects: Set<Entity>
-    var gameHOTable: [Entity: any GameHO]
+    var scoreManager: ScoreManager?
+    var hitObjectManager: HitObjectManager?
     private var inputManager: InputManager?
-    private var hitObjectManager: HitObjectManager?
     private var conductor: Conductor?
+
+    var gameHOTable: [Entity: any GameHO]
+    private var allObjects: Set<Entity>
+
     var match: Match?
     var eventManager = EventManager()
     private var systems: [System] = []
@@ -23,8 +25,12 @@ class GameEngine {
         guard let removedGameHO = self?.gameHOTable.removeValue(forKey: removedObject) else {
             return
         }
+
+        guard let scoreManager = self?.scoreManager else {
+            fatalError("All game engine instances should have a score manager")
+        }
         if !removedGameHO.isHit {
-            self?.scoreManager.missCount += 1
+            scoreManager.missCount += 1
         }
     }
 
@@ -33,28 +39,29 @@ class GameEngine {
         self?.gameHOTable[gameHO.wrappingObject] = gameHO
     }
 
-    init() {
+    init(_ modeAttachment: ModeAttachment) {
         self.allObjects = Set()
         self.gameHOTable = [:]
-        self.scoreManager = ScoreManager()
-        self.match = Match(matchId: "051181") // TODO: Remove
-        self.eventManager.setMatchEventHandler(matchEventHandler: self)
-        self.systems.append(ScoreSystem(scoreManager: scoreManager))
-        self.systems.append(InputSystem())
-        self.systems.append(TestSystem())
-        self.systems.append(MatchFeedSystem())
-        self.systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
+
+        match = Match(matchId: "051181") // TODO: Remove
+        eventManager.setMatchEventHandler(matchEventHandler: self)
+
+        systems.append(InputSystem())
+        systems.append(TestSystem())
+        systems.append(MatchFeedSystem())
+
+        modeAttachment.configEngine(self)
+        guard let hitObjectManager = hitObjectManager, let scoreManager = scoreManager else {
+            fatalError("Mode attachment should have initialized hit object manager and score manager")
+        }
+        systems.append(hitObjectManager)
+        systems.append(ScoreSystem(scoreManager: scoreManager))
+        systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
     }
 
     func load(_ beatmap: Beatmap) {
         reset()
-        self.hitObjectManager = HitObjectManager(
-            hitObjects: beatmap.hitObjects,
-            preSpawnInterval: beatmap.preSpawnInterval,
-            remover: objRemover,
-            offset: beatmap.offset,
-            slideSpeed: beatmap.sliderSpeed
-        )
+        hitObjectManager?.feedBeatmap(beatmap: beatmap, remover: objRemover)
         self.conductor = Conductor(bpm: beatmap.bpm)
         self.inputManager = InputManager()
     }

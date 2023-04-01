@@ -17,6 +17,7 @@ class ScoreSystem: System {
         eventManager.registerHandler(hitEventHandler)
     }
 
+    // TODO: Probably best to allow scoreManager to handle score update instead of direct access (cater for different score mode)
     private lazy var hitEventHandler = { [self] (_: EventManagable, event: HitEvent) -> Void in
         let gameHO = event.gameHO
         if gameHO.proximityScore < proximityScoreThreshould[0] {
