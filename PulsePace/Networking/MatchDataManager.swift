@@ -50,9 +50,9 @@ class MatchDataManager {
     }
 
     private func setupMessageHandlers() {
-        var baseMessageHandler = MatchMessageDecoder()
-        var sampleMessageHandler = SampleMessageDecoder()
-        var bombDisruptorMessageHandler = BombDisruptorMessageDecoder()
+        let baseMessageHandler = MatchMessageDecoder()
+        let sampleMessageHandler = SampleMessageDecoder()
+        let bombDisruptorMessageHandler = BombDisruptorMessageDecoder()
 
         _ = baseMessageHandler
             .setNext(handler: sampleMessageHandler)
