@@ -24,24 +24,26 @@ struct LobbyView: View {
     @ViewBuilder
     private func renderLobbyControls() -> some View {
         HStack {
-            StyledLobbyButton(command: CreateLobbyCommand(receiver: viewModel), text: "Create New Lobby")
-            Spacer()
-            Text("OR")
-                .foregroundColor(.secondary)
-            Spacer()
-            TextField("Lobby Code", text: $lobbyCode)
-                .frame(maxWidth: 300)
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-                .onReceive(Just(lobbyCode)) { newValue in
-                    let filtered = newValue.filter { "0123456789".contains($0) }
-                    if filtered != newValue {
-                        self.lobbyCode = filtered
+            if viewModel.lobby == nil {
+                StyledLobbyButton(command: CreateLobbyCommand(receiver: viewModel), text: "Create New Lobby")
+                Spacer()
+                Text("OR")
+                    .foregroundColor(.secondary)
+                Spacer()
+                TextField("Lobby Code", text: $lobbyCode)
+                    .frame(maxWidth: 300)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.numberPad)
+                    .onReceive(Just(lobbyCode)) { newValue in
+                        let filtered = newValue.filter { "0123456789".contains($0) }
+                        if filtered != newValue {
+                            self.lobbyCode = filtered
+                        }
                     }
-                }
-            StyledLobbyButton(command: JoinLobbyCommand(receiver: viewModel,
-                                                        lobbyCode: lobbyCode),
-                              text: "Join Lobby")
+                StyledLobbyButton(command: JoinLobbyCommand(receiver: viewModel,
+                                                            lobbyCode: lobbyCode),
+                                  text: "Join Lobby")
+            }
         }
         .padding(20)
     }
@@ -50,17 +52,17 @@ struct LobbyView: View {
     private func renderLobbyPlayers(players: [Player]) -> some View {
         VStack {
             if let lobby = viewModel.lobby {
-                Text("Lobby Code: \(lobby.lobbyId)")
+                Text("Lobby Code: \(lobby.playerCount > 0 ? lobby.lobbyId : "Not Found")")
                     .font(.title)
-            }
-            List {
-                ForEach(players, id: \.playerId) { player in
-                    HStack {
-                        Text(player.name)
-                        Spacer()
-                        Text(player.isReady ? "Ready to Play" : "Not Ready")
-                            .fontWeight(.bold)
-                            .foregroundColor(player.isReady ? Color.green : Color.gray)
+                List {
+                    ForEach(players, id: \.playerId) { player in
+                        HStack {
+                            Text(player.name)
+                            Spacer()
+                            Text(player.isReady ? "Ready to Play" : "Not Ready")
+                                .fontWeight(.bold)
+                                .foregroundColor(player.isReady ? Color.green : Color.gray)
+                        }
                     }
                 }
             }
@@ -70,11 +72,16 @@ struct LobbyView: View {
 
     @ViewBuilder
     private func renderMatchControls() -> some View {
-        if viewModel.lobby != nil {
+        if let lobby = viewModel.lobby {
             HStack {
                 Spacer()
-                StyledMenuButton(path: $path, page: Page.playPage, text: "Start Match",
-                                 isDisabled: viewModel.lobbyPlayers.count < 2)
+                StyledLobbyButton(command: StartMatchCommand(receiver: viewModel), text: "Start Match",
+                                  isDisabled: !lobby.isEligibleToPlay || !lobby.isUserHost)
+            }
+            .onChange(of: lobby.lobbyStatus) { status in
+                if status == .matchStarted {
+                    self.path.append(Page.playPage)
+                }
             }
             .padding(20)
         }

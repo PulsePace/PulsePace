@@ -59,6 +59,10 @@ struct BeatmapDesignerView: View {
             if let player = audioManager.player {
                 viewModel.initialisePlayer(player: player)
             }
+            // TODO: remove
+            if let property = AchievementManager.shared.properties[1] as? TotalBeatmapDesignerOpenedProperty {
+                property.updateValue(to: property.value + 1)
+            }
         }
         .onDisappear {
             audioManager.stopPlayer()

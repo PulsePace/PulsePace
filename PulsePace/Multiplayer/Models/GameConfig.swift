@@ -11,6 +11,6 @@ protocol GameConfig {
 }
 
 struct CompetitiveMultiplayerConfig: GameConfig {
-    var minPlayerCount = 1
+    var minPlayerCount = 2
     var maxPlayerCount = 4
 }

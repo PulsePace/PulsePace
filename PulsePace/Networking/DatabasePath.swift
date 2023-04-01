@@ -7,8 +7,11 @@
 
 enum DatabasePath {
     static let lobbies = "lobbies"
-    static let matches = "matches"
     static let players = "players"
+    static let lobbyStatus = "lobbyStatus"
+
+    static let matches = "matches"
+    static let events = "events"
 
     static func getPath(fromPaths: [String]) -> String {
         var concatPath = ""
