@@ -8,7 +8,7 @@
 import Foundation
 
 class GameEngine {
-    var scoreManager: ScoreManager?
+    var scoreSystem: ScoreSystem?
     var hitObjectManager: HitObjectManager?
     private var inputManager: InputManager?
     private var conductor: Conductor?
@@ -21,12 +21,15 @@ class GameEngine {
     private var systems: [System] = []
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
-        self?.allObjects.remove(removedObject)
-        guard let removedGameHO = self?.gameHOTable.removeValue(forKey: removedObject) else {
+        guard let self = self else {
+            fatalError("No active game engine to remove entities")
+        }
+        self.allObjects.remove(removedObject)
+        guard let removedGameHO = self.gameHOTable.removeValue(forKey: removedObject) else {
             return
         }
 
-        guard let scoreManager = self?.scoreManager else {
+        guard let scoreManager = self.scoreSystem?.scoreManager else {
             fatalError("All game engine instances should have a score manager")
         }
         if !removedGameHO.isHit {
@@ -52,11 +55,11 @@ class GameEngine {
         systems.append(MatchFeedSystem())
 
         modeAttachment.configEngine(self)
-        guard let hitObjectManager = hitObjectManager, let scoreManager = scoreManager else {
+        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
             fatalError("Mode attachment should have initialized hit object manager and score manager")
         }
         systems.append(hitObjectManager)
-        systems.append(ScoreSystem(scoreManager: scoreManager))
+        systems.append(scoreSystem)
         systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
     }
 
