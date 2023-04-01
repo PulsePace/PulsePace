@@ -39,10 +39,9 @@ class BombDisruptorMessageDecoder: MessageHandler {
             print("end of CoR")
             return
         }
-        print(event)
-        eventManager.add(event: SpawnBombDisruptorEvent(timestamp: Date().timeIntervalSince1970))
-        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970,
-                                                  message: "Bomb spawned for \( event.destinationIds)"))
+        eventManager.add(event: SpawnBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
+                                                        bombSourcePlayerId: message.sourceId,
+                                                        bombTargetPlayerId: event.destinationIds[0]))
         print("bomb disruptor event")
     }
 }
