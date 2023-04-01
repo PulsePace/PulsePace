@@ -90,6 +90,8 @@
 		C7CC5F0729D760FF001DB28E /* TotalHitObjectsPlacedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD999029D2FF4C00E40BFA /* TotalHitObjectsPlacedProperty.swift */; };
 		C7CC5F0829D760FF001DB28E /* ExpertBeatmapDesignerAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD999A29D30C5C00E40BFA /* ExpertBeatmapDesignerAchievement.swift */; };
 		C7CC5F0B29D7832D001DB28E /* MatchFeedSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0A29D7832D001DB28E /* MatchFeedSystem.swift */; };
+		C7CC5F0E29D822A1001DB28E /* MessageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0D29D822A1001DB28E /* MessageBuilder.swift */; };
+		C7CC5F1029D822DB001DB28E /* MessageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0F29D822DB001DB28E /* MessageConfig.swift */; };
 		C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */; };
 		C7CD9BD929B7514E00ABEE8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7CD9BD829B7514E00ABEE8F /* Assets.xcassets */; };
 		C7CD9BDC29B7514E00ABEE8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7CD9BDB29B7514E00ABEE8F /* Preview Assets.xcassets */; };
@@ -255,6 +257,8 @@
 		C7CC5F0329D6EF29001DB28E /* MatchMessageDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMessageDecoder.swift; sourceTree = "<group>"; };
 		C7CC5F0529D6F128001DB28E /* MatchEventMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchEventMessage.swift; sourceTree = "<group>"; };
 		C7CC5F0A29D7832D001DB28E /* MatchFeedSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFeedSystem.swift; sourceTree = "<group>"; };
+		C7CC5F0D29D822A1001DB28E /* MessageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBuilder.swift; sourceTree = "<group>"; };
+		C7CC5F0F29D822DB001DB28E /* MessageConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageConfig.swift; sourceTree = "<group>"; };
 		C7CD9BD129B7514900ABEE8F /* PulsePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulsePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceApp.swift; sourceTree = "<group>"; };
 		C7CD9BD829B7514E00ABEE8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -557,7 +561,7 @@
 		C77A7D8529D083A70082458E /* Multiplayer */ = {
 			isa = PBXGroup;
 			children = (
-				C7CC5F0929D7831D001DB28E /* Systems */,
+				C7CC5F0929D7831D001DB28E /* MatchFeed */,
 				C7CC5EF529D605C5001DB28E /* MatchEvents */,
 				C7069F4D29D4C1EF0039C906 /* Utils */,
 				C7069F4729D4AF6E0039C906 /* Commands */,
@@ -626,12 +630,14 @@
 			path = MatchEvents;
 			sourceTree = "<group>";
 		};
-		C7CC5F0929D7831D001DB28E /* Systems */ = {
+		C7CC5F0929D7831D001DB28E /* MatchFeed */ = {
 			isa = PBXGroup;
 			children = (
 				C7CC5F0A29D7832D001DB28E /* MatchFeedSystem.swift */,
+				C7CC5F0D29D822A1001DB28E /* MessageBuilder.swift */,
+				C7CC5F0F29D822DB001DB28E /* MessageConfig.swift */,
 			);
-			path = Systems;
+			path = MatchFeed;
 			sourceTree = "<group>";
 		};
 		C7CD9BC829B7514900ABEE8F = {
@@ -1223,6 +1229,7 @@
 				C7FD9A4629C2356800191F03 /* CanvasTapInput.swift in Sources */,
 				175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */,
 				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
+				C7CC5F1029D822DB001DB28E /* MessageConfig.swift in Sources */,
 				D0D7D12C29C4F4AA00676F12 /* SlideHitObjectTimelineView.swift in Sources */,
 				C7CC5F0B29D7832D001DB28E /* MatchFeedSystem.swift in Sources */,
 				C7CC5EFB29D60E60001DB28E /* FirebaseListener.swift in Sources */,
@@ -1234,6 +1241,7 @@
 				C77A7D9029D377BF0082458E /* DatabasePath.swift in Sources */,
 				D0D7D13C29C4F68500676F12 /* GestureHandler.swift in Sources */,
 				17A4828B29D1C9FC006C5DB9 /* System.swift in Sources */,
+				C7CC5F0E29D822A1001DB28E /* MessageBuilder.swift in Sources */,
 				D06820D929D4AA9B00C96BB7 /* SystemIconButtonView.swift in Sources */,
 				C7CC5F0429D6EF29001DB28E /* MatchMessageDecoder.swift in Sources */,
 			);
