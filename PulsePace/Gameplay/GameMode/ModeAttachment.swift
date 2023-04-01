@@ -7,6 +7,14 @@
 
 import Foundation
 
+enum PlayCat: String {
+    case singlePlayer = "Singleplayer", mulitplayer = "Multiplayer"
+
+    var description: String {
+        self.rawValue
+    }
+}
+
 final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
@@ -25,19 +33,54 @@ final class ModeAttachment {
 }
 
 final class ModeFactory {
-    static var modeNames: [String] = []
-    static var nameToModeAttachmentTable: [String: ModeAttachment] = [:]
-    static var defaultMode: ModeAttachment = {
-        let singleMode = ModeAttachment(
-            modeName: "Single Player",
-            hOManager: HitObjectManager(),
-            scoreSystem: ScoreSystem(scoreManager: ScoreManager())
-        )
+    private static var isPopulated = false
+    private static var gameModes: [GameMode] = []
+    private static var nameToModeAttachmentTable: [String: ModeAttachment] = [:]
+    static var defaultMode = ModeAttachment(
+        modeName: "Classic",
+        hOManager: HitObjectManager(),
+        scoreSystem: ScoreSystem(scoreManager: ScoreManager())
+    )
+
+    static func populateFactory() {
+        isPopulated = true
+
         let coopMode = ModeAttachment(
             modeName: "Basic Coop",
             hOManager: CoopHOManager(),
             scoreSystem: ScoreSystem(scoreManager: ScoreManager())
         )
-        return singleMode
-    }()
+
+        nameToModeAttachmentTable[defaultMode.modeName] = defaultMode
+        nameToModeAttachmentTable[coopMode.modeName] = coopMode
+        gameModes.append(
+            GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
+                     caption: "Tap, Slide, Hold, Win!", page: Page.playPage, modeName: defaultMode.modeName))
+        gameModes.append(
+            GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
+                     caption: "Make up for your partner's misses!", page: Page.lobbyPage, modeName: coopMode.modeName))
+        // @Charisma
+        gameModes.append(
+            GameMode(image: "", category: "Multiplayer", title: "Beat-Off",
+                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage, modeName: ""))
+    }
+
+    static func getModeAttachment(modeName: String) -> ModeAttachment {
+        if !isPopulated {
+            populateFactory()
+        }
+        guard let selectedMode = nameToModeAttachmentTable[modeName] else {
+            print("Request mode not found, falling back to default")
+            return defaultMode
+        }
+        return selectedMode
+    }
+
+    static func getAllModes() -> [GameMode] {
+        if !isPopulated {
+            populateFactory()
+        }
+
+        return gameModes
+    }
 }
