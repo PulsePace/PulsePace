@@ -41,7 +41,7 @@ class MatchFeedSystem: System {
 
         eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
-    
+
     private func addToMatchFeed(message: MatchFeedMessage) {
         matchFeedMessages.enqueue(message)
         if matchFeedMessages.count > 10 {
