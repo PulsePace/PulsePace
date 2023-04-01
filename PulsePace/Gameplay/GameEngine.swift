@@ -42,6 +42,7 @@ class GameEngine {
     init(_ modeAttachment: ModeAttachment) {
         self.allObjects = Set()
         self.gameHOTable = [:]
+        self.inputManager = InputManager()
 
         match = Match(matchId: "051181") // TODO: Remove
         eventManager.setMatchEventHandler(matchEventHandler: self)
@@ -60,17 +61,8 @@ class GameEngine {
     }
 
     func load(_ beatmap: Beatmap) {
-        reset()
         hitObjectManager?.feedBeatmap(beatmap: beatmap, remover: objRemover)
         self.conductor = Conductor(bpm: beatmap.bpm)
-        self.inputManager = InputManager()
-    }
-
-    func reset() {
-        self.allObjects.removeAll()
-        self.gameHOTable.removeAll()
-        self.hitObjectManager = nil
-        self.inputManager = nil
     }
 
     func step(_ deltaTime: Double) {

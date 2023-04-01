@@ -7,22 +7,15 @@
 
 import Foundation
 
-struct GameSetting {
-    let minPlayerCount: Int
-    let maxPlayerCount: Int
-}
-
 final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
     var scoreManager: ScoreManager
-    var setting: GameSetting
 
-    init(modeName: String, hOManager: HitObjectManager, scoreManager: ScoreManager, setting: GameSetting) {
+    init(modeName: String, hOManager: HitObjectManager, scoreManager: ScoreManager) {
         self.modeName = modeName
         self.hOManager = hOManager
         self.scoreManager = scoreManager
-        self.setting = setting
     }
 
     func configEngine(_ gameEngine: GameEngine) {
@@ -35,8 +28,16 @@ final class ModeFactory {
     static var modeNames: [String] = []
     static var nameToModeAttachmentTable: [String: ModeAttachment] = [:]
     static var defaultMode: ModeAttachment = {
-        let singleMode = ModeAttachment(modeName: "Single Player", hOManager: HitObjectManager(), scoreManager: ScoreManager(), setting: GameSetting(minPlayerCount: 1, maxPlayerCount: 1))
-        let coopMode = ModeAttachment(modeName: "Basic Coop", hOManager: CoopHOManager(), scoreManager: ScoreManager(), setting: GameSetting(minPlayerCount: 2, maxPlayerCount: 2))
+        let singleMode = ModeAttachment(
+            modeName: "Single Player",
+            hOManager: HitObjectManager(),
+            scoreManager: ScoreManager()
+        )
+        let coopMode = ModeAttachment(
+            modeName: "Basic Coop",
+            hOManager: CoopHOManager(),
+            scoreManager: ScoreManager()
+        )
         return singleMode
     }()
 }
