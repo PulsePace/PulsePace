@@ -10,6 +10,9 @@ import Foundation
 class MatchFeedSystem: System {
     let messageBuilder: MessageBuilder
 
+    var matchFeedMessages: PriorityQueue<MatchFeedMessage> = PriorityQueue<MatchFeedMessage>(
+        sortBy: { x, y in x.timestamp < y.timestamp })
+
     init() {
         // TODO: Get actual player names
         self.messageBuilder = MessageBuilder(playerNames: ["123": "Player123", "456": "Player456"])
@@ -33,7 +36,17 @@ class MatchFeedSystem: System {
             .setTarget(event.bombTargetPlayerId)
             .build()
 
+        let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
+        addToMatchFeed(message: matchFeedMessage)
+
         eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
+    }
+    
+    private func addToMatchFeed(message: MatchFeedMessage) {
+        matchFeedMessages.enqueue(message)
+        if matchFeedMessages.count > 10 {
+            _ = matchFeedMessages.dequeue()
+        }
     }
 
     private func setupMessageConfigs() {
@@ -45,4 +58,9 @@ class MatchFeedSystem: System {
 struct AnnounceFeedEvent: Event {
     var timestamp: Double
     var message: String
+}
+
+struct MatchFeedMessage {
+    var message: String
+    var timestamp: Double
 }
