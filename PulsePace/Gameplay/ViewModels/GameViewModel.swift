@@ -23,7 +23,10 @@ class GameViewModel: ObservableObject, RenderSystem {
     @Published var songPosition: Double = 0
 
     var score: String {
-        String(format: "%06d", gameEngine?.scoreManager.score ?? 0)
+        guard let scoreManager = gameEngine?.scoreManager else {
+            return String(0)
+        }
+        return String(format: "%06d", scoreManager.score)
     }
 
     var accuracy: String {
@@ -31,7 +34,10 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     var combo: String {
-        String(gameEngine?.scoreManager.comboCount ?? 0) + "x"
+        guard let scoreManager = gameEngine?.scoreManager else {
+            return String(0)
+        }
+        return String(scoreManager.comboCount) + "x"
     }
 
     var health: Double {
@@ -94,7 +100,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     func initEngineWithBeatmap(_ beatmap: Beatmap) {
-        gameEngine = GameEngine()
+        gameEngine = GameEngine(ModeFactory.defaultMode)
         gameEngine?.load(beatmap)
     }
 

@@ -8,6 +8,7 @@
 import Foundation
 
 class TapGameHO: GameHO {
+    let fromPartner = false
     let wrappingObject: Entity
 
     let position: CGPoint
