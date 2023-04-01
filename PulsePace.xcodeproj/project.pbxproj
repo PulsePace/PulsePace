@@ -91,6 +91,7 @@
 		C7CC5F0629D6F128001DB28E /* MatchEventMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0529D6F128001DB28E /* MatchEventMessage.swift */; };
 		C7CC5F0729D760FF001DB28E /* TotalHitObjectsPlacedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD999029D2FF4C00E40BFA /* TotalHitObjectsPlacedProperty.swift */; };
 		C7CC5F0829D760FF001DB28E /* ExpertBeatmapDesignerAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD999A29D30C5C00E40BFA /* ExpertBeatmapDesignerAchievement.swift */; };
+		C7CC5F0B29D7832D001DB28E /* MatchFeedSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CC5F0A29D7832D001DB28E /* MatchFeedSystem.swift */; };
 		C7CD9BD529B7514900ABEE8F /* PulsePaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */; };
 		C7CD9BD929B7514E00ABEE8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7CD9BD829B7514E00ABEE8F /* Assets.xcassets */; };
 		C7CD9BDC29B7514E00ABEE8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7CD9BDB29B7514E00ABEE8F /* Preview Assets.xcassets */; };
@@ -260,6 +261,7 @@
 		C7CC5F0129D6EEED001DB28E /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		C7CC5F0329D6EF29001DB28E /* MatchMessageDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMessageDecoder.swift; sourceTree = "<group>"; };
 		C7CC5F0529D6F128001DB28E /* MatchEventMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchEventMessage.swift; sourceTree = "<group>"; };
+		C7CC5F0A29D7832D001DB28E /* MatchFeedSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFeedSystem.swift; sourceTree = "<group>"; };
 		C7CD9BD129B7514900ABEE8F /* PulsePace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulsePace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD9BD429B7514900ABEE8F /* PulsePaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsePaceApp.swift; sourceTree = "<group>"; };
 		C7CD9BD829B7514E00ABEE8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 		C77A7D8529D083A70082458E /* Multiplayer */ = {
 			isa = PBXGroup;
 			children = (
+				C7CC5F0929D7831D001DB28E /* Systems */,
 				C7CC5EF529D605C5001DB28E /* MatchEvents */,
 				C7069F4D29D4C1EF0039C906 /* Utils */,
 				C7069F4729D4AF6E0039C906 /* Commands */,
@@ -631,6 +634,14 @@
 				C7CC5F0329D6EF29001DB28E /* MatchMessageDecoder.swift */,
 			);
 			path = MatchEvents;
+			sourceTree = "<group>";
+		};
+		C7CC5F0929D7831D001DB28E /* Systems */ = {
+			isa = PBXGroup;
+			children = (
+				C7CC5F0A29D7832D001DB28E /* MatchFeedSystem.swift */,
+			);
+			path = Systems;
 			sourceTree = "<group>";
 		};
 		C7CD9BC829B7514900ABEE8F = {
@@ -1236,6 +1247,7 @@
 				175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */,
 				6A96AABF29C1257D00FAA79E /* Math.swift in Sources */,
 				D0D7D12C29C4F4AA00676F12 /* SlideHitObjectTimelineView.swift in Sources */,
+				C7CC5F0B29D7832D001DB28E /* MatchFeedSystem.swift in Sources */,
 				C7CC5EFB29D60E60001DB28E /* FirebaseListener.swift in Sources */,
 				C7069F3229D48CBA0039C906 /* GameModesView.swift in Sources */,
 				C7A1D85629C6B4C100340BEE /* InputManager.swift in Sources */,

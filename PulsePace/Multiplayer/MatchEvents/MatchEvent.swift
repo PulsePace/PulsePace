@@ -25,6 +25,8 @@ struct SampleEvent: MatchEvent {
 // Events
 struct SpawnBombDisruptorEvent: Event {
     var timestamp: Double
+    var bombSourcePlayerId: String
+    var bombTargetPlayerId: String
 }
 
 struct TestEvent: Event {
@@ -32,22 +34,7 @@ struct TestEvent: Event {
     var player: Player
 }
 
-struct AnnounceFeedEvent: Event {
-    var timestamp: Double
-    var message: String
-}
-
 // Systems
-class MatchFeedSystem: System {
-    func registerEventHandlers(eventManager: EventManagable) {
-        eventManager.registerHandler(announceFeedHandler)
-    }
-
-    private lazy var announceFeedHandler = { [self] (_: EventManagable, event: AnnounceFeedEvent) -> Void in
-        print(event.message)
-    }
-}
-
 class TestSystem: System {
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(testEventHandler)
