@@ -24,19 +24,67 @@ final class ModeAttachment {
     }
 }
 
-final class ModeFactory {
-    static var modeNames: [String] = []
-    static var nameToModeAttachmentTable: [String: ModeAttachment] = [:]
-    static var defaultMode: ModeAttachment = {
-        let singleMode = ModeAttachment(modeName: "Single Player",
-                                        hOManager: HitObjectManager(),
-                                        scoreSystem: ScoreSystem())
-        let coopMode = ModeAttachment(modeName: "Basic Coop",
-                                      hOManager: CoopHOManager(),
-                                      scoreSystem: ScoreSystem())
-        let competitiveMode = ModeAttachment(modeName: "Beat-Off",
-                                             hOManager: CompetitiveHOManager(),
-                                             scoreSystem: CompetitiveScoreSystem())
-        return singleMode
-    }()
+protocol Factory {
+    associatedtype ProductType
+    static var isPopulated: Bool { get }
+    static var assemblies: [String: ProductType] { get }
+    static func populate()
+}
+
+final class ModeFactory: Factory {
+    static var isPopulated = false
+    private static var gameModes: [GameMode] = []
+    static var assemblies: [String: ModeAttachment] = [:]
+    static var defaultMode = ModeAttachment(
+        modeName: "Classic",
+        hOManager: HitObjectManager(),
+        scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
+        roomSetting: RoomSettingFactory.defaultSetting
+    )
+
+    static func populate() {
+        if isPopulated {
+            return
+        }
+        isPopulated = true
+
+        let coopMode = ModeAttachment(
+            modeName: "Basic Coop",
+            hOManager: CoopHOManager(),
+            scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
+            roomSetting: RoomSettingFactory.baseCoopSetting
+        )
+
+        assemblies[defaultMode.modeName] = defaultMode
+        assemblies[coopMode.modeName] = coopMode
+        gameModes.append(
+            GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
+                     caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
+        gameModes.append(
+            GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
+                     caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))
+        // @Charisma
+        gameModes.append(
+            GameMode(image: "", category: "Multiplayer", title: "Beat-Off",
+                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage, metaInfo: ""))
+    }
+
+    static func getModeAttachment(_ metaInfo: String) -> ModeAttachment {
+        if !isPopulated {
+            populate()
+        }
+        guard let selectedMode = assemblies[metaInfo] else {
+            print("Request mode not found, falling back to default")
+            return defaultMode
+        }
+        return selectedMode
+    }
+
+    static func getAllModes() -> [GameMode] {
+        if !isPopulated {
+            populate()
+        }
+
+        return gameModes
+    }
 }

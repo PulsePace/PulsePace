@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol HitObject: AnyObject, Identifiable {
+protocol HitObject: AnyObject, Identifiable, Serializable {
     var position: CGPoint { get set }
     var startTime: Double { get set }
     var endTime: Double { get set }
@@ -20,20 +20,30 @@ extension HitObject {
     }
 }
 
-protocol SerializedHO: Codable {
-    associatedtype HOType: HitObject
+protocol SerializedHO: Deserializable where DeserialType: HitObject {
     var position: CGPoint { get set }
     var startTime: Double { get set }
     var endTime: Double { get set }
 
-    func deserialize() -> HOType
+    static var decoderAssembly: (String) -> Self { get set }
 }
 
 struct SerializedTapHO: SerializedHO {
-    typealias HOType = TapHitObject
+    typealias DeserialType = TapHitObject
     var position: CGPoint
     var startTime: Double
     var endTime: Double
+
+    static var decoderAssembly = { (encodedData: String) -> SerializedTapHO in
+        guard let data = encodedData.data(using: .utf8) else {
+            fatalError("Data not decodable check for consistent schemes")
+        }
+        do {
+            return try JSONDecoder().decode(SerializedTapHO.self, from: data)
+        } catch {
+            fatalError("Fuck all this error handling")
+        }
+    }
 
     init(tapHO: TapHitObject) {
         position = tapHO.position
@@ -47,11 +57,22 @@ struct SerializedTapHO: SerializedHO {
 }
 
 struct SerializedSlideHO: SerializedHO {
-    typealias HOType = SlideHitObject
+    typealias DeserialType = SlideHitObject
     var position: CGPoint
     var startTime: Double
     var endTime: Double
     var vertices: [CGPoint]
+
+    static var decoderAssembly = { (encodedData: String) -> SerializedSlideHO in
+        guard let data = encodedData.data(using: .utf8) else {
+            fatalError("Data not decodable check for consistent schemes")
+        }
+        do {
+            return try JSONDecoder().decode(SerializedSlideHO.self, from: data)
+        } catch {
+            fatalError("Fuck all this error handling")
+        }
+    }
 
     init(slideHO: SlideHitObject) {
         position = slideHO.position
@@ -66,10 +87,21 @@ struct SerializedSlideHO: SerializedHO {
 }
 
 struct SerializedHoldHO: SerializedHO {
-    typealias HOType = HoldHitObject
+    typealias DeserialType = HoldHitObject
     var position: CGPoint
     var startTime: Double
     var endTime: Double
+
+    static var decoderAssembly = { (encodedData: String) -> SerializedHoldHO in
+        guard let data = encodedData.data(using: .utf8) else {
+            fatalError("Data not decodable check for consistent schemes")
+        }
+        do {
+            return try JSONDecoder().decode(SerializedHoldHO.self, from: data)
+        } catch {
+            fatalError("Fuck all this error handling")
+        }
+    }
 
     init(holdHO: HoldHitObject) {
         position = holdHO.position

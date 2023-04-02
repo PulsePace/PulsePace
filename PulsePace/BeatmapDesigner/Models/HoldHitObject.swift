@@ -8,6 +8,7 @@
 import Foundation
 
 class HoldHitObject: HitObject {
+    typealias SerialType = SerializedHoldHO
     var position: CGPoint
     var startTime: Double
     var endTime: Double
@@ -20,5 +21,9 @@ class HoldHitObject: HitObject {
         self.position = position
         self.startTime = startTime
         self.endTime = endTime
+    }
+
+    func serialize() -> SerializedHoldHO {
+        SerializedHoldHO(holdHO: self)
     }
 }
