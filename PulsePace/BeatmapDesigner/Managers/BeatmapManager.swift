@@ -19,13 +19,13 @@ final class BeatmapManager: ObservableObject {
             fileName: localBeatmapStorage, bundlePath: bundledBeatmaps)
         self.beatmapDataManager = beatmapDataManager
         self.beatmapDataManager.load(filename: localBeatmapStorage,
-                                     bundlePath: bundledBeatmaps, initData: []) { [unowned self] result in
+                                     bundlePath: bundledBeatmaps, initData: []) { [weak self] result in
             switch result {
             case .failure(let error):
                 fatalError(error.localizedDescription)
             case .success(let serialBeatmaps):
-                self.serialBeatmaps = serialBeatmaps
-                self.beatmapChoices = serialBeatmaps.map { $0.deserialize() }
+                self?.serialBeatmaps = serialBeatmaps
+                self?.beatmapChoices = serialBeatmaps.map { $0.deserialize() }
             }
         }
     }

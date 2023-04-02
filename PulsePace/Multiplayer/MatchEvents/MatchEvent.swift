@@ -91,6 +91,6 @@ class TestSystem: System {
         eventManager.matchEventHandler?.publishMatchEvent(message: MatchEventMessage(
             timestamp: Date().timeIntervalSince1970, sourceId: UserConfig().userId,
             event: PublishNoHintsDisruptorEvent(timestamp: Date().timeIntervalSince1970,
-                                                noHintsTargetId: selectedTarget, preSpawnInterval: 0.5, duration: 10)))
+                                                noHintsTargetId: selectedTarget, preSpawnInterval: 0.4, duration: 10)))
     }
 }

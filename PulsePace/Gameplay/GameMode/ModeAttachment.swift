@@ -62,9 +62,9 @@ final class ModeFactory: Factory {
             roomSetting: RoomSettingFactory.competitiveSetting
         )
 
-        nameToModeAttachmentTable[defaultMode.modeName] = defaultMode
-        nameToModeAttachmentTable[coopMode.modeName] = coopMode
-        nameToModeAttachmentTable[competitiveMode.modeName] = competitiveMode
+        assemblies[defaultMode.modeName] = defaultMode
+        assemblies[coopMode.modeName] = coopMode
+        assemblies[competitiveMode.modeName] = competitiveMode
 
         gameModes.append(
             GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
