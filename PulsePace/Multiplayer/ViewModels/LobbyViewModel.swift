@@ -9,8 +9,8 @@ import Foundation
 
 class LobbyViewModel: ObservableObject {
     @Published var lobby: Lobby?
-
     @Published var lobbyPlayers: [Player] = []
+    @Published var match: Match?
 
     func onLobbyDataChanged() {
         guard let lobby = lobby else {

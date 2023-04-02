@@ -21,7 +21,11 @@ struct GameView: View {
                     .ignoresSafeArea()
             }
             .overlay(alignment: .bottomTrailing) {
-                GameControlView()
+                if viewModel.selectedGameMode.modeName == ModeFactory.defaultMode.modeName {
+                    GameControlView()
+                } else {
+                    MatchFeedView()
+                }
             }
         }
         .frame(
@@ -32,7 +36,7 @@ struct GameView: View {
         .onAppear {
             audioManager.startPlayer(track: "test")
             if viewModel.gameEngine == nil {
-                viewModel.initEngineWithBeatmap(beatmapManager.beatmapChoices[0].beatmap)
+                viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
             }
             viewModel.startGameplay()
             if let audioPlayer = audioManager.player {

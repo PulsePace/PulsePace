@@ -16,7 +16,7 @@ struct StartButtonView: View {
     var body: some View {
         Button(action: {
             path.append(Page.playPage)
-            gameVM.initEngineWithBeatmap(designerVM.beatmap)
+            gameVM.initEngine(with: designerVM.beatmap)
         }) {
             Text("Start")
                 .font(.title2)

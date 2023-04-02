@@ -50,7 +50,7 @@ class LobbyDataManager {
             at: lobbyPath, updateBlock: { requestedLobby -> TransactionResult in
                 if var updatedLobby = requestedLobby.value as? [String: AnyObject] {
                     if updatedLobby[DatabasePath.modeName] as? String != lobby.modeName {
-                        return TransactionResult.success(withValue: requestedLobby)
+                        return TransactionResult.abort()
                     }
 
                     guard var players = updatedLobby[DatabasePath.players] as? [String: AnyObject] else {
