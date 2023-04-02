@@ -12,6 +12,8 @@ struct LobbyView: View {
     @StateObject var viewModel = LobbyViewModel()
     @State private var lobbyCode: String = ""
     @Binding var path: [Page]
+    @EnvironmentObject var gameVM: GameViewModel
+
     let selectedModeName: String
 
     var body: some View {
@@ -53,7 +55,8 @@ struct LobbyView: View {
     @ViewBuilder
     private func renderLobbyPlayers(players: [Player]) -> some View {
         VStack {
-            if let lobby = viewModel.lobby {
+            if let lobby = viewModel.lobby,
+               lobby.players.contains(where: { $0.key == UserConfig().userId }) {
                 Text("Lobby Code: \(lobby.playerCount > 0 ? lobby.lobbyId : "Not Found")")
                     .font(.title)
                 List {
@@ -67,6 +70,8 @@ struct LobbyView: View {
                         }
                     }
                 }
+            } else if viewModel.lobby != nil {
+                Text("This lobby is for another game mode")
             }
         }
         .padding(20)
@@ -74,7 +79,8 @@ struct LobbyView: View {
 
     @ViewBuilder
     private func renderMatchControls() -> some View {
-        if let lobby = viewModel.lobby {
+        if let lobby = viewModel.lobby,
+           lobby.players.contains(where: { $0.key == UserConfig().userId }) {
             HStack {
                 Spacer()
                 StyledLobbyButton(command: StartMatchCommand(receiver: viewModel), text: "Start Match",
@@ -82,6 +88,7 @@ struct LobbyView: View {
             }
             .onChange(of: lobby.lobbyStatus) { status in
                 if status == .matchStarted {
+                    gameVM.match = Match(matchId: lobbyCode)
                     self.path.append(Page.playPage)
                 }
             }

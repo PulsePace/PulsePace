@@ -45,6 +45,9 @@ class GameViewModel: ObservableObject, RenderSystem {
         50
     }
 
+    var selectedGameMode: ModeAttachment = ModeFactory.defaultMode
+    var match: Match?
+
     lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
         guard let gameEngine = self?.gameEngine else {
@@ -100,8 +103,8 @@ class GameViewModel: ObservableObject, RenderSystem {
         songPosition = audioPlayer.currentTime
     }
 
-    func initEngineWithBeatmap(_ beatmap: Beatmap) {
-        gameEngine = GameEngine(ModeFactory.getModeAttachment("Beat-Off")) // TODO: Change
+    func initEngine(with beatmap: Beatmap) {
+        gameEngine = GameEngine(selectedGameMode, match: match)
         gameEngine?.load(beatmap)
     }
 

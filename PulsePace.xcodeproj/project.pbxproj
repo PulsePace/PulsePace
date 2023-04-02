@@ -79,6 +79,7 @@
 		C788084429D9878C00107A32 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788084329D9878C00107A32 /* Serializable.swift */; };
 		C788084629D98C8400107A32 /* CompetitiveHOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788084529D98C8400107A32 /* CompetitiveHOManager.swift */; };
 		C788084829D99AB700107A32 /* DisruptorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788084729D99AB700107A32 /* DisruptorSystem.swift */; };
+		C788084A29D9A65B00107A32 /* MatchFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788084929D9A65B00107A32 /* MatchFeedView.swift */; };
 		C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3129B7D8CD006F7423 /* TapInput.swift */; };
 		C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3329B7D8D6006F7423 /* SlideInput.swift */; };
 		C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3729B7D8E9006F7423 /* HoldInput.swift */; };
@@ -256,6 +257,7 @@
 		C788084329D9878C00107A32 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		C788084529D98C8400107A32 /* CompetitiveHOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompetitiveHOManager.swift; sourceTree = "<group>"; };
 		C788084729D99AB700107A32 /* DisruptorSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptorSystem.swift; sourceTree = "<group>"; };
+		C788084929D9A65B00107A32 /* MatchFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFeedView.swift; sourceTree = "<group>"; };
 		C7908E3129B7D8CD006F7423 /* TapInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInput.swift; sourceTree = "<group>"; };
 		C7908E3329B7D8D6006F7423 /* SlideInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInput.swift; sourceTree = "<group>"; };
 		C7908E3729B7D8E9006F7423 /* HoldInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldInput.swift; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */,
 				C7FD9A5729C39ECB00191F03 /* ScoreView.swift */,
 				C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */,
+				C788084929D9A65B00107A32 /* MatchFeedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1219,6 +1222,7 @@
 				C7069F3529D494210039C906 /* CardView.swift in Sources */,
 				D0D7D14029C4F6CC00676F12 /* TapGestureHandler.swift in Sources */,
 				D06820D329D4AA5100C96BB7 /* ZoomButtonsView.swift in Sources */,
+				C788084A29D9A65B00107A32 /* MatchFeedView.swift in Sources */,
 				C7FD9A5829C39ECB00191F03 /* ScoreView.swift in Sources */,
 				173DE14E29D336C90005876E /* InputSystem.swift in Sources */,
 				6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */,

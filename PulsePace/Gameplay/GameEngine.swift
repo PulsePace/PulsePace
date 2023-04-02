@@ -42,16 +42,18 @@ class GameEngine {
         self?.gameHOTable[gameHO.wrappingObject] = gameHO
     }
 
-    init(_ modeAttachment: ModeAttachment) {
+    init(_ modeAttachment: ModeAttachment, match: Match? = nil) {
         self.allObjects = Set()
         self.gameHOTable = [:]
         self.inputManager = InputManager()
 
-        match = Match(matchId: "051181") // TODO: Remove
-        eventManager.setMatchEventHandler(matchEventHandler: self)
+        if match != nil {
+            self.match = match
+            eventManager.setMatchEventHandler(matchEventHandler: self)
+            systems.append(MatchFeedSystem())
+        }
 
         systems.append(InputSystem())
-        systems.append(MatchFeedSystem())
 
         modeAttachment.configEngine(self)
         guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
