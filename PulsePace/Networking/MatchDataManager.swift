@@ -51,12 +51,12 @@ class MatchDataManager {
 
     // TODO: setUpMessageHandlers according to gamemode
     private func setupMessageHandlers() {
-        var baseMessageHandler = MatchMessageDecoder()
-        var sampleMessageHandler = SampleMessageDecoder()
-        var missTapMessageHandler = MissTapMessageDecoder()
-        var missSlideMessageHandler = MissSlideMessageDecoder()
-        var missHoldMessageHandler = MissHoldMessageDecoder()
-        var bombDisruptorMessageHandler = BombDisruptorMessageDecoder()
+        let baseMessageHandler = MatchMessageDecoder()
+        let sampleMessageHandler = SampleMessageDecoder()
+        let missTapMessageHandler = MissTapMessageDecoder()
+        let missSlideMessageHandler = MissSlideMessageDecoder()
+        let missHoldMessageHandler = MissHoldMessageDecoder()
+        let bombDisruptorMessageHandler = BombDisruptorMessageDecoder()
 
         _ = baseMessageHandler
             .setNext(handler: sampleMessageHandler)

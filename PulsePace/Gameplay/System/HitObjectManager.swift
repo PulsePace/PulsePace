@@ -12,8 +12,8 @@ class HitObjectManager: System {
     private var remover: ((Entity) -> Void)?
     private var queuedHitObjects: MyQueue<any HitObject>
     private var offset = 0.0
-    private var preSpawnInterval = 0.0
     private var slideSpeed = 0.0
+    var preSpawnInterval = 0.0
 
     func registerEventHandlers(eventManager: EventManagable) {
         lazy var noHandler = { (_: EventManagable, _: NoEvent) -> Void in

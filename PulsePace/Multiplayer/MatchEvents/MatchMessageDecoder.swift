@@ -36,12 +36,14 @@ class BombDisruptorMessageDecoder: MessageHandler {
         guard let data = Data(base64Encoded: message.encodedEvent),
               let event = try? JSONDecoder().decode(PublishBombDisruptorEvent.self, from: data)
         else {
-            print("end of CoR")
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
         eventManager.add(event: SpawnBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
                                                         bombSourcePlayerId: message.sourceId,
-                                                        bombTargetPlayerId: event.destinationIds[0]))
+                                                        bombTargetPlayerId: event.bombTargetId,
+                                                        bombLocation: event.bombLocation
+                                                       ))
         print("bomb disruptor event")
     }
 }
@@ -55,7 +57,8 @@ class MissTapMessageDecoder: MessageHandler {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
-        eventManager.add(event: SpawnHOEvent(timestamp: Date().timeIntervalSince1970, hitObject: event.tapHO.deserialize()))
+        eventManager.add(event: SpawnHOEvent(timestamp: Date().timeIntervalSince1970,
+                                             hitObject: event.tapHO.deserialize()))
     }
 }
 
