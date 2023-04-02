@@ -12,6 +12,7 @@ struct MenuView: View {
     @StateObject var audioManager = AudioManager()
     @StateObject var gameVM = GameViewModel()
     @State private var path: [Page] = []
+    @State private var modeName = ModeFactory.defaultMode.modeName
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -27,9 +28,9 @@ struct MenuView: View {
                 if page == Page.designPage {
                     BeatmapDesignerView(path: $path)
                 } else if page == Page.gameModesPage {
-                    GameModesView(path: $path)
+                    GameModesView(path: $path, modeName: $modeName)
                 } else if page == Page.lobbyPage {
-                    LobbyView(path: $path)
+                    LobbyView(path: $path, selectedModeName: modeName)
                 } else if page == Page.playPage {
                     GameView()
                 } else {
@@ -70,6 +71,21 @@ struct Page: Hashable {
     static let lobbyPage = Page(name: "lobby")
     static let playPage = Page(name: "play")
     let name: String
+    // Data from the page, e.g. gameModesPage contains selected gamemode that should be accessed by lobby page
+    var data: Data?
+
+    init(name: String, data: Data? = nil) {
+        self.name = name
+        self.data = data
+    }
+
+    static func == (lhs: Page, rhs: Page) -> Bool {
+        lhs.name == rhs.name
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
 }
 
 struct MenuView_Previews: PreviewProvider {

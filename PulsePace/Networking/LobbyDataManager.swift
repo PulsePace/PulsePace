@@ -39,28 +39,64 @@ class LobbyDataManager {
 
     func joinLobby(lobby: Lobby, player: Player) {
         self.lobby = lobby
+        let gameConfig = lobby.roomSetting
+        // Check lobby at lobby id is of matching lobby type first
+        // TODO: Combine two queries into one
+        let lobbyPath = DatabasePath.getPath(fromPaths: [
+            DatabasePath.lobbies, lobby.lobbyId
+        ])
 
-        let playersPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId,
-                                                           DatabasePath.players])
-        let gameConfig = CompetitiveMultiplayerConfig()
         lobbyDatabase.runTransactionBlock(
-            at: playersPath,
-            updateBlock: { mutablePlayers -> TransactionResult in
-                if mutablePlayers.childrenCount < gameConfig.maxPlayerCount,
-                   var newPlayers = mutablePlayers.value as? [String: AnyObject] {
-                    do {
-                        let jsonData = try JSONEncoder().encode(player)
-                        let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-                        newPlayers[player.playerId] = dict as? AnyObject
-                        mutablePlayers.value = newPlayers
-                        return TransactionResult.success(withValue: mutablePlayers)
-                    } catch {}
+            at: lobbyPath, updateBlock: { requestedLobby -> TransactionResult in
+                if var updatedLobby = requestedLobby.value as? [String: AnyObject] {
+                    if updatedLobby[DatabasePath.modeName] as? String != lobby.modeName {
+                        return TransactionResult.abort()
+                    }
+
+                    guard var players = updatedLobby[DatabasePath.players] as? [String: AnyObject] else {
+                        fatalError("There should be at least one player in a lobby")
+                    }
+
+                    if players.count < gameConfig.maxPlayerCount {
+                         do {
+                             let jsonData = try JSONEncoder().encode(player)
+                             let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+                             players[player.playerId] = dict as? AnyObject
+                             updatedLobby[DatabasePath.players] = players as AnyObject
+                             requestedLobby.value = updatedLobby
+                             return TransactionResult.success(withValue: requestedLobby)
+                         } catch {
+                             print(error.localizedDescription)
+                         }
+                    }
                 }
-                return TransactionResult.success(withValue: mutablePlayers)
+                return TransactionResult.abort()
             },
             completion: { [weak self] _ in
                 self?.setupListeners()
-            })
+            }
+        )
+//        let playersPath = DatabasePath.getPath(fromPaths: [
+//            DatabasePath.lobbies, lobby.lobbyId, DatabasePath.players])
+//
+//        lobbyDatabase.runTransactionBlock(
+//            at: playersPath,
+//            updateBlock: { mutablePlayers -> TransactionResult in
+//                if mutablePlayers.childrenCount < gameConfig.maxPlayerCount,
+//                   var newPlayers = mutablePlayers.value as? [String: AnyObject] {
+//                    do {
+//                        let jsonData = try JSONEncoder().encode(player)
+//                        let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+//                        newPlayers[player.playerId] = dict as? AnyObject
+//                        mutablePlayers.value = newPlayers
+//                        return TransactionResult.success(withValue: mutablePlayers)
+//                    } catch {}
+//                }
+//                return TransactionResult.abort()
+//            },
+//            completion: { [weak self] _ in
+//                self?.setupListeners()
+//            })
     }
 
     func startMatch(match: Match) {

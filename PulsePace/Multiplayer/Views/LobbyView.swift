@@ -12,6 +12,7 @@ struct LobbyView: View {
     @StateObject var viewModel = LobbyViewModel()
     @State private var lobbyCode: String = ""
     @Binding var path: [Page]
+    let selectedModeName: String
 
     var body: some View {
         VStack {
@@ -25,7 +26,7 @@ struct LobbyView: View {
     private func renderLobbyControls() -> some View {
         HStack {
             if viewModel.lobby == nil {
-                StyledLobbyButton(command: CreateLobbyCommand(receiver: viewModel), text: "Create New Lobby")
+                StyledLobbyButton(command: CreateLobbyCommand(modeName: selectedModeName, receiver: viewModel), text: "Create New Lobby")
                 Spacer()
                 Text("OR")
                     .foregroundColor(.secondary)
@@ -41,7 +42,7 @@ struct LobbyView: View {
                         }
                     }
                 StyledLobbyButton(command: JoinLobbyCommand(receiver: viewModel,
-                                                            lobbyCode: lobbyCode),
+                                                            lobbyCode: lobbyCode, modeName: selectedModeName),
                                   text: "Join Lobby")
             }
         }

@@ -11,4 +11,6 @@ protocol CardDisplayable {
     var title: String { get set }
     var caption: String { get set }
     var page: Page { get set }
+    // Used to retrieve correct mode from ModeFactory
+    var metaInfo: String { get }
 }
