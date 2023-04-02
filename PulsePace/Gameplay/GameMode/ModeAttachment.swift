@@ -65,8 +65,17 @@ final class ModeFactory: Factory {
             roomSetting: RoomSettingFactory.baseCoopSetting
         )
 
+        let competitiveMode = ModeAttachment(
+            modeName: "Beat-Off",
+            hOManager: CompetitiveHOManager(),
+            scoreSystem: CompetitiveScoreSystem(scoreManager: ScoreManager()),
+            roomSetting: RoomSettingFactory.competitiveSetting
+        )
+
         assemblies[defaultMode.modeName] = defaultMode
         assemblies[coopMode.modeName] = coopMode
+        assemblies[competitiveMode.modeName] = competitiveMode
+
         gameModes.append(
             GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))

@@ -33,7 +33,8 @@ extension Beatmap: Serializable {
         let stringifiedHOs = hitObjects.map { hitObject in
             do {
                 let serializedHO = hitObject.serialize()
-                return HOLabelAndData(typeLabel: serializedHO.typeLabel, data: String(data: try encoder.encode(serializedHO), encoding: .utf8) ?? "")
+                return HOLabelAndData(typeLabel: serializedHO.typeLabel,
+                                      data: String(data: try encoder.encode(serializedHO), encoding: .utf8) ?? "")
             } catch {
                 fatalError(error.localizedDescription)
             }
