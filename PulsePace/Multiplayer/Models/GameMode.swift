@@ -11,4 +11,6 @@ struct GameMode: CardDisplayable {
     var title: String
     var caption: String
     var page: Page
+    // metaInfo is modeName used to retrieve correct mode from ModeFactory
+    let metaInfo: String
 }

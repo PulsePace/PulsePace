@@ -49,6 +49,7 @@ class MatchDataManager {
         publisher.deleteData(at: matchPath) { _ in }
     }
 
+    // TODO: setUpMessageHandlers according to gamemode
     private func setupMessageHandlers() {
         let baseMessageHandler = MatchMessageDecoder()
         let sampleMessageHandler = SampleMessageDecoder()
