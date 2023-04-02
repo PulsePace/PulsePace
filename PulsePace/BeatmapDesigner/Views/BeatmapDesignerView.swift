@@ -24,6 +24,20 @@ struct StartButtonView: View {
     }
 }
 
+struct SaveButtonView: View {
+    @EnvironmentObject var designerVM: BeatmapDesignerViewModel
+    @EnvironmentObject var beatmapManager: BeatmapManager
+
+    var body: some View {
+        Button(action: {
+            beatmapManager.saveBeatmap(namedBeatmap: designerVM.namedBeatmap)
+        }) {
+            Text("Save")
+                .font(.title2)
+        }
+    }
+}
+
 struct BeatmapDesignerView: View {
     @EnvironmentObject var audioManager: AudioManager
     @StateObject var viewModel = BeatmapDesignerViewModel()
@@ -35,7 +49,10 @@ struct BeatmapDesignerView: View {
                 ZoomButtonsView()
                 TimelineView()
                 DivisorSliderView()
-                StartButtonView(path: $path)
+                VStack {
+                    StartButtonView(path: $path)
+                    SaveButtonView()
+                }
             }
 
             HStack {

@@ -34,10 +34,17 @@ final class ModeAttachment {
     }
 }
 
-final class ModeFactory {
-    private static var isPopulated = false
+protocol Factory {
+    associatedtype ProductType
+    static var isPopulated: Bool { get }
+    static var assemblies: [String: ProductType] { get }
+    static func populate()
+}
+
+final class ModeFactory: Factory {
+    static var isPopulated = false
     private static var gameModes: [GameMode] = []
-    private static var nameToModeAttachmentTable: [String: ModeAttachment] = [:]
+    static var assemblies: [String: ModeAttachment] = [:]
     static var defaultMode = ModeAttachment(
         modeName: "Classic",
         hOManager: HitObjectManager(),
@@ -45,7 +52,10 @@ final class ModeFactory {
         roomSetting: RoomSettingFactory.defaultSetting
     )
 
-    static func populateFactory() {
+    static func populate() {
+        if isPopulated {
+            return
+        }
         isPopulated = true
 
         let coopMode = ModeAttachment(
@@ -55,17 +65,8 @@ final class ModeFactory {
             roomSetting: RoomSettingFactory.baseCoopSetting
         )
 
-        let competitiveMode = ModeAttachment(
-            modeName: "Beat-Off",
-            hOManager: CompetitiveHOManager(),
-            scoreSystem: CompetitiveScoreSystem(scoreManager: ScoreManager()),
-            roomSetting: RoomSettingFactory.competitiveSetting
-        )
-
-        nameToModeAttachmentTable[defaultMode.modeName] = defaultMode
-        nameToModeAttachmentTable[coopMode.modeName] = coopMode
-        nameToModeAttachmentTable[competitiveMode.modeName] = competitiveMode
-
+        assemblies[defaultMode.modeName] = defaultMode
+        assemblies[coopMode.modeName] = coopMode
         gameModes.append(
             GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
@@ -80,9 +81,9 @@ final class ModeFactory {
 
     static func getModeAttachment(_ metaInfo: String) -> ModeAttachment {
         if !isPopulated {
-            populateFactory()
+            populate()
         }
-        guard let selectedMode = nameToModeAttachmentTable[metaInfo] else {
+        guard let selectedMode = assemblies[metaInfo] else {
             print("Request mode not found, falling back to default")
             return defaultMode
         }
@@ -91,7 +92,7 @@ final class ModeFactory {
 
     static func getAllModes() -> [GameMode] {
         if !isPopulated {
-            populateFactory()
+            populate()
         }
 
         return gameModes

@@ -8,6 +8,7 @@
 import Foundation
 
 class SlideHitObject: HitObject {
+    typealias SerialType = SerializedSlideHO
     var position: CGPoint
     var startTime: Double
     var endTime: Double
@@ -22,5 +23,9 @@ class SlideHitObject: HitObject {
         self.startTime = startTime
         self.endTime = endTime
         self.vertices = vertices
+    }
+
+    func serialize() -> SerializedSlideHO {
+        SerializedSlideHO(slideHO: self)
     }
 }

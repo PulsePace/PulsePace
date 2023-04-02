@@ -10,6 +10,8 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
+    // FIXME: Remove loc
+    @EnvironmentObject var beatmapManager: BeatmapManager
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -29,6 +31,9 @@ struct GameView: View {
         )
         .onAppear {
             audioManager.startPlayer(track: "test")
+            if viewModel.gameEngine == nil {
+                viewModel.initEngineWithBeatmap(beatmapManager.beatmapChoices[0].beatmap)
+            }
             viewModel.startGameplay()
             if let audioPlayer = audioManager.player {
                 viewModel.initialisePlayer(audioPlayer: audioPlayer)
