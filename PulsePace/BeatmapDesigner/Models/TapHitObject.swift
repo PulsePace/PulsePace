@@ -8,6 +8,7 @@
 import Foundation
 
 class TapHitObject: HitObject {
+    typealias SerialType = SerializedTapHO
     var position: CGPoint
     var startTime: Double
     var endTime: Double
@@ -16,5 +17,9 @@ class TapHitObject: HitObject {
         self.position = position
         self.startTime = startTime
         self.endTime = startTime
+    }
+
+    func serialize() -> SerializedTapHO {
+        SerializedTapHO(tapHO: self)
     }
 }
