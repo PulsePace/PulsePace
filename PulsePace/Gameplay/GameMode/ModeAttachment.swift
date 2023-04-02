@@ -58,7 +58,7 @@ final class ModeFactory: Factory {
         let competitiveMode = ModeAttachment(
             modeName: "Beat-Off",
             hOManager: CompetitiveHOManager(),
-            scoreSystem: CompetitiveScoreSystem(scoreManager: ScoreManager()),
+            scoreSystem: DisruptorSystem(scoreManager: ScoreManager()),
             roomSetting: RoomSettingFactory.competitiveSetting
         )
 

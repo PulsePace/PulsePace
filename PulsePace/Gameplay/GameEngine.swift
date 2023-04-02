@@ -52,7 +52,6 @@ class GameEngine {
         eventManager.setMatchEventHandler(matchEventHandler: self)
 
         systems.append(InputSystem())
-        systems.append(TestSystem())
         systems.append(MatchFeedSystem())
 
         modeAttachment.configEngine(self)

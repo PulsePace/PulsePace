@@ -20,6 +20,11 @@ struct ActivateNoHintsDisruptorMessageConfig: MessageConfig {
     var requiredPlaceholders: [String] = ["{sourcePlayer}", "{targetPlayer}"]
 }
 
+struct DeactivateNoHintsDisruptorMessageConfig: MessageConfig {
+    var messageFormat: String = "{targetPlayer}'s hints have returned"
+    var requiredPlaceholders: [String] = ["{targetPlayer}"]
+}
+
 struct PlayerDiedMessageConfig: MessageConfig {
     var messageFormat: String = "{sourcePlayer} died"
     var requiredPlaceholders: [String] = ["{sourcePlayer}"]
