@@ -18,8 +18,8 @@ class InputSystem: System {
             event.gameHO.checkOnInputEnd(input: event.inputData)
             eventManager.add(event: HitEvent(gameHO: event.gameHO, timestamp: Date().timeIntervalSince1970))
             // TODO: Remove
-//            eventManager.add(event: TestEvent(timestamp: Date().timeIntervalSince1970,
-//                                              player: Player(playerId: UserConfig().userId, name: UserConfig().name)))
+            eventManager.add(event: TestEvent(timestamp: Date().timeIntervalSince1970,
+                                              player: Player(playerId: UserConfig().userId, name: UserConfig().name)))
         } else {
             event.gameHO.checkOnInput(input: event.inputData)
         }

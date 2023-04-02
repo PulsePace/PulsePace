@@ -26,7 +26,8 @@ struct LobbyView: View {
     private func renderLobbyControls() -> some View {
         HStack {
             if viewModel.lobby == nil {
-                StyledLobbyButton(command: CreateLobbyCommand(modeName: selectedModeName, receiver: viewModel), text: "Create New Lobby")
+                StyledLobbyButton(command: CreateLobbyCommand(modeName: selectedModeName, receiver: viewModel),
+                                  text: "Create New Lobby")
                 Spacer()
                 Text("OR")
                     .foregroundColor(.secondary)

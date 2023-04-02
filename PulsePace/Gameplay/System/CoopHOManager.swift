@@ -48,10 +48,14 @@ class CompetitiveHOManager: HitObjectManager {
             position: event.bombLocation, startTime: Date().addingTimeInterval(5).timeIntervalSince1970))
     }
 
-    lazy var onActivateNoHintsHandler = { [weak self] (_: EventManagable, _: ActivateNoHintsDisruptorEvent) -> Void in
+    lazy var
+    onActivateNoHintsHandler = { [weak self] (_: EventManagable, event: ActivateNoHintsDisruptorEvent) -> Void in
+        guard event.noHintsTargetPlayerId == UserConfig().userId else {
+            return
+        }
         let originalPreSpawnInterval = self?.preSpawnInterval
-        self?.preSpawnInterval = 0.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+        self?.preSpawnInterval = event.preSpawnInterval
+        DispatchQueue.main.asyncAfter(deadline: .now() + event.duration) {
             self?.preSpawnInterval = originalPreSpawnInterval ?? 0.0
         }
     }

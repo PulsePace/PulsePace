@@ -36,9 +36,9 @@ struct PublishBombDisruptorEvent: MatchEvent {
     var bombLocation: CGPoint
 }
 
-struct PublishSlowHintsDisruptorEvent: MatchEvent {
+struct PublishNoHintsDisruptorEvent: MatchEvent {
     var timestamp: Double
-    var slowHintTargetId: String
+    var noHintsTargetId: String
     var preSpawnInterval: Double
     var duration: Double
 }
@@ -70,11 +70,6 @@ struct TestEvent: Event {
     var player: Player
 }
 
-struct SampleEvent: MatchEvent {
-    var timestamp: Double
-    var sampleData: String
-}
-
 // Systems
 class MatchFeedSystem: System {
     func registerEventHandlers(eventManager: EventManagable) {
@@ -87,6 +82,7 @@ class MatchFeedSystem: System {
 }
 
 class TestSystem: System {
+    var selectedTarget = UserConfig().userId // TODO: Set this
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(testEventHandler)
     }
@@ -94,7 +90,7 @@ class TestSystem: System {
     private lazy var testEventHandler = { [self] (eventManager: EventManagable, _: TestEvent) -> Void in
         eventManager.matchEventHandler?.publishMatchEvent(message: MatchEventMessage(
             timestamp: Date().timeIntervalSince1970, sourceId: UserConfig().userId,
-            event: PublishBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
-                                             bombTargetId: "123", bombLocation: CGPoint.zero)))
+            event: PublishNoHintsDisruptorEvent(timestamp: Date().timeIntervalSince1970,
+                                                noHintsTargetId: selectedTarget, preSpawnInterval: 0.5, duration: 10)))
     }
 }

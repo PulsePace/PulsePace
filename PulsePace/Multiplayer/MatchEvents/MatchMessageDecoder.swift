@@ -14,21 +14,6 @@ class MatchMessageDecoder: MessageHandler {
     }
 }
 
-class SampleMessageDecoder: MessageHandler {
-    var nextHandler: MessageHandler?
-
-    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        guard let data = Data(base64Encoded: message.encodedEvent),
-              let event = try? JSONDecoder().decode(SampleEvent.self, from: data)
-        else {
-            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
-            return
-        }
-        print(event)
-        print("sample event")
-    }
-}
-
 class BombDisruptorMessageDecoder: MessageHandler {
     var nextHandler: MessageHandler?
 
@@ -45,6 +30,25 @@ class BombDisruptorMessageDecoder: MessageHandler {
                                                         bombLocation: event.bombLocation
                                                        ))
         print("bomb disruptor event")
+    }
+}
+
+class NoHintsDisruptorMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let data = Data(base64Encoded: message.encodedEvent),
+              let event = try? JSONDecoder().decode(PublishNoHintsDisruptorEvent.self, from: data)
+        else {
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+            return
+        }
+        eventManager.add(event: ActivateNoHintsDisruptorEvent(timestamp: event.timestamp,
+                                                              noHintsSourcePlayerId: message.sourceId,
+                                                              noHintsTargetPlayerId: event.noHintsTargetId,
+                                                              preSpawnInterval: event.preSpawnInterval,
+                                                              duration: event.duration))
+        print("no hints disruptor event")
     }
 }
 
