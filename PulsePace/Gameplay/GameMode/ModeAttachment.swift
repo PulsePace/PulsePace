@@ -19,11 +19,13 @@ final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
     var scoreSystem: ScoreSystem
+    var roomSetting: RoomSetting
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem) {
+    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, roomSetting: RoomSetting) {
         self.modeName = modeName
         self.hOManager = hOManager
         self.scoreSystem = scoreSystem
+        self.roomSetting = roomSetting
     }
 
     func configEngine(_ gameEngine: GameEngine) {
@@ -39,7 +41,8 @@ final class ModeFactory {
     static var defaultMode = ModeAttachment(
         modeName: "Classic",
         hOManager: HitObjectManager(),
-        scoreSystem: ScoreSystem(scoreManager: ScoreManager())
+        scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
+        roomSetting: RoomSettingFactory.defaultSetting
     )
 
     static func populateFactory() {
@@ -48,28 +51,29 @@ final class ModeFactory {
         let coopMode = ModeAttachment(
             modeName: "Basic Coop",
             hOManager: CoopHOManager(),
-            scoreSystem: ScoreSystem(scoreManager: ScoreManager())
+            scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
+            roomSetting: RoomSettingFactory.baseCoopSetting
         )
 
         nameToModeAttachmentTable[defaultMode.modeName] = defaultMode
         nameToModeAttachmentTable[coopMode.modeName] = coopMode
         gameModes.append(
             GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
-                     caption: "Tap, Slide, Hold, Win!", page: Page.playPage, modeName: defaultMode.modeName))
+                     caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
         gameModes.append(
             GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
-                     caption: "Make up for your partner's misses!", page: Page.lobbyPage, modeName: coopMode.modeName))
+                     caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))
         // @Charisma
         gameModes.append(
             GameMode(image: "", category: "Multiplayer", title: "Beat-Off",
-                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage, modeName: ""))
+                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage, metaInfo: ""))
     }
 
-    static func getModeAttachment(modeName: String) -> ModeAttachment {
+    static func getModeAttachment(_ metaInfo: String) -> ModeAttachment {
         if !isPopulated {
             populateFactory()
         }
-        guard let selectedMode = nameToModeAttachmentTable[modeName] else {
+        guard let selectedMode = nameToModeAttachmentTable[metaInfo] else {
             print("Request mode not found, falling back to default")
             return defaultMode
         }

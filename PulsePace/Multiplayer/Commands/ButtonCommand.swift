@@ -19,9 +19,9 @@ class CreateLobbyCommand: ButtonCommand {
         super.init(action: action)
     }
 
-    convenience init(receiver: LobbyViewModel) {
+    convenience init(modeName: String, receiver: LobbyViewModel) {
         self.init { _ in
-            receiver.lobby = Lobby(lobbyDataChangeHandler: receiver.onLobbyDataChanged)
+            receiver.lobby = Lobby(modeName: modeName, lobbyDataChangeHandler: receiver.onLobbyDataChanged)
         }
     }
 }
@@ -31,9 +31,9 @@ class JoinLobbyCommand: ButtonCommand {
         super.init(action: action)
     }
 
-    convenience init(receiver: LobbyViewModel, lobbyCode: String) {
+    convenience init(receiver: LobbyViewModel, lobbyCode: String, modeName: String) {
         self.init { _ in
-            receiver.lobby = Lobby(lobbyId: lobbyCode, lobbyDataChangeHandler: receiver.onLobbyDataChanged)
+            receiver.lobby = Lobby(lobbyId: lobbyCode, modeName: modeName, lobbyDataChangeHandler: receiver.onLobbyDataChanged)
         }
     }
 }
@@ -45,6 +45,7 @@ class StartMatchCommand: ButtonCommand {
 
     convenience init(receiver: LobbyViewModel) {
         self.init { _ in
+            // TODO: Add additional logic here to ensure match only started after relevant configurations are made
             receiver.lobby?.startMatch()
         }
     }

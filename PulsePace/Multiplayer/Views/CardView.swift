@@ -10,11 +10,15 @@ import SwiftUI
 
 struct CardView: View {
     @Binding var path: [Page]
+    @Binding var modeName: String
 
     var cardDisplayable: CardDisplayable
 
     var body: some View {
-        Button(action: { path.append(cardDisplayable.page) }) {
+        Button(action: {
+            modeName = cardDisplayable.metaInfo
+            path.append(cardDisplayable.page)
+        }) {
             VStack {
                 Image(cardDisplayable.image) // TODO: Add image assets
                     .resizable()
