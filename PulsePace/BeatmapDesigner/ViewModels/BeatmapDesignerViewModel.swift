@@ -20,6 +20,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
     @Published var gestureHandler: any GestureHandler
+    var achievementManager: AchievementManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     private var player: AVAudioPlayer?
@@ -82,9 +83,9 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     init() {
-        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
-        gestureHandler = TapGestureHandler()
-        gestureHandlerList = [
+        self.hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
+        self.gestureHandler = TapGestureHandler()
+        self.gestureHandlerList = [
             TapGestureHandler(),
             HoldGestureHandler(),
             SlideGestureHandler()
@@ -126,9 +127,10 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     private func incrementHitObjectsProperty() {
-        // TODO: remove
-        let updater = AchievementManager.shared.getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self)
-        updater.increment()
+        if let objectsPlacedUpdater = achievementManager?
+            .getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self) {
+            objectsPlacedUpdater.increment()
+        }
     }
 
     static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {

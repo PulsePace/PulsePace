@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MenuView: View {
+    @StateObject var achievementManager = AchievementManager()
     @StateObject var audioManager = AudioManager()
     @StateObject var gameVM = GameViewModel()
     @State private var path: [Page] = []
@@ -30,6 +31,7 @@ struct MenuView: View {
                 }
             }
         }
+        .environmentObject(achievementManager)
         .environmentObject(audioManager)
         .environmentObject(gameVM)
     }

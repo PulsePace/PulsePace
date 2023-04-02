@@ -8,8 +8,6 @@
 import Foundation
 
 class AchievementManager: ObservableObject {
-    static let shared = AchievementManager() // TODO: remove singleton
-
     private var properties: [any Property]
     private var achievements: [any Achievement]
 
