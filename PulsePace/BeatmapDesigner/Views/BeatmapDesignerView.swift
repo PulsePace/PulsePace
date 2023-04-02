@@ -16,6 +16,7 @@ struct StartButtonView: View {
     var body: some View {
         Button(action: {
             path.append(Page.playPage)
+            gameVM.selectedGameMode = ModeFactory.defaultMode
             gameVM.initEngine(with: designerVM.beatmap)
         }) {
             Text("Start")
