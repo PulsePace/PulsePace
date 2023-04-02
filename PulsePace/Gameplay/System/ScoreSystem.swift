@@ -7,9 +7,9 @@
 
 class ScoreSystem: System {
     var proximityScoreThreshould = [0.5, 1]
-    var scoreManager: ScoreManager
+    var scoreManager: ScoreManager?
 
-    init(scoreManager: ScoreManager) {
+    init(scoreManager: ScoreManager? = nil) {
         self.scoreManager = scoreManager
     }
 
@@ -17,8 +17,12 @@ class ScoreSystem: System {
         eventManager.registerHandler(hitEventHandler)
     }
 
-    // TODO: Probably best to allow scoreManager to handle score update instead of direct access (cater for different score mode)
+    /* TODO: Probably best to allow scoreManager to handle score update
+     instead of direct access (cater for different score mode) */
     private lazy var hitEventHandler = { [self] (_: EventManagable, event: HitEvent) -> Void in
+        guard let scoreManager = scoreManager else {
+            return
+        }
         let gameHO = event.gameHO
         if gameHO.proximityScore < proximityScoreThreshould[0] {
             scoreManager.perfectCount += 1
@@ -31,4 +35,8 @@ class ScoreSystem: System {
             scoreManager.score += 10
         }
     }
+}
+
+class CompetitiveScoreSystem: ScoreSystem {
+
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 class GameEngine {
+    var scoreSystem: ScoreSystem?
     var scoreManager: ScoreManager?
     var hitObjectManager: HitObjectManager?
     private var inputManager: InputManager?
@@ -42,6 +43,7 @@ class GameEngine {
     init(_ modeAttachment: ModeAttachment) {
         self.allObjects = Set()
         self.gameHOTable = [:]
+        self.scoreManager = ScoreManager()
 
         match = Match(matchId: "051181") // TODO: Remove
         eventManager.setMatchEventHandler(matchEventHandler: self)
@@ -51,26 +53,20 @@ class GameEngine {
         systems.append(MatchFeedSystem())
 
         modeAttachment.configEngine(self)
-        guard let hitObjectManager = hitObjectManager, let scoreManager = scoreManager else {
-            fatalError("Mode attachment should have initialized hit object manager and score manager")
+        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem,
+                let scoreManager = scoreManager else {
+            fatalError("Mode attachment should have initialized hit object manager and score system")
         }
+        scoreSystem.scoreManager = scoreManager
+
         systems.append(hitObjectManager)
-        systems.append(ScoreSystem(scoreManager: scoreManager))
+        systems.append(scoreSystem)
         systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
     }
 
     func load(_ beatmap: Beatmap) {
-        reset()
         hitObjectManager?.feedBeatmap(beatmap: beatmap, remover: objRemover)
         self.conductor = Conductor(bpm: beatmap.bpm)
-        self.inputManager = InputManager()
-    }
-
-    func reset() {
-        self.allObjects.removeAll()
-        self.gameHOTable.removeAll()
-        self.hitObjectManager = nil
-        self.inputManager = nil
     }
 
     func step(_ deltaTime: Double) {

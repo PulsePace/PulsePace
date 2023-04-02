@@ -31,3 +31,28 @@ class CoopHOManager: HitObjectManager {
         return gameHOSpawned
     }
 }
+
+class CompetitiveHOManager: HitObjectManager {
+    private var disruptorsQueue = MyQueue<any HitObject>()
+
+    override func registerEventHandlers(eventManager: EventManagable) {
+        eventManager.registerHandler(onSpawnBombHandler)
+        eventManager.registerHandler(onActivateNoHintsHandler)
+    }
+
+    lazy var onSpawnBombHandler = { [weak self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
+        guard event.bombTargetPlayerId == UserConfig().userId else {
+            return
+        }
+        self?.disruptorsQueue.enqueue(TapHitObject(
+            position: event.bombLocation, startTime: Date().addingTimeInterval(5).timeIntervalSince1970))
+    }
+
+    lazy var onActivateNoHintsHandler = { [weak self] (_: EventManagable, _: ActivateNoHintsDisruptorEvent) -> Void in
+        let originalPreSpawnInterval = self?.preSpawnInterval
+        self?.preSpawnInterval = 0.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            self?.preSpawnInterval = originalPreSpawnInterval ?? 0.0
+        }
+    }
+}

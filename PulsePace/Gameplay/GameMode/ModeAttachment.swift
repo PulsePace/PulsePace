@@ -7,27 +7,20 @@
 
 import Foundation
 
-struct GameSetting {
-    let minPlayerCount: Int
-    let maxPlayerCount: Int
-}
-
 final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
-    var scoreManager: ScoreManager
-    var setting: GameSetting
+    var scoreSystem: ScoreSystem
 
-    init(modeName: String, hOManager: HitObjectManager, scoreManager: ScoreManager, setting: GameSetting) {
+    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem) {
         self.modeName = modeName
         self.hOManager = hOManager
-        self.scoreManager = scoreManager
-        self.setting = setting
+        self.scoreSystem = scoreSystem
     }
 
     func configEngine(_ gameEngine: GameEngine) {
         gameEngine.hitObjectManager = hOManager
-        gameEngine.scoreManager = scoreManager
+        gameEngine.scoreSystem = scoreSystem
     }
 }
 
@@ -35,8 +28,15 @@ final class ModeFactory {
     static var modeNames: [String] = []
     static var nameToModeAttachmentTable: [String: ModeAttachment] = [:]
     static var defaultMode: ModeAttachment = {
-        let singleMode = ModeAttachment(modeName: "Single Player", hOManager: HitObjectManager(), scoreManager: ScoreManager(), setting: GameSetting(minPlayerCount: 1, maxPlayerCount: 1))
-        let coopMode = ModeAttachment(modeName: "Basic Coop", hOManager: CoopHOManager(), scoreManager: ScoreManager(), setting: GameSetting(minPlayerCount: 2, maxPlayerCount: 2))
+        let singleMode = ModeAttachment(modeName: "Single Player",
+                                        hOManager: HitObjectManager(),
+                                        scoreSystem: ScoreSystem())
+        let coopMode = ModeAttachment(modeName: "Basic Coop",
+                                      hOManager: CoopHOManager(),
+                                      scoreSystem: ScoreSystem())
+        let competitiveMode = ModeAttachment(modeName: "Beat-Off",
+                                             hOManager: CompetitiveHOManager(),
+                                             scoreSystem: CompetitiveScoreSystem())
         return singleMode
     }()
 }
