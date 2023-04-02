@@ -10,16 +10,17 @@ class MatchDataManager {
     let subscriber: any DatabaseListenerAdapter<MatchEventMessage>
     let matchId: String
     let matchPath: String
-    var firstMessageHandler: MessageHandler?
+
+    var firstMessageHandler: (any MessageHandler)?
 
     init(publisher: any DatabaseAdapter<MatchEventMessage>,
          subscriber: any DatabaseListenerAdapter<MatchEventMessage>,
-         matchId: String) {
+         matchId: String, matchEventTypes: [any MatchEvent.Type]) {
         self.publisher = publisher
         self.subscriber = subscriber
         self.matchId = matchId
         self.matchPath = DatabasePath.getPath(fromPaths: [DatabasePath.matches, matchId, DatabasePath.events])
-        setupMatchEventsConfig()
+        setupMatchEventsConfig(matchEventTypes)
     }
 
     func publishEvent(matchEvent: MatchEventMessage) {
@@ -40,31 +41,23 @@ class MatchDataManager {
         subscriber.setupAddChildListener(in: matchPath, completion: eventUpdateHandler)
     }
 
-    private func setupMatchEventsConfig() {
+    private func setupMatchEventsConfig(_ matchEventTypes: [any MatchEvent.Type]) {
         deleteAllMatchEvents()
-        setupMessageHandlers()
+        setupMessageHandlers(matchEventTypes)
     }
 
     private func deleteAllMatchEvents() {
         publisher.deleteData(at: matchPath) { _ in }
     }
 
-    // TODO: setUpMessageHandlers according to gamemode
-    private func setupMessageHandlers() {
-        var baseMessageHandler = MatchMessageDecoder()
-        var sampleMessageHandler = SampleMessageDecoder()
-        var missTapMessageHandler = MissTapMessageDecoder()
-        var missSlideMessageHandler = MissSlideMessageDecoder()
-        var missHoldMessageHandler = MissHoldMessageDecoder()
-        var bombDisruptorMessageHandler = BombDisruptorMessageDecoder()
+    private func setupMessageHandlers(_ matchEventTypes: [any MatchEvent.Type]) {
+        let handlers = matchEventTypes.map { matchEventType in matchEventType.getType.createHandler() }
 
-        _ = baseMessageHandler
-            .setNext(handler: sampleMessageHandler)
-            .setNext(handler: bombDisruptorMessageHandler)
-            .setNext(handler: missTapMessageHandler)
-            .setNext(handler: missSlideMessageHandler)
-            .setNext(handler: missHoldMessageHandler)
+        let firstHandler = SampleMessageDecoder()
+        _ = handlers.reduce(firstHandler as any MessageHandler, { chainedHandler, nextHandler in
+            chainedHandler.setNext(handler: nextHandler)
+        })
 
-        firstMessageHandler = baseMessageHandler
+        firstMessageHandler = firstHandler
     }
 }

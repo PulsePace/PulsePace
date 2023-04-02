@@ -7,86 +7,98 @@
 
 import Foundation
 
-class MatchMessageDecoder: MessageHandler {
-    var nextHandler: MessageHandler?
-    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+final class SampleMessageDecoder: MessageHandler {
+    static func createHandler() -> SampleMessageDecoder {
+        SampleMessageDecoder()
     }
-}
 
-class SampleMessageDecoder: MessageHandler {
-    var nextHandler: MessageHandler?
+    typealias MatchEventType = SampleEvent
+    var nextHandler: (any MessageHandler)?
 
     func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        guard let data = Data(base64Encoded: message.encodedEvent),
-              let event = try? JSONDecoder().decode(SampleEvent.self, from: data)
-        else {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
-        print(event)
+        print(matchEvent)
         print("sample event")
     }
 }
 
-class BombDisruptorMessageDecoder: MessageHandler {
-    var nextHandler: MessageHandler?
+final class BombDisruptorMessageDecoder: MessageHandler {
+    static func createHandler() -> BombDisruptorMessageDecoder {
+        BombDisruptorMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishBombDisruptorEvent
+    var nextHandler: (any MessageHandler)?
 
     func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        guard let data = Data(base64Encoded: message.encodedEvent),
-              let event = try? JSONDecoder().decode(PublishBombDisruptorEvent.self, from: data)
-        else {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
             print("end of CoR")
             return
         }
         eventManager.add(event: SpawnBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
                                                         bombSourcePlayerId: message.sourceId,
-                                                        bombTargetPlayerId: event.destinationIds[0]))
+                                                        bombTargetPlayerId: matchEvent.destinationIds[0]))
         print("bomb disruptor event")
     }
 }
 
-class MissTapMessageDecoder: MessageHandler {
-    var nextHandler: MessageHandler?
+final class MissTapMessageDecoder: MessageHandler {
+    static func createHandler() -> MissTapMessageDecoder {
+        MissTapMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishMissTapEvent
+    var nextHandler: (any MessageHandler)?
 
     func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        guard let data = Data(base64Encoded: message.encodedEvent),
-              let event = try? JSONDecoder().decode(PublishMissTapEvent.self, from: data) else {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
-        eventManager.add(event: SpawnHOEvent(timestamp: Date().timeIntervalSince1970, hitObject: event.tapHO.deserialize()))
+        eventManager.add(event: SpawnHOEvent(timestamp: Date().timeIntervalSince1970,
+                                             hitObject: matchEvent.tapHO.deserialize()))
     }
 }
 
-class MissHoldMessageDecoder: MessageHandler {
-    var nextHandler: MessageHandler?
+final class MissHoldMessageDecoder: MessageHandler {
+    static func createHandler() -> MissHoldMessageDecoder {
+        MissHoldMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishMissHoldEvent
+    var nextHandler: (any MessageHandler)?
 
     func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        guard let data = Data(base64Encoded: message.encodedEvent),
-              let event = try? JSONDecoder().decode(PublishMissHoldEvent.self, from: data) else {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
         eventManager.add(event: SpawnHOEvent(
             timestamp: Date().timeIntervalSince1970,
-            hitObject: event.holdHO.deserialize()
+            hitObject: matchEvent.holdHO.deserialize()
         ))
     }
 }
 
-class MissSlideMessageDecoder: MessageHandler {
-    var nextHandler: MessageHandler?
+final class MissSlideMessageDecoder: MessageHandler {
+    static func createHandler() -> MissSlideMessageDecoder {
+        MissSlideMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishMissSlideEvent
+    var nextHandler: (any MessageHandler)?
 
     func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        guard let data = Data(base64Encoded: message.encodedEvent),
-              let event = try? JSONDecoder().decode(PublishMissSlideEvent.self, from: data) else {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
         eventManager.add(event: SpawnHOEvent(
             timestamp: Date().timeIntervalSince1970,
-            hitObject: event.slideHO.deserialize()
+            hitObject: matchEvent.slideHO.deserialize()
         ))
     }
 }

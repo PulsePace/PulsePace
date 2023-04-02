@@ -30,4 +30,10 @@ class CoopHOManager: HitObjectManager {
 
         return gameHOSpawned
     }
+
+    override func spawnGameHitObject(_ hitObject: any HitObject) -> any GameHO {
+        let gameHO = super.spawnGameHitObject(hitObject)
+        gameHO.fromPartner = true
+        return gameHO
+    }
 }

@@ -74,7 +74,6 @@ class HitObjectManager: System {
         } else {
             fatalError("Hit object type not found")
         }
-
         counter += 1
         return newGameHO
     }

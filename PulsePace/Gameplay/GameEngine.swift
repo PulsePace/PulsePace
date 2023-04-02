@@ -18,7 +18,7 @@ class GameEngine {
 
     var match: Match?
     var eventManager = EventManager()
-    private var systems: [System] = []
+    var systems: [System] = []
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         guard let self = self else {
@@ -32,8 +32,10 @@ class GameEngine {
         guard let scoreManager = self.scoreSystem?.scoreManager else {
             fatalError("All game engine instances should have a score manager")
         }
+
         if !removedGameHO.isHit {
             scoreManager.missCount += 1
+            self.eventManager.add(event: MissEvent(gameHO: removedGameHO, timestamp: Date().timeIntervalSince1970))
         }
     }
 
@@ -47,7 +49,7 @@ class GameEngine {
         self.gameHOTable = [:]
         self.inputManager = InputManager()
 
-        match = Match(matchId: "051181") // TODO: Remove
+        match = Match(matchId: "051181", modeName: "") // TODO: Remove
         eventManager.setMatchEventHandler(matchEventHandler: self)
 
         systems.append(InputSystem())

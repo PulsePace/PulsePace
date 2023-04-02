@@ -7,35 +7,48 @@
 
 import Foundation
 
+// NOTE: Assumes one to one relationship between match event and handler
 protocol MatchEvent: Codable {
+    associatedtype MessageHandlerType: MessageHandler
     var timestamp: Double { get }
+}
+
+extension MatchEvent {
+    static var getType: MessageHandlerType.Type {
+        MessageHandlerType.self
+    }
 }
 
 // Coop limited to two player
 struct PublishMissTapEvent: MatchEvent {
+    typealias MessageHandlerType = MissTapMessageDecoder
     var timestamp: Double
     var tapHO: SerializedTapHO
-    var destinationId: String
+    var sourceId: String
 }
 
 struct PublishMissSlideEvent: MatchEvent {
+    typealias MessageHandlerType = MissSlideMessageDecoder
     var timestamp: Double
     var slideHO: SerializedSlideHO
-    var destinationId: String
+    var sourceId: String
 }
 
 struct PublishMissHoldEvent: MatchEvent {
+    typealias MessageHandlerType = MissHoldMessageDecoder
     var timestamp: Double
     var holdHO: SerializedHoldHO
-    var destinationId: String
+    var sourceId: String
 }
 
 struct PublishBombDisruptorEvent: MatchEvent {
+    typealias MessageHandlerType = BombDisruptorMessageDecoder
     var timestamp: Double
     var destinationIds: [String]
 }
 
 struct SampleEvent: MatchEvent {
+    typealias MessageHandlerType = SampleMessageDecoder
     var timestamp: Double
     var sampleData: String
 }

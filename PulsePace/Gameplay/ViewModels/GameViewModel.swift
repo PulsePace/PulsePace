@@ -131,5 +131,4 @@ class GameViewModel: ObservableObject, RenderSystem {
         displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 75, maximum: 150, __preferred: 90)
         displayLink?.add(to: .current, forMode: .default)
     }
-
 }

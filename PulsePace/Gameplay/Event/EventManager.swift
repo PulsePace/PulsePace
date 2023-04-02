@@ -17,7 +17,7 @@ class EventManager: EventManagable {
         eventQueue.enqueue(event)
     }
 
-    func registerHandler<T>(_ handler: @escaping (EventManagable, T) -> Void) where T: Event {
+    func registerHandler<T: Event>(_ handler: @escaping (EventManagable, T) -> Void) {
         let eventHandler = EventHandler(closure: handler, event: T.self)
         eventHandlerMap[T.label, default: []].append(eventHandler)
     }

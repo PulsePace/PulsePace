@@ -19,18 +19,28 @@ final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
     var scoreSystem: ScoreSystem
+    var listeningMatchEvents: [any MatchEvent.Type]
+    var matchEventRelay: MatchEventRelay?
     var roomSetting: RoomSetting
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, roomSetting: RoomSetting) {
+    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, roomSetting: RoomSetting,
+         listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?) {
         self.modeName = modeName
         self.hOManager = hOManager
         self.scoreSystem = scoreSystem
         self.roomSetting = roomSetting
+        self.listeningMatchEvents = listeningMatchEvents
+        self.matchEventRelay = matchEventRelay
     }
 
     func configEngine(_ gameEngine: GameEngine) {
         gameEngine.hitObjectManager = hOManager
         gameEngine.scoreSystem = scoreSystem
+        if let matchEventRelay = matchEventRelay {
+            // FIXME: remove stubs
+            matchEventRelay.assignProperties(userId: "", publisher: gameEngine.publishMatchEvent, match: Match(matchId: "", modeName: ""))
+            gameEngine.systems.append(matchEventRelay)
+        }
     }
 }
 
@@ -49,7 +59,9 @@ final class ModeFactory: Factory {
         modeName: "Classic",
         hOManager: HitObjectManager(),
         scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
-        roomSetting: RoomSettingFactory.defaultSetting
+        roomSetting: RoomSettingFactory.defaultSetting,
+        listeningMatchEvents: [],
+        matchEventRelay: nil
     )
 
     static func populate() {
@@ -62,7 +74,9 @@ final class ModeFactory: Factory {
             modeName: "Basic Coop",
             hOManager: CoopHOManager(),
             scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
-            roomSetting: RoomSettingFactory.baseCoopSetting
+            roomSetting: RoomSettingFactory.baseCoopSetting,
+            listeningMatchEvents: [PublishMissTapEvent.self, PublishMissHoldEvent.self, PublishMissSlideEvent.self],
+            matchEventRelay: CoopMatchEventRelay()
         )
 
         assemblies[defaultMode.modeName] = defaultMode

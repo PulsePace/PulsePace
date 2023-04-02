@@ -85,7 +85,7 @@ class Lobby {
     }
 
     func startMatch() {
-        let match = Match(matchId: lobbyId)
+        let match = Match(matchId: lobbyId, modeName: modeName)
         dataManager.startMatch(match: match)
     }
 }
