@@ -25,6 +25,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
+    private var songTitle: String
 
     var gestureHandlerList: [any GestureHandler] = []
 
@@ -56,6 +57,10 @@ class BeatmapDesignerViewModel: ObservableObject {
         interval * quantisedBeat
     }
 
+    var namedBeatmap: NamedBeatmap {
+        NamedBeatmap(songTitle: songTitle, beatmap: beatmap)
+    }
+
     var beatmap: Beatmap {
         // TODO: Assumes beatmap retrieved only once
         var hitObjectS2B: [any HitObject] = []
@@ -82,10 +87,11 @@ class BeatmapDesignerViewModel: ObservableObject {
         return Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjectS2B)
     }
 
-    init() {
-        self.hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
-        self.gestureHandler = TapGestureHandler()
-        self.gestureHandlerList = [
+    init(songTitle: String = "Unravel") {
+        self.songTitle = songTitle
+        hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
+        gestureHandler = TapGestureHandler()
+        gestureHandlerList = [
             TapGestureHandler(),
             HoldGestureHandler(),
             SlideGestureHandler()

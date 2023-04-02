@@ -11,6 +11,7 @@ struct MenuView: View {
     @StateObject var achievementManager = AchievementManager()
     @StateObject var audioManager = AudioManager()
     @StateObject var gameVM = GameViewModel()
+    @StateObject var beatmapManager = BeatmapManager()
     @State private var path: [Page] = []
     @State private var modeName = ModeFactory.defaultMode.modeName
 
@@ -41,6 +42,7 @@ struct MenuView: View {
         .environmentObject(achievementManager)
         .environmentObject(audioManager)
         .environmentObject(gameVM)
+        .environmentObject(beatmapManager)
     }
 }
 

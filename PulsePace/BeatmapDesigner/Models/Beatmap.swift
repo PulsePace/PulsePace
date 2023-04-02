@@ -54,7 +54,7 @@ struct SerializedBeatmap: Deserializable {
     func deserialize() -> Beatmap {
         let decoder = JSONDecoder()
         let deserializedHOs = stringifiedHOs.map { stringifiedHO in
-            return HOTypeFactory.assemble(hOTypeLabel: stringifiedHO.typeLabel, data: stringifiedHO.data).deserialize()
+            HOTypeFactory.assemble(hOTypeLabel: stringifiedHO.typeLabel, data: stringifiedHO.data).deserialize()
         }
         return Beatmap(bpm: bpm, offset: offset,
                        hitObjects: deserializedHOs,
