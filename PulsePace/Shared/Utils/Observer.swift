@@ -6,5 +6,5 @@
 //
 
 protocol Observer: AnyObject {
-    func update(with observable: Observable)
+    func update<T: Observable>(with observable: T)
 }

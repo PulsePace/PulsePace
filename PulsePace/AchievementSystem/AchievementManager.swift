@@ -8,10 +8,8 @@
 import Foundation
 
 class AchievementManager: ObservableObject {
-    static let shared = AchievementManager() // TODO: remove singleton
-
-    var properties: [any Property] = [] // TODO: private
-    var achievements: [any Achievement] = []
+    private var properties: [any Property]
+    private var achievements: [any Achievement]
 
     init() {
         properties = [
@@ -29,5 +27,15 @@ class AchievementManager: ObservableObject {
         for achievement in achievements {
             achievement.initialiseConstraints(properties: properties)
         }
+    }
+
+    func getPropertyUpdater<T: Property>(for propertyType: T.Type) -> T.S {
+        guard let property = properties.first(where: { type(of: $0) == propertyType }) else {
+            fatalError("Property for property \(propertyType) not found")
+        }
+        guard let updater = property.updater as? T.S else {
+            fatalError("Updater for property \(propertyType) not found")
+        }
+        return updater
     }
 }

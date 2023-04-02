@@ -11,4 +11,10 @@ class TotalHitObjectsPlacedProperty: Property {
     var name: String = "Total Hit Objects Placed"
     var value: Int = 0
     var observers: [Observer] = []
+    var updater: TotalHitObjectsPlacedPropertyUpdater
+
+    init() {
+        self.updater = TotalHitObjectsPlacedPropertyUpdater()
+        updater.property = self
+    }
 }

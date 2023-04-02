@@ -9,8 +9,11 @@ import Foundation
 
 protocol Property: Observable {
     associatedtype T
+    associatedtype S: PropertyUpdater
+
     var name: String { get }
     var value: T { get set }
+    var updater: S { get }
 }
 
 extension Property {

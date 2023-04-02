@@ -9,6 +9,7 @@ import Foundation
 
 class GameEngine {
     var scoreSystem: ScoreSystem?
+    var scoreManager: ScoreManager?
     var hitObjectManager: HitObjectManager?
     private var inputManager: InputManager?
     private var conductor: Conductor?
@@ -45,7 +46,7 @@ class GameEngine {
     init(_ modeAttachment: ModeAttachment, match: Match? = nil) {
         self.allObjects = Set()
         self.gameHOTable = [:]
-        self.inputManager = InputManager()
+        self.scoreManager = ScoreManager()
 
         if match != nil {
             self.match = match
@@ -59,6 +60,8 @@ class GameEngine {
         guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
             fatalError("Mode attachment should have initialized hit object manager and score system")
         }
+        scoreSystem.scoreManager = scoreManager
+
         systems.append(hitObjectManager)
         systems.append(scoreSystem)
         systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })

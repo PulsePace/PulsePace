@@ -7,14 +7,6 @@
 
 import Foundation
 
-enum PlayCat: String {
-    case singlePlayer = "Singleplayer", mulitplayer = "Multiplayer"
-
-    var description: String {
-        self.rawValue
-    }
-}
-
 final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager

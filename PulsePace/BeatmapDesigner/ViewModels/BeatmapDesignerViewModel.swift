@@ -20,6 +20,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
     @Published var gestureHandler: any GestureHandler
+    var achievementManager: AchievementManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     private var player: AVAudioPlayer?
@@ -128,9 +129,13 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.enqueue(hitObject)
         previewHitObject = nil
-        // TODO: remove
-        if let property = AchievementManager.shared.properties[0] as? TotalHitObjectsPlacedProperty {
-            property.updateValue(to: property.value + 1)
+        incrementHitObjectsProperty()
+    }
+
+    private func incrementHitObjectsProperty() {
+        if let objectsPlacedUpdater = achievementManager?
+            .getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self) {
+            objectsPlacedUpdater.increment()
         }
     }
 

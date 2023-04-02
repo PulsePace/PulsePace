@@ -39,6 +39,7 @@ struct SaveButtonView: View {
 }
 
 struct BeatmapDesignerView: View {
+    @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var audioManager: AudioManager
     @StateObject var viewModel = BeatmapDesignerViewModel()
     @Binding var path: [Page]
@@ -76,10 +77,11 @@ struct BeatmapDesignerView: View {
             if let player = audioManager.player {
                 viewModel.initialisePlayer(player: player)
             }
-            // TODO: remove
-            if let property = AchievementManager.shared.properties[1] as? TotalBeatmapDesignerOpenedProperty {
-                property.updateValue(to: property.value + 1)
-            }
+            viewModel.achievementManager = achievementManager
+
+            let openedPropertyUpdater = achievementManager
+                .getPropertyUpdater(for: TotalBeatmapDesignerOpenedProperty.self)
+            openedPropertyUpdater.increment()
         }
         .onDisappear {
             audioManager.stopPlayer()
