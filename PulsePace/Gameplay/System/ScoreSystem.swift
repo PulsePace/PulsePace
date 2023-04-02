@@ -5,6 +5,8 @@
 //  Created by Yuanxi Zhu on 26/3/23.
 //
 
+import Foundation
+
 class ScoreSystem: System {
     var proximityScoreThreshould = [0.5, 1]
     var scoreManager: ScoreManager?
@@ -19,7 +21,7 @@ class ScoreSystem: System {
 
     /* TODO: Probably best to allow scoreManager to handle score update
      instead of direct access (cater for different score mode) */
-    private lazy var hitEventHandler = { [self] (_: EventManagable, event: HitEvent) -> Void in
+    lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
         guard let scoreManager = scoreManager else {
             return
         }
@@ -27,6 +29,10 @@ class ScoreSystem: System {
         if gameHO.proximityScore < proximityScoreThreshould[0] {
             scoreManager.perfectCount += 1
             scoreManager.score += 100
+            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
+                                                     comboCount: scoreManager.comboCount,
+                                                     lastLocation: gameHO.position
+                                                    ))
         } else if gameHO.proximityScore < proximityScoreThreshould[1] {
             scoreManager.goodCount += 1
             scoreManager.score += 50
@@ -35,8 +41,4 @@ class ScoreSystem: System {
             scoreManager.score += 10
         }
     }
-}
-
-class CompetitiveScoreSystem: ScoreSystem {
-
 }

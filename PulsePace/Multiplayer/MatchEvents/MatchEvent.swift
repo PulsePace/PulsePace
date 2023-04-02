@@ -43,7 +43,6 @@ struct PublishNoHintsDisruptorEvent: MatchEvent {
     var duration: Double
 }
 
-// FOR TESTING
 // Events
 struct SpawnBombDisruptorEvent: Event {
     var timestamp: Double
@@ -60,27 +59,18 @@ struct ActivateNoHintsDisruptorEvent: Event {
     var duration: Double
 }
 
+struct DeactivateNoHintsDisruptorEvent: Event {
+    var timestamp: Double
+    var noHintsTargetPlayerId: String
+}
+
+struct UpdateComboEvent: Event {
+    var timestamp: Double
+    var comboCount: Int
+    var lastLocation: CGPoint
+}
+
 struct SpawnHOEvent: Event {
     var timestamp = 0.0
     var hitObject: any HitObject
-}
-
-struct TestEvent: Event {
-    var timestamp: Double
-    var player: Player
-}
-
-// Systems
-class TestSystem: System {
-    var selectedTarget = UserConfig().userId // TODO: Set this
-    func registerEventHandlers(eventManager: EventManagable) {
-        eventManager.registerHandler(testEventHandler)
-    }
-
-    private lazy var testEventHandler = { [self] (eventManager: EventManagable, _: TestEvent) -> Void in
-        eventManager.matchEventHandler?.publishMatchEvent(message: MatchEventMessage(
-            timestamp: Date().timeIntervalSince1970, sourceId: UserConfig().userId,
-            event: PublishNoHintsDisruptorEvent(timestamp: Date().timeIntervalSince1970,
-                                                noHintsTargetId: selectedTarget, preSpawnInterval: 0.4, duration: 10)))
-    }
 }

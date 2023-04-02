@@ -13,7 +13,7 @@ class MatchFeedSystem: System {
     var matchFeedMessages: PriorityQueue<MatchFeedMessage> = PriorityQueue<MatchFeedMessage>(
         sortBy: { x, y in x.timestamp < y.timestamp })
 
-    init() {
+    init(playerNames: [String: String] = [:]) {
         // TODO: Get actual player names
         self.messageBuilder = MessageBuilder(playerNames: ["123": "Player123", "456": "Player456"])
         self.setupMessageConfigs()
@@ -23,14 +23,15 @@ class MatchFeedSystem: System {
         eventManager.registerHandler(announceFeedHandler)
         eventManager.registerHandler(spawnBombDisruptorHandler)
         eventManager.registerHandler(activateNoHintsDisruptorHandler)
+        eventManager.registerHandler(deactivateNoHintsDisruptorHandler)
     }
 
     private lazy var announceFeedHandler = { [self] (_: EventManagable, event: AnnounceFeedEvent) -> Void in
         print(event.message)
     }
 
-    private lazy var
-    spawnBombDisruptorHandler = { [self] (eventManager: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
+    private lazy var spawnBombDisruptorHandler
+    = { [self] (eventManager: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
         let message = messageBuilder
             .setEventType(type(of: event).label)
             .setSource(event.bombSourcePlayerId)
@@ -57,6 +58,19 @@ class MatchFeedSystem: System {
         eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
+    private lazy var deactivateNoHintsDisruptorHandler
+    = { [self] (eventManager: EventManagable, event: DeactivateNoHintsDisruptorEvent) -> Void in
+        let message = messageBuilder
+            .setEventType(type(of: event).label)
+            .setTarget(event.noHintsTargetPlayerId)
+            .build()
+
+        let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
+        addToMatchFeed(message: matchFeedMessage)
+
+        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
+    }
+
     private func addToMatchFeed(message: MatchFeedMessage) {
         matchFeedMessages.enqueue(message)
         if matchFeedMessages.count > 10 {
@@ -69,6 +83,8 @@ class MatchFeedSystem: System {
                                              messageConfig: SpawnBombDisruptorMessageConfig())
         messageBuilder.addEventMessageConfig(eventType: ActivateNoHintsDisruptorEvent.label,
                                              messageConfig: ActivateNoHintsDisruptorMessageConfig())
+        messageBuilder.addEventMessageConfig(eventType: DeactivateNoHintsDisruptorEvent.label,
+                                             messageConfig: DeactivateNoHintsDisruptorMessageConfig())
     }
 }
 
