@@ -44,8 +44,6 @@ class DisruptorSystem: ScoreSystem {
 }
 
 class PublishDisruptorFactory {
-    var assemblies: [Disruptor: MatchEvent] = [:]
-
     func getPublishEvent(disruptor: Disruptor, targetId: String, location: CGPoint) -> MatchEvent {
         if disruptor == .bomb {
             return PublishBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
