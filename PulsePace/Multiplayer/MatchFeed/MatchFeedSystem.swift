@@ -43,8 +43,8 @@ class MatchFeedSystem: System {
         eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
-    private lazy var activateNoHintsDisruptorHandler = { [self] (eventManager: EventManagable,
-                                                                 event: ActivateNoHintsDisruptorEvent) -> Void in
+    private lazy var activateNoHintsDisruptorHandler
+    = { [self] (eventManager: EventManagable, event: ActivateNoHintsDisruptorEvent) -> Void in
         let message = messageBuilder
             .setEventType(type(of: event).label)
             .setSource(event.noHintsSourcePlayerId)
