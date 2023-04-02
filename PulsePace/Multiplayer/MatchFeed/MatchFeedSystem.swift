@@ -14,8 +14,7 @@ class MatchFeedSystem: System {
         sortBy: { x, y in x.timestamp < y.timestamp })
 
     init(playerNames: [String: String] = [:]) {
-        // TODO: Get actual player names
-        self.messageBuilder = MessageBuilder(playerNames: ["123": "Player123", "456": "Player456"])
+        self.messageBuilder = MessageBuilder(playerNames: playerNames)
         self.setupMessageConfigs()
     }
 
@@ -24,6 +23,8 @@ class MatchFeedSystem: System {
         eventManager.registerHandler(spawnBombDisruptorHandler)
         eventManager.registerHandler(activateNoHintsDisruptorHandler)
         eventManager.registerHandler(deactivateNoHintsDisruptorHandler)
+        eventManager.registerHandler(deathHandler)
+        eventManager.registerHandler(lostlifeHandler)
     }
 
     private lazy var announceFeedHandler = { [self] (_: EventManagable, event: AnnounceFeedEvent) -> Void in
@@ -71,6 +72,32 @@ class MatchFeedSystem: System {
         eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
+    private lazy var deathHandler
+    = { [self] (eventManager: EventManagable, event: DeathEvent) -> Void in
+        let message = messageBuilder
+            .setEventType(type(of: event).label)
+            .setSource(event.diedPlayerId)
+            .build()
+
+        let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
+        addToMatchFeed(message: matchFeedMessage)
+
+        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
+    }
+
+    private lazy var lostlifeHandler
+    = { [self] (eventManager: EventManagable, event: LostLifeEvent) -> Void in
+        let message = messageBuilder
+            .setEventType(type(of: event).label)
+            .setSource(event.lostLifePlayerId)
+            .build()
+
+        let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
+        addToMatchFeed(message: matchFeedMessage)
+
+        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
+    }
+
     private func addToMatchFeed(message: MatchFeedMessage) {
         matchFeedMessages.enqueue(message)
         if matchFeedMessages.count > 10 {
@@ -85,6 +112,10 @@ class MatchFeedSystem: System {
                                              messageConfig: ActivateNoHintsDisruptorMessageConfig())
         messageBuilder.addEventMessageConfig(eventType: DeactivateNoHintsDisruptorEvent.label,
                                              messageConfig: DeactivateNoHintsDisruptorMessageConfig())
+        messageBuilder.addEventMessageConfig(eventType: DeathEvent.label,
+                                             messageConfig: DeathMessageConfig())
+        messageBuilder.addEventMessageConfig(eventType: LostLifeEvent.label,
+                                             messageConfig: LostLifeMessageConfig())
     }
 }
 

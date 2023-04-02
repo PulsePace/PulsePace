@@ -14,8 +14,6 @@ struct LobbyView: View {
     @Binding var path: [Page]
     @EnvironmentObject var gameVM: GameViewModel
 
-    let selectedModeName: String
-
     var body: some View {
         VStack {
             renderLobbyControls()
@@ -28,7 +26,8 @@ struct LobbyView: View {
     private func renderLobbyControls() -> some View {
         HStack {
             if viewModel.lobby == nil {
-                StyledLobbyButton(command: CreateLobbyCommand(modeName: selectedModeName, receiver: viewModel),
+                StyledLobbyButton(command: CreateLobbyCommand(modeName: gameVM.selectedGameMode.modeName,
+                                                              receiver: viewModel),
                                   text: "Create New Lobby")
                 Spacer()
                 Text("OR")
@@ -45,7 +44,8 @@ struct LobbyView: View {
                         }
                     }
                 StyledLobbyButton(command: JoinLobbyCommand(receiver: viewModel,
-                                                            lobbyCode: lobbyCode, modeName: selectedModeName),
+                                                            lobbyCode: lobbyCode,
+                                                            modeName: gameVM.selectedGameMode.modeName),
                                   text: "Join Lobby")
             }
         }
@@ -71,7 +71,9 @@ struct LobbyView: View {
                         }
                     }
                 }
-            } else if viewModel.lobby != nil {
+            } else if let lobby = viewModel.lobby,
+            (!lobby.players.contains(where: { $0.key == UserConfig().userId }) ||
+             gameVM.selectedGameMode.modeName != lobby.modeName) {
                 Text("This lobby is not valid")
             }
         }
@@ -90,7 +92,7 @@ struct LobbyView: View {
             }
             .onChange(of: lobby.lobbyStatus) { status in
                 if status == .matchStarted && gameVM.selectedGameMode.modeName == lobby.modeName {
-                    gameVM.match = Match(matchId: lobbyCode)
+                    gameVM.match = Match(matchId: lobbyCode, lobby: viewModel.lobby)
                     self.path.append(Page.playPage)
                 }
             }

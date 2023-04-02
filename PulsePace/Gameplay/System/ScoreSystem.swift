@@ -19,8 +19,6 @@ class ScoreSystem: System {
         eventManager.registerHandler(hitEventHandler)
     }
 
-    /* TODO: Probably best to allow scoreManager to handle score update
-     instead of direct access (cater for different score mode) */
     lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
         guard let scoreManager = scoreManager else {
             return

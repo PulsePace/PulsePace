@@ -43,6 +43,11 @@ struct PublishNoHintsDisruptorEvent: MatchEvent {
     var duration: Double
 }
 
+struct PublishDeathEvent: MatchEvent {
+    var timestamp: Double
+    var diedPlayerId: String
+}
+
 // Events
 struct SpawnBombDisruptorEvent: Event {
     var timestamp: Double
@@ -73,4 +78,14 @@ struct UpdateComboEvent: Event {
 struct SpawnHOEvent: Event {
     var timestamp = 0.0
     var hitObject: any HitObject
+}
+
+struct DeathEvent: Event {
+    var timestamp: Double
+    var diedPlayerId: String
+}
+
+struct LostLifeEvent: Event {
+    var timestamp: Double
+    var lostLifePlayerId: String
 }

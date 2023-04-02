@@ -13,7 +13,6 @@ struct MenuView: View {
     @StateObject var gameVM = GameViewModel()
     @StateObject var beatmapManager = BeatmapManager()
     @State private var path: [Page] = []
-    @State private var modeName = ModeFactory.defaultMode.modeName
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -29,9 +28,9 @@ struct MenuView: View {
                 if page == Page.designPage {
                     BeatmapDesignerView(path: $path)
                 } else if page == Page.gameModesPage {
-                    GameModesView(path: $path, modeName: $modeName)
+                    GameModesView(path: $path)
                 } else if page == Page.lobbyPage {
-                    LobbyView(path: $path, selectedModeName: modeName)
+                    LobbyView(path: $path)
                 } else if page == Page.playPage {
                     GameView()
                 } else {

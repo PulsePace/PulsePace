@@ -25,7 +25,12 @@ struct DeactivateNoHintsDisruptorMessageConfig: MessageConfig {
     var requiredPlaceholders: [String] = ["{targetPlayer}"]
 }
 
-struct PlayerDiedMessageConfig: MessageConfig {
+struct DeathMessageConfig: MessageConfig {
     var messageFormat: String = "{sourcePlayer} died"
+    var requiredPlaceholders: [String] = ["{sourcePlayer}"]
+}
+
+struct LostLifeMessageConfig: MessageConfig {
+    var messageFormat: String = "{sourcePlayer} lost a life"
     var requiredPlaceholders: [String] = ["{sourcePlayer}"]
 }

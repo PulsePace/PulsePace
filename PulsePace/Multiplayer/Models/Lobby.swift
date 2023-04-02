@@ -12,7 +12,7 @@ class Lobby {
     var lobbyStatus: LobbyStatus
 
     let roomSetting: RoomSetting
-    let modeName: String
+    var modeName: String
 
     let dataManager: LobbyDataManager
     let lobbyDataChangeHandler: (() -> Void)?
@@ -85,7 +85,7 @@ class Lobby {
     }
 
     func startMatch() {
-        let match = Match(matchId: lobbyId)
+        let match = Match(matchId: lobbyId, lobby: self)
         dataManager.startMatch(match: match)
     }
 }

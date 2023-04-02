@@ -10,12 +10,17 @@ import Foundation
 class DisruptorSystem: ScoreSystem {
     var selectedTarget = UserConfig().userId
     var selectedDisruptor: Disruptor = .noHints
+
+    var livesRemaining = 3
+
     var isEligibileToSendDisruptor: Bool {
         guard let scoreManager = scoreManager else {
             return false
         }
         return scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 5)
     }
+
+    var spawnedDisruptorLocations: [CGPoint] = []
 
     func setDisruptor(disruptor: Disruptor) {
         self.selectedDisruptor = disruptor
@@ -28,6 +33,8 @@ class DisruptorSystem: ScoreSystem {
     override func registerEventHandlers(eventManager: EventManagable) {
         super.registerEventHandlers(eventManager: eventManager)
         eventManager.registerHandler(updateComboHandler)
+        eventManager.registerHandler(onSpawnBombDisruptorHandler)
+        eventManager.registerHandler(bombHitEventHandler)
     }
 
     lazy var updateComboHandler = { [self] (eventManager: EventManagable, event: UpdateComboEvent) -> Void in
@@ -40,6 +47,33 @@ class DisruptorSystem: ScoreSystem {
                                                              targetId: selectedTarget,
                                                              location: event.lastLocation
                                                             )))
+    }
+
+    lazy var onSpawnBombDisruptorHandler = { [self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
+        guard event.bombTargetPlayerId == UserConfig().userId else {
+            return
+        }
+        spawnedDisruptorLocations.append(event.bombLocation)
+    }
+
+    lazy var bombHitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
+        guard !spawnedDisruptorLocations.allSatisfy({ event.gameHO.position != $0 }) else {
+            return
+        }
+        self.scoreManager?.comboCount = 0
+        self.livesRemaining -= 1
+        self.spawnedDisruptorLocations.removeAll(where: { $0 == event.gameHO.position })
+
+        eventManager.add(event: LostLifeEvent(timestamp: Date().timeIntervalSince1970,
+                                              lostLifePlayerId: UserConfig().userId))
+
+        if livesRemaining == 0 {
+            eventManager.matchEventHandler?.publishMatchEvent(
+                message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
+                                           sourceId: UserConfig().userId,
+                                           event: PublishDeathEvent(timestamp: Date().timeIntervalSince1970,
+                                                                    diedPlayerId: UserConfig().userId)))
+        }
     }
 }
 

@@ -97,3 +97,19 @@ class MissSlideMessageDecoder: MessageHandler {
         ))
     }
 }
+
+class DeathMessageDecoder: MessageHandler {
+    var nextHandler: MessageHandler?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let data = Data(base64Encoded: message.encodedEvent),
+              let event = try? JSONDecoder().decode(PublishDeathEvent.self, from: data) else {
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+            return
+        }
+        eventManager.add(event: DeathEvent(
+            timestamp: Date().timeIntervalSince1970,
+            diedPlayerId: event.diedPlayerId
+        ))
+    }
+}

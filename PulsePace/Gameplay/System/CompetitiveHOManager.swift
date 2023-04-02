@@ -15,12 +15,13 @@ class CompetitiveHOManager: HitObjectManager {
         eventManager.registerHandler(onActivateNoHintsHandler)
     }
 
-    lazy var onSpawnBombHandler = { [weak self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
+    lazy var onSpawnBombHandler
+    = { [weak self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
         guard event.bombTargetPlayerId == UserConfig().userId else {
             return
         }
         self?.disruptorsQueue.enqueue(TapHitObject(
-            position: event.bombLocation, startTime: Date().addingTimeInterval(5).timeIntervalSince1970))
+            position: event.bombLocation, startTime: Date().addingTimeInterval(10).timeIntervalSince1970))
     }
 
     lazy var onActivateNoHintsHandler
@@ -35,5 +36,16 @@ class CompetitiveHOManager: HitObjectManager {
             eventManager.add(event: DeactivateNoHintsDisruptorEvent(timestamp: Date().timeIntervalSince1970,
                                                                     noHintsTargetPlayerId: event.noHintsTargetPlayerId))
         }
+    }
+
+    override func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
+        var gameHOSpawned = super.checkBeatMap(currBeat)
+        while let disruptorHO = disruptorsQueue.peek() {
+            disruptorHO.startTime = ceil(currBeat)
+            gameHOSpawned.append(spawnGameHitObject(disruptorHO))
+            _ = disruptorsQueue.dequeue()
+        }
+
+        return gameHOSpawned
     }
 }

@@ -57,6 +57,7 @@ class MatchDataManager {
         let missTapMessageHandler = MissTapMessageDecoder()
         let missSlideMessageHandler = MissSlideMessageDecoder()
         let missHoldMessageHandler = MissHoldMessageDecoder()
+        let deathMessageHandler = DeathMessageDecoder()
 
         _ = baseMessageHandler
             .setNext(handler: bombDisruptorMessageHandler)
@@ -64,6 +65,7 @@ class MatchDataManager {
             .setNext(handler: missTapMessageHandler)
             .setNext(handler: missSlideMessageHandler)
             .setNext(handler: missHoldMessageHandler)
+            .setNext(handler: deathMessageHandler)
 
         firstMessageHandler = baseMessageHandler
     }

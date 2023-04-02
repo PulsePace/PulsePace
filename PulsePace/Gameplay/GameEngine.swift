@@ -11,6 +11,7 @@ class GameEngine {
     var scoreSystem: ScoreSystem?
     var scoreManager: ScoreManager?
     var hitObjectManager: HitObjectManager?
+    var matchFeedSystem: MatchFeedSystem?
     private var inputManager: InputManager?
     private var conductor: Conductor?
 
@@ -48,10 +49,13 @@ class GameEngine {
         self.gameHOTable = [:]
         self.scoreManager = ScoreManager()
 
-        if match != nil {
+        if let match = match {
             self.match = match
             eventManager.setMatchEventHandler(matchEventHandler: self)
-            systems.append(MatchFeedSystem())
+            matchFeedSystem = MatchFeedSystem(playerNames: match.players)
+            if let matchFeedSystem = matchFeedSystem {
+                systems.append(matchFeedSystem)
+            }
         }
 
         systems.append(InputSystem())
@@ -61,7 +65,11 @@ class GameEngine {
             fatalError("Mode attachment should have initialized hit object manager and score system")
         }
         scoreSystem.scoreManager = scoreManager
-
+        if let disruptorSystem = scoreSystem as? DisruptorSystem,
+           let match = match {
+            disruptorSystem.selectedTarget = match.players.first(where: { $0.key != UserConfig().userId })?.key
+            ?? UserConfig().userId
+        }
         systems.append(hitObjectManager)
         systems.append(scoreSystem)
         systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })

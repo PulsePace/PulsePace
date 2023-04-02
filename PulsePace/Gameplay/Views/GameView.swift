@@ -36,7 +36,7 @@ struct GameView: View {
         .onAppear {
             audioManager.startPlayer(track: "test")
             if viewModel.gameEngine == nil {
-                viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
+                viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
             }
             viewModel.startGameplay()
             if let audioPlayer = audioManager.player {
