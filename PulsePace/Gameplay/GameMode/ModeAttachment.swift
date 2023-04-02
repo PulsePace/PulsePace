@@ -11,11 +11,13 @@ final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
     var scoreSystem: ScoreSystem
+    var roomSetting: RoomSetting
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem) {
+    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, roomSetting: RoomSetting) {
         self.modeName = modeName
         self.hOManager = hOManager
         self.scoreSystem = scoreSystem
+        self.roomSetting = roomSetting
     }
 
     func configEngine(_ gameEngine: GameEngine) {
