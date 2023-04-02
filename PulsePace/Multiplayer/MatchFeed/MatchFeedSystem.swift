@@ -22,6 +22,7 @@ class MatchFeedSystem: System {
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(announceFeedHandler)
         eventManager.registerHandler(spawnBombDisruptorHandler)
+        eventManager.registerHandler(activateNoHintsDisruptorHandler)
     }
 
     private lazy var announceFeedHandler = { [self] (_: EventManagable, event: AnnounceFeedEvent) -> Void in
@@ -42,6 +43,20 @@ class MatchFeedSystem: System {
         eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
+    private lazy var activateNoHintsDisruptorHandler = { [self] (eventManager: EventManagable,
+                                                                 event: ActivateNoHintsDisruptorEvent) -> Void in
+        let message = messageBuilder
+            .setEventType(type(of: event).label)
+            .setSource(event.noHintsSourcePlayerId)
+            .setTarget(event.noHintsTargetPlayerId)
+            .build()
+
+        let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
+        addToMatchFeed(message: matchFeedMessage)
+
+        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
+    }
+
     private func addToMatchFeed(message: MatchFeedMessage) {
         matchFeedMessages.enqueue(message)
         if matchFeedMessages.count > 10 {
@@ -52,6 +67,8 @@ class MatchFeedSystem: System {
     private func setupMessageConfigs() {
         messageBuilder.addEventMessageConfig(eventType: SpawnBombDisruptorEvent.label,
                                              messageConfig: SpawnBombDisruptorMessageConfig())
+        messageBuilder.addEventMessageConfig(eventType: ActivateNoHintsDisruptorEvent.label,
+                                             messageConfig: ActivateNoHintsDisruptorMessageConfig())
     }
 }
 

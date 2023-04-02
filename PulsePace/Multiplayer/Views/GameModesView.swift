@@ -12,12 +12,14 @@ struct GameModesView: View {
     @Binding var path: [Page]
     @Binding var modeName: String
 
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
-        LazyVGrid(columns: columns) {
-            ForEach(viewModel.gameModes, id: \.title) { gameMode in
-                CardView(path: $path, modeName: $modeName, cardDisplayable: gameMode)
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(viewModel.gameModes, id: \.title) { gameMode in
+                    CardView(path: $path, modeName: $modeName, cardDisplayable: gameMode)
+                }
             }
         }
         .padding(20)

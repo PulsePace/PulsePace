@@ -33,7 +33,8 @@ class JoinLobbyCommand: ButtonCommand {
 
     convenience init(receiver: LobbyViewModel, lobbyCode: String, modeName: String) {
         self.init { _ in
-            receiver.lobby = Lobby(lobbyId: lobbyCode, modeName: modeName, lobbyDataChangeHandler: receiver.onLobbyDataChanged)
+            receiver.lobby = Lobby(lobbyId: lobbyCode, modeName: modeName,
+                                   lobbyDataChangeHandler: receiver.onLobbyDataChanged)
         }
     }
 }

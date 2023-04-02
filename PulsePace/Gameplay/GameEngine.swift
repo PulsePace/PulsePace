@@ -56,7 +56,7 @@ class GameEngine {
 
         modeAttachment.configEngine(self)
         guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
-            fatalError("Mode attachment should have initialized hit object manager and score manager")
+            fatalError("Mode attachment should have initialized hit object manager and score system")
         }
         systems.append(hitObjectManager)
         systems.append(scoreSystem)

@@ -100,7 +100,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     func initEngineWithBeatmap(_ beatmap: Beatmap) {
-        gameEngine = GameEngine(ModeFactory.defaultMode)
+        gameEngine = GameEngine(ModeFactory.getModeAttachment("Beat-Off")) // TODO: Change
         gameEngine?.load(beatmap)
     }
 

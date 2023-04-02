@@ -53,7 +53,7 @@ class Lobby {
         let modeName = try values.decode(String.self, forKey: .modeName)
         self.init(lobbyId: try values.decode(String.self, forKey: .lobbyId),
                   hostId: try values.decode(String.self, forKey: .hostId),
-                  roomSetting: ModeFactory.getModeAttachment( modeName).roomSetting,
+                  roomSetting: ModeFactory.getModeAttachment(modeName).roomSetting,
                   modeName: modeName,
                   lobbyStatus: try values.decode(LobbyStatus.self, forKey: .lobbyStatus))
     }
@@ -66,7 +66,7 @@ class Lobby {
         let user = UserConfig()
         let player = Player(playerId: user.userId, name: user.name)
         self.init(lobbyId: id, hostId: user.userId,
-                  roomSetting: ModeFactory.getModeAttachment( modeName).roomSetting,
+                  roomSetting: ModeFactory.getModeAttachment(modeName).roomSetting,
                   modeName: modeName, players: [user.userId: player],
                   lobbyDataChangeHandler: lobbyDataChangeHandler)
         dataManager.createLobby(lobby: self)

@@ -55,18 +55,27 @@ final class ModeFactory {
             roomSetting: RoomSettingFactory.baseCoopSetting
         )
 
+        let competitiveMode = ModeAttachment(
+            modeName: "Beat-Off",
+            hOManager: CompetitiveHOManager(),
+            scoreSystem: CompetitiveScoreSystem(scoreManager: ScoreManager()),
+            roomSetting: RoomSettingFactory.competitiveSetting
+        )
+
         nameToModeAttachmentTable[defaultMode.modeName] = defaultMode
         nameToModeAttachmentTable[coopMode.modeName] = coopMode
+        nameToModeAttachmentTable[competitiveMode.modeName] = competitiveMode
+
         gameModes.append(
             GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
         gameModes.append(
             GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
                      caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))
-        // @Charisma
         gameModes.append(
             GameMode(image: "", category: "Multiplayer", title: "Beat-Off",
-                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage, metaInfo: ""))
+                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage,
+                     metaInfo: competitiveMode.modeName))
     }
 
     static func getModeAttachment(_ metaInfo: String) -> ModeAttachment {
