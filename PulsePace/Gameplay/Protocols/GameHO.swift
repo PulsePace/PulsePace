@@ -9,13 +9,14 @@ import Foundation
 
 protocol GameHO: Component, AnyObject {
     var fromPartner: Bool { get set }
+
     var position: CGPoint { get }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage: LifeStage { get }
     var lifeEnd: Double { get }
 
-    var isHit: Bool { get }
+    var isHit: Bool { get set }
     var proximityScore: Double { get }
 
     func updateState(currBeat: Double)

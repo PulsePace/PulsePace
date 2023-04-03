@@ -7,14 +7,6 @@
 
 import Foundation
 
-enum PlayCat: String {
-    case singlePlayer = "Singleplayer", mulitplayer = "Multiplayer"
-
-    var description: String {
-        self.rawValue
-    }
-}
-
 final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
@@ -33,13 +25,25 @@ final class ModeAttachment {
         self.matchEventRelay = matchEventRelay
     }
 
+    // ModeFactory reuses the same reference to each mode's ModeAttachment
+    func clean() {
+        hOManager.reset()
+        scoreSystem.reset()
+        matchEventRelay?.reset()
+    }
+
     func configEngine(_ gameEngine: GameEngine) {
         gameEngine.hitObjectManager = hOManager
         gameEngine.scoreSystem = scoreSystem
-        if let matchEventRelay = matchEventRelay {
+        if let matchEventRelay = matchEventRelay,
+           let match = gameEngine.match {
             // FIXME: remove stubs
-            matchEventRelay.assignProperties(userId: "", publisher: gameEngine.publishMatchEvent, match: Match(matchId: "", modeName: ""))
+            matchEventRelay.assignProperties(userId: UserConfig().userId,
+                                             publisher: gameEngine.publishMatchEvent,
+                                             match: match)
             gameEngine.systems.append(matchEventRelay)
+        } else {
+            print("No active match or match event relay on \(UserConfig().userId)")
         }
     }
 }
@@ -58,7 +62,7 @@ final class ModeFactory: Factory {
     static var defaultMode = ModeAttachment(
         modeName: "Classic",
         hOManager: HitObjectManager(),
-        scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
+        scoreSystem: ScoreSystem(ScoreManager()),
         roomSetting: RoomSettingFactory.defaultSetting,
         listeningMatchEvents: [],
         matchEventRelay: nil
@@ -73,24 +77,39 @@ final class ModeFactory: Factory {
         let coopMode = ModeAttachment(
             modeName: "Basic Coop",
             hOManager: CoopHOManager(),
-            scoreSystem: ScoreSystem(scoreManager: ScoreManager()),
+            scoreSystem: ScoreSystem(ScoreManager()),
             roomSetting: RoomSettingFactory.baseCoopSetting,
             listeningMatchEvents: [PublishMissTapEvent.self, PublishMissHoldEvent.self, PublishMissSlideEvent.self],
             matchEventRelay: CoopMatchEventRelay()
         )
 
+        // FIXME: Provide matchEventRelay for competitive mode
+        let competitiveMode = ModeAttachment(
+            modeName: "Beat-Off",
+            hOManager: CompetitiveHOManager(),
+            scoreSystem: DisruptorSystem(ScoreManager()),
+            roomSetting: RoomSettingFactory.competitiveSetting,
+            listeningMatchEvents: [
+                PublishBombDisruptorEvent.self,
+                PublishNoHintsDisruptorEvent.self,
+                PublishDeathEvent.self],
+            matchEventRelay: nil
+        )
+
         assemblies[defaultMode.modeName] = defaultMode
         assemblies[coopMode.modeName] = coopMode
+        assemblies[competitiveMode.modeName] = competitiveMode
+
         gameModes.append(
             GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
         gameModes.append(
             GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
                      caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))
-        // @Charisma
         gameModes.append(
             GameMode(image: "", category: "Multiplayer", title: "Beat-Off",
-                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage, metaInfo: ""))
+                     caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage,
+                     metaInfo: competitiveMode.modeName))
     }
 
     static func getModeAttachment(_ metaInfo: String) -> ModeAttachment {
@@ -101,6 +120,7 @@ final class ModeFactory: Factory {
             print("Request mode not found, falling back to default")
             return defaultMode
         }
+        selectedMode.clean()
         return selectedMode
     }
 

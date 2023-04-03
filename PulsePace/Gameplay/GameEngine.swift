@@ -9,7 +9,15 @@ import Foundation
 
 class GameEngine {
     var scoreSystem: ScoreSystem?
+    var scoreManager: ScoreManager {
+        guard let scoreSystem = scoreSystem else {
+            fatalError("Score system has no score manager")
+        }
+        return scoreSystem.scoreManager
+    }
+
     var hitObjectManager: HitObjectManager?
+    var matchFeedSystem: MatchFeedSystem?
     private var inputManager: InputManager?
     private var conductor: Conductor?
 
@@ -44,21 +52,33 @@ class GameEngine {
         self?.gameHOTable[gameHO.wrappingObject] = gameHO
     }
 
-    init(_ modeAttachment: ModeAttachment) {
+    init(_ modeAttachment: ModeAttachment, match: Match? = nil) {
         self.allObjects = Set()
         self.gameHOTable = [:]
-        self.inputManager = InputManager()
 
-        match = Match(matchId: "051181", modeName: "") // TODO: Remove
-        eventManager.setMatchEventHandler(matchEventHandler: self)
+        if let match = match {
+            self.match = match
+            eventManager.setMatchEventHandler(matchEventHandler: self)
+            matchFeedSystem = MatchFeedSystem(playerNames: match.players)
+            if let matchFeedSystem = matchFeedSystem {
+                systems.append(matchFeedSystem)
+            }
+        } else {
+            print("No match attached to engine")
+        }
 
         systems.append(InputSystem())
-        systems.append(TestSystem())
-        systems.append(MatchFeedSystem())
 
         modeAttachment.configEngine(self)
         guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
-            fatalError("Mode attachment should have initialized hit object manager and score manager")
+            fatalError("Mode attachment should have initialized hit object manager and score system")
+        }
+
+        // TODO: Move to mode attachment
+        if let disruptorSystem = scoreSystem as? DisruptorSystem,
+           let match = match {
+            disruptorSystem.selectedTarget = match.players.first(where: { $0.key != UserConfig().userId })?.key
+            ?? UserConfig().userId
         }
         systems.append(hitObjectManager)
         systems.append(scoreSystem)

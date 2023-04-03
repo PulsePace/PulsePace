@@ -13,5 +13,5 @@ struct RoomSetting: Codable {
 final class RoomSettingFactory {
     static let defaultSetting = RoomSetting(minPlayerCount: 1, maxPlayerCount: 1)
     static let baseCoopSetting = RoomSetting(minPlayerCount: 2, maxPlayerCount: 2)
-    static let multiCompeteSetting = RoomSetting(minPlayerCount: 2, maxPlayerCount: 4)
+    static let competitiveSetting = RoomSetting(minPlayerCount: 2, maxPlayerCount: 4)
 }

@@ -19,6 +19,12 @@ extension MatchEvent {
     }
 }
 
+// Not used for base decoder dummy
+struct PublishNoEvent: MatchEvent {
+    typealias MessageHandlerType = MatchMessageDecoder
+    var timestamp: Double
+}
+
 // Coop limited to two player
 struct PublishMissTapEvent: MatchEvent {
     typealias MessageHandlerType = MissTapMessageDecoder
@@ -44,21 +50,49 @@ struct PublishMissHoldEvent: MatchEvent {
 struct PublishBombDisruptorEvent: MatchEvent {
     typealias MessageHandlerType = BombDisruptorMessageDecoder
     var timestamp: Double
-    var destinationIds: [String]
+    var bombTargetId: String
+    var bombLocation: CGPoint
 }
 
-struct SampleEvent: MatchEvent {
-    typealias MessageHandlerType = SampleMessageDecoder
+struct PublishNoHintsDisruptorEvent: MatchEvent {
+    typealias MessageHandlerType = NoHintsDisruptorMessageDecoder
     var timestamp: Double
-    var sampleData: String
+    var noHintsTargetId: String
+    var preSpawnInterval: Double
+    var duration: Double
 }
 
-// FOR TESTING
+struct PublishDeathEvent: MatchEvent {
+    typealias MessageHandlerType = DeathMessageDecoder
+    var timestamp: Double
+    var diedPlayerId: String
+}
+
 // Events
 struct SpawnBombDisruptorEvent: Event {
     var timestamp: Double
     var bombSourcePlayerId: String
     var bombTargetPlayerId: String
+    var bombLocation: CGPoint
+}
+
+struct ActivateNoHintsDisruptorEvent: Event {
+    var timestamp: Double
+    var noHintsSourcePlayerId: String
+    var noHintsTargetPlayerId: String
+    var preSpawnInterval: Double
+    var duration: Double
+}
+
+struct DeactivateNoHintsDisruptorEvent: Event {
+    var timestamp: Double
+    var noHintsTargetPlayerId: String
+}
+
+struct UpdateComboEvent: Event {
+    var timestamp: Double
+    var comboCount: Int
+    var lastLocation: CGPoint
 }
 
 struct SpawnHOEvent: Event {
@@ -66,21 +100,12 @@ struct SpawnHOEvent: Event {
     var hitObject: any HitObject
 }
 
-struct TestEvent: Event {
+struct DeathEvent: Event {
     var timestamp: Double
-    var player: Player
+    var diedPlayerId: String
 }
 
-// Systems
-class TestSystem: System {
-    func registerEventHandlers(eventManager: EventManagable) {
-        eventManager.registerHandler(testEventHandler)
-    }
-
-    private lazy var testEventHandler = { [self] (eventManager: EventManagable, _: TestEvent) -> Void in
-        eventManager.matchEventHandler?.publishMatchEvent(message: MatchEventMessage(
-            timestamp: Date().timeIntervalSince1970, sourceId: UserConfig().userId,
-            event: PublishBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
-                                             destinationIds: ["123", "456"])))
-    }
+struct LostLifeEvent: Event {
+    var timestamp: Double
+    var lostLifePlayerId: String
 }

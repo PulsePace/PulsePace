@@ -16,7 +16,7 @@ extension Event {
 }
 
 protocol MatchRelatedEvent: Event {
-    static func makeMessage(event: Self, playerId: String) -> MatchEventMessage
+    static func makeMessage(event: Self, playerId: String) -> MatchEventMessage?
 }
 
 struct NoEvent: Event {

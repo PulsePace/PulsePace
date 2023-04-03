@@ -13,7 +13,6 @@ class SpinCommand: InputCommand {
     convenience init() {
         self.init(
             action: { _ in
-                print("Spin")
 //                receiver.checkOnInput(inputData: inputData)
             },
             completion: { _ in

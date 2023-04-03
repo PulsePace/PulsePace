@@ -7,13 +7,21 @@
 
 import Foundation
 
+// TODO: Apply delay to missedHO
 class CoopHOManager: HitObjectManager {
     private var partnerMissedHO = MyQueue<any HitObject>()
-    let minMissSpawnDelay = 1
-    let maxMissSpawnDelay = 5
+//    private var rearrangedMissedHO = PriorityQueue<any HitObject> { a, b in a.startTime < b.startTime}
+    let minMissSpawnDelay = 3
+    let maxMissSpawnDelay = 7
+
+    override func reset() {
+        super.reset()
+        partnerMissedHO.removeAll()
+    }
 
     lazy var onPartnerMissHandler = { [weak self] (_: EventManagable, event: SpawnHOEvent) -> Void in
         self?.partnerMissedHO.enqueue(event.hitObject)
+//        self?.rearrangedMissedHO.enqueue(event.hitObject)
     }
 
     override func registerEventHandlers(eventManager: EventManagable) {
@@ -24,14 +32,14 @@ class CoopHOManager: HitObjectManager {
         var gameHOSpawned = super.checkBeatMap(currBeat)
         while let firstInMissed = partnerMissedHO.peek() {
             firstInMissed.startTime = ceil(currBeat)
-            gameHOSpawned.append(spawnGameHitObject(firstInMissed))
+            gameHOSpawned.append(spawnMissedHitObject(firstInMissed))
             _ = partnerMissedHO.dequeue()
         }
 
         return gameHOSpawned
     }
 
-    override func spawnGameHitObject(_ hitObject: any HitObject) -> any GameHO {
+    func spawnMissedHitObject(_ hitObject: any HitObject) -> any GameHO {
         let gameHO = super.spawnGameHitObject(hitObject)
         gameHO.fromPartner = true
         return gameHO

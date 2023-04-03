@@ -9,3 +9,8 @@ protocol System: AnyObject {
     // register to listen to events
     func registerEventHandlers(eventManager: EventManagable)
 }
+
+// Will be reused hence must have reset function
+protocol ModeSystem: System {
+    func reset()
+}

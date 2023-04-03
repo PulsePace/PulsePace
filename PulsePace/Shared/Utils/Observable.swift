@@ -22,6 +22,8 @@ extension Observable {
     }
 
     func notifyObservers() {
-        observers.forEach { $0.update(with: self) }
+        for observer in observers {
+            observer.update(with: self)
+        }
     }
 }

@@ -15,7 +15,22 @@ struct SpawnBombDisruptorMessageConfig: MessageConfig {
     var requiredPlaceholders: [String] = ["{sourcePlayer}", "{targetPlayer}"]
 }
 
-struct PlayerDiedMessageConfig: MessageConfig {
+struct ActivateNoHintsDisruptorMessageConfig: MessageConfig {
+    var messageFormat: String = "{sourcePlayer} took away hints from {targetPlayer}"
+    var requiredPlaceholders: [String] = ["{sourcePlayer}", "{targetPlayer}"]
+}
+
+struct DeactivateNoHintsDisruptorMessageConfig: MessageConfig {
+    var messageFormat: String = "{targetPlayer}'s hints have returned"
+    var requiredPlaceholders: [String] = ["{targetPlayer}"]
+}
+
+struct DeathMessageConfig: MessageConfig {
     var messageFormat: String = "{sourcePlayer} died"
+    var requiredPlaceholders: [String] = ["{sourcePlayer}"]
+}
+
+struct LostLifeMessageConfig: MessageConfig {
+    var messageFormat: String = "{sourcePlayer} lost a life"
     var requiredPlaceholders: [String] = ["{sourcePlayer}"]
 }

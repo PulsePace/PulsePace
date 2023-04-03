@@ -5,11 +5,17 @@
 //  Created by Yuanxi Zhu on 26/3/23.
 //
 
-class ScoreSystem: System {
+import Foundation
+
+class ScoreSystem: ModeSystem {
     var proximityScoreThreshould = [0.5, 1]
     var scoreManager: ScoreManager
 
-    init(scoreManager: ScoreManager) {
+    func reset() {
+        scoreManager = ScoreManager()
+    }
+
+    init(_ scoreManager: ScoreManager) {
         self.scoreManager = scoreManager
     }
 
@@ -17,21 +23,26 @@ class ScoreSystem: System {
         eventManager.registerHandler(hitEventHandler)
     }
 
-    // TODO: Probably best to allow scoreManager to handle score update instead of direct access (cater for different score mode)
-    private lazy var hitEventHandler = { [weak self] (_: EventManagable, event: HitEvent) -> Void in
-        guard let self = self else {
-            fatalError("No active score system")
-        }
+    lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
         let gameHO = event.gameHO
-        if gameHO.proximityScore < self.proximityScoreThreshould[0] {
-            self.scoreManager.perfectCount += 1
-            self.scoreManager.score += 100
-        } else if gameHO.proximityScore < self.proximityScoreThreshould[1] {
-            self.scoreManager.goodCount += 1
-            self.scoreManager.score += 50
+        if gameHO.proximityScore < proximityScoreThreshould[0] {
+            if let tapGameHO = gameHO as? TapGameHO {
+                print("Tap object perfect hit")
+            }
+            scoreManager.perfectCount += 1
+            scoreManager.score += 100
+            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
+                                                     comboCount: scoreManager.comboCount,
+                                                     lastLocation: gameHO.position
+                                                    ))
+            gameHO.isHit = true
+        } else if gameHO.proximityScore < proximityScoreThreshould[1] {
+            scoreManager.goodCount += 1
+            scoreManager.score += 50
+            gameHO.isHit = true
         } else {
-            self.scoreManager.missCount += 1
-            self.scoreManager.score += 10
+            scoreManager.missCount += 1
+            scoreManager.score += 10
         }
     }
 }

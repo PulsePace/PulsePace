@@ -53,7 +53,7 @@ class MatchDataManager {
     private func setupMessageHandlers(_ matchEventTypes: [any MatchEvent.Type]) {
         let handlers = matchEventTypes.map { matchEventType in matchEventType.getType.createHandler() }
 
-        let firstHandler = SampleMessageDecoder()
+        let firstHandler = MatchMessageDecoder()
         _ = handlers.reduce(firstHandler as any MessageHandler, { chainedHandler, nextHandler in
             chainedHandler.setNext(handler: nextHandler)
         })

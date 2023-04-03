@@ -21,31 +21,39 @@ extension Achievement {
         remainingConstraints.isEmpty
     }
 
-    func notifyUnlock() {
+    func handleUnlock() {
         guard isUnlocked else {
             return
         }
         print("Unlocked \(title)")
     }
 
-    func update(with observable: Observable) {
+    func update<T: Observable>(with observable: T) {
         guard let property = observable as? any Property else {
             return
         }
+        handleUnsubscribe(property: property)
+        handleUnlock()
+    }
+
+    private func handleUnsubscribe(property: any Property) {
         let hasRemainingConstraint = remainingConstraints.contains(where: {
             $0.checkProperty(property: property)
         })
         if !hasRemainingConstraint {
             property.removeObserver(self)
         }
-        notifyUnlock()
     }
 
     func initialiseConstraints(properties: [any Property]) {
+        bindProperties(properties: properties)
+        subscribe()
+    }
+
+    private func bindProperties(properties: [any Property]) {
         for constraint in constraints {
             constraint.bindProperty(from: properties)
         }
-        subscribe()
     }
 
     private func subscribe() {

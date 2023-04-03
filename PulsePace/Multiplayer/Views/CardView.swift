@@ -10,13 +10,13 @@ import SwiftUI
 
 struct CardView: View {
     @Binding var path: [Page]
-    @Binding var modeName: String
+    @EnvironmentObject var gameVM: GameViewModel
 
     var cardDisplayable: CardDisplayable
 
     var body: some View {
         Button(action: {
-            modeName = cardDisplayable.metaInfo
+            gameVM.selectedGameMode = ModeFactory.getModeAttachment(cardDisplayable.metaInfo)
             path.append(cardDisplayable.page)
         }) {
             VStack {

@@ -9,24 +9,28 @@ class Match {
     let matchId: String
     let modeName: String
     let dataManager: MatchDataManager
+    let players: [String: String]
 
-    init(matchId: String, modeName: String) {
+    init(matchId: String, lobby: Lobby? = nil) {
         self.matchId = matchId
-        self.modeName = modeName
+        self.modeName = lobby?.modeName ?? ModeFactory.defaultMode.modeName
         self.dataManager = MatchDataManager(publisher: FirebaseDatabase<MatchEventMessage>(),
                                             subscriber: FirebaseListener<MatchEventMessage>(),
-                                            matchId: matchId, matchEventTypes: ModeFactory.getModeAttachment(modeName).listeningMatchEvents)
+                                            matchId: matchId,
+                                            matchEventTypes: ModeFactory.getModeAttachment(modeName).listeningMatchEvents)
+        self.players = lobby?.players.mapValues { player in
+            player.name
+        } ?? [:]
     }
 
     required convenience init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        self.init(matchId: try values.decode(String.self, forKey: .matchId), modeName: try values.decode(String.self, forKey: .modeName))
+        self.init(matchId: try values.decode(String.self, forKey: .matchId))
     }
 }
 
 extension Match: Codable {
     private enum CodingKeys: String, CodingKey {
         case matchId
-        case modeName
     }
 }

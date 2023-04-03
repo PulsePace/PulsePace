@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MatchEventRelay: System {
+protocol MatchEventRelay: ModeSystem {
     var match: Match? { get set }
     var userId: String? { get set }
     var publisher: ((MatchEventMessage) -> Void)? { get set }
@@ -26,6 +26,12 @@ class CoopMatchEventRelay: MatchEventRelay {
     var userId: String?
     var publisher: ((MatchEventMessage) -> Void)?
 
+    func reset() {
+        match = nil
+        userId = nil
+        publisher = nil
+    }
+
     func assignProperties(userId: String, publisher: @escaping (MatchEventMessage) -> Void, match: Match) {
         self.userId = userId
         self.publisher = publisher
@@ -40,6 +46,11 @@ class CoopMatchEventRelay: MatchEventRelay {
         guard let self = self, let userId = self.userId else {
             fatalError("No active match event relay")
         }
-        self.publisher?(MissEvent.makeMessage(event: missEvent, playerId: userId))
+        guard let matchEventMessage = MissEvent.makeMessage(event: missEvent, playerId: userId) else {
+            return
+        }
+        self.publisher?(matchEventMessage)
     }
 }
+
+// TODO: CompetitiveMatchEventRelay

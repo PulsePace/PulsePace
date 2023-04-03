@@ -7,21 +7,17 @@
 
 import Foundation
 
-final class SampleMessageDecoder: MessageHandler {
-    static func createHandler() -> SampleMessageDecoder {
-        SampleMessageDecoder()
+final class MatchMessageDecoder: MessageHandler {
+    static func createHandler() -> MatchMessageDecoder {
+        MatchMessageDecoder()
     }
 
-    typealias MatchEventType = SampleEvent
+    typealias MatchEventType = PublishNoEvent
     var nextHandler: (any MessageHandler)?
 
     func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
-        guard let matchEvent = decodeMatchEventMessage(message: message) else {
-            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
-            return
-        }
-        print(matchEvent)
-        print("sample event")
+        nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+        return
     }
 }
 
@@ -35,13 +31,36 @@ final class BombDisruptorMessageDecoder: MessageHandler {
 
     func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
         guard let matchEvent = decodeMatchEventMessage(message: message) else {
-            print("end of CoR")
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
         eventManager.add(event: SpawnBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
                                                         bombSourcePlayerId: message.sourceId,
-                                                        bombTargetPlayerId: matchEvent.destinationIds[0]))
+                                                        bombTargetPlayerId: matchEvent.bombTargetId,
+                                                        bombLocation: matchEvent.bombLocation))
         print("bomb disruptor event")
+    }
+}
+
+final class NoHintsDisruptorMessageDecoder: MessageHandler {
+    static func createHandler() -> NoHintsDisruptorMessageDecoder {
+        NoHintsDisruptorMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishNoHintsDisruptorEvent
+    var nextHandler: (any MessageHandler)?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+            return
+        }
+        eventManager.add(event: ActivateNoHintsDisruptorEvent(timestamp: matchEvent.timestamp,
+                                                              noHintsSourcePlayerId: message.sourceId,
+                                                              noHintsTargetPlayerId: matchEvent.noHintsTargetId,
+                                                              preSpawnInterval: matchEvent.preSpawnInterval,
+                                                              duration: matchEvent.duration))
+        print("no hints disruptor event")
     }
 }
 
@@ -99,6 +118,26 @@ final class MissSlideMessageDecoder: MessageHandler {
         eventManager.add(event: SpawnHOEvent(
             timestamp: Date().timeIntervalSince1970,
             hitObject: matchEvent.slideHO.deserialize()
+        ))
+    }
+}
+
+final class DeathMessageDecoder: MessageHandler {
+    static func createHandler() -> DeathMessageDecoder {
+        DeathMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishDeathEvent
+    var nextHandler: (any MessageHandler)?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+            return
+        }
+        eventManager.add(event: DeathEvent(
+            timestamp: Date().timeIntervalSince1970,
+            diedPlayerId: matchEvent.diedPlayerId
         ))
     }
 }
