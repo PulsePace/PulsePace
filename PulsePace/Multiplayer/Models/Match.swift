@@ -17,7 +17,8 @@ class Match {
         self.dataManager = MatchDataManager(publisher: FirebaseDatabase<MatchEventMessage>(),
                                             subscriber: FirebaseListener<MatchEventMessage>(),
                                             matchId: matchId,
-                                            matchEventTypes: ModeFactory.getModeAttachment(modeName).listeningMatchEvents)
+                                            matchEventTypes:
+                                                ModeFactory.getModeAttachment(modeName).listeningMatchEvents)
         self.players = lobby?.players.mapValues { player in
             player.name
         } ?? [:]
