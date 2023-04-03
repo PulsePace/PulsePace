@@ -31,7 +31,9 @@ class CoopHOManager: HitObjectManager {
     override func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned = super.checkBeatMap(currBeat)
         while let firstInMissed = partnerMissedHO.peek() {
+            let originalStartTime = firstInMissed.startTime
             firstInMissed.startTime = ceil(currBeat)
+            firstInMissed.endTime = firstInMissed.startTime + firstInMissed.endTime - originalStartTime
             gameHOSpawned.append(spawnMissedHitObject(firstInMissed))
             _ = partnerMissedHO.dequeue()
         }

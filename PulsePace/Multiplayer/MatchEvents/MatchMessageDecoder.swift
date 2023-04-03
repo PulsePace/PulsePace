@@ -77,6 +77,13 @@ final class MissTapMessageDecoder: MessageHandler {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
+        print("Checking if should spawn tap object")
+        // Spawned only on other player's device
+        if matchEvent.sourceId == UserConfig().userId {
+            return
+        }
+
+        print("Adding tap hold object event to queue")
         eventManager.add(event: SpawnHOEvent(timestamp: Date().timeIntervalSince1970,
                                              hitObject: matchEvent.tapHO.deserialize()))
     }
@@ -95,6 +102,13 @@ final class MissHoldMessageDecoder: MessageHandler {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
+
+        print("Checking if should spawn hold object")
+        if matchEvent.sourceId == UserConfig().userId {
+            return
+        }
+
+        print("Adding spawn hold object event to queue")
         eventManager.add(event: SpawnHOEvent(
             timestamp: Date().timeIntervalSince1970,
             hitObject: matchEvent.holdHO.deserialize()
@@ -115,6 +129,12 @@ final class MissSlideMessageDecoder: MessageHandler {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
+        print("Checking if should spawn slide object")
+        if matchEvent.sourceId == UserConfig().userId {
+            return
+        }
+
+        print("Adding spawn slide object event to queue")
         eventManager.add(event: SpawnHOEvent(
             timestamp: Date().timeIntervalSince1970,
             hitObject: matchEvent.slideHO.deserialize()
@@ -135,6 +155,7 @@ final class DeathMessageDecoder: MessageHandler {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
+
         eventManager.add(event: DeathEvent(
             timestamp: Date().timeIntervalSince1970,
             diedPlayerId: matchEvent.diedPlayerId

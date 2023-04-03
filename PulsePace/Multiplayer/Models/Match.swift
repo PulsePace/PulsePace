@@ -23,6 +23,10 @@ class Match {
         } ?? [:]
     }
 
+    convenience init(_ lobby: Lobby) {
+        self.init(matchId: lobby.lobbyId, lobby: lobby)
+    }
+
     required convenience init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.init(matchId: try values.decode(String.self, forKey: .matchId))

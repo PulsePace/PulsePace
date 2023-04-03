@@ -103,6 +103,10 @@ class GameViewModel: ObservableObject, RenderSystem {
         songPosition = audioPlayer.currentTime
     }
 
+    func assignMatch(_ match: Match) {
+        self.match = match
+    }
+
     func initEngine(with beatmap: Beatmap) {
         gameEngine = GameEngine(selectedGameMode, match: match)
         gameEngine?.load(beatmap)
@@ -124,6 +128,8 @@ class GameViewModel: ObservableObject, RenderSystem {
     func stopGameplay() {
         displayLink?.invalidate()
         gameEngine = nil
+        match = nil
+        clear()
     }
 
     func initialisePlayer(audioPlayer: AVAudioPlayer) {

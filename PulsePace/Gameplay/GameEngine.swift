@@ -42,7 +42,6 @@ class GameEngine {
         }
 
         if !removedGameHO.isHit {
-            scoreManager.missCount += 1
             self.eventManager.add(event: MissEvent(gameHO: removedGameHO, timestamp: Date().timeIntervalSince1970))
         }
     }
@@ -63,6 +62,7 @@ class GameEngine {
             if let matchFeedSystem = matchFeedSystem {
                 systems.append(matchFeedSystem)
             }
+            print("Match id \(match.matchId)")
         } else {
             print("No match attached to engine")
         }
