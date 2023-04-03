@@ -18,11 +18,12 @@ class LobbyDataManager {
 
     init(databaseAdapter: any DatabaseAdapter<Lobby>, lobbyDataChangeHandler: (() -> Void)? = {}) {
         self.lobbyDatabase = databaseAdapter
-        self.lobbyListener = FirebaseListener<Lobby>() // TODO: remove
+        self.lobbyListener = FirebaseListener<Lobby>() // TODO: remove @Charisma
         self.playersListener = FirebaseListener<Player>() // TODO: remove
         self.lobbyDataChangeHandler = lobbyDataChangeHandler
     }
 
+    // TODO: Test create lobby for competitive mode @Charisma
     func createLobby(lobby: Lobby) {
         self.lobby = lobby
         let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId])
@@ -37,6 +38,7 @@ class LobbyDataManager {
         }
     }
 
+    // TODO: Consider allowing players to change game mode later? @Charisma
     func joinLobby(lobby: Lobby, player: Player) {
         self.lobby = lobby
         let gameConfig = lobby.roomSetting

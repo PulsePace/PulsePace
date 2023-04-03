@@ -9,7 +9,7 @@ import Foundation
 
 class DisruptorSystem: ScoreSystem {
     var selectedTarget = UserConfig().userId
-    var selectedDisruptor: Disruptor = .noHints
+    var selectedDisruptor: Disruptor = .bomb
 
     var livesRemaining = 3
 
@@ -17,7 +17,7 @@ class DisruptorSystem: ScoreSystem {
         guard let scoreManager = scoreManager else {
             return false
         }
-        return scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 5)
+        return scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 3)
     }
 
     var spawnedDisruptorLocations: [CGPoint] = []
