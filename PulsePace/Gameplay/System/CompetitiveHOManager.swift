@@ -10,11 +10,6 @@ import Foundation
 class CompetitiveHOManager: HitObjectManager {
     private var disruptorsQueue = MyQueue<any HitObject>()
 
-    override func reset() {
-        super.reset()
-        disruptorsQueue.removeAll()
-    }
-
     override func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(onSpawnBombHandler)
         eventManager.registerHandler(onActivateNoHintsHandler)

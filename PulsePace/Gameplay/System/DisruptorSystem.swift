@@ -38,7 +38,6 @@ class DisruptorSystem: ScoreSystem {
         guard isEligibileToSendDisruptor else {
             return
         }
-        // TODO: refactor into matchEventRelay
         eventManager.matchEventHandler?.publishMatchEvent(message: MatchEventMessage(
             timestamp: Date().timeIntervalSince1970, sourceId: UserConfig().userId,
             event: PublishDisruptorFactory().getPublishEvent(disruptor: selectedDisruptor,
