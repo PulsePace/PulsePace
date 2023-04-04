@@ -10,12 +10,15 @@ class TapCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init(receiver: TapGameHO, timeReceived: Double) {
+    convenience init(receiver: TapGameHO, eventManager: EventManager, timeReceived: Double) {
         self.init { inputData in
             var inputData = inputData
             inputData.timeReceived = timeReceived
             print("Tap")
-//            receiver.checkOnInput(inputData: inputData)
+            eventManager.add(event: InputEvent(inputData: inputData,
+                                               gameHO: receiver,
+                                               timestamp: timeReceived,
+                                               isEndingInput: true))
         }
     }
 }

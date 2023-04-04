@@ -36,7 +36,6 @@ class SlideGameHO: GameHO {
     let maxPositionError: Double = 20
     var minimumProximity: Double = 30
     var proximityScore: Double = 0
-    var proximityScoreThresholds: [Double] = [0.2, 1, 1]
     var lastCheckedSongPosition: Double?
     var isHit = false
 
@@ -82,7 +81,7 @@ class SlideGameHO: GameHO {
         }
     }
 
-    func checkOnInput(input: InputData, scoreManager: ScoreManager) {
+    func checkOnInput(input: InputData) {
         guard let lastCheckedSongPosition = lastCheckedSongPosition else {
             lastCheckedSongPosition = input.timeReceived
             return
@@ -98,7 +97,7 @@ class SlideGameHO: GameHO {
 
         // if drag too far away
         if locationError > maxPositionError {
-            scoreManager.missCount += 1
+            // miss
             destroyObject()
             return
         }
@@ -111,24 +110,13 @@ class SlideGameHO: GameHO {
         self.lastCheckedSongPosition = input.timeReceived
     }
 
-    func checkOnInputEnd(input: InputData, scoreManager: ScoreManager) {
+    func checkOnInputEnd(input: InputData) {
         // if drag ended too early
         if currEdgeIndex < vertices.count - 1 {
-            scoreManager.missCount += 1
-            destroyObject()
+            // miss
+//            destroyObject()
         }
-
         isHit = true
-        // TODO: define proper scoring rule
-        if proximityScore < proximityScoreThresholds[0] {
-            // perfect
-            scoreManager.perfetHitCount += 1
-            scoreManager.score += 2
-        } else {
-            // good
-            scoreManager.goodHitCount += 1
-            scoreManager.score += 1
-        }
     }
 
     private func setExpectedPosition(currBeat: Double) {
