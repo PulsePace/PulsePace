@@ -85,7 +85,7 @@ final class ModeFactory: Factory {
 
         // FIXME: Provide matchEventRelay for competitive mode
         let competitiveMode = ModeAttachment(
-            modeName: "Beat-Off",
+            modeName: "Rhythm Battle",
             hOManager: CompetitiveHOManager(),
             scoreSystem: DisruptorSystem(ScoreManager()),
             roomSetting: RoomSettingFactory.competitiveSetting,
@@ -107,7 +107,7 @@ final class ModeFactory: Factory {
             GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
                      caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))
         gameModes.append(
-            GameMode(image: "", category: "Multiplayer", title: "Beat-Off",
+            GameMode(image: "", category: "Multiplayer", title: "Rhythm Battle",
                      caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage,
                      metaInfo: competitiveMode.modeName))
     }

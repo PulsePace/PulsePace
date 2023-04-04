@@ -9,7 +9,7 @@ import Foundation
 
 class DisruptorSystem: ScoreSystem {
     var selectedTarget = UserConfig().userId
-    var selectedDisruptor: Disruptor = .noHints
+    var selectedDisruptor: Disruptor = .bomb
 
     var livesRemaining = 3
 
