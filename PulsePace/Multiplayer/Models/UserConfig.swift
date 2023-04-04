@@ -9,5 +9,6 @@ import UIKit
 
 struct UserConfig {
     var userId: String = UIDevice.current.identifierForVendor?.uuidString ?? "default"
+    // TODO: make name dynamic
     var name: String = "Charisma"
 }

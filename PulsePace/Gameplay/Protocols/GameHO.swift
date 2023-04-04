@@ -8,14 +8,15 @@
 import Foundation
 
 protocol GameHO: Component, AnyObject {
-    var fromPartner: Bool { get }
+    var fromPartner: Bool { get set }
+
     var position: CGPoint { get }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage: LifeStage { get }
     var lifeEnd: Double { get }
 
-    var isHit: Bool { get }
+    var isHit: Bool { get set }
     var proximityScore: Double { get }
 
     func updateState(currBeat: Double)
@@ -28,18 +29,18 @@ extension GameHO {
     var lifeTime: Double {
         lifeEnd - lifeStart
     }
+
 }
 
 protocol Component {
     var wrappingObject: Entity { get }
-    // List of callbacks to invoke when gameHO is destroyed (scoreSystem)
-    var onLifeEnd: [(Self) -> Void] { get }
+//    var onLifeEnd: (EventManagable) -> Void { get }
 }
 
 extension Component {
     func destroyObject() {
         wrappingObject.destroy()
-        onLifeEnd.forEach { $0(self) }
+//        onLifeEnd()
     }
 }
 

@@ -12,6 +12,10 @@ class GameHOVM<T: GameHO>: Identifiable {
     let id: Int
     let eventManager: EventManager
 
+    var fromPartner: Bool {
+        gameHO.fromPartner
+    }
+
     init(gameHO: T, id: Int, eventManager: EventManager) {
         self.gameHO = gameHO
         self.id = id

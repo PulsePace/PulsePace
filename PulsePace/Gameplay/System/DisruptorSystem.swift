@@ -14,10 +14,7 @@ class DisruptorSystem: ScoreSystem {
     var livesRemaining = 3
 
     var isEligibileToSendDisruptor: Bool {
-        guard let scoreManager = scoreManager else {
-            return false
-        }
-        return scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 3)
+        scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 5)
     }
 
     var spawnedDisruptorLocations: [CGPoint] = []
@@ -60,7 +57,7 @@ class DisruptorSystem: ScoreSystem {
         guard !spawnedDisruptorLocations.allSatisfy({ event.gameHO.position != $0 }) else {
             return
         }
-        self.scoreManager?.comboCount = 0
+        self.scoreManager.comboCount = 0
         self.livesRemaining -= 1
         self.spawnedDisruptorLocations.removeAll(where: { $0 == event.gameHO.position })
 
@@ -78,7 +75,7 @@ class DisruptorSystem: ScoreSystem {
 }
 
 class PublishDisruptorFactory {
-    func getPublishEvent(disruptor: Disruptor, targetId: String, location: CGPoint) -> MatchEvent {
+    func getPublishEvent(disruptor: Disruptor, targetId: String, location: CGPoint) -> any MatchEvent {
         if disruptor == .bomb {
             return PublishBombDisruptorEvent(timestamp: Date().timeIntervalSince1970,
                                              bombTargetId: targetId,

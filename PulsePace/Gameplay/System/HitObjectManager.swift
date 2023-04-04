@@ -7,13 +7,22 @@
 
 import Foundation
 
-class HitObjectManager: System {
+class HitObjectManager: ModeSystem {
     private var counter = 0
     private var remover: ((Entity) -> Void)?
     private var queuedHitObjects: MyQueue<any HitObject>
     private var offset = 0.0
     private var slideSpeed = 0.0
     var preSpawnInterval = 0.0
+
+    func reset() {
+        queuedHitObjects.removeAll()
+        remover = nil
+        offset = 0
+        slideSpeed = 0
+        preSpawnInterval = 0
+        counter = 0
+    }
 
     func registerEventHandlers(eventManager: EventManagable) {
         lazy var noHandler = { (_: EventManagable, _: NoEvent) -> Void in
@@ -74,7 +83,6 @@ class HitObjectManager: System {
         } else {
             fatalError("Hit object type not found")
         }
-
         counter += 1
         return newGameHO
     }

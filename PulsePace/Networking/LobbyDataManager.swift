@@ -78,27 +78,6 @@ class LobbyDataManager {
                 self?.setupListeners()
             }
         )
-//        let playersPath = DatabasePath.getPath(fromPaths: [
-//            DatabasePath.lobbies, lobby.lobbyId, DatabasePath.players])
-//
-//        lobbyDatabase.runTransactionBlock(
-//            at: playersPath,
-//            updateBlock: { mutablePlayers -> TransactionResult in
-//                if mutablePlayers.childrenCount < gameConfig.maxPlayerCount,
-//                   var newPlayers = mutablePlayers.value as? [String: AnyObject] {
-//                    do {
-//                        let jsonData = try JSONEncoder().encode(player)
-//                        let dict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-//                        newPlayers[player.playerId] = dict as? AnyObject
-//                        mutablePlayers.value = newPlayers
-//                        return TransactionResult.success(withValue: mutablePlayers)
-//                    } catch {}
-//                }
-//                return TransactionResult.abort()
-//            },
-//            completion: { [weak self] _ in
-//                self?.setupListeners()
-//            })
     }
 
     func startMatch(match: Match) {

@@ -92,7 +92,8 @@ struct LobbyView: View {
             }
             .onChange(of: lobby.lobbyStatus) { status in
                 if status == .matchStarted && gameVM.selectedGameMode.modeName == lobby.modeName {
-                    gameVM.match = Match(matchId: lobbyCode, lobby: viewModel.lobby)
+                    let match = Match(lobby)
+                    gameVM.assignMatch(match)
                     self.path.append(Page.playPage)
                 }
             }

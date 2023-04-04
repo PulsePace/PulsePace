@@ -7,17 +7,25 @@
 
 class Match {
     let matchId: String
+    let modeName: String
     let dataManager: MatchDataManager
     let players: [String: String]
 
     init(matchId: String, lobby: Lobby? = nil) {
         self.matchId = matchId
+        self.modeName = lobby?.modeName ?? ModeFactory.defaultMode.modeName
         self.dataManager = MatchDataManager(publisher: FirebaseDatabase<MatchEventMessage>(),
                                             subscriber: FirebaseListener<MatchEventMessage>(),
-                                            matchId: matchId)
+                                            matchId: matchId,
+                                            matchEventTypes:
+                                                ModeFactory.getModeAttachment(modeName).listeningMatchEvents)
         self.players = lobby?.players.mapValues { player in
             player.name
         } ?? [:]
+    }
+
+    convenience init(_ lobby: Lobby) {
+        self.init(matchId: lobby.lobbyId, lobby: lobby)
     }
 
     required convenience init(from decoder: Decoder) throws {

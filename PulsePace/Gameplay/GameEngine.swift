@@ -9,7 +9,13 @@ import Foundation
 
 class GameEngine {
     var scoreSystem: ScoreSystem?
-    var scoreManager: ScoreManager?
+    var scoreManager: ScoreManager {
+        guard let scoreSystem = scoreSystem else {
+            fatalError("Score system has no score manager")
+        }
+        return scoreSystem.scoreManager
+    }
+
     var hitObjectManager: HitObjectManager?
     var matchFeedSystem: MatchFeedSystem?
     private var inputManager: InputManager?
@@ -20,7 +26,7 @@ class GameEngine {
 
     var match: Match?
     var eventManager = EventManager()
-    private var systems: [System] = []
+    var systems: [System] = []
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
         guard let self = self else {
@@ -34,8 +40,9 @@ class GameEngine {
         guard let scoreManager = self.scoreSystem?.scoreManager else {
             fatalError("All game engine instances should have a score manager")
         }
+
         if !removedGameHO.isHit {
-            scoreManager.missCount += 1
+            self.eventManager.add(event: MissEvent(gameHO: removedGameHO, timestamp: Date().timeIntervalSince1970))
         }
     }
 
@@ -47,7 +54,6 @@ class GameEngine {
     init(_ modeAttachment: ModeAttachment, match: Match? = nil) {
         self.allObjects = Set()
         self.gameHOTable = [:]
-        self.scoreManager = ScoreManager()
 
         if let match = match {
             self.match = match
@@ -56,6 +62,9 @@ class GameEngine {
             if let matchFeedSystem = matchFeedSystem {
                 systems.append(matchFeedSystem)
             }
+            print("Match id \(match.matchId)")
+        } else {
+            print("No match attached to engine")
         }
 
         systems.append(InputSystem())
@@ -64,7 +73,8 @@ class GameEngine {
         guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
             fatalError("Mode attachment should have initialized hit object manager and score system")
         }
-        scoreSystem.scoreManager = scoreManager
+
+        // TODO: Move to mode attachment
         if let disruptorSystem = scoreSystem as? DisruptorSystem,
            let match = match {
             disruptorSystem.selectedTarget = match.players.first(where: { $0.key != UserConfig().userId })?.key

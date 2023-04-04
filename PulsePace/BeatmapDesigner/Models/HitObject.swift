@@ -51,6 +51,13 @@ struct SerializedTapHO: SerializedHO {
         endTime = tapHO.endTime
     }
 
+    init(tapGameHO: TapGameHO) {
+        position = tapGameHO.position
+        let startTime = (tapGameHO.lifeStart + tapGameHO.lifeEnd) / 2
+        self.startTime = startTime
+        endTime = startTime
+    }
+
     func deserialize() -> TapHitObject {
         TapHitObject(position: position, startTime: startTime)
     }
@@ -81,6 +88,13 @@ struct SerializedSlideHO: SerializedHO {
         vertices = slideHO.vertices
     }
 
+    init(slideGameHO: SlideGameHO) {
+        position = slideGameHO.position
+        startTime = slideGameHO.optimalStart
+        endTime = slideGameHO.optimalEnd
+        vertices = slideGameHO.vertices
+    }
+
     func deserialize() -> SlideHitObject {
         SlideHitObject(position: position, startTime: startTime, endTime: endTime, vertices: vertices)
     }
@@ -107,6 +121,12 @@ struct SerializedHoldHO: SerializedHO {
         position = holdHO.position
         startTime = holdHO.startTime
         endTime = holdHO.endTime
+    }
+
+    init(holdGameHO: HoldGameHO) {
+        position = holdGameHO.position
+        startTime = holdGameHO.optimalStart
+        endTime = holdGameHO.optimalEnd
     }
 
     func deserialize() -> HoldHitObject {

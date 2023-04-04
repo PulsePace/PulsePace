@@ -59,16 +59,17 @@ struct TapGameHOView: View {
     var body: some View {
         let tapGameHO = tapGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * tapGameHOVM.ringScale))
+        let color = tapGameHOVM.fromPartner ? Color.purple : Color.white
 
         return ZStack {
             Circle()
-                .strokeBorder(.white, lineWidth: 4)
+                .strokeBorder(color, lineWidth: 4)
                 .frame(width: ringDiameter, height: ringDiameter)
                 .position(x: tapGameHO.position.x,
                           y: tapGameHO.position.y)
 
             Circle()
-                .fill(.white)
+                .fill(color)
                 .frame(width: 100, height: 100)
                 .position(x: tapGameHO.position.x,
                           y: tapGameHO.position.y)
@@ -88,6 +89,7 @@ struct SlideGameHOView: View {
     var body: some View {
         let slideGameHO = slideGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * slideGameHOVM.ringScale))
+        let color = slideGameHOVM.fromPartner ? Color.purple : Color.white
 
         return ZStack {
             DrawShapeBorder(points: [slideGameHO.position] + slideGameHO.vertices).stroked(
@@ -95,13 +97,13 @@ struct SlideGameHOView: View {
             )
 
             Circle()
-                .strokeBorder(.white, lineWidth: 4)
+                .strokeBorder(color, lineWidth: 4)
                 .frame(width: ringDiameter, height: ringDiameter)
                 .position(x: slideGameHO.position.x,
                           y: slideGameHO.position.y)
 
             Circle()
-                .fill(.white)
+                .fill(color)
                 .frame(width: 100, height: 100)
                 .position(x: slideGameHO.expectedPosition.x,
                           y: slideGameHO.expectedPosition.y)
@@ -116,7 +118,7 @@ struct SlideGameHOView: View {
 
             ForEach(slideGameHO.vertices, id: \.self) { position in
                 Circle()
-                    .fill(.white)
+                    .fill(color)
                     .frame(width: 20, height: 20)
                     .position(x: position.x,
                               y: position.y)
@@ -137,16 +139,17 @@ struct HoldGameHOView: View {
     var body: some View {
         let holdGameHO = holdGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * holdGameHOVM.ringScale))
+        let color = holdGameHOVM.fromPartner ? Color.purple : Color.white
 
         return ZStack {
             Circle()
-                .strokeBorder(.white, lineWidth: 4)
+                .strokeBorder(color, lineWidth: 4)
                 .frame(width: ringDiameter, height: ringDiameter)
                 .position(x: holdGameHO.position.x,
                           y: holdGameHO.position.y)
 
             Circle()
-                .fill(.white)
+                .fill(color)
                 .frame(width: 100, height: 100)
                 .position(x: holdGameHO.position.x,
                           y: holdGameHO.position.y)

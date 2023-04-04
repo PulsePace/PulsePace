@@ -46,7 +46,6 @@ class StartMatchCommand: ButtonCommand {
 
     convenience init(receiver: LobbyViewModel) {
         self.init { _ in
-            // TODO: Add additional logic here to ensure match only started after relevant configurations are made
             receiver.lobby?.startMatch()
         }
     }
