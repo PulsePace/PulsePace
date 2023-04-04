@@ -14,7 +14,6 @@ class TapCommand: InputCommand {
         self.init { inputData in
             var inputData = inputData
             inputData.timeReceived = timeReceived
-            print("Tap")
             eventManager.add(event: InputEvent(inputData: inputData,
                                                gameHO: receiver,
                                                timestamp: timeReceived,

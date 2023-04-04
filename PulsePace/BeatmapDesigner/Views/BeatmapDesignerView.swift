@@ -16,7 +16,8 @@ struct StartButtonView: View {
     var body: some View {
         Button(action: {
             path.append(Page.playPage)
-            gameVM.initEngineWithBeatmap(designerVM.beatmap)
+            gameVM.selectedGameMode = ModeFactory.defaultMode
+            gameVM.initEngine(with: designerVM.beatmap)
         }) {
             Text("Start")
                 .font(.title2)
@@ -24,7 +25,22 @@ struct StartButtonView: View {
     }
 }
 
+struct SaveButtonView: View {
+    @EnvironmentObject var designerVM: BeatmapDesignerViewModel
+    @EnvironmentObject var beatmapManager: BeatmapManager
+
+    var body: some View {
+        Button(action: {
+            beatmapManager.saveBeatmap(namedBeatmap: designerVM.namedBeatmap)
+        }) {
+            Text("Save")
+                .font(.title2)
+        }
+    }
+}
+
 struct BeatmapDesignerView: View {
+    @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var audioManager: AudioManager
     @StateObject var viewModel = BeatmapDesignerViewModel()
     @Binding var path: [Page]
@@ -35,7 +51,10 @@ struct BeatmapDesignerView: View {
                 ZoomButtonsView()
                 TimelineView()
                 DivisorSliderView()
-                StartButtonView(path: $path)
+                VStack {
+                    StartButtonView(path: $path)
+                    SaveButtonView()
+                }
             }
 
             HStack {
@@ -59,6 +78,11 @@ struct BeatmapDesignerView: View {
             if let player = audioManager.player {
                 viewModel.initialisePlayer(player: player)
             }
+            viewModel.achievementManager = achievementManager
+
+            let openedPropertyUpdater = achievementManager
+                .getPropertyUpdater(for: TotalBeatmapDesignerOpenedProperty.self)
+            openedPropertyUpdater.increment()
         }
         .onDisappear {
             audioManager.stopPlayer()
@@ -66,10 +90,3 @@ struct BeatmapDesignerView: View {
         .environmentObject(viewModel)
     }
 }
-
-// struct BeatmapDesignerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BeatmapDesignerView(viewModel: BeatmapDesignerViewModel())
-//            .previewInterfaceOrientation(.landscapeLeft)
-//    }
-// }

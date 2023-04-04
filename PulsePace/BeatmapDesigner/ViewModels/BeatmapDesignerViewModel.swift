@@ -20,10 +20,12 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
     @Published var gestureHandler: any GestureHandler
+    var achievementManager: AchievementManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
+    private var songTitle: String
 
     var gestureHandlerList: [any GestureHandler] = []
 
@@ -55,6 +57,10 @@ class BeatmapDesignerViewModel: ObservableObject {
         interval * quantisedBeat
     }
 
+    var namedBeatmap: NamedBeatmap {
+        NamedBeatmap(songTitle: songTitle, beatmap: beatmap)
+    }
+
     var beatmap: Beatmap {
         // TODO: Assumes beatmap retrieved only once
         var hitObjectS2B: [any HitObject] = []
@@ -81,7 +87,8 @@ class BeatmapDesignerViewModel: ObservableObject {
         return Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjectS2B)
     }
 
-    init() {
+    init(songTitle: String = "Unravel") {
+        self.songTitle = songTitle
         hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
         gestureHandler = TapGestureHandler()
         gestureHandlerList = [
@@ -122,6 +129,14 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.enqueue(hitObject)
         previewHitObject = nil
+        incrementHitObjectsProperty()
+    }
+
+    private func incrementHitObjectsProperty() {
+        if let objectsPlacedUpdater = achievementManager?
+            .getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self) {
+            objectsPlacedUpdater.increment()
+        }
     }
 
     static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {

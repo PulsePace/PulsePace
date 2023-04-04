@@ -5,11 +5,13 @@
 //  Created by Yuanxi Zhu on 26/3/23.
 //
 
+import Foundation
+
 class ScoreSystem: System {
     var proximityScoreThreshould = [0.5, 1]
-    var scoreManager: ScoreManager
+    var scoreManager: ScoreManager?
 
-    init(scoreManager: ScoreManager) {
+    init(scoreManager: ScoreManager? = nil) {
         self.scoreManager = scoreManager
     }
 
@@ -17,11 +19,18 @@ class ScoreSystem: System {
         eventManager.registerHandler(hitEventHandler)
     }
 
-    private lazy var hitEventHandler = { [self] (_: EventManagable, event: HitEvent) -> Void in
+    lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
+        guard let scoreManager = scoreManager else {
+            return
+        }
         let gameHO = event.gameHO
         if gameHO.proximityScore < proximityScoreThreshould[0] {
             scoreManager.perfectCount += 1
             scoreManager.score += 100
+            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
+                                                     comboCount: scoreManager.comboCount,
+                                                     lastLocation: gameHO.position
+                                                    ))
         } else if gameHO.proximityScore < proximityScoreThreshould[1] {
             scoreManager.goodCount += 1
             scoreManager.score += 50

@@ -8,6 +8,7 @@
 import Foundation
 
 protocol GameHO: Component, AnyObject {
+    var fromPartner: Bool { get }
     var position: CGPoint { get }
     var lifeStart: Double { get }
     // lifestage is clamped between 0 and 1, 0.5 being the optimal

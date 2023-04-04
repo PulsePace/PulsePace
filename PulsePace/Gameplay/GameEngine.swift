@@ -8,22 +8,34 @@
 import Foundation
 
 class GameEngine {
-    var scoreManager: ScoreManager
-    private var allObjects: Set<Entity>
-    var gameHOTable: [Entity: any GameHO]
+    var scoreSystem: ScoreSystem?
+    var scoreManager: ScoreManager?
+    var hitObjectManager: HitObjectManager?
+    var matchFeedSystem: MatchFeedSystem?
     private var inputManager: InputManager?
-    private var hitObjectManager: HitObjectManager?
     private var conductor: Conductor?
+
+    var gameHOTable: [Entity: any GameHO]
+    private var allObjects: Set<Entity>
+
+    var match: Match?
     var eventManager = EventManager()
     private var systems: [System] = []
 
     lazy var objRemover: (Entity) -> Void = { [weak self] removedObject in
-        self?.allObjects.remove(removedObject)
-        guard let removedGameHO = self?.gameHOTable.removeValue(forKey: removedObject) else {
+        guard let self = self else {
+            fatalError("No active game engine to remove entities")
+        }
+        self.allObjects.remove(removedObject)
+        guard let removedGameHO = self.gameHOTable.removeValue(forKey: removedObject) else {
             return
         }
+
+        guard let scoreManager = self.scoreSystem?.scoreManager else {
+            fatalError("All game engine instances should have a score manager")
+        }
         if !removedGameHO.isHit {
-            self?.scoreManager.missCount += 1
+            scoreManager.missCount += 1
         }
     }
 
@@ -32,34 +44,40 @@ class GameEngine {
         self?.gameHOTable[gameHO.wrappingObject] = gameHO
     }
 
-    init() {
+    init(_ modeAttachment: ModeAttachment, match: Match? = nil) {
         self.allObjects = Set()
         self.gameHOTable = [:]
         self.scoreManager = ScoreManager()
-        self.systems.append(ScoreSystem(scoreManager: scoreManager))
-        self.systems.append(InputSystem())
-        self.systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
+
+        if let match = match {
+            self.match = match
+            eventManager.setMatchEventHandler(matchEventHandler: self)
+            matchFeedSystem = MatchFeedSystem(playerNames: match.players)
+            if let matchFeedSystem = matchFeedSystem {
+                systems.append(matchFeedSystem)
+            }
+        }
+
+        systems.append(InputSystem())
+
+        modeAttachment.configEngine(self)
+        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
+            fatalError("Mode attachment should have initialized hit object manager and score system")
+        }
+        scoreSystem.scoreManager = scoreManager
+        if let disruptorSystem = scoreSystem as? DisruptorSystem,
+           let match = match {
+            disruptorSystem.selectedTarget = match.players.first(where: { $0.key != UserConfig().userId })?.key
+            ?? UserConfig().userId
+        }
+        systems.append(hitObjectManager)
+        systems.append(scoreSystem)
+        systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
     }
 
     func load(_ beatmap: Beatmap) {
-        reset()
-        self.hitObjectManager = HitObjectManager(
-            hitObjects: beatmap.hitObjects,
-            preSpawnInterval: beatmap.preSpawnInterval,
-            remover: objRemover,
-            offset: beatmap.offset,
-            slideSpeed: beatmap.sliderSpeed
-        )
+        hitObjectManager?.feedBeatmap(beatmap: beatmap, remover: objRemover)
         self.conductor = Conductor(bpm: beatmap.bpm)
-        self.inputManager = InputManager()
-//        inputManager.addHandler(scoreManager)
-    }
-
-    func reset() {
-        self.allObjects.removeAll()
-        self.gameHOTable.removeAll()
-        self.hitObjectManager = nil
-        self.inputManager = nil
     }
 
     func step(_ deltaTime: Double) {
@@ -83,4 +101,19 @@ class GameEngine {
         }
         eventManager.handleAllEvents()
     }
+}
+
+extension GameEngine: MatchEventHandler {
+    func publishMatchEvent(message: MatchEventMessage) {
+        match?.dataManager.publishEvent(matchEvent: message)
+    }
+
+    func subscribeMatchEvents() {
+        match?.dataManager.subscribeEvents(eventManager: eventManager)
+    }
+}
+
+protocol MatchEventHandler: AnyObject {
+    func publishMatchEvent(message: MatchEventMessage)
+    func subscribeMatchEvents()
 }

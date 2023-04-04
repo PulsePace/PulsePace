@@ -16,7 +16,6 @@ class SlideCommand: InputCommand {
             action: { inputData in
                 var inputData = inputData
                 inputData.timeReceived = timeReceived
-                print("Slide")
 //                receiver.checkOnInput(inputData: inputData)
             },
             completion: { inputData in

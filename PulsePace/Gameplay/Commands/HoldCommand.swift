@@ -15,7 +15,6 @@ class HoldCommand: InputCommand {
             action: { inputData in
                 var inputData = inputData
                 inputData.timeReceived = timeReceived
-                print("Hold")
 //                receiver.checkOnInput(inputData: inputData)
             },
             completion: { inputData in

@@ -10,6 +10,8 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
+    // FIXME: Remove loc
+    @EnvironmentObject var beatmapManager: BeatmapManager
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -19,7 +21,11 @@ struct GameView: View {
                     .ignoresSafeArea()
             }
             .overlay(alignment: .bottomTrailing) {
-                GameControlView()
+                if viewModel.selectedGameMode.modeName == ModeFactory.defaultMode.modeName {
+                    GameControlView()
+                } else {
+                    MatchFeedView()
+                }
             }
         }
         .frame(
@@ -29,6 +35,9 @@ struct GameView: View {
         )
         .onAppear {
             audioManager.startPlayer(track: "test")
+            if viewModel.gameEngine == nil {
+                viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
+            }
             viewModel.startGameplay()
             if let audioPlayer = audioManager.player {
                 viewModel.initialisePlayer(audioPlayer: audioPlayer)
@@ -149,9 +158,3 @@ struct HoldGameHOView: View {
                                                        timeReceived: viewModel.songPosition)))
     }
 }
-
-// struct GameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GameView()
-//    }
-// }

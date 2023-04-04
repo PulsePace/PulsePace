@@ -15,7 +15,8 @@ protocol RenderSystem {
 
 class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
-    private var gameEngine: GameEngine?
+    // FIXME: make private
+    var gameEngine: GameEngine?
     private var audioPlayer: AVAudioPlayer?
     @Published var slideGameHOs: [SlideGameHOVM] = []
     @Published var holdGameHOs: [HoldGameHOVM] = []
@@ -23,7 +24,10 @@ class GameViewModel: ObservableObject, RenderSystem {
     @Published var songPosition: Double = 0
 
     var score: String {
-        String(format: "%06d", gameEngine?.scoreManager.score ?? 0)
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
+            return String(0)
+        }
+        return String(format: "%06d", scoreManager.score)
     }
 
     var accuracy: String {
@@ -31,12 +35,18 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     var combo: String {
-        String(gameEngine?.scoreManager.comboCount ?? 0) + "x"
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
+            return String(0)
+        }
+        return String(scoreManager.comboCount) + "x"
     }
 
     var health: Double {
         50
     }
+
+    var selectedGameMode: ModeAttachment = ModeFactory.defaultMode
+    var match: Match?
 
     lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
@@ -93,8 +103,8 @@ class GameViewModel: ObservableObject, RenderSystem {
         songPosition = audioPlayer.currentTime
     }
 
-    func initEngineWithBeatmap(_ beatmap: Beatmap) {
-        gameEngine = GameEngine()
+    func initEngine(with beatmap: Beatmap) {
+        gameEngine = GameEngine(selectedGameMode, match: match)
         gameEngine?.load(beatmap)
     }
 

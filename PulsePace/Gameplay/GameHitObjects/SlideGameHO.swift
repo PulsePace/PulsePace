@@ -11,6 +11,7 @@ import simd
 // Straight slider
 class SlideGameHO: GameHO {
     typealias Vector2 = SIMD2<Double>
+    let fromPartner = false
 
     let wrappingObject: Entity
     let position: CGPoint

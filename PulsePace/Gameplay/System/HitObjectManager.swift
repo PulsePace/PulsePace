@@ -7,27 +7,31 @@
 
 import Foundation
 
-final class HitObjectManager {
+class HitObjectManager: System {
     private var counter = 0
-    let remover: (Entity) -> Void
+    private var remover: ((Entity) -> Void)?
     private var queuedHitObjects: MyQueue<any HitObject>
-    let offset: Double
-    let preSpawnInterval: Double
-    let slideSpeed: Double
+    private var offset = 0.0
+    private var slideSpeed = 0.0
+    var preSpawnInterval = 0.0
 
-    init(
-        hitObjects: [any HitObject],
-        preSpawnInterval: Double,
-        remover: @escaping (Entity) -> Void,
-        offset: Double,
-        slideSpeed: Double
-    ) {
+    func registerEventHandlers(eventManager: EventManagable) {
+        lazy var noHandler = { (_: EventManagable, _: NoEvent) -> Void in
+            fatalError("No event should not be emitted")
+        }
+        eventManager.registerHandler(noHandler)
+    }
+
+    init() {
+        queuedHitObjects = MyQueue()
+    }
+
+    func feedBeatmap(beatmap: Beatmap, remover: @escaping (Entity) -> Void) {
         self.remover = remover
-        self.preSpawnInterval = preSpawnInterval
-        self.offset = offset
-        self.slideSpeed = slideSpeed
-        self.queuedHitObjects = MyQueue()
-        hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
+        self.preSpawnInterval = beatmap.preSpawnInterval
+        self.offset = beatmap.offset
+        self.slideSpeed = beatmap.sliderSpeed
+        beatmap.hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
     }
 
     // Takes in a BeatMap
@@ -45,7 +49,10 @@ final class HitObjectManager {
         return gameHOSpawned
     }
 
-    private func spawnGameHitObject(_ hitObject: any HitObject) -> any GameHO {
+    func spawnGameHitObject(_ hitObject: any HitObject) -> any GameHO {
+        guard let remover = remover else {
+            fatalError("Hit object manager must have a valid remover")
+        }
         // TODO: HitObject differentiation
         let entity = Entity(id: counter, remover: remover)
         let newGameHO: any GameHO
