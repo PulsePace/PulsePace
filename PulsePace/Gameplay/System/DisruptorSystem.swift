@@ -11,13 +11,16 @@ class DisruptorSystem: ScoreSystem {
     var selectedTarget = UserConfig().userId
     var selectedDisruptor: Disruptor = .bomb
 
-    var livesRemaining = 3
-
     var isEligibileToSendDisruptor: Bool {
         scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 5)
     }
 
     var spawnedDisruptorLocations: [CGPoint] = []
+    
+    override init(_ scoreManager: ScoreManager) {
+        super.init(scoreManager)
+        self.scoreManager.livesRemaining = 3
+    }
 
     func setDisruptor(disruptor: Disruptor) {
         self.selectedDisruptor = disruptor
@@ -58,13 +61,13 @@ class DisruptorSystem: ScoreSystem {
             return
         }
         self.scoreManager.comboCount = 0
-        self.livesRemaining -= 1
+        self.scoreManager.livesRemaining -= 1
         self.spawnedDisruptorLocations.removeAll(where: { $0 == event.gameHO.position })
 
         eventManager.add(event: LostLifeEvent(timestamp: Date().timeIntervalSince1970,
                                               lostLifePlayerId: UserConfig().userId))
 
-        if livesRemaining == 0 {
+        if self.scoreManager.livesRemaining == 0 {
             eventManager.matchEventHandler?.publishMatchEvent(
                 message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
                                            sourceId: UserConfig().userId,
