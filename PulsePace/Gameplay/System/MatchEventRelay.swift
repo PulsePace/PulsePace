@@ -19,24 +19,18 @@ extension MatchEventRelay {
         self.userId = userId
         self.publisher = publisher
     }
-}
-
-class CoopMatchEventRelay: MatchEventRelay {
-    var match: Match?
-    var userId: String?
-    var publisher: ((MatchEventMessage) -> Void)?
 
     func reset() {
         match = nil
         userId = nil
         publisher = nil
     }
+}
 
-    func assignProperties(userId: String, publisher: @escaping (MatchEventMessage) -> Void, match: Match) {
-        self.userId = userId
-        self.publisher = publisher
-        self.match = match
-    }
+class CoopMatchEventRelay: MatchEventRelay {
+    var match: Match?
+    var userId: String?
+    var publisher: ((MatchEventMessage) -> Void)?
 
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(missEventRelay)
@@ -53,4 +47,19 @@ class CoopMatchEventRelay: MatchEventRelay {
     }
 }
 
-// TODO: CompetitiveMatchEventRelay
+class CompetitiveMatchEventRelay: MatchEventRelay {
+    var match: Match?
+    var userId: String?
+    var publisher: ((MatchEventMessage) -> Void)?
+
+    func registerEventHandlers(eventManager: EventManagable) {
+        eventManager.registerHandler(otherRelay)
+    }
+
+    private lazy var otherRelay = { [weak self] (_: EventManagable, _: DeathEvent) -> Void in
+        guard let self = self, let userId = self.userId else {
+            fatalError("No active match event relay")
+        }
+        print(self.publisher ?? "")
+    }
+}

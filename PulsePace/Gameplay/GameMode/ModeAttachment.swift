@@ -83,7 +83,6 @@ final class ModeFactory: Factory {
             matchEventRelay: CoopMatchEventRelay()
         )
 
-        // FIXME: Provide matchEventRelay for competitive mode
         let competitiveMode = ModeAttachment(
             modeName: "Rhythm Battle",
             hOManager: CompetitiveHOManager(),
@@ -93,7 +92,7 @@ final class ModeFactory: Factory {
                 PublishBombDisruptorEvent.self,
                 PublishNoHintsDisruptorEvent.self,
                 PublishDeathEvent.self],
-            matchEventRelay: nil
+            matchEventRelay: CompetitiveMatchEventRelay()
         )
 
         assemblies[defaultMode.modeName] = defaultMode
