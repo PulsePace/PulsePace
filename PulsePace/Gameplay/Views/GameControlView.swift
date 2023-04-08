@@ -14,7 +14,8 @@ struct GameControlView: View {
 
     var body: some View {
         HStack {
-            if let player = audioManager.player {
+            if viewModel.selectedGameMode.requires(gameViewElement: .playbackControls),
+               let player = audioManager.player {
                 Slider(value: $viewModel.songPosition, in: 0...player.duration).disabled(true)
                 SystemIconButtonView(systemName: isPlaying
                                      ? "pause.circle.fill" : "play.circle.fill", fontSize: 44) {

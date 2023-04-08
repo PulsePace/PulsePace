@@ -22,6 +22,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     @Published var holdGameHOs: [HoldGameHOVM] = []
     @Published var tapGameHOs: [TapGameHOVM] = []
     @Published var songPosition: Double = 0
+    @Published var matchFeedMessages: [MatchFeedMessage] = []
 
     var score: String {
         guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
@@ -106,6 +107,7 @@ class GameViewModel: ObservableObject, RenderSystem {
         }
 
         songPosition = audioPlayer.currentTime
+        matchFeedMessages = gameEngine.matchFeedSystem?.matchFeedMessages.toArray() ?? []
     }
 
     func assignMatch(_ match: Match) {

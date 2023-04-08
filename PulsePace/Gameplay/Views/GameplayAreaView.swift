@@ -15,7 +15,7 @@ struct GameplayAreaView: View {
             renderTapGameHO(tapGameHOVMs: gameVM.tapGameHOs)
             renderHoldGameHO(holdGameHOVMs: gameVM.holdGameHOs)
         }
-        .zIndex(100)
+        .zIndex(200)
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity,

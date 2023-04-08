@@ -35,6 +35,10 @@ final class ModeAttachment {
         matchEventRelay?.reset()
     }
 
+    func requires(gameViewElement: GameViewElement) -> Bool {
+        self.gameViewElements.contains(gameViewElement)
+    }
+
     func configEngine(_ gameEngine: GameEngine) {
         gameEngine.hitObjectManager = hOManager
         gameEngine.scoreSystem = scoreSystem
@@ -98,7 +102,7 @@ final class ModeFactory: Factory {
                 PublishNoHintsDisruptorEvent.self,
                 PublishDeathEvent.self],
             matchEventRelay: CompetitiveMatchEventRelay(),
-            gameViewElements: [.gameplayArea, .scoreBoard, .disruptorOptions]
+            gameViewElements: [.gameplayArea, .scoreBoard, .disruptorOptions, .matchFeed, .leaderboard]
         )
 
         assemblies[defaultMode.modeName] = defaultMode
@@ -117,6 +121,9 @@ final class ModeFactory: Factory {
                      metaInfo: competitiveMode.modeName))
     }
 
+    /**
+     Gets mode attachment before the game starts. Should only be called once as it will reset the existing game engine.
+     */
     static func getModeAttachment(_ metaInfo: String) -> ModeAttachment {
         if !isPopulated {
             populate()
@@ -126,17 +133,6 @@ final class ModeFactory: Factory {
             return defaultMode
         }
         selectedMode.clean()
-        return selectedMode
-    }
-
-    static func getGameModeDetails(_ metaInfo: String) -> ModeAttachment {
-        if !isPopulated {
-            populate()
-        }
-        guard let selectedMode = assemblies[metaInfo] else {
-            print("Requested mode not found, falling back to default")
-            return defaultMode
-        }
         return selectedMode
     }
 

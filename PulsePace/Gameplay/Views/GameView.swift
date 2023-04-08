@@ -21,14 +21,14 @@ struct GameView: View {
                     .ignoresSafeArea()
             }
             .overlay(alignment: .bottomTrailing) {
-                if viewModel.selectedGameMode.modeName == ModeFactory.defaultMode.modeName {
-                    GameControlView()
-                } else {
-                    MatchFeedView()
-                }
+                GameControlView()
             }
             .overlay(alignment: .bottom) {
                 DisruptorOptionsView()
+            }
+            .overlay(alignment: .top) {
+                MatchFeedView()
+                    .ignoresSafeArea()
             }
         }
         .frame(
@@ -55,35 +55,35 @@ struct GameView: View {
     }
 }
 
-class GameViewFactory {
-    static func createGameView(for gameMode: String) -> some View {
-        let gameViewElements = ModeFactory.getModeAttachment(gameMode).gameViewElements
-        let view = ZStack {
-            ForEach(gameViewElements, id: \.self) { element in
-                GameViewElement.gameViewElementsBuilderMap[element]?()
-            }
-        }
-        return view
-    }
-}
+// class GameViewFactory {
+//    static func createGameView(for gameMode: String) -> some View {
+//        let gameViewElements = ModeFactory.getModeAttachment(gameMode).gameViewElements
+//        let view = ZStack {
+//            ForEach(gameViewElements, id: \.self) { element in
+//                GameViewElement.gameViewElementsBuilderMap[element]?()
+//            }
+//        }
+//        return view
+//    }
+// }
 
 enum GameViewElement {
     case playbackControls
     case gameplayArea
     case disruptorOptions
     case scoreBoard
-//    case leaderboard
-//    case matchFeed
+    case leaderboard
+    case matchFeed
 
-    static let gameViewElementsBuilderMap: [GameViewElement: () -> AnyView] = [
-        .playbackControls: { GameControlView().eraseToAnyView() },
-        .gameplayArea: { GameplayAreaView().eraseToAnyView() },
-        .scoreBoard: { ScoreView().eraseToAnyView() }
-    ]
+//    static let gameViewElementsBuilderMap: [GameViewElement: () -> AnyView] = [
+//        .playbackControls: { GameControlView().eraseToAnyView() },
+//        .gameplayArea: { GameplayAreaView().eraseToAnyView() },
+//        .scoreBoard: { ScoreView().eraseToAnyView() }
+//    ]
 }
 
-extension View {
-    func eraseToAnyView() -> AnyView {
-        AnyView(self)
-    }
-}
+// extension View {
+//    func eraseToAnyView() -> AnyView {
+//        AnyView(self)
+//    }
+// }

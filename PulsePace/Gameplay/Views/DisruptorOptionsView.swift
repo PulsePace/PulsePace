@@ -19,8 +19,7 @@ struct DisruptorOptionsView: View {
 
     var body: some View {
         ZStack {
-            if ModeFactory.getGameModeDetails(gameVM.selectedGameMode.modeName)
-                .gameViewElements.contains(where: { $0 == GameViewElement.disruptorOptions }) {
+            if gameVM.selectedGameMode.requires(gameViewElement: .disruptorOptions) {
                 HStack {
                     Text("Select Target")
                         .font(Fonts.caption)
@@ -46,7 +45,9 @@ struct DisruptorOptionsView: View {
             }
         }
         .onAppear {
-            selectedTarget = gameVM.otherPlayers[0].key
+            if !gameVM.otherPlayers.isEmpty {
+                selectedTarget = gameVM.otherPlayers[0].key
+            }
         }
     }
 }
@@ -58,6 +59,7 @@ extension Binding {
             set: { selection in
                 self.wrappedValue = selection
                 handler.executeAction(inputData: selection)
-            })
+            }
+        )
     }
 }

@@ -22,6 +22,14 @@ class DisruptorSystem: ScoreSystem {
         self.scoreManager.livesRemaining = 3
     }
 
+    override func reset() {
+        super.reset()
+        self.selectedTarget = UserConfig().userId
+        self.selectedDisruptor = .bomb
+        self.spawnedDisruptorLocations = []
+        self.scoreManager.livesRemaining = 3
+    }
+
     func setDisruptor(disruptor: Disruptor) {
         self.selectedDisruptor = disruptor
     }
