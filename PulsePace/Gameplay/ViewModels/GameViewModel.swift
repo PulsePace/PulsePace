@@ -45,8 +45,13 @@ class GameViewModel: ObservableObject, RenderSystem {
         50
     }
 
+    var disruptors = Disruptor.allCases.map({ $0.rawValue })
+
     var selectedGameMode: ModeAttachment = ModeFactory.defaultMode
     var match: Match?
+
+    typealias DictAsArray = [(key: String, value: String)]
+    var otherPlayers: DictAsArray = []
 
     lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
@@ -105,6 +110,12 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     func assignMatch(_ match: Match) {
         self.match = match
+        self.otherPlayers = []
+        match.players.forEach({
+            if $0.key != UserConfig().userId {
+                self.otherPlayers.append((key: $0.key, value: $0.value))
+            }
+        })
     }
 
     func initEngine(with beatmap: Beatmap) {
@@ -134,6 +145,14 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     func initialisePlayer(audioPlayer: AVAudioPlayer) {
         self.audioPlayer = audioPlayer
+    }
+
+    func setTarget(_ targetId: String) {
+        gameEngine?.setTarget(targetId: targetId)
+    }
+
+    func setDisruptor(_ disruptor: Disruptor) {
+        gameEngine?.setDisruptor(disruptor: disruptor)
     }
 
     private func createDisplayLink() {

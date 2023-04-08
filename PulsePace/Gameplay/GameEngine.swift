@@ -111,6 +111,20 @@ class GameEngine {
         }
         eventManager.handleAllEvents()
     }
+
+    func setTarget(targetId: String) {
+        guard let disruptorSystem = scoreSystem as? DisruptorSystem else {
+           return
+        }
+        disruptorSystem.setTarget(targetId: targetId)
+    }
+
+    func setDisruptor(disruptor: Disruptor) {
+        guard let disruptorSystem = scoreSystem as? DisruptorSystem else {
+           return
+        }
+        disruptorSystem.setDisruptor(disruptor: disruptor)
+    }
 }
 
 extension GameEngine: MatchEventHandler {

@@ -54,9 +54,3 @@ struct GameplayAreaView: View {
         }
     }
 }
-
-struct GameplayAreaView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameplayAreaView()
-    }
-}

@@ -14,15 +14,18 @@ final class ModeAttachment {
     var listeningMatchEvents: [any MatchEvent.Type]
     var matchEventRelay: MatchEventRelay?
     var roomSetting: RoomSetting
+    var gameViewElements: [GameViewElement]
 
     init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, roomSetting: RoomSetting,
-         listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?) {
+         listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?,
+         gameViewElements: [GameViewElement]) {
         self.modeName = modeName
         self.hOManager = hOManager
         self.scoreSystem = scoreSystem
         self.roomSetting = roomSetting
         self.listeningMatchEvents = listeningMatchEvents
         self.matchEventRelay = matchEventRelay
+        self.gameViewElements = gameViewElements
     }
 
     // ModeFactory reuses the same reference to each mode's ModeAttachment
@@ -65,7 +68,8 @@ final class ModeFactory: Factory {
         scoreSystem: ScoreSystem(ScoreManager()),
         roomSetting: RoomSettingFactory.defaultSetting,
         listeningMatchEvents: [],
-        matchEventRelay: nil
+        matchEventRelay: nil,
+        gameViewElements: [.gameplayArea, .playbackControls, .scoreBoard]
     )
 
     static func populate() {
@@ -80,7 +84,8 @@ final class ModeFactory: Factory {
             scoreSystem: ScoreSystem(ScoreManager()),
             roomSetting: RoomSettingFactory.baseCoopSetting,
             listeningMatchEvents: [PublishMissTapEvent.self, PublishMissHoldEvent.self, PublishMissSlideEvent.self],
-            matchEventRelay: CoopMatchEventRelay()
+            matchEventRelay: CoopMatchEventRelay(),
+            gameViewElements: [.gameplayArea, .scoreBoard]
         )
 
         let competitiveMode = ModeAttachment(
@@ -92,7 +97,8 @@ final class ModeFactory: Factory {
                 PublishBombDisruptorEvent.self,
                 PublishNoHintsDisruptorEvent.self,
                 PublishDeathEvent.self],
-            matchEventRelay: CompetitiveMatchEventRelay()
+            matchEventRelay: CompetitiveMatchEventRelay(),
+            gameViewElements: [.gameplayArea, .scoreBoard, .disruptorOptions]
         )
 
         assemblies[defaultMode.modeName] = defaultMode
@@ -116,10 +122,21 @@ final class ModeFactory: Factory {
             populate()
         }
         guard let selectedMode = assemblies[metaInfo] else {
-            print("Request mode not found, falling back to default")
+            print("Requested mode not found, falling back to default")
             return defaultMode
         }
         selectedMode.clean()
+        return selectedMode
+    }
+
+    static func getGameModeDetails(_ metaInfo: String) -> ModeAttachment {
+        if !isPopulated {
+            populate()
+        }
+        guard let selectedMode = assemblies[metaInfo] else {
+            print("Requested mode not found, falling back to default")
+            return defaultMode
+        }
         return selectedMode
     }
 

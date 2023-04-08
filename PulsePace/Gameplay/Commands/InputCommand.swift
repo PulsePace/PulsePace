@@ -5,8 +5,6 @@
 //  Created by Charisma Kausar on 8/3/23.
 //
 
-import SwiftUI
-
 class InputCommand: Command {
     typealias ActionArguments = InputData
     var action: Action

@@ -16,7 +16,7 @@ class DisruptorSystem: ScoreSystem {
     }
 
     var spawnedDisruptorLocations: [CGPoint] = []
-    
+
     override init(_ scoreManager: ScoreManager) {
         super.init(scoreManager)
         self.scoreManager.livesRemaining = 3
@@ -93,7 +93,7 @@ class PublishDisruptorFactory {
     }
 }
 
-enum Disruptor: String {
-    case noHints
-    case bomb
+enum Disruptor: String, CaseIterable {
+    case bomb = "Bomb"
+    case noHints = "No Hints"
 }
