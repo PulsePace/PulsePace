@@ -8,71 +8,54 @@
 import SwiftUI
 import AVKit
 
-struct StartButtonView: View {
-    @Binding var path: [Page]
-    @EnvironmentObject var gameVM: GameViewModel
-    @EnvironmentObject var designerVM: BeatmapDesignerViewModel
-
-    var body: some View {
-        Button(action: {
-            path.append(Page.playPage)
-            gameVM.selectedGameMode = ModeFactory.defaultMode
-            gameVM.initEngine(with: designerVM.beatmap)
-        }) {
-            Text("Start")
-                .font(.title2)
-        }
-    }
-}
-
-struct SaveButtonView: View {
-    @EnvironmentObject var designerVM: BeatmapDesignerViewModel
-    @EnvironmentObject var beatmapManager: BeatmapManager
-
-    var body: some View {
-        Button(action: {
-            beatmapManager.saveBeatmap(namedBeatmap: designerVM.namedBeatmap)
-        }) {
-            Text("Save")
-                .font(.title2)
-        }
-    }
-}
-
 struct BeatmapDesignerView: View {
     @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var audioManager: AudioManager
+    @EnvironmentObject var beatmapManager: BeatmapManager
+    @EnvironmentObject var gameViewModel: GameViewModel
     @StateObject var viewModel = BeatmapDesignerViewModel()
     @Binding var path: [Page]
 
     var body: some View {
-        VStack {
-            HStack {
+        VStack(spacing: 0) {
+            HStack(spacing: 16) {
                 ZoomButtonsView()
                 TimelineView()
                 DivisorSliderView()
-                VStack {
-                    StartButtonView(path: $path)
-                    SaveButtonView()
+                VStack(spacing: 4) {
+                    renderStartButton()
+                    renderSaveButton()
                 }
             }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 16)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        .black.opacity(0.25),
+                        .black.opacity(0.225)
+                    ]),
+                    startPoint: .bottom,
+                    endPoint: .top
+                )
+            )
 
-            HStack {
-                VStack {
-                    ForEach(viewModel.gestureHandlerList, id: \.title) { gestureHandler in
-                        Button(action: {
-                            viewModel.gestureHandler = gestureHandler
-                        }) {
-                            Text(gestureHandler.title)
-                        }
-                    }
-                }
-
+            ZStack(alignment: .leading) {
                 CanvasView()
+                ToolButtonsView()
             }
-
             PlaybackControlView()
         }
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    .purple,
+                    Color(hex: 0x873EBA)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .onAppear {
             audioManager.startPlayer(track: "test")
             if let player = audioManager.player {
@@ -88,5 +71,29 @@ struct BeatmapDesignerView: View {
             audioManager.stopPlayer()
         }
         .environmentObject(viewModel)
+    }
+
+    @ViewBuilder
+    private func renderStartButton() -> some View {
+        Button(action: {
+            path.append(Page.playPage)
+            gameViewModel.selectedGameMode = ModeFactory.defaultMode
+            gameViewModel.initEngine(with: viewModel.beatmap)
+        }) {
+            Text("Start")
+                .foregroundColor(.white)
+                .font(.title2)
+        }
+    }
+
+    @ViewBuilder
+    private func renderSaveButton() -> some View {
+        Button(action: {
+            beatmapManager.saveBeatmap(namedBeatmap: viewModel.namedBeatmap)
+        }) {
+            Text("Save")
+                .foregroundColor(.white)
+                .font(.title2)
+        }
     }
 }

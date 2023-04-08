@@ -14,5 +14,5 @@ protocol HitObjectViewFactory {
     associatedtype CanvasView: HitObjectCanvasView
 
     func createTimelineView(for object: Object, with beatOffset: Double, and zoom: Double) -> TimelineView
-    func createCanvasView(for object: Object, at cursorTime: Double) -> CanvasView
+    func createCanvasView(for object: Object, at cursorTime: Double, with spacing: CGFloat) -> CanvasView
 }
