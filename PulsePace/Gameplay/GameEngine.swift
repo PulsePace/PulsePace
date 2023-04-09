@@ -79,6 +79,7 @@ class GameEngine {
            let match = match {
             disruptorSystem.selectedTarget = match.players.first(where: { $0.key != UserConfig().userId })?.key
             ?? UserConfig().userId
+            match.players.forEach({ disruptorSystem.allScores[$0.key] = 0 })
         }
         systems.append(hitObjectManager)
         systems.append(scoreSystem)

@@ -48,5 +48,10 @@ class ScoreSystem: ModeSystem {
             scoreManager.missCount += 1
             scoreManager.score += 10
         }
+        eventManager.matchEventHandler?.publishMatchEvent(
+            message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
+                                       sourceId: UserConfig().userId,
+                                       event: PublishScoreEvent(timestamp: Date().timeIntervalSince1970,
+                                                                playerScore: scoreManager.score)))
     }
 }

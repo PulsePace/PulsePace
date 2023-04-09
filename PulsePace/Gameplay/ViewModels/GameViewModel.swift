@@ -53,6 +53,7 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     typealias DictAsArray = [(key: String, value: String)]
     var otherPlayers: DictAsArray = []
+    var leaderboard: DictAsArray = []
 
     lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
@@ -107,7 +108,8 @@ class GameViewModel: ObservableObject, RenderSystem {
         }
 
         songPosition = audioPlayer.currentTime
-        matchFeedMessages = gameEngine.matchFeedSystem?.matchFeedMessages.toArray() ?? []
+        updateMatchFeed()
+        updateLeaderboard()
     }
 
     func assignMatch(_ match: Match) {
@@ -161,5 +163,19 @@ class GameViewModel: ObservableObject, RenderSystem {
         self.displayLink = CADisplayLink(target: self, selector: #selector(step))
         displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 75, maximum: 150, __preferred: 90)
         displayLink?.add(to: .current, forMode: .default)
+    }
+
+    private func updateMatchFeed() {
+        matchFeedMessages = gameEngine?.matchFeedSystem?.matchFeedMessages.toArray() ?? []
+        matchFeedMessages.sort(by: { x, y in x.timestamp < y.timestamp })
+    }
+
+    private func updateLeaderboard() {
+        leaderboard = []
+        (gameEngine?.scoreSystem as? DisruptorSystem)?.allScores.forEach({
+            leaderboard.append((key: match?.players[$0.key] ?? "Anonymous",
+                                value: String(format: "%06d", $0.value)))
+            leaderboard.sort(by: { x, y in Int(x.value) ?? 0 > Int(y.value) ?? 0 })
+        })
     }
 }

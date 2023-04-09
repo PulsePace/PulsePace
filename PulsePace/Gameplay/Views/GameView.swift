@@ -20,6 +20,10 @@ struct GameView: View {
                 ScoreView()
                     .ignoresSafeArea()
             }
+            .overlay(alignment: .topTrailing) {
+                LeaderboardView()
+                    .ignoresSafeArea()
+            }
             .overlay(alignment: .bottomTrailing) {
                 GameControlView()
             }

@@ -87,7 +87,11 @@ final class ModeFactory: Factory {
             hOManager: CoopHOManager(),
             scoreSystem: ScoreSystem(ScoreManager()),
             roomSetting: RoomSettingFactory.baseCoopSetting,
-            listeningMatchEvents: [PublishMissTapEvent.self, PublishMissHoldEvent.self, PublishMissSlideEvent.self],
+            listeningMatchEvents: [
+                PublishMissTapEvent.self,
+                PublishMissHoldEvent.self,
+                PublishMissSlideEvent.self
+            ],
             matchEventRelay: CoopMatchEventRelay(),
             gameViewElements: [.gameplayArea, .scoreBoard]
         )
@@ -100,9 +104,11 @@ final class ModeFactory: Factory {
             listeningMatchEvents: [
                 PublishBombDisruptorEvent.self,
                 PublishNoHintsDisruptorEvent.self,
-                PublishDeathEvent.self],
+                PublishDeathEvent.self,
+                PublishScoreEvent.self
+            ],
             matchEventRelay: CompetitiveMatchEventRelay(),
-            gameViewElements: [.gameplayArea, .scoreBoard, .disruptorOptions, .matchFeed, .leaderboard]
+            gameViewElements: [.gameplayArea, .disruptorOptions, .matchFeed, .leaderboard]
         )
 
         assemblies[defaultMode.modeName] = defaultMode

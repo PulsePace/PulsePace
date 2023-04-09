@@ -17,6 +17,8 @@ class DisruptorSystem: ScoreSystem {
 
     var spawnedDisruptorLocations: [CGPoint] = []
 
+    var allScores: [String: Int] = [:]
+
     override init(_ scoreManager: ScoreManager) {
         super.init(scoreManager)
         self.scoreManager.livesRemaining = 3
@@ -43,6 +45,7 @@ class DisruptorSystem: ScoreSystem {
         eventManager.registerHandler(updateComboHandler)
         eventManager.registerHandler(onSpawnBombDisruptorHandler)
         eventManager.registerHandler(bombHitEventHandler)
+        eventManager.registerHandler(onUpdateScoreEventHandler)
     }
 
     lazy var updateComboHandler = { [self] (eventManager: EventManagable, event: UpdateComboEvent) -> Void in
@@ -82,6 +85,10 @@ class DisruptorSystem: ScoreSystem {
                                            event: PublishDeathEvent(timestamp: Date().timeIntervalSince1970,
                                                                     diedPlayerId: UserConfig().userId)))
         }
+    }
+
+    lazy var onUpdateScoreEventHandler = { [self] (_: EventManagable, event: UpdateScoreEvent) -> Void in
+        allScores[event.playerId] = event.playerScore
     }
 }
 

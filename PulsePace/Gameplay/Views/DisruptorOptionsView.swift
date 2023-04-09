@@ -14,7 +14,7 @@ struct DisruptorOptionsView: View {
     @State private var selectedDisruptor = "Bomb"
 
     init() {
-        UISegmentedControl.appearance().selectedSegmentTintColor = .tintColor
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.purple)
     }
 
     var body: some View {
@@ -41,7 +41,8 @@ struct DisruptorOptionsView: View {
                     .pickerStyle(.segmented)
                 }
                 .frame(height: 50)
-                .padding(.all, 20)
+                .padding(20)
+                .background(.ultraThinMaterial)
             }
         }
         .onAppear {

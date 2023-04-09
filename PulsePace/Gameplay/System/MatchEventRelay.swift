@@ -60,6 +60,6 @@ class CompetitiveMatchEventRelay: MatchEventRelay {
         guard let self = self, let userId = self.userId else {
             fatalError("No active match event relay")
         }
-        print(self.publisher ?? "") // TODO: MatchEvents
+        print(self.publisher ?? "") // TODO: MatchEvents - `makeMessage()` can be done by the other system
     }
 }
