@@ -48,9 +48,13 @@ class ScoreSystem: ModeSystem {
             scoreManager.missCount += 1
             scoreManager.score += 10
         }
+
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
         eventManager.matchEventHandler?.publishMatchEvent(
             message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
-                                       sourceId: UserConfig().userId,
+                                       sourceId: userConfigManager.userId,
                                        event: PublishScoreEvent(timestamp: Date().timeIntervalSince1970,
                                                                 playerScore: scoreManager.score)))
     }

@@ -42,15 +42,17 @@ final class ModeAttachment {
     func configEngine(_ gameEngine: GameEngine) {
         gameEngine.hitObjectManager = hOManager
         gameEngine.scoreSystem = scoreSystem
+
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
         if let matchEventRelay = matchEventRelay,
            let match = gameEngine.match {
-            // FIXME: remove stubs
-            matchEventRelay.assignProperties(userId: UserConfig().userId,
-                                             publisher: gameEngine.publishMatchEvent,
-                                             match: match)
+            matchEventRelay.assignProperties(publisher: gameEngine.publishMatchEvent, match: match)
             gameEngine.systems.append(matchEventRelay)
         } else {
-            print("No active match or match event relay on \(UserConfig().userId)")
+            print("No active match")
         }
     }
 }

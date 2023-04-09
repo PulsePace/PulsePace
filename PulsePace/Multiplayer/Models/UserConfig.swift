@@ -10,7 +10,7 @@ import UIKit
 struct UserConfig: Codable {
     static let randomNameLength = 10
     let userId: String
-    let name: String
+    var name: String
 
     init() {
         userId = UIDevice.current.identifierForVendor?.uuidString ?? "default"
@@ -21,7 +21,7 @@ struct UserConfig: Codable {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         var randomString = ""
         for _ in 0..<UserConfig.randomNameLength {
-            let randomIndex = Int(arc4random_uniform(UInt32(letters.count)))
+            let randomIndex = Int.random(in: 0..<letters.count)
             let randomLetter = letters[letters.index(letters.startIndex, offsetBy: randomIndex)]
             randomString += String(randomLetter)
         }
@@ -30,9 +30,18 @@ struct UserConfig: Codable {
 }
 
 final class UserConfigManager: ObservableObject {
+    static var instance: UserConfigManager?
     @Published var userConfig: UserConfig
     let localConfigStorage = "userConfig.json"
     let userConfigDataManager: LocalDataManager<UserConfig>
+
+    var userId: String {
+        userConfig.userId
+    }
+
+    var name: String {
+        userConfig.name
+    }
 
     init() {
         let userConfigDataManager = LocalDataManager<UserConfig>()
@@ -48,11 +57,13 @@ final class UserConfigManager: ObservableObject {
                 self?.userConfig = userConfig
             }
         }
+        if UserConfigManager.instance == nil {
+            UserConfigManager.instance = self
+        }
     }
 
-    func save(_ userConfig: UserConfig) {
-        userConfigDataManager.save(values: userConfig, filename: localConfigStorage) {
-            result in
+    func save() {
+        userConfigDataManager.save(values: userConfig, filename: localConfigStorage) { result in
             if case .failure(let error) = result {
                 fatalError(error.localizedDescription)
             }

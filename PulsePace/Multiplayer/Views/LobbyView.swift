@@ -13,6 +13,7 @@ struct LobbyView: View {
     @State private var lobbyCode: String = ""
     @Binding var path: [Page]
     @EnvironmentObject var gameVM: GameViewModel
+    @EnvironmentObject var userConfigManager: UserConfigManager
 
     var body: some View {
         VStack {
@@ -56,7 +57,7 @@ struct LobbyView: View {
     private func renderLobbyPlayers(players: [Player]) -> some View {
         VStack {
             if let lobby = viewModel.lobby,
-               lobby.players.contains(where: { $0.key == UserConfig().userId }),
+               lobby.players.contains(where: { $0.key == userConfigManager.userId }),
                gameVM.selectedGameMode.modeName == lobby.modeName {
                 Text("Lobby Code: \(lobby.playerCount > 0 ? lobby.lobbyId : "Not Found")")
                     .font(.title)
@@ -72,7 +73,7 @@ struct LobbyView: View {
                     }
                 }
             } else if let lobby = viewModel.lobby,
-            (!lobby.players.contains(where: { $0.key == UserConfig().userId }) ||
+            (!lobby.players.contains(where: { $0.key == userConfigManager.userId }) ||
              gameVM.selectedGameMode.modeName != lobby.modeName) {
                 Text("This lobby is not valid")
             }
@@ -83,7 +84,7 @@ struct LobbyView: View {
     @ViewBuilder
     private func renderMatchControls() -> some View {
         if let lobby = viewModel.lobby,
-           lobby.players.contains(where: { $0.key == UserConfig().userId }),
+           lobby.players.contains(where: { $0.key == userConfigManager.userId }),
            gameVM.selectedGameMode.modeName == lobby.modeName {
             HStack {
                 Spacer()
