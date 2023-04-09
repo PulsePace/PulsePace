@@ -164,6 +164,9 @@
 		D081DDB429C2BB91006B11B4 /* HitObjectViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDB329C2BB91006B11B4 /* HitObjectViewFactory.swift */; };
 		D081DDBC29C31F7E006B11B4 /* CGPoint+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBB29C31F7E006B11B4 /* CGPoint+Utility.swift */; };
 		D081DDBE29C32AF2006B11B4 /* CGVector+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBD29C32AF2006B11B4 /* CGVector+Utility.swift */; };
+		D0A2D0F129E2D8F1000C4BB5 /* StorageAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2D0F029E2D8F1000C4BB5 /* StorageAdapter.swift */; };
+		D0A2D0F329E2DA76000C4BB5 /* FirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2D0F229E2DA76000C4BB5 /* FirebaseStorage.swift */; };
+		D0A2D0F529E2EC52000C4BB5 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2D0F429E2EC52000C4BB5 /* TestView.swift */; };
 		D0C3587F29D317E500E7D7CC /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C3587E29D317E500E7D7CC /* Achievement.swift */; };
 		D0CD998329D219FB00E40BFA /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD998229D219FB00E40BFA /* Observer.swift */; };
 		D0CD998529D21A0B00E40BFA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD998429D21A0B00E40BFA /* Observable.swift */; };
@@ -371,6 +374,9 @@
 		D081DDB329C2BB91006B11B4 /* HitObjectViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitObjectViewFactory.swift; sourceTree = "<group>"; };
 		D081DDBB29C31F7E006B11B4 /* CGPoint+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utility.swift"; sourceTree = "<group>"; };
 		D081DDBD29C32AF2006B11B4 /* CGVector+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGVector+Utility.swift"; sourceTree = "<group>"; };
+		D0A2D0F029E2D8F1000C4BB5 /* StorageAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAdapter.swift; sourceTree = "<group>"; };
+		D0A2D0F229E2DA76000C4BB5 /* FirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorage.swift; sourceTree = "<group>"; };
+		D0A2D0F429E2EC52000C4BB5 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		D0C3587E29D317E500E7D7CC /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		D0CD998229D219FB00E40BFA /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		D0CD998429D21A0B00E40BFA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -640,6 +646,8 @@
 				C77A7D7D29D047A10082458E /* FirebaseDatabase.swift */,
 				C7CC5EF829D60D29001DB28E /* DatabaseListenerAdapter.swift */,
 				C7CC5EFA29D60E60001DB28E /* FirebaseListener.swift */,
+				D0A2D0F029E2D8F1000C4BB5 /* StorageAdapter.swift */,
+				D0A2D0F229E2DA76000C4BB5 /* FirebaseStorage.swift */,
 				C77A7D8129D052C60082458E /* LobbyDataManager.swift */,
 				C7CC5EFD29D61FE4001DB28E /* MatchDataManager.swift */,
 				C77A7D8F29D377BF0082458E /* DatabasePath.swift */,
@@ -1289,6 +1297,7 @@
 				6A5A375F29E2EA1F0028BB08 /* Evaluator.swift in Sources */,
 				C7069F4929D4AFA00039C906 /* ButtonCommand.swift in Sources */,
 				6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */,
+				D0A2D0F129E2D8F1000C4BB5 /* StorageAdapter.swift in Sources */,
 				C788084029D9869B00107A32 /* BeatmapManager.swift in Sources */,
 				D070B46D29C41A9400E55693 /* DrawShapeBorder.swift in Sources */,
 				C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */,
@@ -1376,6 +1385,7 @@
 				D0D7D12E29C4F58500676F12 /* HoldHitObjectCanvasView.swift in Sources */,
 				C7D1AF2929BF8A9300244EF5 /* Heap.swift in Sources */,
 				D06820D529D4AA6800C96BB7 /* DivisorSliderView.swift in Sources */,
+				D0A2D0F329E2DA76000C4BB5 /* FirebaseStorage.swift in Sources */,
 				D06820CC29D4A32700C96BB7 /* TotalBeatmapDesignerOpenedProperty.swift in Sources */,
 				6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */,
 				D0E1422929E1419F00FCA272 /* DateComponentsFormatter+Formatters.swift in Sources */,
