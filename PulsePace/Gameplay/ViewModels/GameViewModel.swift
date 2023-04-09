@@ -42,8 +42,11 @@ class GameViewModel: ObservableObject, RenderSystem {
         return String(scoreManager.comboCount) + "x"
     }
 
-    var health: Double {
-        50
+    var livesCount: Int {
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
+            return 1
+        }
+        return scoreManager.livesRemaining
     }
 
     var disruptors = Disruptor.allCases.map({ $0.rawValue })

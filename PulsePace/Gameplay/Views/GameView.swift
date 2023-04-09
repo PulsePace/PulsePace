@@ -24,15 +24,18 @@ struct GameView: View {
                 LeaderboardView()
                     .ignoresSafeArea()
             }
+            .overlay(alignment: .top) {
+                MatchFeedView()
+                    .ignoresSafeArea()
+            }
+            .overlay(alignment: .topLeading) {
+                LivesCountView()
+            }
             .overlay(alignment: .bottomTrailing) {
                 GameControlView()
             }
             .overlay(alignment: .bottom) {
                 DisruptorOptionsView()
-            }
-            .overlay(alignment: .top) {
-                MatchFeedView()
-                    .ignoresSafeArea()
             }
         }
         .frame(
@@ -78,6 +81,7 @@ enum GameViewElement {
     case scoreBoard
     case leaderboard
     case matchFeed
+    case livesCount
 
 //    static let gameViewElementsBuilderMap: [GameViewElement: () -> AnyView] = [
 //        .playbackControls: { GameControlView().eraseToAnyView() },

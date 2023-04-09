@@ -77,6 +77,7 @@
 		C77A7D9029D377BF0082458E /* DatabasePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8F29D377BF0082458E /* DatabasePath.swift */; };
 		C77C95A129E145FA005D8245 /* PickerCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C95A029E145FA005D8245 /* PickerCommand.swift */; };
 		C77C95A529E1F41F005D8245 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C95A429E1F41F005D8245 /* LeaderboardView.swift */; };
+		C77C95A729E24530005D8245 /* LivesCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C95A629E24530005D8245 /* LivesCountView.swift */; };
 		C788083F29D9869B00107A32 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788083D29D9869B00107A32 /* LocalDataManager.swift */; };
 		C788084029D9869B00107A32 /* BeatmapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788083E29D9869B00107A32 /* BeatmapManager.swift */; };
 		C788084229D986F900107A32 /* preloadedBeatmaps.json in Resources */ = {isa = PBXBuildFile; fileRef = C788084129D986F900107A32 /* preloadedBeatmaps.json */; };
@@ -264,6 +265,7 @@
 		C77A7D8F29D377BF0082458E /* DatabasePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePath.swift; sourceTree = "<group>"; };
 		C77C95A029E145FA005D8245 /* PickerCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCommand.swift; sourceTree = "<group>"; };
 		C77C95A429E1F41F005D8245 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		C77C95A629E24530005D8245 /* LivesCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivesCountView.swift; sourceTree = "<group>"; };
 		C788083D29D9869B00107A32 /* LocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		C788083E29D9869B00107A32 /* BeatmapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatmapManager.swift; sourceTree = "<group>"; };
 		C788084129D986F900107A32 /* preloadedBeatmaps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = preloadedBeatmaps.json; sourceTree = "<group>"; };
@@ -670,6 +672,7 @@
 				C788084929D9A65B00107A32 /* MatchFeedView.swift */,
 				C75FCA8B29DF59C600C4EE1C /* DisruptorOptionsView.swift */,
 				C77C95A429E1F41F005D8245 /* LeaderboardView.swift */,
+				C77C95A629E24530005D8245 /* LivesCountView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1185,6 +1188,7 @@
 				C7069F4329D4AC800039C906 /* LobbyView.swift in Sources */,
 				D06820D729D4AA8000C96BB7 /* CanvasView.swift in Sources */,
 				C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */,
+				C77C95A729E24530005D8245 /* LivesCountView.swift in Sources */,
 				D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */,
 				C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */,
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,

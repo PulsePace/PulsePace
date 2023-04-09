@@ -108,7 +108,8 @@ final class ModeFactory: Factory {
                 PublishScoreEvent.self
             ],
             matchEventRelay: CompetitiveMatchEventRelay(),
-            gameViewElements: [.gameplayArea, .disruptorOptions, .matchFeed, .leaderboard]
+            gameViewElements: [.gameplayArea, .disruptorOptions, .matchFeed,
+                .leaderboard, .livesCount]
         )
 
         assemblies[defaultMode.modeName] = defaultMode
