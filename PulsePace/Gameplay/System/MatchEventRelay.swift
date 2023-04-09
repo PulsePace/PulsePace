@@ -46,7 +46,7 @@ class CoopMatchEventRelay: MatchEventRelay {
         guard let self = self else {
             fatalError("No active match event relay")
         }
-        guard let matchEventMessage = MissEvent.makeMessage(event: missEvent, playerId: userId) else {
+        guard let matchEventMessage = MissEvent.makeMessage(event: missEvent, playerId: self.userId) else {
             return
         }
         self.publisher?(matchEventMessage)

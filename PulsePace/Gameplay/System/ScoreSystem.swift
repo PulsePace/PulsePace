@@ -26,9 +26,6 @@ class ScoreSystem: ModeSystem {
     lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
         let gameHO = event.gameHO
         if gameHO.proximityScore < proximityScoreThreshould[0] {
-            if let tapGameHO = gameHO as? TapGameHO {
-                print("Tap object perfect hit")
-            }
             scoreManager.perfectCount += 1
             scoreManager.score += 100
             eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
@@ -48,7 +45,6 @@ class ScoreSystem: ModeSystem {
             scoreManager.missCount += 1
             scoreManager.score += 10
         }
-
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
         }

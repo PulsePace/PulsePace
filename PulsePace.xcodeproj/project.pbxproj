@@ -180,7 +180,6 @@
 		D0D7D14029C4F6CC00676F12 /* TapGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7D13F29C4F6CC00676F12 /* TapGestureHandler.swift */; };
 		D0D7D14229C4F6EA00676F12 /* HoldGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7D14129C4F6EA00676F12 /* HoldGestureHandler.swift */; };
 		D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7D14329C4F6FB00676F12 /* SlideGestureHandler.swift */; };
-		D0E1421F29E037AF00FCA272 /* MatchEventRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1421E29E037AE00FCA272 /* MatchEventRelay.swift */; };
 		D0E1422129E12C1C00FCA272 /* ToolButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1422029E12C1C00FCA272 /* ToolButtonsView.swift */; };
 		D0E1422429E12D1E00FCA272 /* LargeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1422329E12D1E00FCA272 /* LargeButtonView.swift */; };
 		D0E1422729E13EDF00FCA272 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1422629E13EDF00FCA272 /* Color+Hex.swift */; };
@@ -379,7 +378,6 @@
 		D0D7D13F29C4F6CC00676F12 /* TapGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGestureHandler.swift; sourceTree = "<group>"; };
 		D0D7D14129C4F6EA00676F12 /* HoldGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldGestureHandler.swift; sourceTree = "<group>"; };
 		D0D7D14329C4F6FB00676F12 /* SlideGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideGestureHandler.swift; sourceTree = "<group>"; };
-		D0E1421E29E037AE00FCA272 /* MatchEventRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchEventRelay.swift; sourceTree = "<group>"; };
 		D0E1422029E12C1C00FCA272 /* ToolButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolButtonsView.swift; sourceTree = "<group>"; };
 		D0E1422329E12D1E00FCA272 /* LargeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButtonView.swift; sourceTree = "<group>"; };
 		D0E1422629E13EDF00FCA272 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
@@ -1538,7 +1536,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = X77GX48L42;
+				DEVELOPMENT_TEAM = P3QLTH5V5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
@@ -1575,7 +1573,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = X77GX48L42;
+				DEVELOPMENT_TEAM = P3QLTH5V5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PulsePace/Info.plist;

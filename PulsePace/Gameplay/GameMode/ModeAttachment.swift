@@ -43,10 +43,6 @@ final class ModeAttachment {
         gameEngine.hitObjectManager = hOManager
         gameEngine.scoreSystem = scoreSystem
 
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
         if let matchEventRelay = matchEventRelay,
            let match = gameEngine.match {
             matchEventRelay.assignProperties(publisher: gameEngine.publishMatchEvent, match: match)
