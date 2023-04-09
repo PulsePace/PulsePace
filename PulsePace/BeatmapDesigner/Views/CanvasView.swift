@@ -20,34 +20,7 @@ struct CanvasView: View {
                 if let hitObject = beatmapDesigner.previewHitObject {
                     renderHitObject(hitObject, spacing: beatmapDesigner.gridSpacing)
                 }
-
-                let height = beatmapDesigner.gridHeight
-                let width = beatmapDesigner.gridWidth
-                let spacing = beatmapDesigner.gridSpacing
-
-                Path { path in
-                    for index in 0...Int(16) {
-                        let hOffset = CGFloat(index) * spacing
-                        path.move(to: CGPoint(x: hOffset, y: 0))
-                        path.addLine(to: CGPoint(x: hOffset, y: height))
-                    }
-                    for index in 0...Int(12) {
-                        let vOffset = CGFloat(index) * spacing
-                        path.move(to: CGPoint(x: 0, y: vOffset))
-                        path.addLine(to: CGPoint(x: width, y: vOffset))
-                    }
-                }
-                .stroke(.white.opacity(0.4))
-
-                Path { path in
-                    let hOffset = 8 * spacing
-                    path.move(to: CGPoint(x: hOffset, y: 0))
-                    path.addLine(to: CGPoint(x: hOffset, y: height))
-                    let vOffset = 6 * spacing
-                    path.move(to: CGPoint(x: 0, y: vOffset))
-                    path.addLine(to: CGPoint(x: width, y: vOffset))
-                }
-                .stroke(.white)
+                renderGrid()
             }
             .offset(beatmapDesigner.gridOffset)
             .onChange(of: geometry.size, perform: { size in
@@ -64,6 +37,37 @@ struct CanvasView: View {
             beatmapDesigner: beatmapDesigner,
             gestureHandler: beatmapDesigner.gestureHandler
         ))
+    }
+
+    @ViewBuilder
+    private func renderGrid() -> some View {
+        let height = beatmapDesigner.gridHeight
+        let width = beatmapDesigner.gridWidth
+        let spacing = beatmapDesigner.gridSpacing
+
+        Path { path in
+            for index in 0...Int(16) {
+                let hOffset = CGFloat(index) * spacing
+                path.move(to: CGPoint(x: hOffset, y: 0))
+                path.addLine(to: CGPoint(x: hOffset, y: height))
+            }
+            for index in 0...Int(12) {
+                let vOffset = CGFloat(index) * spacing
+                path.move(to: CGPoint(x: 0, y: vOffset))
+                path.addLine(to: CGPoint(x: width, y: vOffset))
+            }
+        }
+        .stroke(.white.opacity(0.4))
+
+        Path { path in
+            let hOffset = 8 * spacing
+            path.move(to: CGPoint(x: hOffset, y: 0))
+            path.addLine(to: CGPoint(x: hOffset, y: height))
+            let vOffset = 6 * spacing
+            path.move(to: CGPoint(x: 0, y: vOffset))
+            path.addLine(to: CGPoint(x: width, y: vOffset))
+        }
+        .stroke(.white)
     }
 
     private func renderHitObject(
