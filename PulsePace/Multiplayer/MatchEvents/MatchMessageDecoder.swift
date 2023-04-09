@@ -162,3 +162,25 @@ final class DeathMessageDecoder: MessageHandler {
         ))
     }
 }
+
+final class ScoreMessageDecoder: MessageHandler {
+    static func createHandler() -> ScoreMessageDecoder {
+        ScoreMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishScoreEvent
+    var nextHandler: (any MessageHandler)?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+            return
+        }
+
+        eventManager.add(event: UpdateScoreEvent(
+            timestamp: Date().timeIntervalSince1970,
+            playerScore: matchEvent.playerScore,
+            playerId: message.sourceId
+        ))
+    }
+}

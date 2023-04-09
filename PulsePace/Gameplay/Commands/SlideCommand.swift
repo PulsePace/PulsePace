@@ -4,7 +4,6 @@
 //
 //  Created by Charisma Kausar on 9/3/23.
 //
-import simd
 
 class SlideCommand: InputCommand {
     override private init(action: @escaping InputCommand.Action, completion: InputCommand.Action? = nil) {

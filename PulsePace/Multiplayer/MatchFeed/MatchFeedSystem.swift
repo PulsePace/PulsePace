@@ -100,7 +100,7 @@ class MatchFeedSystem: System {
 
     private func addToMatchFeed(message: MatchFeedMessage) {
         matchFeedMessages.enqueue(message)
-        if matchFeedMessages.count > 10 {
+        if matchFeedMessages.count > 3 {
             _ = matchFeedMessages.dequeue()
         }
     }

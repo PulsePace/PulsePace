@@ -68,6 +68,12 @@ struct PublishDeathEvent: MatchEvent {
     var diedPlayerId: String
 }
 
+struct PublishScoreEvent: MatchEvent {
+    typealias MessageHandlerType = ScoreMessageDecoder
+    var timestamp: Double
+    var playerScore: Int
+}
+
 // Events
 struct SpawnBombDisruptorEvent: Event {
     var timestamp: Double
@@ -108,4 +114,10 @@ struct DeathEvent: Event {
 struct LostLifeEvent: Event {
     var timestamp: Double
     var lostLifePlayerId: String
+}
+
+struct UpdateScoreEvent: Event {
+    var timestamp: Double
+    var playerScore: Int
+    var playerId: String
 }

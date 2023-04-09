@@ -10,4 +10,5 @@ import SwiftUI
 struct Fonts {
     static let title = Font.custom("Noteworthy-Bold", size: 48.0)
     static let title2 = Font.custom("Noteworthy-Bold", size: 32.0)
+    static let caption = Font.custom("Noteworthy-Bold", size: 20.0)
 }
