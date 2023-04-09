@@ -8,7 +8,7 @@
 import Foundation
 
 class CompetitiveHOManager: HitObjectManager {
-    private var disruptorsQueue = MyQueue<any HitObject>()
+    private var disruptorsQueue = MyQueue<TapHitObject>()
 
     override func reset() {
         super.reset()
@@ -55,7 +55,11 @@ class CompetitiveHOManager: HitObjectManager {
         var gameHOSpawned = super.checkBeatMap(currBeat)
         while let disruptorHO = disruptorsQueue.peek() {
             disruptorHO.startTime = ceil(currBeat)
-            gameHOSpawned.append(spawnGameHitObject(disruptorHO))
+            guard let gameHO = spawnGameHitObject(disruptorHO) as? TapGameHO else {
+                continue
+            }
+            gameHO.isBomb = true
+            gameHOSpawned.append(gameHO)
             _ = disruptorsQueue.dequeue()
         }
 
