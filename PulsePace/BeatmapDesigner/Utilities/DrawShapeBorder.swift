@@ -14,9 +14,9 @@ struct DrawShapeBorder: Shape {
 
     func stroked(strokeColor: Color, strokeWidth: Double, borderWidth: Double) -> some View {
         ZStack {
-            self.stroke(.blue,
+            self.stroke(strokeColor,
                         style: StrokeStyle(lineWidth: strokeWidth + borderWidth * 2, lineCap: .round, lineJoin: .round))
-            self.stroke(.white,
+            self.stroke(.black,
                         style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round, lineJoin: .round))
                 .compositingGroup()
                 .blendMode(.difference)

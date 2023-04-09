@@ -12,29 +12,70 @@ struct CanvasView: View {
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
 
     var body: some View {
-        ZStack {
-            ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
-                renderHitObject(hitObject)
+        GeometryReader { geometry in
+            ZStack {
+                ForEach(beatmapDesigner.hitObjects.toArray(), id: \.id) { hitObject in
+                    renderHitObject(hitObject, spacing: beatmapDesigner.gridSpacing)
+                }
+                if let hitObject = beatmapDesigner.previewHitObject {
+                    renderHitObject(hitObject, spacing: beatmapDesigner.gridSpacing)
+                }
+
+                let height = beatmapDesigner.gridHeight
+                let width = beatmapDesigner.gridWidth
+                let spacing = beatmapDesigner.gridSpacing
+
+                Path { path in
+                    for index in 0...Int(16) {
+                        let hOffset = CGFloat(index) * spacing
+                        path.move(to: CGPoint(x: hOffset, y: 0))
+                        path.addLine(to: CGPoint(x: hOffset, y: height))
+                    }
+                    for index in 0...Int(12) {
+                        let vOffset = CGFloat(index) * spacing
+                        path.move(to: CGPoint(x: 0, y: vOffset))
+                        path.addLine(to: CGPoint(x: width, y: vOffset))
+                    }
+                }
+                .stroke(.white.opacity(0.4))
+
+                Path { path in
+                    let hOffset = 8 * spacing
+                    path.move(to: CGPoint(x: hOffset, y: 0))
+                    path.addLine(to: CGPoint(x: hOffset, y: height))
+                    let vOffset = 6 * spacing
+                    path.move(to: CGPoint(x: 0, y: vOffset))
+                    path.addLine(to: CGPoint(x: width, y: vOffset))
+                }
+                .stroke(.white)
             }
-            if let hitObject = beatmapDesigner.previewHitObject {
-                renderHitObject(hitObject)
-            }
+            .offset(beatmapDesigner.gridOffset)
+            .onChange(of: geometry.size, perform: { size in
+                beatmapDesigner.initialiseFrame(size: size)
+            })
         }
+        .contentShape(Rectangle())
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity,
             alignment: .topLeading
         )
-        .background(.orange)
         .modifier(EditModeModifier(
             beatmapDesigner: beatmapDesigner,
             gestureHandler: beatmapDesigner.gestureHandler
         ))
     }
 
-    private func renderHitObject(_ hitObject: any HitObject) -> some View {
+    private func renderHitObject(
+        _ hitObject: any HitObject,
+        spacing: CGFloat
+    ) -> some View {
         let cursorTime = beatmapDesigner.sliderValue + beatmapDesigner.offset
-        return ViewFactoryCreator().createCanvasView(for: hitObject, at: cursorTime)
+        return ViewFactoryCreator().createCanvasView(
+            for: hitObject,
+            at: cursorTime,
+            with: spacing
+        )
     }
 }
 

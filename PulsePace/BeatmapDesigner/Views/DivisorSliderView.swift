@@ -13,12 +13,14 @@ struct DivisorSliderView: View {
     var body: some View {
         VStack {
             Text("Beat Snap Divisor: 1/\(Int(beatmapDesigner.divisor))")
+                .foregroundColor(.white)
 
             Slider(
                 value: $beatmapDesigner.divisorIndex,
                 in: 0...Double(beatmapDesigner.divisorList.count - 1),
                 step: 1
             )
+            .tint(.purple)
             .frame(width: 200)
         }
     }
