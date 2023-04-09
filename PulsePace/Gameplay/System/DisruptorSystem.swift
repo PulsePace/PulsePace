@@ -8,16 +8,21 @@
 import Foundation
 
 class DisruptorSystem: ScoreSystem {
+    static let defaultLifeCount = 3
     var selectedTarget = UserConfig().userId
     var selectedDisruptor: Disruptor = .noHints
-
-    var livesRemaining = 3
+    var livesRemaining = DisruptorSystem.defaultLifeCount
 
     var isEligibileToSendDisruptor: Bool {
         scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 5)
     }
 
     var spawnedDisruptorLocations: [CGPoint] = []
+
+    override func reset() {
+        super.reset()
+        livesRemaining = DisruptorSystem.defaultLifeCount
+    }
 
     func setDisruptor(disruptor: Disruptor) {
         self.selectedDisruptor = disruptor

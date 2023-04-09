@@ -11,7 +11,10 @@ struct MenuView: View {
     @StateObject var achievementManager = AchievementManager()
     @StateObject var audioManager = AudioManager()
     @StateObject var gameVM = GameViewModel()
+
     @StateObject var beatmapManager = BeatmapManager()
+    @StateObject var userConfigManager = UserConfigManager()
+
     @State private var path: [Page] = []
 
     var body: some View {

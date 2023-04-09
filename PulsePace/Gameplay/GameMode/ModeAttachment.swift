@@ -83,7 +83,6 @@ final class ModeFactory: Factory {
             matchEventRelay: CoopMatchEventRelay()
         )
 
-        // FIXME: Provide matchEventRelay for competitive mode
         let competitiveMode = ModeAttachment(
             modeName: "Beat-Off",
             hOManager: CompetitiveHOManager(),

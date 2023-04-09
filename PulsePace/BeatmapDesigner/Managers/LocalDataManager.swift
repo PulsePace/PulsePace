@@ -8,9 +8,6 @@
 import Foundation
 
 final class LocalDataManager<T: Codable> {
-    let fileName: String
-    let bundlePath: String
-
     private static func fileURL(_ filename: String) throws -> URL {
         try FileManager.default.url(for: .documentDirectory,
                                     in: .userDomainMask,
@@ -19,13 +16,10 @@ final class LocalDataManager<T: Codable> {
            .appendingPathComponent(filename)
     }
 
-    // Assumes all local data has local storage and provided bundle
-    init(fileName: String, bundlePath: String) {
-        self.fileName = fileName
-        self.bundlePath = bundlePath
-    }
-
-    func readDefault(bundlePath: String, initData: T) -> T {
+    func readDefault(bundlePath: String?, initData: T) -> T {
+        if bundlePath == nil {
+            return initData
+        }
         if let url = Bundle.main.url(forResource: bundlePath, withExtension: "json"),
             let data = try? Data(contentsOf: url) {
                 let decoder = JSONDecoder()
@@ -36,7 +30,7 @@ final class LocalDataManager<T: Codable> {
         return initData
     }
 
-    func load(filename: String, bundlePath: String, initData: T, completion: @escaping (Result<T, Error>) -> Void) {
+    func load(filename: String, bundlePath: String?, initData: T, completion: @escaping (Result<T, Error>) -> Void) {
           DispatchQueue.global(qos: .background).async {
               do {
                   let fileURL = try LocalDataManager.fileURL(filename)
