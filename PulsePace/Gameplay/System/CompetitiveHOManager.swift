@@ -26,7 +26,7 @@ class CompetitiveHOManager: HitObjectManager {
             return
         }
         self?.disruptorsQueue.enqueue(TapHitObject(
-            position: event.bombLocation, startTime: Date().addingTimeInterval(10).timeIntervalSince1970))
+            position: event.bombLocation, startTime: Date().timeIntervalSince1970))
     }
 
     lazy var onActivateNoHintsHandler

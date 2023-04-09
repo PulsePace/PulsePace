@@ -8,20 +8,23 @@
 import SwiftUI
 
 struct ScoreView: View {
-    @EnvironmentObject var gameViewModel: GameViewModel
+    @EnvironmentObject var gameVM: GameViewModel
 
     @ViewBuilder
     var body: some View {
-        VStack(alignment: .trailing) {
-            Text(gameViewModel.score)
-                .font(Fonts.title)
-            Text(gameViewModel.accuracy)
-                .font(Fonts.title2)
-            Text(gameViewModel.combo)
-                .font(Fonts.title2)
+        if gameVM.selectedGameMode.requires(gameViewElement: .scoreBoard) {
+            VStack(alignment: .trailing) {
+                Text(gameVM.score)
+                    .font(Fonts.title)
+                // TODO: Accuracy calculation
+                //            Text(gameVM.accuracy)
+                //                .font(Fonts.title2)
+                Text(gameVM.combo)
+                    .font(Fonts.title2)
+            }
+            .foregroundColor(.white)
+            .padding(20)
         }
-        .foregroundColor(.white)
-        .padding(.horizontal, 20)
     }
 }
 

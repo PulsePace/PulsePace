@@ -39,10 +39,19 @@ class ScoreSystem: ModeSystem {
         } else if gameHO.proximityScore < proximityScoreThreshould[1] {
             scoreManager.goodCount += 1
             scoreManager.score += 50
+            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
+                                                     comboCount: scoreManager.comboCount,
+                                                     lastLocation: gameHO.position
+                                                    ))
             gameHO.isHit = true
         } else {
             scoreManager.missCount += 1
             scoreManager.score += 10
         }
+        eventManager.matchEventHandler?.publishMatchEvent(
+            message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
+                                       sourceId: UserConfig().userId,
+                                       event: PublishScoreEvent(timestamp: Date().timeIntervalSince1970,
+                                                                playerScore: scoreManager.score)))
     }
 }

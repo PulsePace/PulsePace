@@ -54,6 +54,9 @@
 		C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73CF95229C6797000C3E017 /* View+Conditional.swift */; };
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
+		C75FCA8829DF0AE200C4EE1C /* MatchEventRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75FCA8729DF0AE200C4EE1C /* MatchEventRelay.swift */; };
+		C75FCA8A29DF380700C4EE1C /* TapGameHOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75FCA8929DF380700C4EE1C /* TapGameHOView.swift */; };
+		C75FCA8C29DF59C600C4EE1C /* DisruptorOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75FCA8B29DF59C600C4EE1C /* DisruptorOptionsView.swift */; };
 		C77572EA29BDE4C100367053 /* View+FullBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77572E929BDE4C100367053 /* View+FullBackground.swift */; };
 		C77A6A2C29D937F3007AB023 /* RoomSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A6A2B29D937F3007AB023 /* RoomSetting.swift */; };
 		C77A7D6B29CF04030082458E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C77A7D6A29CF04030082458E /* FirebaseAuth */; };
@@ -73,6 +76,9 @@
 		C77A7D8929D084090082458E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8829D084090082458E /* Player.swift */; };
 		C77A7D8D29D089180082458E /* UserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8C29D089180082458E /* UserConfig.swift */; };
 		C77A7D9029D377BF0082458E /* DatabasePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A7D8F29D377BF0082458E /* DatabasePath.swift */; };
+		C77C95A129E145FA005D8245 /* PickerCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C95A029E145FA005D8245 /* PickerCommand.swift */; };
+		C77C95A529E1F41F005D8245 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C95A429E1F41F005D8245 /* LeaderboardView.swift */; };
+		C77C95A729E24530005D8245 /* LivesCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C95A629E24530005D8245 /* LivesCountView.swift */; };
 		C788083F29D9869B00107A32 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788083D29D9869B00107A32 /* LocalDataManager.swift */; };
 		C788084029D9869B00107A32 /* BeatmapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788083E29D9869B00107A32 /* BeatmapManager.swift */; };
 		C788084229D986F900107A32 /* preloadedBeatmaps.json in Resources */ = {isa = PBXBuildFile; fileRef = C788084129D986F900107A32 /* preloadedBeatmaps.json */; };
@@ -245,6 +251,9 @@
 		C73CF95229C6797000C3E017 /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
+		C75FCA8729DF0AE200C4EE1C /* MatchEventRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchEventRelay.swift; sourceTree = "<group>"; };
+		C75FCA8929DF380700C4EE1C /* TapGameHOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGameHOView.swift; sourceTree = "<group>"; };
+		C75FCA8B29DF59C600C4EE1C /* DisruptorOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptorOptionsView.swift; sourceTree = "<group>"; };
 		C77572E929BDE4C100367053 /* View+FullBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+FullBackground.swift"; sourceTree = "<group>"; };
 		C77A6A2B29D937F3007AB023 /* RoomSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomSetting.swift; sourceTree = "<group>"; };
 		C77A7D7B29D046700082458E /* DatabaseAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAdapter.swift; sourceTree = "<group>"; };
@@ -256,6 +265,9 @@
 		C77A7D8829D084090082458E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		C77A7D8C29D089180082458E /* UserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConfig.swift; sourceTree = "<group>"; };
 		C77A7D8F29D377BF0082458E /* DatabasePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePath.swift; sourceTree = "<group>"; };
+		C77C95A029E145FA005D8245 /* PickerCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCommand.swift; sourceTree = "<group>"; };
+		C77C95A429E1F41F005D8245 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		C77C95A629E24530005D8245 /* LivesCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivesCountView.swift; sourceTree = "<group>"; };
 		C788083D29D9869B00107A32 /* LocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		C788083E29D9869B00107A32 /* BeatmapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatmapManager.swift; sourceTree = "<group>"; };
 		C788084129D986F900107A32 /* preloadedBeatmaps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = preloadedBeatmaps.json; sourceTree = "<group>"; };
@@ -423,6 +435,7 @@
 				6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */,
 				6A070B4429D7CBCB0096E5AA /* CoopHOManager.swift */,
 				C788084529D98C8400107A32 /* CompetitiveHOManager.swift */,
+				C75FCA8729DF0AE200C4EE1C /* MatchEventRelay.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -473,6 +486,7 @@
 				6A96AAC429C1259900FAA79E /* SlideCommand.swift */,
 				6A96AAC329C1259900FAA79E /* HoldCommand.swift */,
 				C7FD9A5529C36B3200191F03 /* SpinCommand.swift */,
+				C77C95A029E145FA005D8245 /* PickerCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -654,10 +668,14 @@
 			isa = PBXGroup;
 			children = (
 				C7908E4D29B93137006F7423 /* GameView.swift */,
+				C75FCA8929DF380700C4EE1C /* TapGameHOView.swift */,
 				C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */,
 				C7FD9A5729C39ECB00191F03 /* ScoreView.swift */,
 				C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */,
 				C788084929D9A65B00107A32 /* MatchFeedView.swift */,
+				C75FCA8B29DF59C600C4EE1C /* DisruptorOptionsView.swift */,
+				C77C95A429E1F41F005D8245 /* LeaderboardView.swift */,
+				C77C95A629E24530005D8245 /* LivesCountView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1169,9 +1187,11 @@
 				C7CC5F0729D760FF001DB28E /* TotalHitObjectsPlacedProperty.swift in Sources */,
 				C7CC5F0829D760FF001DB28E /* ExpertBeatmapDesignerAchievement.swift in Sources */,
 				D0D7D12429C4F39D00676F12 /* HitObjectTimelineView.swift in Sources */,
+				C75FCA8A29DF380700C4EE1C /* TapGameHOView.swift in Sources */,
 				C7069F4329D4AC800039C906 /* LobbyView.swift in Sources */,
 				D06820D729D4AA8000C96BB7 /* CanvasView.swift in Sources */,
 				C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */,
+				C77C95A729E24530005D8245 /* LivesCountView.swift in Sources */,
 				D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */,
 				C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */,
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
@@ -1237,6 +1257,7 @@
 				6A83A67829C504E60024D4DF /* GameHOVM.swift in Sources */,
 				C7069F4F29D4C1FB0039C906 /* NanoID.swift in Sources */,
 				C788084629D98C8400107A32 /* CompetitiveHOManager.swift in Sources */,
+				C77C95A529E1F41F005D8245 /* LeaderboardView.swift in Sources */,
 				D070B47329C4521E00E55693 /* CGPoint+Hashable.swift in Sources */,
 				C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */,
 				D0CD998B29D21CAC00E40BFA /* Constraint.swift in Sources */,
@@ -1266,9 +1287,11 @@
 				D0CD998F29D2FE4E00E40BFA /* AchievementManager.swift in Sources */,
 				D0D7D12629C4F3BC00676F12 /* TapHitObjectCanvasView.swift in Sources */,
 				C77A7D8929D084090082458E /* Player.swift in Sources */,
+				C77C95A129E145FA005D8245 /* PickerCommand.swift in Sources */,
 				D0513A0029D9CB8600136C1E /* SlideHitObject.swift in Sources */,
 				C7D1AF2529BF844A00244EF5 /* PriorityQueue.swift in Sources */,
 				175B3F0C29C4719700DE715D /* ScoreManager.swift in Sources */,
+				C75FCA8C29DF59C600C4EE1C /* DisruptorOptionsView.swift in Sources */,
 				C7D1AF2729BF895D00244EF5 /* Queue.swift in Sources */,
 				C7FD9A5C29C3ACE200191F03 /* GameControlView.swift in Sources */,
 				C7069F4529D4ADD30039C906 /* LobbyViewModel.swift in Sources */,
@@ -1494,7 +1517,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePace;
+				PRODUCT_BUNDLE_IDENTIFIER = PulsePace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1532,7 +1555,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = PulsePace.PulsePace;
+				PRODUCT_BUNDLE_IDENTIFIER = PulsePace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -8,6 +8,7 @@
 // TODO: Make ScoreManager a protocol
 class ScoreManager {
     var score: Int
+    var livesRemaining: Int
     var perfectCount: Int {
         didSet {
             comboCount += perfectCount - oldValue
@@ -31,5 +32,6 @@ class ScoreManager {
         perfectCount = 0
         goodCount = 0
         missCount = 0
+        livesRemaining = 1
     }
 }

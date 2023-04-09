@@ -20,3 +20,5 @@ struct Player {
 }
 
 extension Player: Codable {}
+
+extension Player: Hashable {}
