@@ -22,7 +22,10 @@ class Lobby {
     }
 
     var isUserHost: Bool {
-        hostId == UserConfig().userId
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+        return hostId == userConfigManager.userId
     }
 
     var isEligibleToPlay: Bool {
@@ -63,11 +66,13 @@ class Lobby {
      */
     convenience init(modeName: String, lobbyDataChangeHandler: (() -> Void)? = {}) {
         let id = NanoID.new(alphabet: .numbers, size: 6)
-        let user = UserConfig()
-        let player = Player(playerId: user.userId, name: user.name)
-        self.init(lobbyId: id, hostId: user.userId,
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+        let player = Player(playerId: userConfigManager.userId, name: userConfigManager.name)
+        self.init(lobbyId: id, hostId: userConfigManager.userId,
                   roomSetting: ModeFactory.getModeAttachment(modeName).roomSetting,
-                  modeName: modeName, players: [user.userId: player],
+                  modeName: modeName, players: [userConfigManager.userId: player],
                   lobbyDataChangeHandler: lobbyDataChangeHandler)
         dataManager.createLobby(lobby: self)
     }
@@ -76,11 +81,13 @@ class Lobby {
      Joins a lobby with the given `lobbyId`, if it exists.
      */
     convenience init(lobbyId: String, modeName: String, lobbyDataChangeHandler: (() -> Void)? = {}) {
-        let user = UserConfig()
-        self.init(lobbyId: lobbyId, hostId: user.userId,
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+        self.init(lobbyId: lobbyId, hostId: userConfigManager.userId,
                   roomSetting: ModeFactory.getModeAttachment(modeName).roomSetting,
                   modeName: modeName, lobbyDataChangeHandler: lobbyDataChangeHandler)
-        let player = Player(playerId: user.userId, name: user.name)
+        let player = Player(playerId: userConfigManager.userId, name: userConfigManager.name)
         dataManager.joinLobby(lobby: self, player: player)
     }
 

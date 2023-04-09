@@ -11,18 +11,28 @@ struct MenuView: View {
     @StateObject var achievementManager = AchievementManager()
     @StateObject var audioManager = AudioManager()
     @StateObject var gameVM = GameViewModel()
+
     @StateObject var beatmapManager = BeatmapManager()
+    @StateObject var userConfigManager = UserConfigManager()
+
     @State private var path: [Page] = []
 
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: 30) {
-                Text("PulsePace")
-                    .font(.largeTitle)
-
-                StyledMenuButton(path: $path, page: Page.gameModesPage, text: "Play")
-
-                StyledMenuButton(path: $path, page: Page.designPage, text: "Design")
+            ZStack {
+                VStack {
+                    HStack {
+                        Spacer()
+                        StyledIconButton(action: { path.append(Page.configPage) }, icon: "gear")
+                    }
+                    Spacer()
+                }
+                VStack(spacing: 30) {
+                    Text("PulsePace")
+                        .font(.largeTitle)
+                    StyledMenuButton(path: $path, page: Page.gameModesPage, text: "Play")
+                    StyledMenuButton(path: $path, page: Page.designPage, text: "Design")
+                }
             }
             .navigationDestination(for: Page.self) { page in
                 if page == Page.designPage {
@@ -33,6 +43,8 @@ struct MenuView: View {
                     LobbyView(path: $path)
                 } else if page == Page.playPage {
                     GameView()
+                } else if page == Page.configPage {
+                    ConfigView()
                 } else {
                     Text("Error 404 Not Found :(`")
                 }
@@ -42,6 +54,22 @@ struct MenuView: View {
         .environmentObject(audioManager)
         .environmentObject(gameVM)
         .environmentObject(beatmapManager)
+        .environmentObject(userConfigManager)
+    }
+}
+
+struct StyledIconButton: View {
+    var action: () -> Void
+    var icon: String
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: icon)
+                .resizable()
+                .frame(width: 30, height: 30)
+                .padding(20)
+                .foregroundColor(.purple)
+        }
     }
 }
 
@@ -71,6 +99,7 @@ struct Page: Hashable {
     static let gameModesPage = Page(name: "gameModes")
     static let lobbyPage = Page(name: "lobby")
     static let playPage = Page(name: "play")
+    static let configPage = Page(name: "config")
     let name: String
     // Data from the page, e.g. gameModesPage contains selected gamemode that should be accessed by lobby page
     var data: Data?

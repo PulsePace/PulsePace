@@ -77,9 +77,13 @@ final class MissTapMessageDecoder: MessageHandler {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
+
         print("Checking if should spawn tap object")
         // Spawned only on other player's device
-        if matchEvent.sourceId == UserConfig().userId {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+        if matchEvent.sourceId == userConfigManager.userId {
             return
         }
 
@@ -104,7 +108,10 @@ final class MissHoldMessageDecoder: MessageHandler {
         }
 
         print("Checking if should spawn hold object")
-        if matchEvent.sourceId == UserConfig().userId {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+        if matchEvent.sourceId == userConfigManager.userId {
             return
         }
 
@@ -129,8 +136,12 @@ final class MissSlideMessageDecoder: MessageHandler {
             nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
             return
         }
+
         print("Checking if should spawn slide object")
-        if matchEvent.sourceId == UserConfig().userId {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+        if matchEvent.sourceId == userConfigManager.userId {
             return
         }
 

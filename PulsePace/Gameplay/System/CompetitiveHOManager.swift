@@ -10,6 +10,11 @@ import Foundation
 class CompetitiveHOManager: HitObjectManager {
     private var disruptorsQueue = MyQueue<any HitObject>()
 
+    override func reset() {
+        super.reset()
+        disruptorsQueue.removeAll()
+    }
+
     override func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(onSpawnBombHandler)
         eventManager.registerHandler(onActivateNoHintsHandler)
@@ -17,7 +22,11 @@ class CompetitiveHOManager: HitObjectManager {
 
     lazy var onSpawnBombHandler
     = { [weak self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
-        guard event.bombTargetPlayerId == UserConfig().userId else {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
+        guard event.bombTargetPlayerId == userConfigManager.userId else {
             return
         }
         self?.disruptorsQueue.enqueue(TapHitObject(
@@ -26,7 +35,11 @@ class CompetitiveHOManager: HitObjectManager {
 
     lazy var onActivateNoHintsHandler
     = { [weak self] (eventManager: EventManagable, event: ActivateNoHintsDisruptorEvent) -> Void in
-        guard event.noHintsTargetPlayerId == UserConfig().userId else {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
+        guard event.noHintsTargetPlayerId == userConfigManager.userId else {
             return
         }
         let originalPreSpawnInterval = self?.preSpawnInterval

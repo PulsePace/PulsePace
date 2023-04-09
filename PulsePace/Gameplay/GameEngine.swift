@@ -51,7 +51,7 @@ class GameEngine {
         self?.gameHOTable[gameHO.wrappingObject] = gameHO
     }
 
-    init(_ modeAttachment: ModeAttachment, match: Match? = nil) {
+    init(modeAttachment: ModeAttachment, match: Match? = nil) {
         self.allObjects = Set()
         self.gameHOTable = [:]
 
@@ -74,11 +74,15 @@ class GameEngine {
             fatalError("Mode attachment should have initialized hit object manager and score system")
         }
 
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
         // TODO: Move to mode attachment
         if let disruptorSystem = scoreSystem as? DisruptorSystem,
            let match = match {
-            disruptorSystem.selectedTarget = match.players.first(where: { $0.key != UserConfig().userId })?.key
-            ?? UserConfig().userId
+            disruptorSystem.selectedTarget = match.players.first(where: { $0.key != userConfigManager.userId })?.key
+            ?? userConfigManager.userId
             match.players.forEach({ disruptorSystem.allScores[$0.key] = 0 })
         }
         systems.append(hitObjectManager)
