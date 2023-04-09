@@ -9,12 +9,14 @@ import SwiftUI
 
 struct TapGameHOView: View {
     @EnvironmentObject var viewModel: GameViewModel
+    @State var isTapped = false
     let tapGameHOVM: TapGameHOVM
 
     var body: some View {
         let tapGameHO = tapGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * tapGameHOVM.ringScale))
         let color = tapGameHOVM.fromPartner ? Color.purple : Color.white
+        let tappedColor = tapGameHO.isBomb ? Color.red : Color.white
 
         return ZStack {
             Circle()
@@ -24,12 +26,15 @@ struct TapGameHOView: View {
                           y: tapGameHO.position.y)
 
             Circle()
-                .fill(color)
+                .fill(isTapped ? tappedColor : color)
                 .frame(width: 100, height: 100)
                 .position(x: tapGameHO.position.x,
                           y: tapGameHO.position.y)
         }
         .opacity(tapGameHOVM.opacity)
+        .onTapGesture {
+            self.isTapped = true
+        }
         .modifier(GestureModifier(input: TapInput(),
                                   command: TapCommand(receiver: tapGameHO,
                                                       eventManager: tapGameHOVM.eventManager,
@@ -106,6 +111,12 @@ struct HoldGameHOView: View {
             Circle()
                 .fill(color)
                 .frame(width: 100, height: 100)
+                .position(x: holdGameHO.position.x,
+                          y: holdGameHO.position.y)
+
+            Text("HOLD")
+                .foregroundColor(.gray)
+                .font(Fonts.caption)
                 .position(x: holdGameHO.position.x,
                           y: holdGameHO.position.y)
         }

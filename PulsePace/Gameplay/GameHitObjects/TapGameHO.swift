@@ -9,6 +9,7 @@ import Foundation
 
 class TapGameHO: GameHO {
     var fromPartner = false
+    var isBomb = false
     let wrappingObject: Entity
 
     let position: CGPoint
