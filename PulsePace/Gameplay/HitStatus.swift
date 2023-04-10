@@ -12,9 +12,12 @@ enum HitStatus {
 
     var description: String {
        switch self {
-       case .perfect: return "Perfect"
-       case .good: return "Good"
-       case .miss: return "Miss"
+       case .perfect:
+           return "Perfect"
+       case .good:
+           return "Good"
+       case .miss:
+           return "Miss"
        }
      }
 }

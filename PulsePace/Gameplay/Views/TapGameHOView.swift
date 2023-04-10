@@ -17,7 +17,7 @@ struct TapGameHOView: View {
         let tapGameHO = tapGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * tapGameHOVM.ringScale))
         let color = tapGameHOVM.fromPartner ? Color.purple : Color.white
-        let tappedColor = tapGameHO.isBomb ? Color.red : Color.white
+        let tappedColor = tapGameHO.isBomb ? Color.red : Color.purple
 
         return ZStack {
             Circle()
@@ -27,7 +27,7 @@ struct TapGameHOView: View {
                           y: tapGameHO.position.y)
 
             Circle()
-                .fill(isInteractedWith ? .purple : color)
+                .fill(isInteractedWith ? tappedColor : color)
                 .frame(width: 100 + scale, height: 100 + scale)
                 .position(x: tapGameHO.position.x,
                           y: tapGameHO.position.y)
@@ -39,7 +39,7 @@ struct TapGameHOView: View {
                                                       timeReceived: viewModel.songPosition)))
         .modifier(GestureAnimation(input: TapInput()) {
             withAnimation(.easeInOut(duration: 0.1)) {
-                scale = 10.0
+                scale = 15.0
                 isInteractedWith = true
             }
         } onRelease: {
@@ -55,6 +55,7 @@ struct SlideGameHOView: View {
     @EnvironmentObject var viewModel: GameViewModel
     let slideGameHOVM: SlideGameHOVM
     @State private var scale = 0.0
+    @State private var isInteractedWith = false
 
     var body: some View {
         let slideGameHO = slideGameHOVM.gameHO
@@ -63,7 +64,7 @@ struct SlideGameHOView: View {
 
         return ZStack {
             DrawShapeBorder(points: [slideGameHO.position] + slideGameHO.vertices).stroked(
-                strokeColor: .blue, strokeWidth: 100 + scale, borderWidth: 10
+                strokeColor: isInteractedWith ? .purple : .blue, strokeWidth: 100 + scale, borderWidth: 10
             )
 
             Circle()
@@ -101,11 +102,13 @@ struct SlideGameHOView: View {
                                                         timeReceived: viewModel.songPosition)))
         .modifier(GestureAnimation(input: SlideInput()) {
             withAnimation(.easeInOut(duration: 0.1)) {
-                scale = 10
+                scale = 15
+                isInteractedWith = true
             }
         } onRelease: {
             withAnimation {
-                scale = 1.00
+                scale = 0
+                isInteractedWith = false
             }
         })
     }
@@ -148,7 +151,7 @@ struct HoldGameHOView: View {
                                                        timeReceived: viewModel.songPosition)))
         .modifier(GestureAnimation(input: HoldInput()) {
             withAnimation(.easeInOut(duration: 0.1)) {
-                scale = 10
+                scale = 15
                 isInteractedWith = true
             }
         } onRelease: {

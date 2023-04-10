@@ -31,14 +31,15 @@ struct GameView: View {
             .overlay(alignment: .topLeading) {
                 LivesCountView()
             }
-            .overlay(alignment: .bottomTrailing) {
-                GameControlView()
-            }
+//            .overlay(alignment: .bottomTrailing) {
+//                GameControlView()
+//            }
             .overlay(alignment: .bottom) {
-                DisruptorOptionsView()
-            }
-            .overlay(alignment: .bottomLeading) {
-                HitStatusView()
+                VStack(alignment: .leading) {
+                    HitStatusView()
+                    DisruptorOptionsView()
+                    GameControlView()
+                }
             }
         }
         .frame(

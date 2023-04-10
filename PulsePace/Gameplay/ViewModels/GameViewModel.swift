@@ -52,9 +52,25 @@ class GameViewModel: ObservableObject, RenderSystem {
     var hitStatus: String {
         guard let scoreManager = gameEngine?.scoreSystem?.scoreManager,
               let latestHitStatus = scoreManager.latestHitStatus else {
-            return String(0)
+            return String()
         }
-        return latestHitStatus.description
+        var count = ""
+        switch latestHitStatus {
+        case .perfect:
+            count = "x" + String(scoreManager.perfectCount)
+        case .good:
+            count = "x" + String(scoreManager.goodCount)
+        case .miss:
+            count = "x" + String(scoreManager.missCount)
+        }
+        return latestHitStatus.description + count
+    }
+
+    var hoCount: Int {
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
+            return 0
+        }
+        return scoreManager.goodCount + scoreManager.perfectCount + scoreManager.missCount
     }
 
     var disruptors = Disruptor.allCases.map({ $0.rawValue })
@@ -118,7 +134,7 @@ class GameViewModel: ObservableObject, RenderSystem {
         gameEngine.step(deltaTime)
         sceneAdaptor(hitObjectManager.gameHOTable)
 
-        guard let audioPlayer = audioPlayer else {
+        guard audioPlayer != nil else {
             print("No song player")
             return
         }
