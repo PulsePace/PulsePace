@@ -19,6 +19,8 @@ class ScoreSystem: ModeSystem {
         self.scoreManager = scoreManager
     }
 
+    func attachToMatch(_ match: Match) {}
+
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(hitEventHandler)
     }

@@ -18,12 +18,14 @@ class GameEngine {
 
     var hitObjectManager: HitObjectManager?
     var matchFeedSystem: MatchFeedSystem?
+    var evaluator: Evaluator?
     private var inputManager: InputManager?
     private var conductor: Conductor?
 
     var gameHOTable: [Entity: any GameHO]
     private var allObjects: Set<Entity>
 
+    var gameEnder: () -> Void
     var match: Match?
     var eventManager = EventManager()
     var systems: [System] = []
@@ -51,9 +53,10 @@ class GameEngine {
         self?.gameHOTable[gameHO.wrappingObject] = gameHO
     }
 
-    init(modeAttachment: ModeAttachment, match: Match? = nil) {
+    init(modeAttachment: ModeAttachment, gameEnder: @escaping () -> Void, match: Match? = nil) {
         self.allObjects = Set()
         self.gameHOTable = [:]
+        self.gameEnder = gameEnder
 
         if let match = match {
             self.match = match
@@ -70,23 +73,13 @@ class GameEngine {
         systems.append(InputSystem())
 
         modeAttachment.configEngine(self)
-        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
-            fatalError("Mode attachment should have initialized hit object manager and score system")
+        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem, let evaluator = evaluator else {
+            fatalError("Mode attachment should have initialized hit object manager, score system and evaluator")
         }
 
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
-        // TODO: Move to mode attachment
-        if let disruptorSystem = scoreSystem as? DisruptorSystem,
-           let match = match {
-            disruptorSystem.selectedTarget = match.players.first(where: { $0.key != userConfigManager.userId })?.key
-            ?? userConfigManager.userId
-            match.players.forEach({ disruptorSystem.allScores[$0.key] = 0 })
-        }
         systems.append(hitObjectManager)
         systems.append(scoreSystem)
+        systems.append(evaluator)
         systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
     }
 
@@ -115,6 +108,15 @@ class GameEngine {
             }
         }
         eventManager.handleAllEvents()
+
+        guard let evaluator = evaluator else {
+            fatalError("No active evaluator")
+        }
+
+        if evaluator.evaluate() {
+            // Stop game
+            gameEnder()
+        }
     }
 
     func setTarget(targetId: String) {

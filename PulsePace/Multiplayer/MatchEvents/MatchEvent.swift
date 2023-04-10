@@ -26,6 +26,14 @@ struct PublishNoEvent: MatchEvent {
 }
 
 // Coop limited to two player
+// Game complete != Game end in coop context game complete indicate one side has finished all possible gameplay
+struct PublishGameCompleteEvent: MatchEvent {
+    typealias MessageHandlerType = GameCompleteMessageDecoder
+    var timestamp: Double
+    var sourceId: String
+    var playerScore: Int
+}
+
 struct PublishMissTapEvent: MatchEvent {
     typealias MessageHandlerType = MissTapMessageDecoder
     var timestamp: Double

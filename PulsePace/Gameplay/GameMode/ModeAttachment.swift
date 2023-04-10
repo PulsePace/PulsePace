@@ -10,17 +10,20 @@ import Foundation
 final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
+    var evaluator: Evaluator
     var scoreSystem: ScoreSystem
     var listeningMatchEvents: [any MatchEvent.Type]
     var matchEventRelay: MatchEventRelay?
     var roomSetting: RoomSetting
     var gameViewElements: [GameViewElement]
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, roomSetting: RoomSetting,
+    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem,
+         evaluator: Evaluator, roomSetting: RoomSetting,
          listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?,
          gameViewElements: [GameViewElement]) {
         self.modeName = modeName
         self.hOManager = hOManager
+        self.evaluator = evaluator
         self.scoreSystem = scoreSystem
         self.roomSetting = roomSetting
         self.listeningMatchEvents = listeningMatchEvents
@@ -32,6 +35,7 @@ final class ModeAttachment {
     func clean() {
         hOManager.reset()
         scoreSystem.reset()
+        evaluator.reset()
         matchEventRelay?.reset()
     }
 
@@ -41,6 +45,7 @@ final class ModeAttachment {
 
     func configEngine(_ gameEngine: GameEngine) {
         gameEngine.hitObjectManager = hOManager
+        gameEngine.evaluator = evaluator
         gameEngine.scoreSystem = scoreSystem
 
         guard let userConfigManager = UserConfigManager.instance else {
@@ -51,6 +56,8 @@ final class ModeAttachment {
            let match = gameEngine.match {
             matchEventRelay.assignProperties(publisher: gameEngine.publishMatchEvent, match: match)
             gameEngine.systems.append(matchEventRelay)
+
+            scoreSystem.attachToMatch(match)
         } else {
             print("No active match")
         }
@@ -72,6 +79,7 @@ final class ModeFactory: Factory {
         modeName: "Classic",
         hOManager: HitObjectManager(),
         scoreSystem: ScoreSystem(ScoreManager()),
+        evaluator: DefaultEvaluator(),
         roomSetting: RoomSettingFactory.defaultSetting,
         listeningMatchEvents: [],
         matchEventRelay: nil,
@@ -87,7 +95,8 @@ final class ModeFactory: Factory {
         let coopMode = ModeAttachment(
             modeName: "Basic Coop",
             hOManager: CoopHOManager(),
-            scoreSystem: ScoreSystem(ScoreManager()),
+            scoreSystem: CoopScoreSystem(ScoreManager()),
+            evaluator: CoopEvaluator(),
             roomSetting: RoomSettingFactory.baseCoopSetting,
             listeningMatchEvents: [
                 PublishMissTapEvent.self,
@@ -98,10 +107,12 @@ final class ModeFactory: Factory {
             gameViewElements: [.gameplayArea, .scoreBoard]
         )
 
+        // @Charisma attach with your evaluator
         let competitiveMode = ModeAttachment(
             modeName: "Rhythm Battle",
             hOManager: CompetitiveHOManager(),
             scoreSystem: DisruptorSystem(ScoreManager()),
+            evaluator: DefaultEvaluator(),
             roomSetting: RoomSettingFactory.competitiveSetting,
             listeningMatchEvents: [
                 PublishBombDisruptorEvent.self,

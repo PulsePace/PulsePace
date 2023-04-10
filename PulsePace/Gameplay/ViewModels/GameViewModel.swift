@@ -58,6 +58,11 @@ class GameViewModel: ObservableObject, RenderSystem {
     var otherPlayers: DictAsArray = []
     var leaderboard: DictAsArray = []
 
+    private lazy var gameEnder: () -> Void = { [weak self] in
+        print("Game ended")
+        self?.stopGameplay()
+    }
+
     lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
         guard let gameEngine = self?.gameEngine else {
@@ -126,7 +131,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     func initEngine(with beatmap: Beatmap) {
-        gameEngine = GameEngine(modeAttachment: selectedGameMode, match: match)
+        gameEngine = GameEngine(modeAttachment: selectedGameMode, gameEnder: gameEnder, match: match)
         gameEngine?.load(beatmap)
     }
 

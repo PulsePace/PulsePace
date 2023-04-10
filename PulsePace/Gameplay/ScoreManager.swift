@@ -5,7 +5,6 @@
 //  Created by Yuanxi Zhu on 15/3/23.
 //
 
-// TODO: Make ScoreManager a protocol
 class ScoreManager {
     var score: Int
     var livesRemaining: Int

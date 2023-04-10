@@ -153,6 +153,33 @@ final class MissSlideMessageDecoder: MessageHandler {
     }
 }
 
+final class GameCompleteMessageDecoder: MessageHandler {
+    static func createHandler() -> GameCompleteMessageDecoder {
+        GameCompleteMessageDecoder()
+    }
+
+    typealias MatchEventType = PublishGameCompleteEvent
+    var nextHandler: (any MessageHandler)?
+
+    func addMessageToEventQueue(eventManager: EventManagable, message: MatchEventMessage) {
+        guard let matchEvent = decodeMatchEventMessage(message: message) else {
+            nextHandler?.addMessageToEventQueue(eventManager: eventManager, message: message)
+            return
+        }
+
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
+        if matchEvent.sourceId == userConfigManager.userId {
+            return
+        }
+
+        eventManager.add(event: GameCompleteEvent(timestamp: matchEvent.timestamp,
+                                                  finalScore: matchEvent.playerScore))
+    }
+}
+
 final class DeathMessageDecoder: MessageHandler {
     static func createHandler() -> DeathMessageDecoder {
         DeathMessageDecoder()

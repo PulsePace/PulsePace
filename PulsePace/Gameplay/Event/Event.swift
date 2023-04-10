@@ -18,7 +18,3 @@ extension Event {
 protocol MatchRelatedEvent: Event {
     static func makeMessage(event: Self, playerId: String) -> MatchEventMessage?
 }
-
-struct NoEvent: Event {
-    let timestamp = 0.0
-}

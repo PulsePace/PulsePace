@@ -9,19 +9,27 @@ import Foundation
 
 // TODO: Apply delay to missedHO
 class CoopHOManager: HitObjectManager {
-    private var partnerMissedHO = MyQueue<any HitObject>()
-//    private var rearrangedMissedHO = PriorityQueue<any HitObject> { a, b in a.startTime < b.startTime}
-    let minMissSpawnDelay = 3
-    let maxMissSpawnDelay = 7
+//    private var partnerMissedHO = MyQueue<any HitObject>()
+    private var rearrangedMissedHO = PriorityQueue<any HitObject> { a, b in a.startTime < b.startTime }
+    let minMissSpawnDelay = 5.0
+    let maxMissSpawnDelay = 9.0
 
     override func reset() {
         super.reset()
-        partnerMissedHO.removeAll()
+//        partnerMissedHO.removeAll()
+        rearrangedMissedHO.removeAll()
     }
 
     lazy var onPartnerMissHandler = { [weak self] (_: EventManagable, event: SpawnHOEvent) -> Void in
-        self?.partnerMissedHO.enqueue(event.hitObject)
-//        self?.rearrangedMissedHO.enqueue(event.hitObject)
+//        self?.partnerMissedHO.enqueue(event.hitObject)
+        guard let self = self else {
+            fatalError("No active coop hit object manager")
+        }
+        let lifeTime = event.hitObject.endTime - event.hitObject.startTime
+        event.hitObject.startTime = Double.random(in: self.minMissSpawnDelay...self.maxMissSpawnDelay) + event.hitObject.startTime
+        event.hitObject.endTime = event.hitObject.startTime + lifeTime
+        self.rearrangedMissedHO.enqueue(event.hitObject)
+        self.songEndBeat = max(songEndBeat, event.hitObject.endTime)
     }
 
     override func registerEventHandlers(eventManager: EventManagable) {
@@ -30,12 +38,13 @@ class CoopHOManager: HitObjectManager {
 
     override func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned = super.checkBeatMap(currBeat)
-        while let firstInMissed = partnerMissedHO.peek() {
+        while let firstInMissed = rearrangedMissedHO.peek() {
             let originalStartTime = firstInMissed.startTime
-            firstInMissed.startTime = ceil(currBeat)
+            firstInMissed.startTime = max(originalStartTime, ceil(currBeat))
             firstInMissed.endTime = firstInMissed.startTime + firstInMissed.endTime - originalStartTime
             gameHOSpawned.append(spawnMissedHitObject(firstInMissed))
-            _ = partnerMissedHO.dequeue()
+            _ = rearrangedMissedHO.dequeue()
+            songEndBeat = max(songEndBeat, firstInMissed.endTime)
         }
 
         return gameHOSpawned
