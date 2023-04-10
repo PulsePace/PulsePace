@@ -100,19 +100,24 @@ class GameViewModel: ObservableObject, RenderSystem {
             return
         }
 
+        guard let hitObjectManager = gameEngine.hitObjectManager else {
+            print("No HitObjectManager initialised")
+            return
+        }
+
         let deltaTime = displayLink.targetTimestamp - displayLink.timestamp
 
         gameEngine.step(deltaTime)
-        sceneAdaptor(gameEngine.gameHOTable)
+        sceneAdaptor(hitObjectManager.gameHOTable)
 
         guard let audioPlayer = audioPlayer else {
             print("No song player")
             return
         }
 
-        songPosition = audioPlayer.currentTime
         updateMatchFeed()
         updateLeaderboard()
+        songPosition = gameEngine.conductor?.songPosition ?? 0
     }
 
     func assignMatch(_ match: Match) {
@@ -126,7 +131,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     func initEngine(with beatmap: Beatmap) {
-        gameEngine = GameEngine(modeAttachment: selectedGameMode, match: match)
+        gameEngine = GameEngine(selectedGameMode, match: match)
         gameEngine?.load(beatmap)
     }
 

@@ -13,6 +13,7 @@
 		175B3F0A29C4717B00DE715D /* HitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0929C4717B00DE715D /* HitStatus.swift */; };
 		175B3F0C29C4719700DE715D /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0B29C4719700DE715D /* ScoreManager.swift */; };
 		175B3F0E29C471BA00DE715D /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B3F0D29C471BA00DE715D /* Conductor.swift */; };
+		179476F029E12AFD00C27227 /* MatchEventRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179476EF29E12AFD00C27227 /* MatchEventRelay.swift */; };
 		17A4828429D1C880006C5DB9 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4828329D1C880006C5DB9 /* Event.swift */; };
 		17A4828629D1C8E3006C5DB9 /* EventManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4828529D1C8E3006C5DB9 /* EventManagable.swift */; };
 		17A4828829D1C905006C5DB9 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4828729D1C904006C5DB9 /* EventManager.swift */; };
@@ -213,6 +214,7 @@
 		175B3F0929C4717B00DE715D /* HitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitStatus.swift; sourceTree = "<group>"; };
 		175B3F0B29C4719700DE715D /* ScoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
 		175B3F0D29C471BA00DE715D /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
+		179476EF29E12AFD00C27227 /* MatchEventRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchEventRelay.swift; sourceTree = "<group>"; };
 		17A4828329D1C880006C5DB9 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		17A4828529D1C8E3006C5DB9 /* EventManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManagable.swift; sourceTree = "<group>"; };
 		17A4828729D1C904006C5DB9 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 			children = (
 				6A97526D29DAD994004230C0 /* MatchEventRelay.swift */,
 				17A4828A29D1C9FC006C5DB9 /* System.swift */,
+				179476EF29E12AFD00C27227 /* MatchEventRelay.swift */,
 				17A4828C29D1CA51006C5DB9 /* ScoreSystem.swift */,
 				C788084729D99AB700107A32 /* DisruptorSystem.swift */,
 				173DE14D29D336C90005876E /* InputSystem.swift */,
@@ -1536,7 +1539,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				DEVELOPMENT_TEAM = 8379FJ4AB3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
@@ -1573,7 +1576,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				DEVELOPMENT_TEAM = 8379FJ4AB3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PulsePace/Info.plist;

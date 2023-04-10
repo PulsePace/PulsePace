@@ -56,6 +56,7 @@ class HoldGameHO: GameHO {
     }
 
     func checkOnInput(input: InputData) {
+        print("holding")
         guard let lastCheckedSongPosition = lastCheckedSongPosition else {
             proximityScore += abs(input.timeReceived - lifeStart) / optimalLife
             lastCheckedSongPosition = input.timeReceived
@@ -68,7 +69,7 @@ class HoldGameHO: GameHO {
     }
 
     func checkOnInputEnd(input: InputData) {
-        isHit = true
+        print("holding ended")
         proximityScore += abs(input.timeReceived - lifeStart) / optimalLife
     }
 }

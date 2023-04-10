@@ -21,10 +21,12 @@ class ScoreSystem: ModeSystem {
 
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(hitEventHandler)
+        eventManager.registerHandler(missEventHandler)
     }
 
     lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
         let gameHO = event.gameHO
+        gameHO.isHit = true
         if gameHO.proximityScore < proximityScoreThreshould[0] {
             scoreManager.perfectCount += 1
             scoreManager.score += 100
@@ -32,7 +34,6 @@ class ScoreSystem: ModeSystem {
                                                      comboCount: scoreManager.comboCount,
                                                      lastLocation: gameHO.position
                                                     ))
-            gameHO.isHit = true
         } else if gameHO.proximityScore < proximityScoreThreshould[1] {
             scoreManager.goodCount += 1
             scoreManager.score += 50
@@ -43,7 +44,6 @@ class ScoreSystem: ModeSystem {
             gameHO.isHit = true
         } else {
             scoreManager.missCount += 1
-            scoreManager.score += 10
         }
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
@@ -53,5 +53,10 @@ class ScoreSystem: ModeSystem {
                                        sourceId: userConfigManager.userId,
                                        event: PublishScoreEvent(timestamp: Date().timeIntervalSince1970,
                                                                 playerScore: scoreManager.score)))
+        gameHO.destroyObject()
+    }
+    lazy var missEventHandler = { [self] (_: EventManagable, event: MissEvent) -> Void in
+        let gameHO = event.gameHO
+        scoreManager.missCount += 1
     }
 }

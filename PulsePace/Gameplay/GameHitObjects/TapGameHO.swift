@@ -42,12 +42,6 @@ class TapGameHO: GameHO {
     }
 
     func checkOnInputEnd(input: InputData) {
-        if isHit {
-            return
-        }
-
-        isHit = true
         proximityScore += abs(lifeStage.value - lifeOptimal.value) * 2
-        // self.destroyObject()
     }
 }
