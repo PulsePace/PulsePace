@@ -49,6 +49,14 @@ class GameViewModel: ObservableObject, RenderSystem {
         return scoreManager.livesRemaining
     }
 
+    var hitStatus: String {
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager,
+              let latestHitStatus = scoreManager.latestHitStatus else {
+            return String(0)
+        }
+        return latestHitStatus.description
+    }
+
     var disruptors = Disruptor.allCases.map({ $0.rawValue })
 
     var selectedGameMode: ModeAttachment = ModeFactory.defaultMode

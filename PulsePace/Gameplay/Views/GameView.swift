@@ -37,6 +37,9 @@ struct GameView: View {
             .overlay(alignment: .bottom) {
                 DisruptorOptionsView()
             }
+            .overlay(alignment: .bottomLeading) {
+                HitStatusView()
+            }
         }
         .frame(
             maxWidth: .infinity,
@@ -58,7 +61,7 @@ struct GameView: View {
             viewModel.stopGameplay()
         }
         .environmentObject(viewModel)
-        .fullBackground(imageName: viewModel.gameBackground)
+       .fullBackground(imageName: viewModel.gameBackground)
     }
 }
 

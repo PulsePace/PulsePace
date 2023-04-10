@@ -38,7 +38,7 @@ class TapGameHO: GameHO {
     }
 
     func checkOnInput(input: InputData) {
-        checkOnInputEnd(input: input)
+//        checkOnInputEnd(input: input)
     }
 
     func checkOnInputEnd(input: InputData) {

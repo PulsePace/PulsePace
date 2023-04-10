@@ -12,20 +12,25 @@ class ScoreManager {
     var perfectCount: Int {
         didSet {
             comboCount += perfectCount - oldValue
+            latestHitStatus = .perfect
         }
     }
     var goodCount: Int {
         didSet {
             comboCount += goodCount - oldValue
+            latestHitStatus = .good
         }
     }
     var missCount: Int {
         didSet {
             comboCount = 0
+            latestHitStatus = .miss
         }
     }
 
     var comboCount: Int = 0
+
+    var latestHitStatus: HitStatus?
 
     init() {
         score = 0
