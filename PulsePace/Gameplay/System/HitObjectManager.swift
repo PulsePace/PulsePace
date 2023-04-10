@@ -62,7 +62,10 @@ class HitObjectManager: ModeSystem, EventSource {
         }
 
         if currBeat >= songEndBeat + songEndBuffer {
-            eventManager?.add(event: LastHitobjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
+            guard let eventManager = eventManager else {
+                fatalError("No event manager attached")
+            }
+            eventManager.add(event: LastHitobjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
         }
 
         return gameHOSpawned

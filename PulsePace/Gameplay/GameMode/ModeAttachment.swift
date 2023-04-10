@@ -101,7 +101,9 @@ final class ModeFactory: Factory {
             listeningMatchEvents: [
                 PublishMissTapEvent.self,
                 PublishMissHoldEvent.self,
-                PublishMissSlideEvent.self
+                PublishMissSlideEvent.self,
+                PublishScoreEvent.self,
+                PublishGameCompleteEvent.self
             ],
             matchEventRelay: CoopMatchEventRelay(),
             gameViewElements: [.gameplayArea, .scoreBoard]

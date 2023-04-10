@@ -91,9 +91,9 @@ class CoopEvaluator: Evaluator {
             fatalError("No active evaluator")
         }
 
-        guard let targetEventCount = self.andEventCount[LastHitobjectRemovedEvent.label] else {
-            fatalError("\(LastHitobjectRemovedEvent.label) not found in evaluator ledger")
+        guard let targetEventCount = self.andEventCount[GameCompleteEvent.label] else {
+            fatalError("\(GameCompleteEvent.label) not found in evaluator ledger")
         }
-        self.andEventCount[LastHitobjectRemovedEvent.label] = targetEventCount + 1
+        self.andEventCount[GameCompleteEvent.label] = targetEventCount + 1
     }
 }

@@ -80,7 +80,7 @@ class GameEngine {
         systems.append(hitObjectManager)
         systems.append(scoreSystem)
         systems.append(evaluator)
-        systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
+        systems.forEach { $0.registerEventHandlers(eventManager: self.eventManager) }
     }
 
     func load(_ beatmap: Beatmap) {
