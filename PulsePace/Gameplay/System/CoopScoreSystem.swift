@@ -9,25 +9,22 @@ import Foundation
 
 class CoopScoreSystem: ScoreSystem {
     var allScores: [String: Int] = [:]
+
+    override func getGameEndScore() -> Int {
+        allScores.values.reduce(0, { $0 + $1 })
+    }
+
     override func registerEventHandlers(eventManager: EventManagable) {
         super.registerEventHandlers(eventManager: eventManager)
         eventManager.registerHandler(completeGameHandler)
     }
 
     override func reset() {
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
         super.reset()
         self.allScores = [:]
     }
 
     override func attachToMatch(_ match: Match) {
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
         match.players.forEach({ allScores[$0.key] = 0 })
     }
 

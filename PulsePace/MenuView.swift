@@ -42,7 +42,7 @@ struct MenuView: View {
                 } else if page == Page.lobbyPage {
                     LobbyView(path: $path)
                 } else if page == Page.playPage {
-                    GameView()
+                    GameView(path: $path)
                 } else if page == Page.configPage {
                     ConfigView()
                 } else {

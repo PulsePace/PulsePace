@@ -11,6 +11,10 @@ class ScoreSystem: ModeSystem {
     var proximityScoreThreshould = [0.5, 1]
     var scoreManager: ScoreManager
 
+    func getGameEndScore() -> Int {
+        scoreManager.score
+    }
+
     func reset() {
         scoreManager = ScoreManager()
     }

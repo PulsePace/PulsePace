@@ -12,7 +12,7 @@ class HitObjectManager: ModeSystem, EventSource {
     private var counter = 0
     private var remover: ((Entity) -> Void)?
     private var queuedHitObjects: MyQueue<any HitObject>
-    private var offset = 0.0
+    var offset = 0.0
     private var slideSpeed = 0.0
     var preSpawnInterval = 0.0
     var songEndBeat = 0.0

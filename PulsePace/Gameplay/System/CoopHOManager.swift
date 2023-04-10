@@ -36,9 +36,12 @@ class CoopHOManager: HitObjectManager {
     override func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned = super.checkBeatMap(currBeat)
         while let firstInMissed = rearrangedMissedHO.peek() {
-            let originalStartTime = firstInMissed.startTime
-            firstInMissed.startTime = max(originalStartTime, ceil(currBeat))
-            firstInMissed.endTime = firstInMissed.startTime + firstInMissed.endTime - originalStartTime
+            let lifeTime = firstInMissed.startTime - firstInMissed.endTime
+            firstInMissed.startTime = max(firstInMissed.startTime, floor(currBeat))
+            firstInMissed.endTime = firstInMissed.startTime + lifeTime
+            if firstInMissed.startTime - preSpawnInterval + offset >= currBeat {
+                return gameHOSpawned
+            }
             gameHOSpawned.append(spawnMissedHitObject(firstInMissed))
             _ = rearrangedMissedHO.dequeue()
             songEndBeat = max(songEndBeat, firstInMissed.endTime)
