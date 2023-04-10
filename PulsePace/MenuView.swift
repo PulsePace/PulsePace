@@ -30,9 +30,7 @@ struct MenuView: View {
                 VStack(spacing: 30) {
                     Text("PulsePace")
                         .font(.largeTitle)
-
                     StyledMenuButton(path: $path, page: Page.gameModesPage, text: "Play")
-
                     StyledMenuButton(path: $path, page: Page.designPage, text: "Design")
                 }
             }
@@ -67,6 +65,10 @@ struct StyledIconButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: icon)
+                .resizable()
+                .frame(width: 30, height: 30)
+                .padding(20)
+                .foregroundColor(.purple)
         }
     }
 }

@@ -16,7 +16,11 @@ class HoldHitObjectViewFactory: HitObjectViewFactory {
         HoldHitObjectTimelineView(object: object, beatOffset: beatOffset, zoom: zoom)
     }
 
-    func createCanvasView(for object: HoldHitObject, at cursorTime: Double) -> HoldHitObjectCanvasView {
-        HoldHitObjectCanvasView(object: object, cursorTime: cursorTime)
+    func createCanvasView(
+        for object: HoldHitObject,
+        at cursorTime: Double,
+        with spacing: CGFloat
+    ) -> HoldHitObjectCanvasView {
+        HoldHitObjectCanvasView(object: object, cursorTime: cursorTime, spacing: spacing)
     }
 }

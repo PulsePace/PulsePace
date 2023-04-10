@@ -101,7 +101,9 @@ class DisruptorSystem: ScoreSystem {
             fatalError("No user config manager")
         }
 
-        guard !spawnedDisruptorLocations.allSatisfy({ event.gameHO.position != $0 }) else {
+        guard !spawnedDisruptorLocations.allSatisfy({ event.gameHO.position != $0 }),
+              self.scoreManager.livesRemaining > 0
+        else {
             return
         }
 

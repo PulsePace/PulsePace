@@ -34,9 +34,8 @@ class SlideGameHO: GameHO {
     var expectedPosition: CGPoint
     private var reachedEnd = false
 
-    let maxPositionError: Double = 20
-    var minimumProximity: Double = 30
-    var proximityScore: Double = 0
+    let maxPositionError: Double = 150
+    var proximityScore: Double = 1
     var lastCheckedSongPosition: Double?
     var isHit = false
 
@@ -98,26 +97,15 @@ class SlideGameHO: GameHO {
 
         // if drag too far away
         if locationError > maxPositionError {
-            // miss
             destroyObject()
             return
         }
-
-        let clampedLocationError = Math.clamp(num: locationError,
-                                              minimum: 0,
-                                              maximum: minimumProximity) / minimumProximity
         let deltaTime = input.timeReceived - lastCheckedSongPosition
-        proximityScore += (1 - clampedLocationError) * deltaTime / optimalLife
+        proximityScore -= (1 - locationError / maxPositionError) * deltaTime / optimalLife
         self.lastCheckedSongPosition = input.timeReceived
     }
 
     func checkOnInputEnd(input: InputData) {
-        // if drag ended too early
-        if currEdgeIndex < vertices.count - 1 {
-            // miss
-//            destroyObject()
-        }
-        isHit = true
     }
 
     private func setExpectedPosition(currBeat: Double) {

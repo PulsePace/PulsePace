@@ -24,13 +24,16 @@ class TapGestureHandler: GestureHandler {
     }
 
     private func onChanged(position: CGPoint) {
-        guard let beatmapDesigner = beatmapDesigner else {
+        guard let beatmapDesigner = beatmapDesigner,
+              beatmapDesigner.isValidPosition(position) else {
+            beatmapDesigner?.resetPreviewHitObject()
             return
         }
-        beatmapDesigner.previewHitObject = TapHitObject(
-            position: position,
+        let hitObject = TapHitObject(
+            position: beatmapDesigner.virtualisePosition(position),
             startTime: beatmapDesigner.quantisedTime
         )
+        beatmapDesigner.holdPreviewHitObject(hitObject: hitObject)
     }
 
     private func onEnded() {

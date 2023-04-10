@@ -11,11 +11,11 @@ struct ZoomButtonsView: View {
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
 
     var body: some View {
-        VStack {
-            SystemIconButtonView(systemName: "plus.circle.fill") {
+        VStack(spacing: 4) {
+            SystemIconButtonView(systemName: "plus.circle.fill", color: .white) {
                 beatmapDesigner.increaseZoom()
             }
-            SystemIconButtonView(systemName: "minus.circle.fill") {
+            SystemIconButtonView(systemName: "minus.circle.fill", color: .white) {
                 beatmapDesigner.decreaseZoom()
             }
         }

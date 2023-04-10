@@ -9,5 +9,15 @@ enum HitStatus {
     case perfect
     case good
     case miss
-    case noAction
+
+    var description: String {
+       switch self {
+       case .perfect:
+           return "Perfect"
+       case .good:
+           return "Good"
+       case .miss:
+           return "Miss"
+       }
+     }
 }

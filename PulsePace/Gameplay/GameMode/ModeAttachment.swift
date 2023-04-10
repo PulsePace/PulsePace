@@ -48,10 +48,6 @@ final class ModeAttachment {
         gameEngine.evaluator = evaluator
         gameEngine.scoreSystem = scoreSystem
 
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
         if let matchEventRelay = matchEventRelay,
            let match = gameEngine.match {
             matchEventRelay.assignProperties(publisher: gameEngine.publishMatchEvent, match: match)
