@@ -11,13 +11,16 @@ class TapCommand: InputCommand {
     }
 
     convenience init(receiver: TapGameHO, eventManager: EventManager, timeReceived: Double) {
-        self.init { inputData in
-            var inputData = inputData
-            inputData.timeReceived = timeReceived
-            eventManager.add(event: InputEvent(inputData: inputData,
-                                               gameHO: receiver,
-                                               timestamp: timeReceived,
-                                               isEndingInput: true))
-        }
+        self.init(
+            action: { _ in },
+            completion: { inputData in
+                var inputData = inputData
+                inputData.timeReceived = timeReceived
+                eventManager.add(event: InputEvent(inputData: inputData,
+                                                   gameHO: receiver,
+                                                   timestamp: timeReceived,
+                                                   isEndingInput: true))
+            }
+        )
     }
 }

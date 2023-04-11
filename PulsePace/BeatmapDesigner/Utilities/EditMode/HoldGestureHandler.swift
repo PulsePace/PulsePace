@@ -32,28 +32,39 @@ class HoldGestureHandler: GestureHandler {
     }
 
     private func onChanged(position: CGPoint) {
-        guard let beatmapDesigner = beatmapDesigner, !isHolding else {
+        guard let beatmapDesigner = beatmapDesigner,
+              !isHolding,
+              beatmapDesigner.isValidPosition(position) else {
+            beatmapDesigner?.resetPreviewHitObject()
             return
         }
-        initialisePreviewHitObject(beatmapDesigner: beatmapDesigner, position: position)
+        initialisePreviewHitObject(
+            beatmapDesigner: beatmapDesigner,
+            position: beatmapDesigner.virtualisePosition(position)
+        )
     }
 
     private func initialisePreviewHitObject(beatmapDesigner: BeatmapDesignerViewModel, position: CGPoint) {
         isHolding = true
         startTime = beatmapDesigner.quantisedTime
 
-        beatmapDesigner.previewHitObject = HoldHitObject(
+        let hitObject = HoldHitObject(
             position: position,
             startTime: beatmapDesigner.quantisedTime,
             endTime: beatmapDesigner.quantisedTime
         )
+        beatmapDesigner.holdPreviewHitObject(hitObject: hitObject)
     }
 
     private func onEnded(position: CGPoint) {
-        guard let beatmapDesigner = beatmapDesigner else {
+        guard let beatmapDesigner = beatmapDesigner,
+              beatmapDesigner.isValidPosition(position) else {
             return
         }
-        registerPreviewHitObject(beatmapDesigner: beatmapDesigner, position: position)
+        registerPreviewHitObject(
+            beatmapDesigner: beatmapDesigner,
+            position: beatmapDesigner.virtualisePosition(position)
+        )
         resetState()
     }
 
@@ -61,11 +72,13 @@ class HoldGestureHandler: GestureHandler {
         guard let startTime = startTime else {
             return
         }
-        beatmapDesigner.previewHitObject = HoldHitObject(
+
+        let hitObject = HoldHitObject(
             position: position,
             startTime: startTime,
             endTime: beatmapDesigner.quantisedTime
         )
+        beatmapDesigner.holdPreviewHitObject(hitObject: hitObject)
         beatmapDesigner.registerPreviewHitObject()
     }
 }

@@ -49,6 +49,30 @@ class GameViewModel: ObservableObject, RenderSystem {
         return scoreManager.livesRemaining
     }
 
+    var hitStatus: String {
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager,
+              let latestHitStatus = scoreManager.latestHitStatus else {
+            return String()
+        }
+        var count = ""
+        switch latestHitStatus {
+        case .perfect:
+            count = "x" + String(scoreManager.perfectCount)
+        case .good:
+            count = "x" + String(scoreManager.goodCount)
+        case .miss:
+            count = "x" + String(scoreManager.missCount)
+        }
+        return latestHitStatus.description + count
+    }
+
+    var hoCount: Int {
+        guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
+            return 0
+        }
+        return scoreManager.goodCount + scoreManager.perfectCount + scoreManager.missCount
+    }
+
     var disruptors = Disruptor.allCases.map({ $0.rawValue })
 
     var selectedGameMode: ModeAttachment = ModeFactory.defaultMode
@@ -100,19 +124,24 @@ class GameViewModel: ObservableObject, RenderSystem {
             return
         }
 
+        guard let hitObjectManager = gameEngine.hitObjectManager else {
+            print("No HitObjectManager initialised")
+            return
+        }
+
         let deltaTime = displayLink.targetTimestamp - displayLink.timestamp
 
         gameEngine.step(deltaTime)
-        sceneAdaptor(gameEngine.gameHOTable)
+        sceneAdaptor(hitObjectManager.gameHOTable)
 
-        guard let audioPlayer = audioPlayer else {
+        guard audioPlayer != nil else {
             print("No song player")
             return
         }
 
-        songPosition = audioPlayer.currentTime
         updateMatchFeed()
         updateLeaderboard()
+        songPosition = gameEngine.conductor?.songPosition ?? 0
     }
 
     func assignMatch(_ match: Match) {

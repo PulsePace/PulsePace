@@ -15,8 +15,7 @@ final class BeatmapManager: ObservableObject {
     let beatmapDataManager: LocalDataManager<[SerializedNamedBeatmap]>
 
     init() {
-        let beatmapDataManager = LocalDataManager<[SerializedNamedBeatmap]>(
-            fileName: localBeatmapStorage, bundlePath: bundledBeatmaps)
+        let beatmapDataManager = LocalDataManager<[SerializedNamedBeatmap]>()
         self.beatmapDataManager = beatmapDataManager
         self.beatmapDataManager.load(filename: localBeatmapStorage,
                                      bundlePath: bundledBeatmaps, initData: []) { [weak self] result in
@@ -32,6 +31,7 @@ final class BeatmapManager: ObservableObject {
 
     // NOTE: Permits duplicate saves
     func saveBeatmap(namedBeatmap: NamedBeatmap) {
+        print(namedBeatmap.serialize())
         beatmapChoices.append(namedBeatmap)
         serialBeatmaps.append(namedBeatmap.serialize())
         beatmapDataManager.save(values: serialBeatmaps, filename: localBeatmapStorage) { result in

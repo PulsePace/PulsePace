@@ -23,11 +23,28 @@ class BeatmapDesignerViewModel: ObservableObject {
     var achievementManager: AchievementManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
+    var frame: CGSize = .zero
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
     private var songTitle: String
 
     var gestureHandlerList: [any GestureHandler] = []
+
+    var gridHeight: CGFloat {
+        frame.height * 0.95
+    }
+
+    var gridWidth: CGFloat {
+        gridSpacing * 16
+    }
+
+    var gridSpacing: CGFloat {
+        gridHeight / 12
+    }
+
+    var gridOffset: CGSize {
+        CGSize(width: (frame.width - gridSpacing * 16) / 2, height: frame.height * 0.05 / 2)
+    }
 
     var divisor: Double {
         divisorList[Int(divisorIndex)]
@@ -111,8 +128,18 @@ class BeatmapDesignerViewModel: ObservableObject {
         sliderValue = player.currentTime
     }
 
+    func virtualisePosition(_ position: CGPoint) -> CGPoint {
+        let virtualXOffset = (position.x - gridOffset.width) * 40 / gridSpacing
+        let virtualYOffset = (position.y - gridOffset.height) * 40 / gridSpacing
+        return CGPoint(x: virtualXOffset, y: virtualYOffset)
+    }
+
     func initialisePlayer(player: AVAudioPlayer) {
         self.player = player
+    }
+
+    func initialiseFrame(size: CGSize) {
+        frame = size
     }
 
     func increaseZoom() {
@@ -121,6 +148,21 @@ class BeatmapDesignerViewModel: ObservableObject {
 
     func decreaseZoom() {
         zoom = max(64, zoom / 2)
+    }
+
+    func resetPreviewHitObject() {
+        previewHitObject = nil
+    }
+
+    func holdPreviewHitObject(hitObject: any HitObject) {
+        previewHitObject = hitObject
+    }
+
+    func isValidPosition(_ position: CGPoint) -> Bool {
+        let virtualPosition = virtualisePosition(position)
+        let isWithinHorizontally = virtualPosition.x >= 0 && virtualPosition.x <= 640
+        let isWithinVertically = virtualPosition.y >= 0 && virtualPosition.y <= 480
+        return isWithinHorizontally && isWithinVertically
     }
 
     func registerPreviewHitObject() {

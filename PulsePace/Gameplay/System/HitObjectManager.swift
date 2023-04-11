@@ -15,9 +15,30 @@ class HitObjectManager: ModeSystem {
     private var slideSpeed = 0.0
     var preSpawnInterval = 0.0
 
+    var gameHOTable: [Entity: any GameHO]
+    private var allObjects: Set<Entity>
+    lazy var objRemover = { [weak self] (eventManager: EventManagable) -> (Entity) -> Void in {
+            guard let self = self else {
+                fatalError("No active hit object system to remove entities")
+            }
+            self.allObjects.remove($0)
+            guard let removedGameHO = self.gameHOTable.removeValue(forKey: $0) else {
+                return
+            }
+
+            if !removedGameHO.isHit {
+                eventManager.add(event: MissEvent(gameHO: removedGameHO, timestamp: Date().timeIntervalSince1970))
+            }
+        }
+    }
+
+    lazy var gameHOAdder: (any GameHO) -> Void = { [weak self] gameHO in
+        self?.allObjects.insert(gameHO.wrappingObject)
+        self?.gameHOTable[gameHO.wrappingObject] = gameHO
+    }
+
     func reset() {
         queuedHitObjects.removeAll()
-        remover = nil
         offset = 0
         slideSpeed = 0
         preSpawnInterval = 0
@@ -33,16 +54,31 @@ class HitObjectManager: ModeSystem {
 
     init() {
         queuedHitObjects = MyQueue()
+        gameHOTable = [:]
+        allObjects = Set()
     }
 
-    func feedBeatmap(beatmap: Beatmap, remover: @escaping (Entity) -> Void) {
-        self.remover = remover
+    func feedBeatmap(beatmap: Beatmap, eventManager: EventManagable) {
+        self.remover = objRemover(eventManager)
         self.preSpawnInterval = beatmap.preSpawnInterval
         self.offset = beatmap.offset
         self.slideSpeed = beatmap.sliderSpeed
         beatmap.hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
     }
 
+    func step(deltaTime: Double, songPosition: Double) {
+        let spawnGameHOs = checkBeatMap(songPosition)
+        spawnGameHOs.forEach { gameHOAdder($0) }
+
+        // Update state of gameHO
+        allObjects.forEach { object in
+            if let gameHO = gameHOTable[object] {
+                gameHO.updateState(currBeat: songPosition)
+            } else {
+                print("By game design params, all objects should have a hit object component")
+            }
+        }
+    }
     // Takes in a BeatMap
     func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned: [any GameHO] = []

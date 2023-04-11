@@ -32,18 +32,29 @@ class SlideGestureHandler: GestureHandler {
     }
 
     private func onChanged(position: CGPoint) {
-        guard let beatmapDesigner = beatmapDesigner else {
+        guard let beatmapDesigner = beatmapDesigner,
+              beatmapDesigner.isValidPosition(position) else {
             return
         }
         guard let lastPosition = lastPosition else {
-            initialisePreviewHitObject(beatmapDesigner: beatmapDesigner, position: position)
+            initialisePreviewHitObject(
+                beatmapDesigner: beatmapDesigner,
+                position: beatmapDesigner.virtualisePosition(position)
+            )
             return
         }
-        guard position.distance(to: lastPosition) > 50 else {
+        let virtualPosition = beatmapDesigner.virtualisePosition(position)
+        guard virtualPosition.distance(to: lastPosition) > 50 else {
             unsetPreviewHitObject(beatmapDesigner: beatmapDesigner)
             return
         }
-        setPreviewHitObject(beatmapDesigner: beatmapDesigner, position: position)
+        guard beatmapDesigner.isValidPosition(position) else {
+            return
+        }
+        setPreviewHitObject(
+            beatmapDesigner: beatmapDesigner,
+            position: beatmapDesigner.virtualisePosition(position)
+        )
     }
 
     private func initialisePreviewHitObject(beatmapDesigner: BeatmapDesignerViewModel, position: CGPoint) {
@@ -53,12 +64,13 @@ class SlideGestureHandler: GestureHandler {
         startTime = beatmapDesigner.quantisedTime
         endTime = beatmapDesigner.quantisedTime
 
-        beatmapDesigner.previewHitObject = SlideHitObject(
+        let hitObject = SlideHitObject(
             position: position,
             startTime: beatmapDesigner.quantisedTime,
             endTime: beatmapDesigner.quantisedTime,
             vertices: vertices
         )
+        beatmapDesigner.holdPreviewHitObject(hitObject: hitObject)
     }
 
     private func unsetPreviewHitObject(beatmapDesigner: BeatmapDesignerViewModel) {
@@ -67,12 +79,14 @@ class SlideGestureHandler: GestureHandler {
               let endTime = endTime else {
             return
         }
-        beatmapDesigner.previewHitObject = SlideHitObject(
+
+        let hitObject = SlideHitObject(
             position: startPosition,
             startTime: startBeat,
             endTime: endTime,
             vertices: vertices
         )
+        beatmapDesigner.holdPreviewHitObject(hitObject: hitObject)
     }
 
     private func setPreviewHitObject(beatmapDesigner: BeatmapDesignerViewModel, position: CGPoint) {
@@ -95,16 +109,19 @@ class SlideGestureHandler: GestureHandler {
 
         self.quantisedPosition = quantisedPosition
         self.quantisedTime = quantisedTime
-        beatmapDesigner.previewHitObject = SlideHitObject(
+
+        let hitObject = SlideHitObject(
             position: startPosition,
             startTime: startBeat,
             endTime: endTime + quantisedTime,
             vertices: vertices + [quantisedPosition]
         )
+        beatmapDesigner.holdPreviewHitObject(hitObject: hitObject)
     }
 
     private func onEnded(position: CGPoint) {
-        guard let beatmapDesigner = beatmapDesigner else {
+        guard let beatmapDesigner = beatmapDesigner,
+              beatmapDesigner.isValidPosition(position) else {
             return
         }
         guard let quantisedPosition = quantisedPosition,
@@ -115,7 +132,8 @@ class SlideGestureHandler: GestureHandler {
             lastPosition = quantisedPosition
             return
         }
-        if position.distance(to: lastPosition) <= 50 {
+        let virtualPosition = beatmapDesigner.virtualisePosition(position)
+        if virtualPosition.distance(to: lastPosition) <= 50 {
             beatmapDesigner.registerPreviewHitObject()
             resetState()
         } else {
@@ -124,16 +142,16 @@ class SlideGestureHandler: GestureHandler {
     }
 
     private func resetState() {
-        self.lastPosition = nil
-        self.quantisedPosition = nil
+        lastPosition = nil
+        quantisedPosition = nil
         vertices = []
-        self.startPosition = nil
-        self.startTime = nil
+        startPosition = nil
+        startTime = nil
     }
 
     private func addVertex(quantisedTime: Double, quantisedPosition: CGPoint) {
-        self.lastPosition = quantisedPosition
-        self.endTime? += quantisedTime
+        lastPosition = quantisedPosition
+        endTime? += quantisedTime
         vertices.append(quantisedPosition)
     }
 }

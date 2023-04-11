@@ -16,7 +16,11 @@ class SlideHitObjectViewFactory: HitObjectViewFactory {
         SlideHitObjectTimelineView(object: object, beatOffset: beatOffset, zoom: zoom)
     }
 
-    func createCanvasView(for object: SlideHitObject, at cursorTime: Double) -> SlideHitObjectCanvasView {
-        SlideHitObjectCanvasView(object: object, cursorTime: cursorTime)
+    func createCanvasView(
+        for object: SlideHitObject,
+        at cursorTime: Double,
+        with spacing: CGFloat
+    ) -> SlideHitObjectCanvasView {
+        SlideHitObjectCanvasView(object: object, cursorTime: cursorTime, spacing: spacing)
     }
 }

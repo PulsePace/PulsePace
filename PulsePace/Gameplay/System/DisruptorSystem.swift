@@ -8,7 +8,8 @@
 import Foundation
 
 class DisruptorSystem: ScoreSystem {
-    var selectedTarget = UserConfig().userId
+    static let defaultLifeCount = 3
+    var selectedTarget: String
     var selectedDisruptor: Disruptor = .bomb
 
     var isEligibileToSendDisruptor: Bool {
@@ -20,13 +21,22 @@ class DisruptorSystem: ScoreSystem {
     var allScores: [String: Int] = [:]
 
     override init(_ scoreManager: ScoreManager) {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
+        self.selectedTarget = userConfigManager.userId
         super.init(scoreManager)
         self.scoreManager.livesRemaining = 3
     }
 
     override func reset() {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
         super.reset()
-        self.selectedTarget = UserConfig().userId
+        self.selectedTarget = userConfigManager.userId
         self.selectedDisruptor = .bomb
         self.spawnedDisruptorLocations = []
         self.scoreManager.livesRemaining = 3
@@ -49,11 +59,15 @@ class DisruptorSystem: ScoreSystem {
     }
 
     lazy var updateComboHandler = { [self] (eventManager: EventManagable, event: UpdateComboEvent) -> Void in
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
         guard isEligibileToSendDisruptor else {
             return
         }
         eventManager.matchEventHandler?.publishMatchEvent(message: MatchEventMessage(
-            timestamp: Date().timeIntervalSince1970, sourceId: UserConfig().userId,
+            timestamp: Date().timeIntervalSince1970, sourceId: userConfigManager.userId,
             event: PublishDisruptorFactory().getPublishEvent(disruptor: selectedDisruptor,
                                                              targetId: selectedTarget,
                                                              location: event.lastLocation
@@ -61,29 +75,40 @@ class DisruptorSystem: ScoreSystem {
     }
 
     lazy var onSpawnBombDisruptorHandler = { [self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
-        guard event.bombTargetPlayerId == UserConfig().userId else {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
+        guard event.bombTargetPlayerId == userConfigManager.userId else {
             return
         }
         spawnedDisruptorLocations.append(event.bombLocation)
     }
 
     lazy var bombHitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
-        guard !spawnedDisruptorLocations.allSatisfy({ event.gameHO.position != $0 }) else {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
+        guard !spawnedDisruptorLocations.allSatisfy({ event.gameHO.position != $0 }),
+              self.scoreManager.livesRemaining > 0
+        else {
             return
         }
+
         self.scoreManager.comboCount = 0
         self.scoreManager.livesRemaining -= 1
         self.spawnedDisruptorLocations.removeAll(where: { $0 == event.gameHO.position })
 
         eventManager.add(event: LostLifeEvent(timestamp: Date().timeIntervalSince1970,
-                                              lostLifePlayerId: UserConfig().userId))
+                                              lostLifePlayerId: userConfigManager.userId))
 
         if self.scoreManager.livesRemaining == 0 {
             eventManager.matchEventHandler?.publishMatchEvent(
                 message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
-                                           sourceId: UserConfig().userId,
+                                           sourceId: userConfigManager.userId,
                                            event: PublishDeathEvent(timestamp: Date().timeIntervalSince1970,
-                                                                    diedPlayerId: UserConfig().userId)))
+                                                                    diedPlayerId: userConfigManager.userId)))
         }
     }
 
