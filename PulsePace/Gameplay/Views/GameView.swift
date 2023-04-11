@@ -31,11 +31,15 @@ struct GameView: View {
             .overlay(alignment: .topLeading) {
                 LivesCountView()
             }
-            .overlay(alignment: .bottomTrailing) {
-                GameControlView()
-            }
+//            .overlay(alignment: .bottomTrailing) {
+//                GameControlView()
+//            }
             .overlay(alignment: .bottom) {
-                DisruptorOptionsView()
+                VStack(alignment: .leading) {
+                    HitStatusView()
+                    DisruptorOptionsView()
+                    GameControlView()
+                }
             }
         }
         .frame(
@@ -58,7 +62,7 @@ struct GameView: View {
             viewModel.stopGameplay()
         }
         .environmentObject(viewModel)
-        .fullBackground(imageName: viewModel.gameBackground)
+       .fullBackground(imageName: viewModel.gameBackground)
     }
 }
 

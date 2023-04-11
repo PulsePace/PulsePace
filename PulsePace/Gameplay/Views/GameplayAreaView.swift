@@ -21,7 +21,7 @@ struct GameplayAreaView: View {
             maxHeight: .infinity,
             alignment: .topLeading
         )
-        .background(.black)
+//        .background(.black)
     }
 
     func renderSlideGameHO(slideGameHOVMs: [SlideGameHOVM]) -> some View {

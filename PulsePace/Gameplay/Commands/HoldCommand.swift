@@ -15,12 +15,19 @@ class HoldCommand: InputCommand {
             action: { inputData in
                 var inputData = inputData
                 inputData.timeReceived = timeReceived
-//                receiver.checkOnInput(inputData: inputData)
+                print("hold")
+                eventManager.add(event: InputEvent(inputData: inputData,
+                                                   gameHO: receiver,
+                                                   timestamp: timeReceived,
+                                                   isEndingInput: false))
             },
             completion: { inputData in
                 var inputData = inputData
                 inputData.timeReceived = timeReceived
-//                receiver.checkOnInputEnd(inputData: inputData)
+                eventManager.add(event: InputEvent(inputData: inputData,
+                                                   gameHO: receiver,
+                                                   timestamp: timeReceived,
+                                                   isEndingInput: true))
             }
         )
     }

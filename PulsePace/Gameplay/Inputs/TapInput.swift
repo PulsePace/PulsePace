@@ -8,6 +8,6 @@
 import SwiftUI
 
 struct TapInput: TouchInput {
-    typealias InputGesture = SpatialTapGesture
-    var gesture = SpatialTapGesture(count: 1, coordinateSpace: .global)
+    typealias InputGesture = DragGesture
+    var gesture = DragGesture(minimumDistance: 0, coordinateSpace: .global)
 }
