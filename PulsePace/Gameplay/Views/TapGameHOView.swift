@@ -16,7 +16,7 @@ struct TapGameHOView: View {
     var body: some View {
         let tapGameHO = tapGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * tapGameHOVM.ringScale))
-        let color = tapGameHOVM.fromPartner ? Color.purple : Color.white
+        let color = tapGameHOVM.fromPartner ? Color.orange : Color.white // TODO: Make constants for HO colors
         let tappedColor = tapGameHO.isBomb ? Color.red : Color.purple
 
         return ZStack {
@@ -60,7 +60,7 @@ struct SlideGameHOView: View {
     var body: some View {
         let slideGameHO = slideGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * slideGameHOVM.ringScale))
-        let color = slideGameHOVM.fromPartner ? Color.purple : Color.white
+        let color = slideGameHOVM.fromPartner ? Color.orange : Color.white
 
         return ZStack {
             DrawShapeBorder(points: [slideGameHO.position] + slideGameHO.vertices).stroked(
@@ -123,7 +123,7 @@ struct HoldGameHOView: View {
     var body: some View {
         let holdGameHO = holdGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * holdGameHOVM.ringScale))
-        let color = holdGameHOVM.fromPartner ? Color.purple : Color.white
+        let color = holdGameHOVM.fromPartner ? Color.orange : Color.white
 
         return ZStack {
             Circle()
