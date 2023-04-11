@@ -17,7 +17,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
     // FIXME: make private
     var gameEngine: GameEngine?
-    private var audioPlayer: AVAudioPlayer?
+    private var audioPlayer: AVAudioPlayerNode?
     @Published var slideGameHOs: [SlideGameHOVM] = []
     @Published var holdGameHOs: [HoldGameHOVM] = []
     @Published var tapGameHOs: [TapGameHOVM] = []
@@ -179,7 +179,7 @@ class GameViewModel: ObservableObject, RenderSystem {
         clear()
     }
 
-    func initialisePlayer(audioPlayer: AVAudioPlayer) {
+    func initialisePlayer(audioPlayer: AVAudioPlayerNode) {
         self.audioPlayer = audioPlayer
     }
 

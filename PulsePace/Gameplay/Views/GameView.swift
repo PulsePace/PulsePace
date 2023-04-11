@@ -9,7 +9,6 @@ import SwiftUI
 
 struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
-    @EnvironmentObject var audioManager: AudioManager
     // FIXME: Remove loc
     @EnvironmentObject var beatmapManager: BeatmapManager
 
@@ -48,17 +47,17 @@ struct GameView: View {
             alignment: .topLeading
         )
         .onAppear {
-            audioManager.startPlayer(track: "test")
+            AudioManager.shared.playMusic(track: "test")
             if viewModel.gameEngine == nil {
                 viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
             }
             viewModel.startGameplay()
-            if let audioPlayer = audioManager.player {
+            if let audioPlayer = AudioManager.shared.musicPlayer {
                 viewModel.initialisePlayer(audioPlayer: audioPlayer)
             }
         }
         .onDisappear {
-            audioManager.stopPlayer()
+            AudioManager.shared.stopMusic()
             viewModel.stopGameplay()
         }
         .environmentObject(viewModel)

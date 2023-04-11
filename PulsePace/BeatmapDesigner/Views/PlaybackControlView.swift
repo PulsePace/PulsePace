@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PlaybackControlView: View {
-    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
 
     var body: some View {
@@ -33,20 +32,20 @@ struct PlaybackControlView: View {
 
     @ViewBuilder
     private func renderPlaybackProgressSlider() -> some View {
-        if let player = audioManager.player {
+        if let player = AudioManager.shared.musicPlayer {
             HStack(spacing: 10) {
-                Text(DateComponentsFormatter.positional.string(from: player.currentTime) ?? "0:00")
+                Text(DateComponentsFormatter.positional.string(from: AudioManager.shared.currentTime()) ?? "0:00")
                     .foregroundColor(.white)
                     .font(.system(size: 18))
                     .frame(width: 60)
 
-                Slider(value: $beatmapDesigner.sliderValue, in: 0...player.duration) { editing in
+                Slider(value: $beatmapDesigner.sliderValue, in: 0...AudioManager.shared.musicDuration) { editing in
                     beatmapDesigner.isEditing = editing
                     if editing {
                         player.pause()
                     } else {
                         player.play()
-                        player.currentTime = beatmapDesigner.sliderValue
+                        AudioManager.shared.seekMusic(to: beatmapDesigner.sliderValue)
                     }
                 }
                 .tint(.purple)
@@ -56,11 +55,11 @@ struct PlaybackControlView: View {
 
     @ViewBuilder
     private func renderPlaybackButtons() -> some View {
-        if let player = audioManager.player {
+        if let player = AudioManager.shared.musicPlayer {
             HStack {
                 let iconSystemName = player.isPlaying ? "pause.circle.fill" : "play.circle.fill"
                 SystemIconButtonView(systemName: iconSystemName, fontSize: 44, color: .white) {
-                    audioManager.togglePlayer()
+                    AudioManager.shared.toggleMusic()
                 }
             }
         }
@@ -74,10 +73,10 @@ struct PlaybackControlView: View {
 
             HStack {
                 SystemIconButtonView(systemName: "tortoise.fill", fontSize: 24, color: .white) {
-                    audioManager.decreasePlaybackRate()
+                    AudioManager.shared.decreasePlaybackRate()
                 }
                 SystemIconButtonView(systemName: "hare.fill", fontSize: 24, color: .white) {
-                    audioManager.increasePlaybackRate()
+                    AudioManager.shared.increasePlaybackRate()
                 }
             }
         }
