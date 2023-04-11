@@ -81,6 +81,21 @@ class LobbyDataManager {
         )
     }
 
+    func exitLobby() {
+        guard let lobby = lobby,
+            let userConfigManager = UserConfigManager.instance else {
+            return
+        }
+        if lobby.isUserHost {
+            let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId])
+            lobbyDatabase.deleteData(at: lobbyPath, completion: { _ in })
+        } else {
+            let playerPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId,
+                                                              DatabasePath.players, userConfigManager.userId])
+            lobbyDatabase.deleteData(at: playerPath, completion: { _ in })
+        }
+    }
+
     func startMatch(match: Match) {
         guard let lobby = lobby,
               lobby.isUserHost,

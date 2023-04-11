@@ -62,7 +62,8 @@ struct GameView: View {
             viewModel.stopGameplay()
         }
         .environmentObject(viewModel)
-       .fullBackground(imageName: viewModel.gameBackground)
+        .navigationBarBackButtonHidden(viewModel.match != nil)
+        .fullBackground(imageName: viewModel.gameBackground)
     }
 }
 
