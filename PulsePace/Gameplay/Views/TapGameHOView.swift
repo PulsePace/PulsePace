@@ -137,6 +137,10 @@ struct HoldGameHOView: View {
                 .frame(width: 100 + scale, height: 100 + scale)
                 .position(x: holdGameHO.position.x,
                           y: holdGameHO.position.y)
+            CircularProgressView(progress: holdGameHOVM.progress)
+                        .frame(width: 120 + scale, height: 120 + scale)
+                        .position(x: holdGameHO.position.x,
+                                  y: holdGameHO.position.y)
 
             Text("HOLD")
                 .foregroundColor(.gray)
@@ -160,6 +164,26 @@ struct HoldGameHOView: View {
                 isInteractedWith = false
             }
         })
+    }
+}
+struct CircularProgressView: View {
+    let progress: Double
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(
+                    Color.purple.opacity(0.5),
+                    lineWidth: 5
+                )
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(
+                    Color.purple,
+                    style: StrokeStyle(lineWidth: 5, lineCap: .round)
+                )
+
+                .rotationEffect(.degrees(-90))
+        }
     }
 }
 

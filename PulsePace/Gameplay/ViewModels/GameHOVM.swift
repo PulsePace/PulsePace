@@ -60,6 +60,13 @@ class HoldGameHOVM: GameHOVM<HoldGameHO> {
         return (LifeStage.endStage.value - gameHO.lifeStage.value)
             / (LifeStage.endStage.value - gameHO.optimalStageEnd.value)
     }
+
+    var progress: Double {
+        if gameHO.lifeStage.value <= gameHO.optimalStageStart.value {
+            return 0
+        }
+        return (gameHO.lifeStage.value - gameHO.optimalStageStart.value) / (gameHO.optimalStageEnd.value - gameHO.optimalStageStart.value)
+    }
 }
 
 class SlideGameHOVM: GameHOVM<SlideGameHO> {
