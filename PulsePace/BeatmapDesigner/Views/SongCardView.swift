@@ -19,6 +19,7 @@ struct SongCardView: View {
 
     var body: some View {
         Button(action: {
+            beatmapDesigner.hitObjects.removeAll()
             beatmapDesigner.songData = songData
             pageList.navigate(to: .designPage)
         }) {
