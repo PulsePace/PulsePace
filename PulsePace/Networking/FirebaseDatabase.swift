@@ -84,6 +84,16 @@ class FirebaseDatabase<T: Codable>: DatabaseAdapter {
         }
     }
 
+    func deleteDataOnDisconnect(at path: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        databaseReference.child(path).onDisconnectRemoveValue { error, _ in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
     func runTransactionBlock(at path: String, updateBlock: @escaping (MutableData) -> TransactionResult,
                              completion: @escaping (Result<Void, Error>) -> Void) {
         databaseReference.child(path).runTransactionBlock(updateBlock) { error, _, _ in

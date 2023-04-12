@@ -14,12 +14,27 @@ struct LobbyView: View {
     @Binding var path: [Page]
     @EnvironmentObject var gameVM: GameViewModel
     @EnvironmentObject var userConfigManager: UserConfigManager
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack {
             renderLobbyControls()
             renderLobbyPlayers(players: viewModel.lobbyPlayers)
             renderMatchControls()
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    ExitLobbyCommand(receiver: viewModel).executeAction(inputData: ())
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("Back")
+                    }
+                }
+            }
         }
     }
 

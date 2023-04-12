@@ -65,7 +65,7 @@ struct GameView: View {
         .popup(isPresented: $viewModel.gameEnded) {
             GameEndView(path: $path)
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(viewModel.match != nil)
     }
 }
 
