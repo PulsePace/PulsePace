@@ -34,7 +34,7 @@ extension GameHO {
 
 protocol Component {
     var wrappingObject: Entity { get }
-//    var onLifeEnd: (EventManagable) -> Void { get }
+//    var onLifeEnd: () -> Void { get }
 }
 
 extension Component {

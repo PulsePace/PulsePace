@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct NoEvent: Event {
+    let timestamp = 0.0
+}
+
+struct LastHitobjectRemovedEvent: Event {
+    var timestamp: Double
+}
+
 struct HitEvent: Event {
     var timestamp: Double
     var gameHO: any GameHO
@@ -62,5 +70,21 @@ extension MissEvent: MatchRelatedEvent {
             print("Unsupported game hit object type")
             return nil
         }
+    }
+}
+
+struct GameCompleteEvent: Event {
+    var timestamp: Double
+    var finalScore: Int
+}
+
+extension GameCompleteEvent: MatchRelatedEvent {
+    static func makeMessage(event: GameCompleteEvent, playerId: String) -> MatchEventMessage? {
+        let timeStamp = Date().timeIntervalSince1970
+        return MatchEventMessage(
+            timestamp: timeStamp,
+            sourceId: playerId,
+            event: PublishGameCompleteEvent(timestamp: timeStamp,
+                                            sourceId: playerId, finalScore: event.finalScore))
     }
 }

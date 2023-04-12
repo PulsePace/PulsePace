@@ -16,6 +16,7 @@ class CompetitiveHOManager: HitObjectManager {
     }
 
     override func registerEventHandlers(eventManager: EventManagable) {
+        super.registerEventHandlers(eventManager: eventManager)
         eventManager.registerHandler(onSpawnBombHandler)
         eventManager.registerHandler(onActivateNoHintsHandler)
     }

@@ -7,273 +7,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0F72192A-CB23-4FE4-AE64-B811848C1DA0"
-            shouldBeEnabled = "No"
+            uuid = "F26839DC-0CD5-49C7-9136-A577F3E8CB2E"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/GameHitObjects/HitObjectManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "spawnGameHitObject(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C81BD812-1EC7-401E-A9BC-7925954A24A5"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/ViewModels/GameViewModel.swift"
+            filePath = "PulsePace/Gameplay/Event/HitEvent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
             endingLineNumber = "83"
-            landmarkName = "step()"
+            landmarkName = "makeMessage(event:playerId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F5A3908A-A2A1-4D64-8B7C-DF30AD232323"
-            shouldBeEnabled = "No"
+            uuid = "B578AEA8-2632-41F4-BD8A-E5C09A06B71C"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/Views/GameplayAreaView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "renderTapGameHO(tapGameHOVMs:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AC88CBFF-8DEC-4169-88C3-4B699A14C23E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/Views/GameView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E67B1AA0-62D7-4328-A204-76236A29A34A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/Views/GameView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8B8F5866-06D9-4C00-95CD-763C48E98A51"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/ViewModels/GameViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "sceneAdaptor"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0A2B79DC-4C87-486A-AB3E-FAB26E78A54B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/GameEngine.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "load(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "0A2B79DC-4C87-486A-AB3E-FAB26E78A54B - 8cb2d2e4942a510a"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PulsePace.GameEngine.step(Swift.Double) -&gt; ()"
-                  moduleName = "PulsePace"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zlimezz/Desktop/NUS%20Schoolwork/CS3217/PulsePace/PulsePace/Gameplay/GameEngine.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "192">
-               </Location>
-               <Location
-                  uuid = "0A2B79DC-4C87-486A-AB3E-FAB26E78A54B - 8cb2d2e4942a510a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PulsePace.GameEngine.step(Swift.Double) -&gt; ()"
-                  moduleName = "PulsePace"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zlimezz/Desktop/NUS%20Schoolwork/CS3217/PulsePace/PulsePace/Gameplay/GameEngine.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "432">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "60B8B472-6BE3-47D9-9DC9-C1CA840E15CA"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/GameHitObjects/HitObjectManager.swift"
+            filePath = "PulsePace/Gameplay/System/MatchEventRelay.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
             endingLineNumber = "56"
-            landmarkName = "spawnGameHitObject(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5EF7442A-DD3A-43DD-84AC-9CC7BCA5A938"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/GameHitObjects/HitObjectManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "checkBeatMap(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "19BF0D6D-7315-42DE-857E-9A0507F24E74"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/GameEngine.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "GameEngine"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6D935A32-202E-4F7A-B93A-D6BBD9B59211"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PulsePace/BeatmapDesigner/ViewModels/BeatmapDesignerViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "subBeatSpacing"
+            landmarkName = "gameCompleteEventRelay"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B8E9D2FF-D011-445B-9C44-B569772E20FA"
+            uuid = "6CD67452-5190-4FEB-B8BA-AFD9795995A0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PulsePace/Gameplay/GameHitObjects/SlideGameHO.swift"
+            filePath = "PulsePace/Gameplay/System/Evaluator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "SlideGameHO"
-            landmarkType = "3">
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "markGameCompleteHandler"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7A483CDE-CEFD-4501-AA74-DF20FA9D7789"
+            uuid = "5725ED57-81E7-45C5-9785-D03B1077D8AD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PulsePaceTests/MyQueueTests.swift"
+            filePath = "PulsePace/Gameplay/System/CoopScoreSystem.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "12"
-            endingLineNumber = "12"
-            landmarkName = "testEnqueue()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "7A483CDE-CEFD-4501-AA74-DF20FA9D7789 - 786fde31c952f229"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PulsePaceTests.MyQueueTests.testEnqueue() -&gt; ()"
-                  moduleName = "PulsePaceTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zlimezz/Desktop/NUS%20Schoolwork/CS3217/PulsePace/PulsePaceTests/MyQueueTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  uuid = "7A483CDE-CEFD-4501-AA74-DF20FA9D7789 - 786fde31c952f384"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PulsePaceTests.MyQueueTests.testEnqueue() -&gt; ()"
-                  moduleName = "PulsePaceTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zlimezz/Desktop/NUS%20Schoolwork/CS3217/PulsePace/PulsePaceTests/MyQueueTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "13"
-                  endingLineNumber = "13"
-                  offsetFromSymbolStart = "72">
-               </Location>
-            </Locations>
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "completeGameHandler"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

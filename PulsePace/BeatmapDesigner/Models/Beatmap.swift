@@ -15,6 +15,11 @@ struct Beatmap {
     let preSpawnInterval: Double
     let sliderSpeed: Double
     var hitObjects: [any HitObject]
+    var endBeat: Double {
+        hitObjects.reduce(0, { x, y in
+            max(x, y.endTime)
+        })
+    }
 
     init(bpm: Double, offset: Double,
          hitObjects: [any HitObject], preSpawnInterval: Double = 2,

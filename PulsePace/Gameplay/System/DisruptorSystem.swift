@@ -30,6 +30,16 @@ class DisruptorSystem: ScoreSystem {
         self.scoreManager.livesRemaining = 3
     }
 
+    override func attachToMatch(_ match: Match) {
+        guard let userConfigManager = UserConfigManager.instance else {
+            fatalError("No user config manager")
+        }
+
+        selectedTarget = match.players.first(where: { $0.key != userConfigManager.userId })?.key
+        ?? userConfigManager.userId
+        match.players.forEach({ allScores[$0.key] = 0 })
+    }
+
     override func reset() {
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
@@ -40,6 +50,7 @@ class DisruptorSystem: ScoreSystem {
         self.selectedDisruptor = .bomb
         self.spawnedDisruptorLocations = []
         self.scoreManager.livesRemaining = 3
+        self.allScores = [:]
     }
 
     func setDisruptor(disruptor: Disruptor) {

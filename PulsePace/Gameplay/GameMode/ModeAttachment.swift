@@ -10,17 +10,20 @@ import Foundation
 final class ModeAttachment {
     let modeName: String
     var hOManager: HitObjectManager
+    var evaluator: Evaluator
     var scoreSystem: ScoreSystem
     var listeningMatchEvents: [any MatchEvent.Type]
     var matchEventRelay: MatchEventRelay?
     var roomSetting: RoomSetting
     var gameViewElements: [GameViewElement]
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, roomSetting: RoomSetting,
+    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem,
+         evaluator: Evaluator, roomSetting: RoomSetting,
          listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?,
          gameViewElements: [GameViewElement]) {
         self.modeName = modeName
         self.hOManager = hOManager
+        self.evaluator = evaluator
         self.scoreSystem = scoreSystem
         self.roomSetting = roomSetting
         self.listeningMatchEvents = listeningMatchEvents
@@ -32,6 +35,7 @@ final class ModeAttachment {
     func clean() {
         hOManager.reset()
         scoreSystem.reset()
+        evaluator.reset()
         matchEventRelay?.reset()
     }
 
@@ -41,12 +45,15 @@ final class ModeAttachment {
 
     func configEngine(_ gameEngine: GameEngine) {
         gameEngine.hitObjectManager = hOManager
+        gameEngine.evaluator = evaluator
         gameEngine.scoreSystem = scoreSystem
 
         if let matchEventRelay = matchEventRelay,
            let match = gameEngine.match {
             matchEventRelay.assignProperties(publisher: gameEngine.publishMatchEvent, match: match)
             gameEngine.systems.append(matchEventRelay)
+
+            scoreSystem.attachToMatch(match)
         } else {
             print("No active match")
         }
@@ -68,6 +75,7 @@ final class ModeFactory: Factory {
         modeName: "Classic",
         hOManager: HitObjectManager(),
         scoreSystem: ScoreSystem(ScoreManager()),
+        evaluator: DefaultEvaluator(),
         roomSetting: RoomSettingFactory.defaultSetting,
         listeningMatchEvents: [],
         matchEventRelay: nil,
@@ -83,12 +91,13 @@ final class ModeFactory: Factory {
         let coopMode = ModeAttachment(
             modeName: "Basic Coop",
             hOManager: CoopHOManager(),
-            scoreSystem: ScoreSystem(ScoreManager()),
+            scoreSystem: CoopScoreSystem(ScoreManager()),
+            evaluator: CoopEvaluator(),
             roomSetting: RoomSettingFactory.baseCoopSetting,
             listeningMatchEvents: [
-                PublishMissTapEvent.self,
-                PublishMissHoldEvent.self,
-                PublishMissSlideEvent.self
+                PublishMissTapEvent.self, PublishMissHoldEvent.self,
+                PublishMissSlideEvent.self, PublishScoreEvent.self,
+                PublishGameCompleteEvent.self
             ],
             matchEventRelay: CoopMatchEventRelay(),
             gameViewElements: [.gameplayArea, .scoreBoard]
@@ -98,17 +107,15 @@ final class ModeFactory: Factory {
             modeName: "Rhythm Battle",
             hOManager: CompetitiveHOManager(),
             scoreSystem: DisruptorSystem(ScoreManager()),
+            evaluator: BattleEvaluator(),
             roomSetting: RoomSettingFactory.competitiveSetting,
             listeningMatchEvents: [
-                PublishBombDisruptorEvent.self,
-                PublishNoHintsDisruptorEvent.self,
-                PublishDeathEvent.self,
-                PublishScoreEvent.self
+                PublishBombDisruptorEvent.self, PublishNoHintsDisruptorEvent.self,
+                PublishDeathEvent.self, PublishScoreEvent.self
             ],
             matchEventRelay: CompetitiveMatchEventRelay(),
             gameViewElements: [
-                .gameplayArea, .disruptorOptions, .matchFeed,
-                .leaderboard, .livesCount
+                .gameplayArea, .disruptorOptions, .matchFeed, .leaderboard, .livesCount
             ]
         )
 
@@ -117,14 +124,13 @@ final class ModeFactory: Factory {
         assemblies[competitiveMode.modeName] = competitiveMode
 
         gameModes.append(
-            GameMode(image: "classic-mode", category: "Singleplayer", title: "Classic Mode",
+            GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
         gameModes.append(
-            GameMode(image: "catch-the-potato", category: "Multiplayer", title: "Catch The Potato",
+            GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
                      caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))
         gameModes.append(
-            GameMode(image: "rhythm-battle", category: "Multiplayer",
-                     title: "Rhythm Battle",
+            GameMode(image: "", category: "Multiplayer", title: "Rhythm Battle",
                      caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage,
                      metaInfo: competitiveMode.modeName))
     }
