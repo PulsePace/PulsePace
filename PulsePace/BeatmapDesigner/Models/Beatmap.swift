@@ -10,8 +10,9 @@ import Foundation
 struct Beatmap {
     typealias SerialType = SerializedBeatmap
     /// All the "time units" are in beats
-    let bpm: Double
-    let offset: Double
+    let songData: SongData
+//    let bpm: Double
+//    let offset: Double
     let preSpawnInterval: Double
     let sliderSpeed: Double
     var hitObjects: [any HitObject]
@@ -22,14 +23,12 @@ struct Beatmap {
     }
 
     init(
-        bpm: Double,
-        offset: Double,
+        songData: SongData,
         hitObjects: [any HitObject],
         preSpawnInterval: Double = 2,
         sliderSpeed: Double = 100
     ) {
-        self.bpm = bpm
-        self.offset = offset
+        self.songData = songData
         self.hitObjects = hitObjects
         self.preSpawnInterval = preSpawnInterval
         self.sliderSpeed = sliderSpeed
@@ -48,16 +47,18 @@ extension Beatmap: Serializable {
                 fatalError(error.localizedDescription)
             }
         }
-        return SerializedBeatmap(bpm: bpm, offset: offset,
-                                 preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed,
-                                 stringifiedHOs: stringifiedHOs)
+        return SerializedBeatmap(
+            songData: songData.serialize(),
+            preSpawnInterval: preSpawnInterval,
+            sliderSpeed: sliderSpeed,
+            stringifiedHOs: stringifiedHOs
+        )
     }
 }
 
 struct SerializedBeatmap: Deserializable {
     typealias DeserialType = Beatmap
-    let bpm: Double
-    let offset: Double
+    let songData: SerializedSongData
     let preSpawnInterval: Double
     let sliderSpeed: Double
     // cannot put any SerializedHO here
@@ -67,8 +68,10 @@ struct SerializedBeatmap: Deserializable {
         let deserializedHOs = stringifiedHOs.map { stringifiedHO in
             HOTypeFactory.assemble(hOTypeLabel: stringifiedHO.typeLabel, data: stringifiedHO.data).deserialize()
         }
-        return Beatmap(bpm: bpm, offset: offset,
-                       hitObjects: deserializedHOs,
-                       preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed)
+        return Beatmap(
+            songData: songData.deserialize(),
+            hitObjects: deserializedHOs,
+            sliderSpeed: sliderSpeed
+        )
     }
 }

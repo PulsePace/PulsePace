@@ -69,7 +69,7 @@ class HitObjectManager: ModeSystem, EventSource {
     func feedBeatmap(beatmap: Beatmap, eventManager: EventManagable) {
         self.remover = objRemover(eventManager)
         self.preSpawnInterval = beatmap.preSpawnInterval
-        self.offset = beatmap.offset
+        self.offset = beatmap.songData.offset
         self.slideSpeed = beatmap.sliderSpeed
         self.songEndBeat = beatmap.endBeat
         beatmap.hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }

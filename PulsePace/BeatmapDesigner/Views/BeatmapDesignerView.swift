@@ -97,6 +97,7 @@ struct BeatmapDesignerView: View {
     @ViewBuilder
     private func renderStartButton() -> some View {
         Button(action: {
+            gameViewModel.songData = viewModel.songData
             gameViewModel.selectedGameMode = ModeFactory.defaultMode
             gameViewModel.initEngine(with: viewModel.beatmap)
             pageList.navigate(to: .playPage)

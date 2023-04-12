@@ -26,16 +26,6 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    func startPlayer(data: Data) {
-        do {
-            stopPlayer()
-            player = try AVAudioPlayer(data: data)
-            initialisePlayer(player: player)
-        } catch {
-            print("Failed to initialise player", error)
-        }
-    }
-
     func increasePlaybackRate() {
         guard let player = player else {
             return
@@ -57,7 +47,6 @@ final class AudioManager: ObservableObject {
         player.enableRate = true
         player.prepareToPlay()
         player.rate = 1
-        player.play()
     }
 
     func stopPlayer() {

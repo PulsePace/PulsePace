@@ -48,7 +48,7 @@ struct GameView: View {
         }
         .onAppear {
             if viewModel.gameEngine == nil {
-                viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
+                viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 audioManager.startPlayer(track: "track_1")
