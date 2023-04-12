@@ -7,13 +7,17 @@
 
 import Foundation
 
-class HitObjectManager: ModeSystem {
+class HitObjectManager: ModeSystem, EventSource {
+    var eventManager: EventManagable?
     private var counter = 0
     private var remover: ((Entity) -> Void)?
     private var queuedHitObjects: MyQueue<any HitObject>
-    private var offset = 0.0
+    var offset = 0.0
     private var slideSpeed = 0.0
     var preSpawnInterval = 0.0
+    var songEndBeat = 0.0
+    let songEndBuffer: Double
+    private var lastHitObjectRemoved = false
 
     var gameHOTable: [Entity: any GameHO]
     private var allObjects: Set<Entity>
@@ -43,6 +47,8 @@ class HitObjectManager: ModeSystem {
         slideSpeed = 0
         preSpawnInterval = 0
         counter = 0
+        songEndBeat = 0
+        lastHitObjectRemoved = false
     }
 
     func registerEventHandlers(eventManager: EventManagable) {
@@ -50,10 +56,12 @@ class HitObjectManager: ModeSystem {
             fatalError("No event should not be emitted")
         }
         eventManager.registerHandler(noHandler)
+        self.eventManager = eventManager
     }
 
-    init() {
+    init(_ songEndBuffer: Double = 5) {
         queuedHitObjects = MyQueue()
+        self.songEndBuffer = songEndBuffer
         gameHOTable = [:]
         allObjects = Set()
     }
@@ -63,6 +71,7 @@ class HitObjectManager: ModeSystem {
         self.preSpawnInterval = beatmap.preSpawnInterval
         self.offset = beatmap.offset
         self.slideSpeed = beatmap.sliderSpeed
+        self.songEndBeat = beatmap.endBeat
         beatmap.hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
     }
 
@@ -91,6 +100,15 @@ class HitObjectManager: ModeSystem {
             _ = queuedHitObjects.dequeue()
         }
 
+        if !lastHitObjectRemoved && currBeat >= songEndBeat + songEndBuffer {
+            guard let eventManager = eventManager else {
+                fatalError("No event manager attached")
+            }
+            // Conductor should be paused here to prevent step
+            eventManager.add(event: LastHitobjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
+            lastHitObjectRemoved = true
+        }
+
         return gameHOSpawned
     }
 
@@ -98,7 +116,7 @@ class HitObjectManager: ModeSystem {
         guard let remover = remover else {
             fatalError("Hit object manager must have a valid remover")
         }
-        // TODO: HitObject differentiation
+
         let entity = Entity(id: counter, remover: remover)
         let newGameHO: any GameHO
         if let tapHO = hitObject as? TapHitObject {

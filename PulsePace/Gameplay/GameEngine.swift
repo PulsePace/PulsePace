@@ -18,6 +18,8 @@ class GameEngine {
 
     var hitObjectManager: HitObjectManager?
     var matchFeedSystem: MatchFeedSystem?
+    var evaluator: Evaluator?
+    var gameEnder: () -> Void
     private var inputManager: InputManager?
     var conductor: Conductor?
 
@@ -25,8 +27,8 @@ class GameEngine {
     var eventManager = EventManager()
     var systems: [System] = []
 
-    init(_ modeAttachment: ModeAttachment, match: Match? = nil) {
-
+    init(modeAttachment: ModeAttachment, gameEnder: @escaping () -> Void, match: Match? = nil) {
+        self.gameEnder = gameEnder
         if let match = match {
             self.match = match
             eventManager.setMatchEventHandler(matchEventHandler: self)
@@ -42,24 +44,14 @@ class GameEngine {
         systems.append(InputSystem())
 
         modeAttachment.configEngine(self)
-        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem else {
-            fatalError("Mode attachment should have initialized hit object manager and score system")
+        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem, let evaluator = evaluator else {
+            fatalError("Mode attachment should have initialized hit object manager, score system and evaluator")
         }
 
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
-        // TODO: Move to mode attachment
-        if let disruptorSystem = scoreSystem as? DisruptorSystem,
-           let match = match {
-            disruptorSystem.selectedTarget = match.players.first(where: { $0.key != userConfigManager.userId })?.key
-            ?? userConfigManager.userId
-            match.players.forEach({ disruptorSystem.allScores[$0.key] = 0 })
-        }
         systems.append(hitObjectManager)
         systems.append(scoreSystem)
-        systems.forEach({ $0.registerEventHandlers(eventManager: self.eventManager) })
+        systems.append(evaluator)
+        systems.forEach { $0.registerEventHandlers(eventManager: self.eventManager) }
     }
 
     func load(_ beatmap: Beatmap) {
@@ -75,6 +67,15 @@ class GameEngine {
         conductor.step(deltaTime)
         systems.forEach({ $0.step(deltaTime: deltaTime, songPosition: conductor.songPosition) })
         eventManager.handleAllEvents()
+
+        guard let evaluator = evaluator else {
+            fatalError("No active evaluator")
+        }
+
+        if evaluator.evaluate() {
+            // Stop game
+            gameEnder()
+        }
     }
 
     func setTarget(targetId: String) {

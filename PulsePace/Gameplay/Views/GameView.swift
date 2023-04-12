@@ -10,8 +10,8 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
-    // FIXME: Remove loc
     @EnvironmentObject var beatmapManager: BeatmapManager
+    @Binding var path: [Page]
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -59,25 +59,15 @@ struct GameView: View {
         }
         .onDisappear {
             audioManager.stopPlayer()
-            viewModel.stopGameplay()
+            viewModel.exitGameplay()
         }
-        .environmentObject(viewModel)
-        .navigationBarBackButtonHidden(viewModel.match != nil)
         .fullBackground(imageName: viewModel.gameBackground)
+        .popup(isPresented: $viewModel.gameEnded) {
+            GameEndView(path: $path)
+        }
+        .navigationBarBackButtonHidden(viewModel.match != nil)
     }
 }
-
-// class GameViewFactory {
-//    static func createGameView(for gameMode: String) -> some View {
-//        let gameViewElements = ModeFactory.getModeAttachment(gameMode).gameViewElements
-//        let view = ZStack {
-//            ForEach(gameViewElements, id: \.self) { element in
-//                GameViewElement.gameViewElementsBuilderMap[element]?()
-//            }
-//        }
-//        return view
-//    }
-// }
 
 enum GameViewElement {
     case playbackControls
@@ -87,16 +77,4 @@ enum GameViewElement {
     case leaderboard
     case matchFeed
     case livesCount
-
-//    static let gameViewElementsBuilderMap: [GameViewElement: () -> AnyView] = [
-//        .playbackControls: { GameControlView().eraseToAnyView() },
-//        .gameplayArea: { GameplayAreaView().eraseToAnyView() },
-//        .scoreBoard: { ScoreView().eraseToAnyView() }
-//    ]
 }
-
-// extension View {
-//    func eraseToAnyView() -> AnyView {
-//        AnyView(self)
-//    }
-// }

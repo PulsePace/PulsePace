@@ -16,7 +16,6 @@ class InputSystem: System {
     private lazy var inputEventHandler = { [self] (eventManager: EventManagable, event: InputEvent) -> Void in
         if event.isEndingInput {
             event.gameHO.checkOnInputEnd(input: event.inputData)
-            // TODO: Do not check for hit event after isHit
             eventManager.add(event: HitEvent(gameHO: event.gameHO, timestamp: Date().timeIntervalSince1970))
         } else {
             event.gameHO.checkOnInput(input: event.inputData)

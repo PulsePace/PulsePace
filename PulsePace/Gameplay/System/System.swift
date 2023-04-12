@@ -20,3 +20,7 @@ extension System {
 protocol ModeSystem: System {
     func reset()
 }
+
+protocol EventSource {
+    var eventManager: EventManagable? { get }
+}

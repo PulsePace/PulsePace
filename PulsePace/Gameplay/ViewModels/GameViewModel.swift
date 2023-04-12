@@ -15,7 +15,6 @@ protocol RenderSystem {
 
 class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
-    // FIXME: make private
     var gameEngine: GameEngine?
     private var audioPlayer: AVAudioPlayer?
     @Published var slideGameHOs: [SlideGameHOVM] = []
@@ -23,12 +22,20 @@ class GameViewModel: ObservableObject, RenderSystem {
     @Published var tapGameHOs: [TapGameHOVM] = []
     @Published var songPosition: Double = 0
     @Published var matchFeedMessages: [MatchFeedMessage] = []
+    @Published var gameEnded = false
 
     var score: String {
         guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
             return String(0)
         }
         return String(format: "%06d", scoreManager.score)
+    }
+
+    var gameEndScore: String {
+        guard let scoreSystem = gameEngine?.scoreSystem else {
+            return String(0)
+        }
+        return String(scoreSystem.getGameEndScore())
     }
 
     var accuracy: String {
@@ -81,6 +88,12 @@ class GameViewModel: ObservableObject, RenderSystem {
     typealias DictAsArray = [(key: String, value: String)]
     var otherPlayers: DictAsArray = []
     var leaderboard: DictAsArray = []
+
+    private lazy var gameEnder: () -> Void = { [weak self] in
+        print("Game ended")
+        self?.stopGameplay()
+        self?.gameEnded = true
+    }
 
     lazy var sceneAdaptor: ([Entity: any GameHO]) -> Void = { [weak self] gameHOTable in
         self?.clear()
@@ -156,7 +169,7 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     func initEngine(with beatmap: Beatmap) {
         selectedGameMode.clean()
-        gameEngine = GameEngine(selectedGameMode, match: match)
+        gameEngine = GameEngine(modeAttachment: selectedGameMode, gameEnder: gameEnder, match: match)
         gameEngine?.load(beatmap)
     }
 
@@ -174,7 +187,12 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     func stopGameplay() {
+        audioPlayer?.stop()
+    }
+
+    func exitGameplay() {
         displayLink?.invalidate()
+        gameEnded = false
         gameEngine = nil
         match = nil
         clear()

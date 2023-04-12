@@ -25,6 +25,7 @@ struct ConfigView: View {
 struct StyledButton: View {
     var action: () -> Void
     var text: String
+    var color = Color.purple
 
     var body: some View {
         Button(action: action) {
@@ -33,7 +34,7 @@ struct StyledButton: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(minWidth: 200)
-                .background(Color.purple)
+                .background(color)
                 .cornerRadius(20)
                 .shadow(radius: 5)
         }

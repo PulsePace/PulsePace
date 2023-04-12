@@ -11,6 +11,10 @@ class ScoreSystem: ModeSystem {
     var proximityScoreThreshould = [0.5, 1]
     var scoreManager: ScoreManager
 
+    func getGameEndScore() -> Int {
+        scoreManager.score
+    }
+
     func reset() {
         scoreManager = ScoreManager()
     }
@@ -18,6 +22,8 @@ class ScoreSystem: ModeSystem {
     init(_ scoreManager: ScoreManager) {
         self.scoreManager = scoreManager
     }
+
+    func attachToMatch(_ match: Match) {}
 
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(hitEventHandler)
