@@ -110,11 +110,16 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
                 viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                audioManager.startPlayer(track: "track_1")
+                if let track = viewModel.songData?.track {
+                    audioManager.startPlayer(track: track)
+                } else {
+                    audioManager.startPlayer(track: "track_1")
+                }
                 viewModel.startGameplay()
                 if let audioPlayer = audioManager.player {
                     viewModel.initialisePlayer(audioPlayer: audioPlayer)
                 }
+                audioManager.player?.play()
             }
         }
         .onDisappear {
