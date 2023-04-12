@@ -186,12 +186,12 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     func stopGameplay() {
-        displayLink?.isPaused = true
         audioPlayer?.stop()
     }
 
     func exitGameplay() {
         displayLink?.invalidate()
+        gameEnded = false
         gameEngine = nil
         match = nil
         clear()

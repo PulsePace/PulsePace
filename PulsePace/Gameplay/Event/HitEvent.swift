@@ -85,6 +85,6 @@ extension GameCompleteEvent: MatchRelatedEvent {
             timestamp: timeStamp,
             sourceId: playerId,
             event: PublishGameCompleteEvent(timestamp: timeStamp,
-                                            sourceId: playerId, playerScore: event.finalScore))
+                                            sourceId: playerId, finalScore: event.finalScore))
     }
 }

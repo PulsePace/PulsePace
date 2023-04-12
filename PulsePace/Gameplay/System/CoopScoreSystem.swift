@@ -16,6 +16,7 @@ class CoopScoreSystem: ScoreSystem {
 
     override func registerEventHandlers(eventManager: EventManagable) {
         super.registerEventHandlers(eventManager: eventManager)
+        eventManager.registerHandler(onUpdateScoreEventHandler)
         eventManager.registerHandler(completeGameHandler)
     }
 

@@ -176,7 +176,7 @@ final class GameCompleteMessageDecoder: MessageHandler {
         }
 
         eventManager.add(event: GameCompleteEvent(timestamp: matchEvent.timestamp,
-                                                  finalScore: matchEvent.playerScore))
+                                                  finalScore: matchEvent.finalScore))
     }
 }
 

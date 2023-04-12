@@ -31,7 +31,7 @@ struct PublishGameCompleteEvent: MatchEvent {
     typealias MessageHandlerType = GameCompleteMessageDecoder
     var timestamp: Double
     var sourceId: String
-    var playerScore: Int
+    var finalScore: Int
 }
 
 struct PublishMissTapEvent: MatchEvent {

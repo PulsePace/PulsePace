@@ -40,6 +40,7 @@ class CoopMatchEventRelay: MatchEventRelay {
 
     func registerEventHandlers(eventManager: EventManagable) {
         eventManager.registerHandler(missEventRelay)
+        eventManager.registerHandler(gameCompleteEventRelay)
     }
 
     private lazy var missEventRelay = { [weak self] (_: EventManagable, missEvent: MissEvent) -> Void in

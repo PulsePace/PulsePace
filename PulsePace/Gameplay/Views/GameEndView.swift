@@ -40,7 +40,7 @@ struct GameEndView: View {
         } else if gameVM.selectedGameMode.modeName == "Basic Coop" {
             return VStack(spacing: 15) {
                 Text("Coop Score")
-                Text(String(500))
+                Text(gameVM.gameEndScore)
                 StyledButton(action: { path.removeAll() }, text: "MENU", color: .orange)
             }
         } else {

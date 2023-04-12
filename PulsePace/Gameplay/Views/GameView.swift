@@ -59,7 +59,7 @@ struct GameView: View {
         }
         .onDisappear {
             AudioManager.shared.stopMusic()
-            viewModel.stopGameplay()
+            viewModel.exitGameplay()
         }
         .fullBackground(imageName: viewModel.gameBackground)
         .popup(isPresented: $viewModel.gameEnded) {

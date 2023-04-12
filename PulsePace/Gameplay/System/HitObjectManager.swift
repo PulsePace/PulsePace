@@ -17,6 +17,7 @@ class HitObjectManager: ModeSystem, EventSource {
     var preSpawnInterval = 0.0
     var songEndBeat = 0.0
     let songEndBuffer: Double
+    private var lastHitObjectRemoved = false
 
     var gameHOTable: [Entity: any GameHO]
     private var allObjects: Set<Entity>
@@ -46,6 +47,8 @@ class HitObjectManager: ModeSystem, EventSource {
         slideSpeed = 0
         preSpawnInterval = 0
         counter = 0
+        songEndBeat = 0
+        lastHitObjectRemoved = false
     }
 
     func registerEventHandlers(eventManager: EventManagable) {
@@ -97,11 +100,13 @@ class HitObjectManager: ModeSystem, EventSource {
             _ = queuedHitObjects.dequeue()
         }
 
-        if currBeat >= songEndBeat + songEndBuffer {
+        if !lastHitObjectRemoved && currBeat >= songEndBeat + songEndBuffer {
             guard let eventManager = eventManager else {
                 fatalError("No event manager attached")
             }
+            // Conductor should be paused here to prevent step
             eventManager.add(event: LastHitobjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
+            lastHitObjectRemoved = true
         }
 
         return gameHOSpawned
