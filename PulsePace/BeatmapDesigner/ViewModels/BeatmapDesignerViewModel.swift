@@ -24,7 +24,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     var frame: CGSize = .zero
-    private var player: AVAudioPlayer?
+    private var player: AVAudioPlayerNode?
     private var displayLink: CADisplayLink?
     private var songTitle: String
 
@@ -122,10 +122,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     @objc func step(displaylink: CADisplayLink) {
-        guard let player = player, !isEditing else {
-            return
-        }
-        sliderValue = player.currentTime
+        sliderValue = AudioManager.shared.currentTime()
     }
 
     func virtualisePosition(_ position: CGPoint) -> CGPoint {
@@ -134,7 +131,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         return CGPoint(x: virtualXOffset, y: virtualYOffset)
     }
 
-    func initialisePlayer(player: AVAudioPlayer) {
+    func initialisePlayer(player: AVAudioPlayerNode) {
         self.player = player
     }
 

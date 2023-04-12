@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
-    @EnvironmentObject var audioManager: AudioManager
+    // FIXME: Remove loc
     @EnvironmentObject var beatmapManager: BeatmapManager
     @Binding var path: [Page]
 
@@ -48,18 +48,18 @@ struct GameView: View {
             alignment: .topLeading
         )
         .onAppear {
-            audioManager.startPlayer(track: "test")
+            AudioManager.shared.playMusic(track: "test")
             if viewModel.gameEngine == nil {
                 viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
             }
             viewModel.startGameplay()
-            if let audioPlayer = audioManager.player {
+            if let audioPlayer = AudioManager.shared.musicPlayer {
                 viewModel.initialisePlayer(audioPlayer: audioPlayer)
             }
         }
         .onDisappear {
-            audioManager.stopPlayer()
-            viewModel.exitGameplay()
+            AudioManager.shared.stopMusic()
+            viewModel.stopGameplay()
         }
         .fullBackground(imageName: viewModel.gameBackground)
         .popup(isPresented: $viewModel.gameEnded) {

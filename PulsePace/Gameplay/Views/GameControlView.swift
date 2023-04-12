@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct GameControlView: View {
-    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var viewModel: GameViewModel
     @State var isPlaying = true
 
     var body: some View {
         HStack {
             if viewModel.selectedGameMode.requires(gameViewElement: .playbackControls),
-               let player = audioManager.player {
-                Slider(value: $viewModel.songPosition, in: 0...player.duration).disabled(true)
+               let player = AudioManager.shared.musicPlayer {
+                Slider(value: $viewModel.songPosition, in: 0...AudioManager.shared.musicDuration).disabled(true)
                 SystemIconButtonView(systemName: isPlaying
                                      ? "pause.circle.fill" : "play.circle.fill", fontSize: 44) {
-                    audioManager.togglePlayer()
+                    AudioManager.shared.toggleMusic()
                     isPlaying = player.isPlaying
                     viewModel.toggleGameplay()
                 }.padding(.all, 20)
