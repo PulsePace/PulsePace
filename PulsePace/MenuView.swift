@@ -10,20 +10,19 @@ import SwiftUI
 struct MenuView: View {
     @StateObject private var achievementManager = AchievementManager()
     @StateObject private var audioManager = AudioManager()
+    @StateObject private var beatmapManager = BeatmapManager()
+    @StateObject var userConfigManager = UserConfigManager()
     @StateObject private var gameVM = GameViewModel()
     @StateObject private var beatmapDesignerVM = BeatmapDesignerViewModel()
-    @StateObject private var beatmapManager = BeatmapManager()
     @StateObject private var pageList = PageList()
-    @State private var isShowing = false
-    @StateObject var userConfigManager = UserConfigManager()
 
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $pageList.pages) {
             ZStack {
                 VStack {
                     HStack {
                         Spacer()
-                        StyledIconButton(action: { path.append(Page.configPage) }, icon: "gear")
+                        StyledIconButton(action: { pageList.navigate(to: Page.configPage) }, icon: "gear")
                     }
                     Spacer()
                 }
@@ -31,32 +30,39 @@ struct MenuView: View {
                     Text("PulsePace")
                         .font(.largeTitle)
                     StyledMenuButton(page: Page.gameModesPage, text: "Play")
-                    StyledMenuButton(page: Page.designPage, text: "Design")
+                    StyledMenuButton(page: Page.songSelectPage, text: "Design")
                 }
             }
             .navigationDestination(for: Page.self) { page in
-                if page == Page.designPage {
-                    BeatmapDesignerView(path: $path)
-                } else if page == Page.gameModesPage {
-                    GameModesView(path: $path)
-                } else if page == Page.lobbyPage {
-                    LobbyView(path: $path)
-                } else if page == Page.playPage {
-                    GameView(path: $path)
-                } else if page == Page.configPage {
-                    ConfigView()
-                } else if page == Page.songSelectPage {
-                    SongSelectView()
-                } else {
-                    Text("Error 404 Not Found :(`")
-                }
+                renderDestination(page: page)
             }
         }
         .environmentObject(achievementManager)
         .environmentObject(audioManager)
+        .environmentObject(beatmapManager)
+        .environmentObject(userConfigManager)
         .environmentObject(gameVM)
         .environmentObject(beatmapDesignerVM)
-        .environmentObject(beatmapManager)
+        .environmentObject(pageList)
+    }
+
+    @ViewBuilder
+    private func renderDestination(page: Page) -> some View {
+        if page == Page.designPage {
+            BeatmapDesignerView()
+        } else if page == Page.gameModesPage {
+            GameModesView()
+        } else if page == Page.lobbyPage {
+            LobbyView()
+        } else if page == Page.playPage {
+            GameView()
+        } else if page == Page.configPage {
+            ConfigView()
+        } else if page == Page.songSelectPage {
+            SongSelectView()
+        } else {
+            Text("Error 404 Not Found :(`")
+        }
     }
 }
 
@@ -93,29 +99,6 @@ struct StyledMenuButton: View {
                 .shadow(radius: 5)
         }
         .disabled(isDisabled)
-    }
-}
-
-struct Page: Hashable {
-    static let designPage = Page(name: "design")
-    static let gameModesPage = Page(name: "gameModes")
-    static let lobbyPage = Page(name: "lobby")
-    static let playPage = Page(name: "play")
-    let name: String
-    // Data from the page, e.g. gameModesPage contains selected gamemode that should be accessed by lobby page
-    var data: Data?
-
-    init(name: String, data: Data? = nil) {
-        self.name = name
-        self.data = data
-    }
-
-    static func == (lhs: Page, rhs: Page) -> Bool {
-        lhs.name == rhs.name
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
     }
 }
 

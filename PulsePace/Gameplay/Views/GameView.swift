@@ -11,7 +11,7 @@ struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
-    @Binding var path: [Page]
+    @EnvironmentObject var pageList: PageList
 
     var body: some View {
         ZStack(alignment: .center) {
@@ -65,7 +65,7 @@ struct GameView: View {
         }
         .fullBackground(imageName: viewModel.gameBackground)
         .popup(isPresented: $viewModel.gameEnded) {
-            GameEndView(path: $path)
+            GameEndView()
         }
         .navigationBarBackButtonHidden(viewModel.match != nil)
     }
