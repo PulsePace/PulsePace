@@ -61,6 +61,7 @@ struct PlaybackControlView: View {
                 let iconSystemName = player.isPlaying ? "pause.circle.fill" : "play.circle.fill"
                 SystemIconButtonView(systemName: iconSystemName, fontSize: 44, color: .white) {
                     audioManager.togglePlayer()
+//                    beatmapDesigner.isShowing.toggle()
                 }
             }
         }

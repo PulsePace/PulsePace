@@ -12,7 +12,7 @@ final class AudioManager: ObservableObject {
     @Published var player: AVAudioPlayer?
 
     func startPlayer(track: String) {
-        guard let url = Bundle.main.url(forResource: track, withExtension: "mp3") else {
+        guard let url = Bundle.main.url(forResource: track, withExtension: "m4a") else {
             print("Resource not found: \(track)")
             return
         }
@@ -20,6 +20,16 @@ final class AudioManager: ObservableObject {
         do {
             stopPlayer()
             player = try AVAudioPlayer(contentsOf: url)
+            initialisePlayer(player: player)
+        } catch {
+            print("Failed to initialise player", error)
+        }
+    }
+
+    func startPlayer(data: Data) {
+        do {
+            stopPlayer()
+            player = try AVAudioPlayer(data: data)
             initialisePlayer(player: player)
         } catch {
             print("Failed to initialise player", error)

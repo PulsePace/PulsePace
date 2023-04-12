@@ -105,5 +105,27 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
                 GameControlView()
             }
         }
+        .onAppear {
+            if viewModel.gameEngine == nil {
+                viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                audioManager.startPlayer(track: "track_1")
+                viewModel.startGameplay()
+                if let audioPlayer = audioManager.player {
+                    viewModel.initialisePlayer(audioPlayer: audioPlayer)
+                }
+            }
+        }
+        .onDisappear {
+            audioManager.stopPlayer()
+            viewModel.exitGameplay()
+            viewModel.songPosition = 0
+        }
+        .fullBackground(imageName: viewModel.gameBackground)
+        .popup(isPresented: $viewModel.gameEnded) {
+            GameEndView(path: $path)
+        }
+        .navigationBarBackButtonHidden(viewModel.match != nil)
     }
 }

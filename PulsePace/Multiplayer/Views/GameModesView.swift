@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct GameModesView: View {
+    @EnvironmentObject var pageList: PageList
     @StateObject var viewModel = GameModesViewModel()
-    @Binding var path: [Page]
     @State var isHowToPlayShown = false
 
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
@@ -21,7 +21,7 @@ struct GameModesView: View {
             ScrollView(.vertical) {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(viewModel.gameModes, id: \.title) { gameMode in
-                        CardView(path: $path, cardDisplayable: gameMode)
+                        CardView(cardDisplayable: gameMode)
                     }
                 }
                 .padding(20)
