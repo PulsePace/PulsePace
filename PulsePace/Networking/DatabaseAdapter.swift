@@ -14,6 +14,7 @@ protocol DatabaseAdapter<Data> {
     func setValue(at path: String, value: String, completion: @escaping (Result<Void, Error>) -> Void)
     func fetchData(at path: String, completion: @escaping (Result<Data, Error>) -> Void)
     func deleteData(at path: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteDataOnDisconnect(at path: String, completion: @escaping (Result<Void, Error>) -> Void)
     func runTransactionBlock(at path: String, updateBlock: @escaping (MutableData) -> TransactionResult,
                              completion: @escaping (Result<Void, Error>) -> Void)
 }

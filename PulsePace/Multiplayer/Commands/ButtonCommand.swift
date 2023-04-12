@@ -39,6 +39,18 @@ class JoinLobbyCommand: ButtonCommand {
     }
 }
 
+class ExitLobbyCommand: ButtonCommand {
+    override private init(action: @escaping ButtonCommand.Action) {
+        super.init(action: action)
+    }
+
+    convenience init(receiver: LobbyViewModel) {
+        self.init { _ in
+            receiver.lobby?.dataManager.exitLobby()
+        }
+    }
+}
+
 class StartMatchCommand: ButtonCommand {
     override private init(action: @escaping ButtonCommand.Action) {
         super.init(action: action)
