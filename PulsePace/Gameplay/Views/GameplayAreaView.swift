@@ -17,8 +17,8 @@ struct GameplayAreaView: View {
         }
         .zIndex(200)
         .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
+            maxWidth: 640,
+            maxHeight: 480,
             alignment: .topLeading
         )
 //        .background(.black)

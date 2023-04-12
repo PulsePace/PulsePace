@@ -14,39 +14,38 @@ struct GameView: View {
     @Binding var path: [Page]
 
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack(alignment: .center) {
             GameplayAreaView()
-            .overlay(alignment: .topTrailing) {
-                ScoreView()
-                    .ignoresSafeArea()
-            }
-            .overlay(alignment: .topTrailing) {
-                LeaderboardView()
-                    .ignoresSafeArea()
-            }
-            .overlay(alignment: .top) {
-                MatchFeedView()
-                    .ignoresSafeArea()
-            }
-            .overlay(alignment: .topLeading) {
-                LivesCountView()
-            }
-//            .overlay(alignment: .bottomTrailing) {
-//                GameControlView()
-//            }
-            .overlay(alignment: .bottom) {
-                VStack(alignment: .leading) {
-                    HitStatusView()
-                    DisruptorOptionsView()
-                    GameControlView()
-                }
-            }
         }
         .frame(
             maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .topLeading
+            maxHeight: .infinity
         )
+        .overlay(alignment: .topTrailing) {
+            ScoreView()
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .topTrailing) {
+            LeaderboardView()
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .top) {
+            MatchFeedView()
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .topLeading) {
+            LivesCountView()
+        }
+//            .overlay(alignment: .bottomTrailing) {
+//                GameControlView()
+//            }
+        .overlay(alignment: .bottom) {
+            VStack(alignment: .leading) {
+                HitStatusView()
+                DisruptorOptionsView()
+                GameControlView()
+            }
+        }
         .onAppear {
             if viewModel.gameEngine == nil {
                 viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
