@@ -21,9 +21,13 @@ struct Beatmap {
         })
     }
 
-    init(bpm: Double, offset: Double,
-         hitObjects: [any HitObject], preSpawnInterval: Double = 2,
-         sliderSpeed: Double = 100) {
+    init(
+        bpm: Double,
+        offset: Double,
+        hitObjects: [any HitObject],
+        preSpawnInterval: Double = 2,
+        sliderSpeed: Double = 100
+    ) {
         self.bpm = bpm
         self.offset = offset
         self.hitObjects = hitObjects

@@ -13,20 +13,19 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
     @Published var hitObjects: PriorityQueue<any HitObject>
     @Published var isEditing = false
-    @Published var bpm: Double = 123.482 // TODO: parameterise
-    @Published var offset: Double = 0
     @Published var zoom: Double = 128
     @Published var divisorIndex: Double = 0
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
     @Published var gestureHandler: any GestureHandler
+//    @Published var isShowing = true
+    var songData: SongData?
     var achievementManager: AchievementManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
     var frame: CGSize = .zero
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
-    private var songTitle: String
 
     var gestureHandlerList: [any GestureHandler] = []
 
@@ -58,6 +57,14 @@ class BeatmapDesignerViewModel: ObservableObject {
         mainBeatSpacing / divisor
     }
 
+    var bpm: Double {
+        songData?.bpm ?? 0
+    }
+
+    var offset: Double {
+        songData?.offset ?? 0
+    }
+
     var bps: Double {
         bpm / 60
     }
@@ -74,8 +81,16 @@ class BeatmapDesignerViewModel: ObservableObject {
         interval * quantisedBeat
     }
 
+    var songTitle: String {
+        get async {
+            await songData?.title ?? ""
+        }
+    }
+
     var namedBeatmap: NamedBeatmap {
-        NamedBeatmap(songTitle: songTitle, beatmap: beatmap)
+        get async {
+            NamedBeatmap(songTitle: await songTitle, beatmap: beatmap)
+        }
     }
 
     var beatmap: Beatmap {
@@ -104,8 +119,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         return Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjectS2B)
     }
 
-    init(songTitle: String = "Unravel") {
-        self.songTitle = songTitle
+    init() {
         hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
         gestureHandler = TapGestureHandler()
         gestureHandlerList = [
@@ -127,6 +141,10 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         sliderValue = player.currentTime
     }
+
+//    func initialiseConfig() {
+//        isShowing = true
+//    }
 
     func virtualisePosition(_ position: CGPoint) -> CGPoint {
         let virtualXOffset = (position.x - gridOffset.width) * 40 / gridSpacing

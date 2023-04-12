@@ -51,7 +51,7 @@ struct GameView: View {
                 viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                audioManager.startPlayer(track: "test")
+                audioManager.startPlayer(track: "track_1")
                 viewModel.startGameplay()
                 if let audioPlayer = audioManager.player {
                     viewModel.initialisePlayer(audioPlayer: audioPlayer)
