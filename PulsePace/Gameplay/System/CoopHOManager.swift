@@ -26,7 +26,7 @@ class CoopHOManager: HitObjectManager {
             in: self.minMissSpawnDelay...self.maxMissSpawnDelay) + event.hitObject.startTime
         event.hitObject.endTime = event.hitObject.startTime + lifeTime
         self.rearrangedMissedHO.enqueue(event.hitObject)
-        self.songEndBeat = max(songEndBeat, event.hitObject.endTime)
+        self.songEndBeat = max(self.songEndBeat, event.hitObject.endTime)
     }
 
     override func registerEventHandlers(eventManager: EventManagable) {
