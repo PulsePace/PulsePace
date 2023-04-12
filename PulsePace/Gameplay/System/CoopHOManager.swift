@@ -22,7 +22,8 @@ class CoopHOManager: HitObjectManager {
             fatalError("No active coop hit object manager")
         }
         let lifeTime = event.hitObject.endTime - event.hitObject.startTime
-        event.hitObject.startTime = Double.random(in: self.minMissSpawnDelay...self.maxMissSpawnDelay) + event.hitObject.startTime
+        event.hitObject.startTime = Double.random(
+            in: self.minMissSpawnDelay...self.maxMissSpawnDelay) + event.hitObject.startTime
         event.hitObject.endTime = event.hitObject.startTime + lifeTime
         self.rearrangedMissedHO.enqueue(event.hitObject)
         self.songEndBeat = max(songEndBeat, event.hitObject.endTime)

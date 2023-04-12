@@ -53,7 +53,8 @@ class CoopMatchEventRelay: MatchEventRelay {
         self.publisher?(matchEventMessage)
     }
 
-    private lazy var gameCompleteEventRelay = { [weak self] (_: EventManagable, gameCompleteEvent: GameCompleteEvent) -> Void in
+    private lazy var gameCompleteEventRelay
+    = { [weak self] (_: EventManagable, gameCompleteEvent: GameCompleteEvent) -> Void in
         guard let self = self else {
             fatalError("No active match event relay")
         }

@@ -29,7 +29,8 @@ class CoopScoreSystem: ScoreSystem {
         match.players.forEach({ allScores[$0.key] = 0 })
     }
 
-    private lazy var completeGameHandler = { [weak self] (eventManager: EventManagable, event: LastHitobjectRemovedEvent) -> Void in
+    private lazy var completeGameHandler
+    = { [weak self] (eventManager: EventManagable, event: LastHitobjectRemovedEvent) -> Void in
         guard let self = self else {
             fatalError("No coop score system")
         }

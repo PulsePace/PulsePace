@@ -95,17 +95,14 @@ final class ModeFactory: Factory {
             evaluator: CoopEvaluator(),
             roomSetting: RoomSettingFactory.baseCoopSetting,
             listeningMatchEvents: [
-                PublishMissTapEvent.self,
-                PublishMissHoldEvent.self,
-                PublishMissSlideEvent.self,
-                PublishScoreEvent.self,
+                PublishMissTapEvent.self, PublishMissHoldEvent.self,
+                PublishMissSlideEvent.self, PublishScoreEvent.self,
                 PublishGameCompleteEvent.self
             ],
             matchEventRelay: CoopMatchEventRelay(),
             gameViewElements: [.gameplayArea, .scoreBoard]
         )
 
-        // @Charisma attach with your evaluator
         let competitiveMode = ModeAttachment(
             modeName: "Rhythm Battle",
             hOManager: CompetitiveHOManager(),
@@ -113,15 +110,12 @@ final class ModeFactory: Factory {
             evaluator: BattleEvaluator(),
             roomSetting: RoomSettingFactory.competitiveSetting,
             listeningMatchEvents: [
-                PublishBombDisruptorEvent.self,
-                PublishNoHintsDisruptorEvent.self,
-                PublishDeathEvent.self,
-                PublishScoreEvent.self
+                PublishBombDisruptorEvent.self, PublishNoHintsDisruptorEvent.self,
+                PublishDeathEvent.self, PublishScoreEvent.self
             ],
             matchEventRelay: CompetitiveMatchEventRelay(),
             gameViewElements: [
-                .gameplayArea, .disruptorOptions, .matchFeed,
-                .leaderboard, .livesCount
+                .gameplayArea, .disruptorOptions, .matchFeed, .leaderboard, .livesCount
             ]
         )
 

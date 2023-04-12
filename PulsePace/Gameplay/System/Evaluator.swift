@@ -19,7 +19,7 @@ protocol Evaluator: ModeSystem {
 extension Evaluator {
     // Determines whether game should end
     func evaluate() -> Bool {
-        var andEventsSatisfied = andEventCount.keys.allSatisfy {
+        let andEventsSatisfied = andEventCount.keys.allSatisfy {
             guard let eventCount = andEventCount[$0], let eventTargetCount = andEventCriterias[$0] else {
                 fatalError("Evaluator not initialized correctly")
             }
@@ -30,7 +30,7 @@ extension Evaluator {
             return false
         }
 
-        var orEventsSatisfied = orEventCount.keys.contains(where: {
+        let orEventsSatisfied = orEventCount.keys.contains(where: {
             guard let eventCount = orEventCount[$0], let eventTargetCount = orEventCriterias[$0] else {
                 fatalError("Evaluator not initialized correctly")
             }
@@ -60,7 +60,8 @@ class DefaultEvaluator: Evaluator {
         eventManager.registerHandler(markLastObjectRemovedHandler)
     }
 
-    private lazy var markLastObjectRemovedHandler = { [weak self] (_: EventManagable, _: LastHitobjectRemovedEvent) -> Void in
+    private lazy var markLastObjectRemovedHandler
+    = { [weak self] (_: EventManagable, _: LastHitobjectRemovedEvent) -> Void in
         guard let self = self else {
             fatalError("No active evaluator")
         }
@@ -125,7 +126,8 @@ class BattleEvaluator: Evaluator {
         self.orEventCount[DeathEvent.label] = targetEventCount + 1
     }
 
-    private lazy var markLastObjectRemovedHandler = { [weak self] (_: EventManagable, _: LastHitobjectRemovedEvent) -> Void in
+    private lazy var markLastObjectRemovedHandler
+    = { [weak self] (_: EventManagable, _: LastHitobjectRemovedEvent) -> Void in
         guard let self = self else {
             fatalError("No active evaluator")
         }
