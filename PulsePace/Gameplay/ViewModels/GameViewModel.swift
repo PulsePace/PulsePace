@@ -24,6 +24,8 @@ class GameViewModel: ObservableObject, RenderSystem {
     @Published var matchFeedMessages: [MatchFeedMessage] = []
     @Published var gameEnded = false
 
+    var frame = CGSize.zero
+
     var score: String {
         guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
             return String(0)
@@ -171,6 +173,10 @@ class GameViewModel: ObservableObject, RenderSystem {
         selectedGameMode.clean()
         gameEngine = GameEngine(modeAttachment: selectedGameMode, gameEnder: gameEnder, match: match)
         gameEngine?.load(beatmap)
+    }
+
+    func initialiseFrame(size: CGSize) {
+        frame = size
     }
 
     func startGameplay() {

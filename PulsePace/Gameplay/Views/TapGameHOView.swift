@@ -99,7 +99,9 @@ struct SlideGameHOView: View {
         .modifier(GestureModifier(input: SlideInput(),
                                   command: SlideCommand(receiver: slideGameHO,
                                                         eventManager: slideGameHOVM.eventManager,
-                                                        timeReceived: viewModel.songPosition)))
+                                                        timeReceived: viewModel.songPosition,
+                                                        frame: viewModel.frame
+                                                       )))
         .modifier(GestureAnimation(input: SlideInput()) {
             withAnimation(.easeInOut(duration: 0.1)) {
                 scale = 15

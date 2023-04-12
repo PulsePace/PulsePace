@@ -57,7 +57,7 @@ struct BeatmapDesignerView: View {
             )
         )
         .onAppear {
-            audioManager.startPlayer(track: "test")
+            audioManager.startPlayer(track: "test_trim")
             if let player = audioManager.player {
                 viewModel.initialisePlayer(player: player)
             }
