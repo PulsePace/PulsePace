@@ -12,18 +12,18 @@ class RepositionSongCommand: InputCommand {
         super.init(action: action, completion: completion)
     }
 
-    convenience init(receiver: BeatmapDesignerViewModel) {
+    convenience init(receiver: BeatmapDesignerViewModel, player: AVAudioPlayer) {
         self.init(
             action: { inputData in
                 let timeTranslated = inputData.translation.width / receiver.zoom
-                receiver.sliderValue = AudioManager.shared.currentTime() - timeTranslated
+                receiver.sliderValue = player.currentTime - timeTranslated
                 receiver.isEditing = true
-                AudioManager.shared.musicPlayer?.pause()
+                player.pause()
             },
             completion: { _ in
-                AudioManager.shared.seekMusic(to: receiver.sliderValue)
+                player.currentTime = receiver.sliderValue
                 receiver.isEditing = false
-                AudioManager.shared.musicPlayer?.play()
+                player.play()
             }
         )
     }

@@ -16,7 +16,7 @@ protocol RenderSystem {
 class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
     var gameEngine: GameEngine?
-    private var audioPlayer: AVAudioPlayerNode?
+    private var audioPlayer: AVAudioPlayer?
     @Published var slideGameHOs: [SlideGameHOVM] = []
     @Published var holdGameHOs: [HoldGameHOVM] = []
     @Published var tapGameHOs: [TapGameHOVM] = []
@@ -197,7 +197,7 @@ class GameViewModel: ObservableObject, RenderSystem {
         clear()
     }
 
-    func initialisePlayer(audioPlayer: AVAudioPlayerNode) {
+    func initialisePlayer(audioPlayer: AVAudioPlayer) {
         self.audioPlayer = audioPlayer
     }
 

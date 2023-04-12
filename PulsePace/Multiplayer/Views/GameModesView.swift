@@ -14,18 +14,13 @@ struct GameModesView: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView(.vertical) {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(viewModel.gameModes, id: \.title) { gameMode in
-                        CardView(path: $path, cardDisplayable: gameMode)
-                    }
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(viewModel.gameModes, id: \.title) { gameMode in
+                    CardView(path: $path, cardDisplayable: gameMode)
                 }
-                .padding(20)
-                .frame(width: geometry.size.width)
-                .frame(minHeight: geometry.size.height)
             }
-            .ignoresSafeArea()
         }
+        .padding(20)
     }
 }

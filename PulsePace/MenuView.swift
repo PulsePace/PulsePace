@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MenuView: View {
     @StateObject var achievementManager = AchievementManager()
+    @StateObject var audioManager = AudioManager()
     @StateObject var gameVM = GameViewModel()
+
     @StateObject var beatmapManager = BeatmapManager()
     @StateObject var userConfigManager = UserConfigManager()
 
@@ -49,6 +51,7 @@ struct MenuView: View {
             }
         }
         .environmentObject(achievementManager)
+        .environmentObject(audioManager)
         .environmentObject(gameVM)
         .environmentObject(beatmapManager)
         .environmentObject(userConfigManager)

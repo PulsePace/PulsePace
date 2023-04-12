@@ -8,38 +8,41 @@
 import SwiftUI
 
 struct TimelineView: View {
+    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
     @State var width: CGFloat = 0
     @State var height: CGFloat = 0
 
     @ViewBuilder
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                renderBeatLines(spacing: beatmapDesigner.subBeatSpacing, color: .blue)
-                renderBeatLines(spacing: beatmapDesigner.mainBeatSpacing, color: .white)
-                renderStartLine(color: .red)
-                renderPreviewBeat()
-                renderBeats()
-                renderCursor()
+        if let player = audioManager.player {
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    renderBeatLines(spacing: beatmapDesigner.subBeatSpacing, color: .blue)
+                    renderBeatLines(spacing: beatmapDesigner.mainBeatSpacing, color: .white)
+                    renderStartLine(color: .red)
+                    renderPreviewBeat()
+                    renderBeats()
+                    renderCursor()
+                }
+                .frame(width: width)
+                .onAppear {
+                    self.width = geometry.size.width
+                    self.height = geometry.size.height
+                }
             }
-            .frame(width: width)
-            .onAppear {
-                self.width = geometry.size.width
-                self.height = geometry.size.height
-            }
-        }
-        .frame(height: 60)
-        .background(Color(hex: 0x310067))
+            .frame(height: 60)
+            .background(Color(hex: 0x310067))
 //            .background(.black.opacity(0.6))
-        .mask(LinearGradient(
-            gradient: Gradient(colors: [.clear] + Array(repeating: Color.black, count: 16) + [.clear]),
-            startPoint: .leading,
-            endPoint: .trailing
-        ))
-        .clipped()
-        .modifier(GestureModifier(input: DragInput(),
-                                  command: RepositionSongCommand(receiver: beatmapDesigner)))
+            .mask(LinearGradient(
+                gradient: Gradient(colors: [.clear] + Array(repeating: Color.black, count: 16) + [.clear]),
+                startPoint: .leading,
+                endPoint: .trailing
+            ))
+            .clipped()
+            .modifier(GestureModifier(input: DragInput(),
+                                      command: RepositionSongCommand(receiver: beatmapDesigner, player: player)))
+        }
     }
 
     @ViewBuilder

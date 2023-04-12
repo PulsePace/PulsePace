@@ -124,14 +124,13 @@ final class ModeFactory: Factory {
         assemblies[competitiveMode.modeName] = competitiveMode
 
         gameModes.append(
-            GameMode(image: "classic-mode", category: "Singleplayer", title: "Classic Mode",
+            GameMode(image: "", category: "Singleplayer", title: "Classic Mode",
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
         gameModes.append(
-            GameMode(image: "catch-the-potato", category: "Multiplayer", title: "Catch The Potato",
+            GameMode(image: "", category: "Multiplayer", title: "Catch The Potato",
                      caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))
         gameModes.append(
-            GameMode(image: "rhythm-battle", category: "Multiplayer",
-                     title: "Rhythm Battle",
+            GameMode(image: "", category: "Multiplayer", title: "Rhythm Battle",
                      caption: "Battle your friends with rhythm and strategy!", page: Page.lobbyPage,
                      metaInfo: competitiveMode.modeName))
     }

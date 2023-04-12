@@ -10,6 +10,7 @@ import AVKit
 
 struct BeatmapDesignerView: View {
     @EnvironmentObject var achievementManager: AchievementManager
+    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
     @EnvironmentObject var gameViewModel: GameViewModel
     @StateObject var viewModel = BeatmapDesignerViewModel()
@@ -56,8 +57,8 @@ struct BeatmapDesignerView: View {
             )
         )
         .onAppear {
-            AudioManager.shared.playMusic(track: "test")
-            if let player = AudioManager.shared.musicPlayer {
+            audioManager.startPlayer(track: "test")
+            if let player = audioManager.player {
                 viewModel.initialisePlayer(player: player)
             }
             viewModel.achievementManager = achievementManager
@@ -67,7 +68,7 @@ struct BeatmapDesignerView: View {
             openedPropertyUpdater.increment()
         }
         .onDisappear {
-            AudioManager.shared.stopMusic()
+            audioManager.stopPlayer()
         }
         .environmentObject(viewModel)
     }

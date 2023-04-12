@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CanvasView: View {
+    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapDesigner: BeatmapDesignerViewModel
 
     var body: some View {
