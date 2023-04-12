@@ -11,7 +11,7 @@ struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
-    @Binding var path: [Page]
+    @EnvironmentObject var pageList: PageList
 
     var body: some View {
         GeometryReader { geometry in
@@ -124,7 +124,7 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
         }
         .fullBackground(imageName: viewModel.gameBackground)
         .popup(isPresented: $viewModel.gameEnded) {
-            GameEndView(path: $path)
+            GameEndView()
         }
         .navigationBarBackButtonHidden(viewModel.match != nil)
     }

@@ -164,7 +164,6 @@
 		D081DDBC29C31F7E006B11B4 /* CGPoint+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBB29C31F7E006B11B4 /* CGPoint+Utility.swift */; };
 		D081DDBE29C32AF2006B11B4 /* CGVector+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081DDBD29C32AF2006B11B4 /* CGVector+Utility.swift */; };
 		D0B2069229E5BD2200755AF7 /* SongData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B2069129E5BD2200755AF7 /* SongData.swift */; };
-		D0B2069629E5C45500755AF7 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = D0B2069529E5C45500755AF7 /* PopupView */; };
 		D0C3587F29D317E500E7D7CC /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C3587E29D317E500E7D7CC /* Achievement.swift */; };
 		D0CD998329D219FB00E40BFA /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD998229D219FB00E40BFA /* Observer.swift */; };
 		D0CD998529D21A0B00E40BFA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CD998429D21A0B00E40BFA /* Observable.swift */; };
@@ -433,7 +432,6 @@
 				C77A7D6F29CF04030082458E /* FirebaseDatabaseSwift in Frameworks */,
 				C77A7D7729CF04030082458E /* FirebaseFunctions in Frameworks */,
 				C77A7D6D29CF04030082458E /* FirebaseDatabase in Frameworks */,
-				D0B2069629E5C45500755AF7 /* PopupView in Frameworks */,
 				C77A7D6B29CF04030082458E /* FirebaseAuth in Frameworks */,
 				C77A7D7329CF04030082458E /* FirebaseFirestore in Frameworks */,
 				C77A7D7929CF04030082458E /* FirebaseStorage in Frameworks */,
@@ -1126,7 +1124,6 @@
 				C77A7D7429CF04030082458E /* FirebaseFirestoreSwift */,
 				C77A7D7629CF04030082458E /* FirebaseFunctions */,
 				C77A7D7829CF04030082458E /* FirebaseStorage */,
-				D0B2069529E5C45500755AF7 /* PopupView */,
 			);
 			productName = PulsePace;
 			productReference = C7CD9BD129B7514900ABEE8F /* PulsePace.app */;
@@ -1202,7 +1199,6 @@
 			mainGroup = C7CD9BC829B7514900ABEE8F;
 			packageReferences = (
 				C77A7D6929CF04030082458E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				D0B2069429E5C45500755AF7 /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = C7CD9BD229B7514900ABEE8F /* Products */;
 			projectDirPath = "";
@@ -1610,7 +1606,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				DEVELOPMENT_TEAM = X77GX48L42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
@@ -1647,7 +1643,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = P3QLTH5V5D;
+				DEVELOPMENT_TEAM = X77GX48L42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PulsePace/Info.plist;
@@ -1816,14 +1812,6 @@
 				kind = branch;
 			};
 		};
-		D0B2069429E5C45500755AF7 /* XCRemoteSwiftPackageReference "PopupView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/PopupView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1866,11 +1854,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C77A7D6929CF04030082458E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
-		};
-		D0B2069529E5C45500755AF7 /* PopupView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D0B2069429E5C45500755AF7 /* XCRemoteSwiftPackageReference "PopupView" */;
-			productName = PopupView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

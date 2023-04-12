@@ -7,7 +7,6 @@
 
 import SwiftUI
 import AVKit
-import PopupView
 
 struct BeatmapDesignerView: View {
     @EnvironmentObject var achievementManager: AchievementManager
@@ -75,23 +74,6 @@ struct BeatmapDesignerView: View {
             viewModel.sliderValue = 0
         }
         .environmentObject(viewModel)
-//        .popup(isPresented: $viewModel.isShowing) {
-//            Text("The popup")
-//                .frame(width: 200, height: 60)
-//                .background(Color(red: 0.85, green: 0.8, blue: 0.95))
-//                .cornerRadius(30.0)
-//        } customize: {
-//            $0
-//                .type(.default)
-////                .type(.floater())
-//                .position(.top)
-//                .animation(.spring())
-//                .dismissSourceCallback {
-//                    print($0)
-//                }
-//                .isOpaque(true)
-//                .autohideIn(2)
-//        }
     }
 
     @ViewBuilder
