@@ -48,18 +48,21 @@ struct GameView: View {
             alignment: .topLeading
         )
         .onAppear {
-            audioManager.startPlayer(track: "test")
             if viewModel.gameEngine == nil {
                 viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
             }
-            viewModel.startGameplay()
-            if let audioPlayer = audioManager.player {
-                viewModel.initialisePlayer(audioPlayer: audioPlayer)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                audioManager.startPlayer(track: "test")
+                viewModel.startGameplay()
+                if let audioPlayer = audioManager.player {
+                    viewModel.initialisePlayer(audioPlayer: audioPlayer)
+                }
             }
         }
         .onDisappear {
             audioManager.stopPlayer()
             viewModel.exitGameplay()
+            viewModel.songPosition = 0
         }
         .fullBackground(imageName: viewModel.gameBackground)
         .popup(isPresented: $viewModel.gameEnded) {

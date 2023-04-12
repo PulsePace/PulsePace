@@ -69,6 +69,7 @@ struct BeatmapDesignerView: View {
         }
         .onDisappear {
             audioManager.stopPlayer()
+            viewModel.sliderValue = 0
         }
         .environmentObject(viewModel)
     }
