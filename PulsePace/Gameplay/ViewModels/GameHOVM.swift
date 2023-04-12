@@ -65,7 +65,8 @@ class HoldGameHOVM: GameHOVM<HoldGameHO> {
         if gameHO.lifeStage.value <= gameHO.optimalStageStart.value {
             return 0
         }
-        return (gameHO.lifeStage.value - gameHO.optimalStageStart.value) / (gameHO.optimalStageEnd.value - gameHO.optimalStageStart.value)
+        return (gameHO.lifeStage.value - gameHO.optimalStageStart.value) /
+        (gameHO.optimalStageEnd.value - gameHO.optimalStageStart.value)
     }
 }
 
