@@ -155,6 +155,7 @@ class GameViewModel: ObservableObject, RenderSystem {
     }
 
     func initEngine(with beatmap: Beatmap) {
+        selectedGameMode.clean()
         gameEngine = GameEngine(selectedGameMode, match: match)
         gameEngine?.load(beatmap)
     }
