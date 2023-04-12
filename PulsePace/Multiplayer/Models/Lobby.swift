@@ -95,6 +95,10 @@ class Lobby {
         let match = Match(matchId: lobbyId, lobby: self)
         dataManager.startMatch(match: match)
     }
+    
+    func endMatch() {
+        dataManager.endMatch()
+    }
 }
 
 extension Lobby: Codable {

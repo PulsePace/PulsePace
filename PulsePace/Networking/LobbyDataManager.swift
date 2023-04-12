@@ -108,6 +108,15 @@ class LobbyDataManager {
         lobbyDatabase.setValue(at: lobbyStatusPath, value: LobbyStatus.matchStarted.rawValue) { _ in }
     }
 
+    func endMatch() {
+        guard let lobby = lobby else {
+            return
+        }
+        let lobbyStatusPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobby.lobbyId,
+                                                               DatabasePath.lobbyStatus])
+        lobbyDatabase.setValue(at: lobbyStatusPath, value: LobbyStatus.waitingForPlayers.rawValue) { _ in }
+    }
+
     private func deleteOnDisconnect(at path: String) {
         lobbyDatabase.deleteDataOnDisconnect(at: path, completion: { _ in })
     }
