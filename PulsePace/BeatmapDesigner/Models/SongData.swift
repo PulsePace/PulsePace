@@ -14,9 +14,9 @@ struct SongData {
     var offset: Double
 
     init(
-        track: String,
-        bpm: Double,
-        offset: Double
+        track: String = "",
+        bpm: Double = 0,
+        offset: Double = 0
     ) {
         self.track = track
         self.bpm = bpm
@@ -82,5 +82,30 @@ struct SongData {
                 return .init()
             }
         }
+    }
+}
+
+extension SongData: Serializable {
+    func serialize() -> SerializedSongData {
+        SerializedSongData(
+            track: track,
+            bpm: bpm,
+            offset: offset
+        )
+    }
+}
+
+struct SerializedSongData: Deserializable {
+    typealias DeserialType = SongData
+    let track: String
+    let bpm: Double
+    let offset: Double
+
+    func deserialize() -> SongData {
+        SongData(
+            track: track,
+            bpm: bpm,
+            offset: offset
+        )
     }
 }

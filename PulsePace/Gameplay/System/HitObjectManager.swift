@@ -69,7 +69,7 @@ class HitObjectManager: ModeSystem, EventSource {
 
     func feedBeatmap(beatmap: Beatmap) {
         self.preSpawnInterval = beatmap.preSpawnInterval
-        self.offset = beatmap.offset
+        self.offset = beatmap.songData.offset
         self.slideSpeed = beatmap.sliderSpeed
         self.songEndBeat = beatmap.endBeat
         enqueueObjects(beatmap: beatmap)

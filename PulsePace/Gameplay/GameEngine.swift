@@ -52,6 +52,8 @@ class GameEngine {
     }
 
     func load(_ beatmap: Beatmap) {
+        hitObjectManager?.feedBeatmap(beatmap: beatmap, eventManager: self.eventManager)
+        self.conductor = Conductor(bpm: beatmap.songData.bpm)
         hitObjectManager?.feedBeatmap(beatmap: beatmap)
         conductor?.feedBeatmap(beatmap: beatmap)
     }

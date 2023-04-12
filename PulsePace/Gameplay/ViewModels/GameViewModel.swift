@@ -16,6 +16,7 @@ protocol RenderSystem {
 class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
     var gameEngine: GameEngine?
+    var songData: SongData?
     private var audioPlayer: AVAudioPlayer?
     @Published var slideGameHOs: [SlideGameHOVM] = []
     @Published var holdGameHOs: [HoldGameHOVM] = []
