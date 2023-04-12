@@ -122,7 +122,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     }
 
     @objc func step(displaylink: CADisplayLink) {
-        sliderValue = AudioManager.shared.currentTime()
+        sliderValue = AudioManager.shared.currentTime(from: String(describing: self))
     }
 
     func virtualisePosition(_ position: CGPoint) -> CGPoint {

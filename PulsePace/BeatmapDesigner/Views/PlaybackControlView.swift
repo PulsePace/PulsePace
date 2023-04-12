@@ -32,34 +32,34 @@ struct PlaybackControlView: View {
 
     @ViewBuilder
     private func renderPlaybackProgressSlider() -> some View {
-        if let player = AudioManager.shared.musicPlayer {
-            HStack(spacing: 10) {
-                Text(DateComponentsFormatter.positional.string(from: AudioManager.shared.currentTime()) ?? "0:00")
-                    .foregroundColor(.white)
-                    .font(.system(size: 18))
-                    .frame(width: 60)
+        HStack(spacing: 10) {
+            Text(DateComponentsFormatter.positional.string(
+                from: AudioManager.shared.currentTime(from: String(describing: beatmapDesigner))) ?? "0:00")
+                .foregroundColor(.white)
+                .font(.system(size: 18))
+                .frame(width: 60)
 
-                Slider(value: $beatmapDesigner.sliderValue, in: 0...AudioManager.shared.musicDuration) { editing in
-                    beatmapDesigner.isEditing = editing
-                    if editing {
-                        player.pause()
-                    } else {
-                        player.play()
-                        AudioManager.shared.seekMusic(to: beatmapDesigner.sliderValue)
-                    }
+            Slider(value: $beatmapDesigner.sliderValue, in: 0...AudioManager.shared.musicDuration) { editing in
+                beatmapDesigner.isEditing = editing
+                if editing {
+                    AudioManager.shared.toggleMusic(from: String(describing: beatmapDesigner))
+                } else {
+                    AudioManager.shared.toggleMusic(from: String(describing: beatmapDesigner))
+                    AudioManager.shared.seekMusic(to: beatmapDesigner.sliderValue,
+                                                  from: String(describing: beatmapDesigner))
                 }
-                .tint(.purple)
             }
+            .tint(.purple)
         }
     }
 
     @ViewBuilder
     private func renderPlaybackButtons() -> some View {
-        if let player = AudioManager.shared.musicPlayer {
+        if let player = AudioManager.shared.musicPlayers[String(describing: beatmapDesigner)] {
             HStack {
                 let iconSystemName = player.isPlaying ? "pause.circle.fill" : "play.circle.fill"
                 SystemIconButtonView(systemName: iconSystemName, fontSize: 44, color: .white) {
-                    AudioManager.shared.toggleMusic()
+                    AudioManager.shared.toggleMusic(from: String(describing: beatmapDesigner))
                 }
             }
         }
@@ -73,10 +73,10 @@ struct PlaybackControlView: View {
 
             HStack {
                 SystemIconButtonView(systemName: "tortoise.fill", fontSize: 24, color: .white) {
-                    AudioManager.shared.decreasePlaybackRate()
+                    AudioManager.shared.decreasePlaybackRate(from: String(describing: beatmapDesigner))
                 }
                 SystemIconButtonView(systemName: "hare.fill", fontSize: 24, color: .white) {
-                    AudioManager.shared.increasePlaybackRate()
+                    AudioManager.shared.increasePlaybackRate(from: String(describing: beatmapDesigner))
                 }
             }
         }

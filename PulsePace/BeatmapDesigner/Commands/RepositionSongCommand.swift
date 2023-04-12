@@ -16,14 +16,15 @@ class RepositionSongCommand: InputCommand {
         self.init(
             action: { inputData in
                 let timeTranslated = inputData.translation.width / receiver.zoom
-                receiver.sliderValue = AudioManager.shared.currentTime() - timeTranslated
+                receiver.sliderValue = AudioManager.shared.currentTime(
+                    from: String(describing: receiver)) - timeTranslated
                 receiver.isEditing = true
-                AudioManager.shared.musicPlayer?.pause()
+                AudioManager.shared.toggleMusic(from: String(describing: receiver))
             },
             completion: { _ in
-                AudioManager.shared.seekMusic(to: receiver.sliderValue)
+                AudioManager.shared.seekMusic(to: receiver.sliderValue, from: String(describing: receiver))
                 receiver.isEditing = false
-                AudioManager.shared.musicPlayer?.play()
+                AudioManager.shared.toggleMusic(from: String(describing: receiver))
             }
         )
     }

@@ -14,11 +14,11 @@ struct GameControlView: View {
     var body: some View {
         HStack {
             if viewModel.selectedGameMode.requires(gameViewElement: .playbackControls),
-               let player = AudioManager.shared.musicPlayer {
+               let player = AudioManager.shared.musicPlayers[String(describing: viewModel)] {
                 Slider(value: $viewModel.songPosition, in: 0...AudioManager.shared.musicDuration).disabled(true)
                 SystemIconButtonView(systemName: isPlaying
                                      ? "pause.circle.fill" : "play.circle.fill", fontSize: 44) {
-                    AudioManager.shared.toggleMusic()
+                    AudioManager.shared.toggleMusic(from: String(describing: viewModel))
                     isPlaying = player.isPlaying
                     viewModel.toggleGameplay()
                 }.padding(.all, 20)

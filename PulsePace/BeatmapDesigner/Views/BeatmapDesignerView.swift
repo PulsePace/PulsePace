@@ -56,8 +56,8 @@ struct BeatmapDesignerView: View {
             )
         )
         .onAppear {
-            AudioManager.shared.playMusic(track: "test")
-            if let player = AudioManager.shared.musicPlayer {
+            AudioManager.shared.playMusic(track: "test", from: String(describing: viewModel))
+            if let player = AudioManager.shared.musicPlayers[String(describing: viewModel)] {
                 viewModel.initialisePlayer(player: player)
             }
             viewModel.achievementManager = achievementManager
@@ -67,7 +67,7 @@ struct BeatmapDesignerView: View {
             openedPropertyUpdater.increment()
         }
         .onDisappear {
-            AudioManager.shared.stopMusic()
+            AudioManager.shared.stopMusic(from: String(describing: viewModel))
         }
         .environmentObject(viewModel)
     }

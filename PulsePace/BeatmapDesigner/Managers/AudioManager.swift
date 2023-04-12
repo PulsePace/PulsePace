@@ -12,15 +12,14 @@ final class AudioManager {
     static let shared = AudioManager()
 
     private let audioEngine = AVAudioEngine()
-    var musicPlayer: AVAudioPlayerNode?
-    private var soundEffectPlayers: [AVAudioPlayerNode] = []
+    var musicPlayers: [String: AVAudioPlayerNode] = [:]
+    private var soundEffectPlayers: [String: AVAudioPlayerNode] = [:]
 
     var musicDuration: Double = 0
     private var musicFile = AVAudioFile()
+    let playbackRateControl = AVAudioUnitVarispeed()
 
-//    private var musicTracks: [String: AVAudioPlayerNode] = [:]
-
-    func playMusic(track: String) {
+    func playMusic(track: String, from screen: String) {
         guard let url = Bundle.main.url(forResource: track, withExtension: "mp3") else {
             print("Resource not found: \(track)")
             return
@@ -32,67 +31,68 @@ final class AudioManager {
         let audioFormat = audioFile.processingFormat
         let audioFrameCount = UInt32(audioFile.length)
         musicFile = audioFile
-        musicDuration = Double(audioFrameCount)
+        musicDuration = Double(audioFrameCount) / musicFile.fileFormat.sampleRate
         guard let buffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: audioFrameCount) else {
             return
         }
         try? audioFile.read(into: buffer)
         let player = AVAudioPlayerNode()
         audioEngine.attach(player)
-        audioEngine.connect(player, to: audioEngine.mainMixerNode, format: nil)
+        audioEngine.attach(playbackRateControl)
+        audioEngine.connect(player, to: playbackRateControl, format: nil)
+        audioEngine.connect(playbackRateControl, to: audioEngine.mainMixerNode, format: nil)
         try? audioEngine.start()
 
-        stopMusic()
-        musicPlayer = player
-        audioEngine.connect(player, to: audioEngine.mainMixerNode, format: buffer.format)
+        stopMusic(from: screen)
+        musicPlayers[screen] = player
+        audioEngine.connect(player, to: playbackRateControl, format: nil)
+        audioEngine.connect(playbackRateControl, to: audioEngine.mainMixerNode, format: buffer.format)
         player.scheduleBuffer(buffer, at: nil, options: .loops, completionHandler: nil)
         player.play()
     }
 
-    func seekMusic(to position: Double) {
-        let sampleRate = musicPlayer?.outputFormat(forBus: 0).sampleRate ?? 0
+    func seekMusic(to position: Double, from screen: String) {
+        guard let player = musicPlayers[screen] else {
+            return
+        }
+        let sampleRate = player.outputFormat(forBus: 0).sampleRate
         let newSampleTime = AVAudioFramePosition(sampleRate * Double(position))
         let length = UInt32(musicDuration - position)
         let frames = AVAudioFrameCount(UInt32(sampleRate) * length)
-        musicPlayer?.stop()
+        player.stop()
         if frames > 1_000 {
-            musicPlayer?.scheduleSegment(musicFile, startingFrame: newSampleTime,
-                                         frameCount: frames, at: nil,
-                                         completionHandler: nil)
+            player.scheduleSegment(musicFile, startingFrame: newSampleTime,
+                                   frameCount: frames, at: nil,
+                                   completionHandler: nil)
+
         }
-        musicPlayer?.play()
+        player.play()
+
+//        let sampleRate = musicFile.fileFormat.sampleRate
+//        let framePosition = AVAudioFramePosition(position * sampleRate)
+//        let audioTime = AVAudioTime(sampleTime: framePosition, atRate: sampleRate)
+//        player.stop()
+//        player.play(at: audioTime)
     }
 
-    func stopMusic() {
-        if let player = musicPlayer {
+    func stopMusic(from screen: String) {
+        if let player = musicPlayers[screen] {
             player.stop()
             audioEngine.disconnectNodeOutput(player)
-            musicPlayer = nil
+            musicPlayers[screen] = nil
         }
     }
 
-    func increasePlaybackRate() {
-        guard let player = musicPlayer else {
-            return
-        }
-        player.rate = min(1, player.rate + 0.25)
+    func increasePlaybackRate(from screen: String) {
+        playbackRateControl.rate = min(1, playbackRateControl.rate + 0.25)
     }
 
-    func decreasePlaybackRate() {
-        guard let player = musicPlayer else {
-            return
-        }
-        player.rate = max(0.25, player.rate - 0.25)
+    func decreasePlaybackRate(from screen: String) {
+        playbackRateControl.rate = max(0.25, playbackRateControl.rate - 0.25)
     }
 
-    private func setPlaybackRate(to rate: Float) {
-        if let player = musicPlayer {
-            player.rate = rate
-        }
-    }
-
-    func toggleMusic() {
-        guard let player = musicPlayer else {
+    func toggleMusic(from screen: String) {
+        guard let player = musicPlayers[screen] else {
             return
         }
         if player.isPlaying {
@@ -102,11 +102,16 @@ final class AudioManager {
         }
     }
 
-    func currentTime() -> TimeInterval {
-        if let nodeTime: AVAudioTime = musicPlayer?.lastRenderTime,
-           let playerTime: AVAudioTime = musicPlayer?.playerTime(forNodeTime: nodeTime) {
-           return Double(Double(playerTime.sampleTime) / playerTime.sampleRate)
+    func currentTime(from screen: String) -> TimeInterval {
+        guard let player = musicPlayers[screen],
+            let nodeTime: AVAudioTime = player.lastRenderTime,
+            let playerTime: AVAudioTime = player.playerTime(forNodeTime: nodeTime)
+        else {
+            return 0
         }
-        return 0
+        let sampleRate = Double(playerTime.sampleRate)
+        let frameCount = Double(playerTime.sampleTime)
+        let currentTime = frameCount / sampleRate
+        return currentTime
     }
 }

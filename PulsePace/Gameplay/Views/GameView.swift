@@ -47,17 +47,17 @@ struct GameView: View {
             alignment: .topLeading
         )
         .onAppear {
-            AudioManager.shared.playMusic(track: "test")
+            AudioManager.shared.playMusic(track: "test", from: String(describing: viewModel))
             if viewModel.gameEngine == nil {
                 viewModel.initEngine(with: beatmapManager.beatmapChoices[1].beatmap)
             }
             viewModel.startGameplay()
-            if let audioPlayer = AudioManager.shared.musicPlayer {
+            if let audioPlayer = AudioManager.shared.musicPlayers[String(describing: viewModel)] {
                 viewModel.initialisePlayer(audioPlayer: audioPlayer)
             }
         }
         .onDisappear {
-            AudioManager.shared.stopMusic()
+            AudioManager.shared.stopMusic(from: String(describing: viewModel))
             viewModel.stopGameplay()
         }
         .environmentObject(viewModel)
