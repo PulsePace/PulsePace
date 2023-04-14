@@ -28,8 +28,8 @@ struct MenuView: View {
                     Spacer()
                 }
                 VStack(spacing: 30) {
-                    Text("PulsePace")
-                        .font(Fonts.title)
+                    Image("app-header")
+                        .resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 600)
                     StyledMenuButton(path: $path, page: Page.gameModesPage, text: "Play")
                     StyledMenuButton(path: $path, page: Page.designPage, text: "Design")
                 }
