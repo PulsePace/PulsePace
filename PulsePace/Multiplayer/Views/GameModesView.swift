@@ -32,8 +32,8 @@ struct GameModesView: View {
                 Text("How to Play")
                     .font(Fonts.caption)
                 SystemIconButtonView(systemName: "info", action: { isHowToPlayShown = true })
-                    .padding(20)
             }
+            .padding(20)
         }
         .popup(isPresented: $isHowToPlayShown) {
             howToPlay
@@ -41,14 +41,19 @@ struct GameModesView: View {
     }
 
     var howToPlay: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 20) {
+            Text("How to Play")
+                .font(Fonts.title2)
             classicModeInstructions
             coopModeInstructions
             competitiveModeInstructions
             Button(action: { isHowToPlayShown = false }) {
-                Text("Back")
+                Text("BACK")
+                    .fontWeight(.bold)
+                    .foregroundColor(.orange)
             }
         }
+        .frame(maxWidth: 800)
         .foregroundColor(.white)
         .padding(.horizontal, 60)
         .padding(.vertical, 35)
@@ -65,8 +70,8 @@ struct GameModesView: View {
         VStack {
             Text("Classic Mode")
                 .font(Fonts.caption)
-            Text("There are 3 kinds of hit objects: tap, slide and hold. " +
-                 "Start interacting with the hit objects when the hint " +
+            Text("There are 3 kinds of hit objects: tap, slide and hold. ") +
+            Text("Start interacting with the hit objects when the hint " +
                  "circle closes and is the same size as the hit object " +
                  "to get the perfect score!")
         }
@@ -78,7 +83,8 @@ struct GameModesView: View {
                 .font(Fonts.caption)
             Text("If your partner misses a hit object, it will spawn on " +
                  "your screen so that you have a chance to make up for it " +
-                 "while your partner makes up for you. Your final score is " +
+                 "while your partner makes up for you. ") +
+            Text("Your final score is " +
                  "a sum of both your individual scores!")
         }
     }
@@ -87,14 +93,15 @@ struct GameModesView: View {
         VStack {
             Text("Rhythm Battle")
                 .font(Fonts.caption)
-            Text("Play with up to 4 players to find the rhythm master! " +
-                 "If you get an x5 combo, a disruptor will be auto-spawned " +
-                 "on one of your competitor's beatmaps. To select who gets " +
-                 "the disruptor and what type of disruptor it is (either " +
-                 "bomb or no hints), use the selection bar on the bottom " +
-                 "of the screen. Hit a bomb and you lose a life. Hit 3 " +
-                 "bombs and you die. The player with the highest score in " +
-                 "the end wins the match!")
+            Text("Play with up to 4 players! ") +
+            Text("If you hit 5 hit objects in a row, a disruptor will be " +
+                 "auto-spawned for one of your competitors. ") +
+            Text("To select who gets the disruptor " +
+                 "and what type it is (bomb or no hints), use the selection bar on the " +
+                 "bottom of the screen. ") +
+            Text("Watch the feed on top for match updates. ") +
+            Text("Hit a bomb and you lose a life. Hit 3 bombs and you die. The " +
+                 "player with the highest score in the end wins!")
         }
     }
 }
