@@ -9,6 +9,7 @@ enum HitStatus {
     case perfect
     case good
     case miss
+    case death
 
     var description: String {
        switch self {
@@ -18,6 +19,8 @@ enum HitStatus {
            return "Good"
        case .miss:
            return "Miss"
+       case .death:
+           return "YOU DIED"
        }
      }
 }
