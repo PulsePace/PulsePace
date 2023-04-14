@@ -9,6 +9,7 @@ import Foundation
 
 class MatchFeedSystem: System {
     let messageBuilder: MessageBuilder
+    var maxMatchFeedMessagesCount = 2
 
     var matchFeedMessages: PriorityQueue<MatchFeedMessage> = PriorityQueue<MatchFeedMessage>(
         sortBy: { x, y in x.timestamp < y.timestamp })
@@ -100,7 +101,7 @@ class MatchFeedSystem: System {
 
     private func addToMatchFeed(message: MatchFeedMessage) {
         matchFeedMessages.enqueue(message)
-        if matchFeedMessages.count > 3 {
+        if matchFeedMessages.count > maxMatchFeedMessagesCount {
             _ = matchFeedMessages.dequeue()
         }
     }
