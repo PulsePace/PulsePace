@@ -84,7 +84,6 @@ struct GameViewTopOverlaysModifier: ViewModifier {
         }
         .overlay(alignment: .top) {
             MatchFeedView()
-                .ignoresSafeArea()
         }
         .overlay(alignment: .topLeading) {
             LivesCountView()

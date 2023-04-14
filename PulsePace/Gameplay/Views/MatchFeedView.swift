@@ -14,14 +14,18 @@ struct MatchFeedView: View {
         if gameVM.selectedGameMode.requires(gameViewElement: .matchFeed) {
             VStack {
                 ForEach(gameVM.matchFeedMessages, id: \.timestamp) { feed in
-                    Text(feed.message)
-                        .font(Fonts.caption)
-                        .opacity(max(0, 1 - 0.1 * abs(Date().timeIntervalSince1970 - feed.timestamp)))
-                        .zIndex(20)
-                        .foregroundColor(.purple)
+                    ZStack {
+                        Text(feed.message)
+                            .font(Fonts.caption)
+                            .zIndex(20)
+                            .foregroundColor(.purple)
+                            .padding(.horizontal)
+                            .background(.ultraThinMaterial)
+                    }
+                    .opacity(max(0, 1 - 0.1 * abs(Date().timeIntervalSince1970 - feed.timestamp)))
                 }
             }
-            .padding(20)
+            .padding(.top, 20)
         }
     }
 }
