@@ -28,10 +28,11 @@ struct GameModesView: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            HStack {
-                Text("How to Play")
-                    .font(Fonts.caption)
+            VStack {
                 SystemIconButtonView(systemName: "info", action: { isHowToPlayShown = true })
+                Text("How to Play")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
             .padding(20)
         }
