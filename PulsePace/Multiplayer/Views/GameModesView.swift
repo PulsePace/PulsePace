@@ -14,7 +14,9 @@ struct GameModesView: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
-        GeometryReader { geometry in
+        VStack(alignment: .center) {
+            Text("Select Game Mode")
+                .font(Fonts.title)
             ScrollView(.vertical) {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(viewModel.gameModes, id: \.title) { gameMode in
@@ -22,10 +24,7 @@ struct GameModesView: View {
                     }
                 }
                 .padding(20)
-                .frame(width: geometry.size.width)
-                .frame(minHeight: geometry.size.height)
             }
-            .ignoresSafeArea()
         }
     }
 }

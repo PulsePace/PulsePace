@@ -29,7 +29,7 @@ struct MenuView: View {
                 }
                 VStack(spacing: 30) {
                     Text("PulsePace")
-                        .font(.largeTitle)
+                        .font(Fonts.title)
                     StyledMenuButton(path: $path, page: Page.gameModesPage, text: "Play")
                     StyledMenuButton(path: $path, page: Page.designPage, text: "Design")
                 }
