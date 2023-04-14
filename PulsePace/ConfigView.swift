@@ -12,12 +12,18 @@ struct ConfigView: View {
     @EnvironmentObject var userConfigManager: UserConfigManager
 
     var body: some View {
-        HStack {
-            TextField("Name", text: $userConfigManager.userConfig.name)
-                .frame(maxWidth: 300)
-                .textFieldStyle(.roundedBorder)
+        VStack(alignment: .center) {
+            Text("Settings")
+                .font(Fonts.title)
+            ScrollView(.vertical) {
+                HStack {
+                    TextField("Name", text: $userConfigManager.userConfig.name)
+                        .frame(maxWidth: 300)
+                        .textFieldStyle(.roundedBorder)
 
-            StyledButton(action: { userConfigManager.save() }, text: "Save")
+                    StyledButton(action: { userConfigManager.save() }, text: "Save Name")
+                }
+            }
         }
     }
 }
