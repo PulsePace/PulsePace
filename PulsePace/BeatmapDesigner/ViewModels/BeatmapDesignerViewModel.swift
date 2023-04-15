@@ -82,6 +82,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         // TODO: Assumes beatmap retrieved only once
         var hitObjectS2B: [any HitObject] = []
         let spb = 60 / bpm
+        let songDuration = player?.duration ?? 0
         hitObjects.toArray().forEach { hitObject in
 
             if hitObject is TapHitObject {
@@ -101,7 +102,7 @@ class BeatmapDesignerViewModel: ObservableObject {
                 )
             }
         }
-        return Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjectS2B)
+        return Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjectS2B, songDuration: songDuration)
     }
 
     init(songTitle: String = "Unravel") {

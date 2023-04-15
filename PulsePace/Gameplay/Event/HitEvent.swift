@@ -35,6 +35,14 @@ struct MissEvent: Event {
     }
 }
 
+struct LoseLifeEvent: Event {
+    var timestamp: Double
+
+    init(timestamp: Double) {
+        self.timestamp = timestamp
+    }
+}
+
 extension MissEvent: MatchRelatedEvent {
     static func makeMessage(event: MissEvent, playerId: String) -> MatchEventMessage? {
         if event.gameHO.fromPartner {

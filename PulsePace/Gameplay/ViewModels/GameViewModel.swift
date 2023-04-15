@@ -80,6 +80,12 @@ class GameViewModel: ObservableObject, RenderSystem {
         return scoreManager.goodCount + scoreManager.perfectCount + scoreManager.missCount
     }
 
+    var playbackRate: Double {
+        guard let playbackScale = gameEngine?.conductor?.playbackScale else {
+            return 1
+        }
+        return playbackScale
+    }
     var disruptors = Disruptor.allCases.map({ $0.rawValue })
 
     var selectedGameMode: ModeAttachment = ModeFactory.defaultMode

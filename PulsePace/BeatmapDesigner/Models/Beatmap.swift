@@ -20,15 +20,17 @@ struct Beatmap {
             max(x, y.endTime)
         })
     }
+    var songDuration: Double
 
     init(bpm: Double, offset: Double,
-         hitObjects: [any HitObject], preSpawnInterval: Double = 2,
+         hitObjects: [any HitObject], songDuration: Double, preSpawnInterval: Double = 2,
          sliderSpeed: Double = 100) {
         self.bpm = bpm
         self.offset = offset
         self.hitObjects = hitObjects
         self.preSpawnInterval = preSpawnInterval
         self.sliderSpeed = sliderSpeed
+        self.songDuration = songDuration
     }
 }
 
@@ -46,7 +48,7 @@ extension Beatmap: Serializable {
         }
         return SerializedBeatmap(bpm: bpm, offset: offset,
                                  preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed,
-                                 stringifiedHOs: stringifiedHOs)
+                                 stringifiedHOs: stringifiedHOs, songDuration: songDuration)
     }
 }
 
@@ -58,13 +60,15 @@ struct SerializedBeatmap: Deserializable {
     let sliderSpeed: Double
     // cannot put any SerializedHO here
     var stringifiedHOs: [HOLabelAndData]
+    let songDuration: Double
 
     func deserialize() -> Beatmap {
+        print("deserialize")
         let deserializedHOs = stringifiedHOs.map { stringifiedHO in
             HOTypeFactory.assemble(hOTypeLabel: stringifiedHO.typeLabel, data: stringifiedHO.data).deserialize()
         }
         return Beatmap(bpm: bpm, offset: offset,
-                       hitObjects: deserializedHOs,
+                       hitObjects: deserializedHOs, songDuration: songDuration,
                        preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed)
     }
 }
