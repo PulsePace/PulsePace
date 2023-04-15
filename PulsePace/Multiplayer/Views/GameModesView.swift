@@ -12,7 +12,7 @@ struct GameModesView: View {
     @Binding var path: [Page]
     @State var isHowToPlayShown = false
 
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
         VStack(alignment: .center) {
@@ -46,6 +46,7 @@ struct GameModesView: View {
             Text("How to Play")
                 .font(Fonts.title2)
             classicModeInstructions
+            infiniteModeInstructions
             coopModeInstructions
             competitiveModeInstructions
             Button(action: { isHowToPlayShown = false }) {
@@ -75,6 +76,17 @@ struct GameModesView: View {
             Text("Start interacting with the hit objects when the hint " +
                  "circle closes and is the same size as the hit object " +
                  "to get the perfect score!")
+        }
+    }
+
+    var infiniteModeInstructions: some View {
+        VStack {
+            Text("Infinite Mode")
+                .font(Fonts.caption)
+            Text("Play until you lose all lives.") +
+            Text("Speed will get faster if you hit 5 objects in a row, and will get slower if you lose a life." +
+                 "(Speed will not go beyond x2 or below x1.)" +
+                 "Try to get as high a score as you can before you lose all 3 lives!")
         }
     }
 

@@ -28,13 +28,16 @@ struct CardView: View {
                         Text(cardDisplayable.category)
                             .font(.headline)
                             .foregroundColor(.secondary)
+                            .multilineTextAlignment(.leading)
                         Text(cardDisplayable.title)
-                            .font(Fonts.title2)
+                            .font(Fonts.caption)
                             .fontWeight(.black)
                             .foregroundColor(.primary)
+                            .multilineTextAlignment(.leading)
                         Text(cardDisplayable.caption)
                             .font(.caption)
                             .foregroundColor(.secondary)
+                            .multilineTextAlignment(.leading)
                     }
                     .layoutPriority(100)
 

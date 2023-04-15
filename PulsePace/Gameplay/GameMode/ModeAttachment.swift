@@ -12,12 +12,13 @@ final class ModeAttachment {
     var hOManager: HitObjectManager
     var evaluator: Evaluator
     var scoreSystem: ScoreSystem
+    var conductor: Conductor
     var listeningMatchEvents: [any MatchEvent.Type]
     var matchEventRelay: MatchEventRelay?
     var roomSetting: RoomSetting
     var gameViewElements: [GameViewElement]
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem,
+    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, conductor: Conductor,
          evaluator: Evaluator, roomSetting: RoomSetting,
          listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?,
          gameViewElements: [GameViewElement]) {
@@ -25,6 +26,7 @@ final class ModeAttachment {
         self.hOManager = hOManager
         self.evaluator = evaluator
         self.scoreSystem = scoreSystem
+        self.conductor = conductor
         self.roomSetting = roomSetting
         self.listeningMatchEvents = listeningMatchEvents
         self.matchEventRelay = matchEventRelay
@@ -37,6 +39,7 @@ final class ModeAttachment {
         scoreSystem.reset()
         evaluator.reset()
         matchEventRelay?.reset()
+        conductor.reset()
     }
 
     func requires(gameViewElement: GameViewElement) -> Bool {
@@ -47,6 +50,7 @@ final class ModeAttachment {
         gameEngine.hitObjectManager = hOManager
         gameEngine.evaluator = evaluator
         gameEngine.scoreSystem = scoreSystem
+        gameEngine.conductor = conductor
 
         if let matchEventRelay = matchEventRelay,
            let match = gameEngine.match {
@@ -74,12 +78,53 @@ final class ModeFactory: Factory {
     static var defaultMode = ModeAttachment(
         modeName: "Classic",
         hOManager: HitObjectManager(),
-        scoreSystem: ScoreSystem(ScoreManager()),
+        scoreSystem: ScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: DefaultEvaluator(),
         roomSetting: RoomSettingFactory.defaultSetting,
         listeningMatchEvents: [],
         matchEventRelay: nil,
         gameViewElements: [.gameplayArea, .playbackControls, .scoreBoard]
+    )
+    private static var infiniteMode = ModeAttachment(
+        modeName: "Infinite Mode",
+        hOManager: InfiniteHOManager(),
+        scoreSystem: InfiniteScoreSystem(ScoreManager()), conductor: InfiniteConductor(),
+        evaluator: InfiniteEvaluator(),
+        roomSetting: RoomSettingFactory.defaultSetting,
+        listeningMatchEvents: [],
+        matchEventRelay: nil,
+        gameViewElements: [.gameplayArea, .scoreBoard, .livesCount]
+    )
+
+    private static var coopMode = ModeAttachment(
+        modeName: "Basic Coop",
+        hOManager: CoopHOManager(),
+        scoreSystem: CoopScoreSystem(ScoreManager()), conductor: Conductor(),
+        evaluator: CoopEvaluator(),
+        roomSetting: RoomSettingFactory.baseCoopSetting,
+        listeningMatchEvents: [
+            PublishMissTapEvent.self, PublishMissHoldEvent.self,
+            PublishMissSlideEvent.self, PublishScoreEvent.self,
+            PublishGameCompleteEvent.self
+        ],
+        matchEventRelay: CoopMatchEventRelay(),
+        gameViewElements: [.gameplayArea, .scoreBoard]
+    )
+
+    private static var competitiveMode = ModeAttachment(
+        modeName: "Rhythm Battle",
+        hOManager: CompetitiveHOManager(),
+        scoreSystem: DisruptorSystem(ScoreManager()), conductor: Conductor(),
+        evaluator: CompetitiveEvaluator(),
+        roomSetting: RoomSettingFactory.competitiveSetting,
+        listeningMatchEvents: [
+            PublishBombDisruptorEvent.self, PublishNoHintsDisruptorEvent.self,
+            PublishDeathEvent.self, PublishScoreEvent.self
+        ],
+        matchEventRelay: CompetitiveMatchEventRelay(),
+        gameViewElements: [
+            .gameplayArea, .disruptorOptions, .matchFeed, .leaderboard, .livesCount
+        ]
     )
 
     static func populate() {
@@ -88,44 +133,17 @@ final class ModeFactory: Factory {
         }
         isPopulated = true
 
-        let coopMode = ModeAttachment(
-            modeName: "Basic Coop",
-            hOManager: CoopHOManager(),
-            scoreSystem: CoopScoreSystem(ScoreManager()),
-            evaluator: CoopEvaluator(),
-            roomSetting: RoomSettingFactory.baseCoopSetting,
-            listeningMatchEvents: [
-                PublishMissTapEvent.self, PublishMissHoldEvent.self,
-                PublishMissSlideEvent.self, PublishScoreEvent.self,
-                PublishGameCompleteEvent.self
-            ],
-            matchEventRelay: CoopMatchEventRelay(),
-            gameViewElements: [.gameplayArea, .scoreBoard]
-        )
-
-        let competitiveMode = ModeAttachment(
-            modeName: "Rhythm Battle",
-            hOManager: CompetitiveHOManager(),
-            scoreSystem: DisruptorSystem(ScoreManager()),
-            evaluator: CompetitiveEvaluator(),
-            roomSetting: RoomSettingFactory.competitiveSetting,
-            listeningMatchEvents: [
-                PublishBombDisruptorEvent.self, PublishNoHintsDisruptorEvent.self,
-                PublishDeathEvent.self, PublishScoreEvent.self
-            ],
-            matchEventRelay: CompetitiveMatchEventRelay(),
-            gameViewElements: [
-                .gameplayArea, .disruptorOptions, .matchFeed, .leaderboard, .livesCount
-            ]
-        )
-
         assemblies[defaultMode.modeName] = defaultMode
         assemblies[coopMode.modeName] = coopMode
         assemblies[competitiveMode.modeName] = competitiveMode
+        assemblies[infiniteMode.modeName] = infiniteMode
 
         gameModes.append(
             GameMode(image: "classic-mode", category: "Singleplayer", title: "Classic Mode",
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
+        gameModes.append(
+            GameMode(image: "infinite-mode", category: "Singleplayer", title: "Infinite Mode",
+                     caption: "Play faster until you die!", page: Page.playPage, metaInfo: infiniteMode.modeName))
         gameModes.append(
             GameMode(image: "catch-the-potato", category: "Multiplayer", title: "Catch The Potato",
                      caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))

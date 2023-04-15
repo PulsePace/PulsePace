@@ -154,3 +154,29 @@ class CompetitiveEvaluator: Evaluator {
         self.orEventCount[OnlyRemainingPlayerEvent.label] = targetEventCount + 1
     }
 }
+
+class InfiniteEvaluator: Evaluator {
+    let andEventCriterias = [DeathEvent.label: 1]
+    let orEventCriterias: [String: Int] = [:]
+    var andEventCount: [String: Int] = [:]
+    var orEventCount: [String: Int] = [:]
+
+    init() {
+        andEventCount[DeathEvent.label] = 0
+    }
+
+    func registerEventHandlers(eventManager: EventManagable) {
+        eventManager.registerHandler(markDeathHandler)
+    }
+
+    private lazy var markDeathHandler = { [weak self] (_: EventManagable, _: DeathEvent) -> Void in
+        guard let self = self else {
+            fatalError("No active evaluator")
+        }
+
+        guard let targetEventCount = self.andEventCount[DeathEvent.label] else {
+            fatalError("\(DeathEvent.label) not found in evaluator ledger")
+        }
+        self.andEventCount[DeathEvent.label] = targetEventCount + 1
+    }
+}

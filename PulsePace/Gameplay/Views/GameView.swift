@@ -39,6 +39,9 @@ struct GameView: View {
             .onChange(of: geometry.size, perform: { size in
                 viewModel.initialiseFrame(size: size)
             })
+            .onChange(of: viewModel.playbackRate) { _ in
+                audioManager.setPlaybackRate(viewModel.playbackRate)
+            }
         }
     }
 
