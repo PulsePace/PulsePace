@@ -20,20 +20,14 @@ class MatchFeedSystem: System {
     }
 
     func registerEventHandlers(eventManager: EventManagable) {
-        eventManager.registerHandler(announceFeedHandler)
         eventManager.registerHandler(spawnBombDisruptorHandler)
         eventManager.registerHandler(activateNoHintsDisruptorHandler)
-        eventManager.registerHandler(deactivateNoHintsDisruptorHandler)
         eventManager.registerHandler(deathHandler)
         eventManager.registerHandler(lostlifeHandler)
     }
 
-    private lazy var announceFeedHandler = { [self] (_: EventManagable, event: AnnounceFeedEvent) -> Void in
-        print(event.message)
-    }
-
     private lazy var spawnBombDisruptorHandler
-    = { [self] (eventManager: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
+    = { [self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
         let message = messageBuilder
             .setEventType(type(of: event).label)
             .setSource(event.bombSourcePlayerId)
@@ -42,12 +36,10 @@ class MatchFeedSystem: System {
 
         let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
         addToMatchFeed(message: matchFeedMessage)
-
-        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
     private lazy var activateNoHintsDisruptorHandler
-    = { [self] (eventManager: EventManagable, event: ActivateNoHintsDisruptorEvent) -> Void in
+    = { [self] (_: EventManagable, event: ActivateNoHintsDisruptorEvent) -> Void in
         let message = messageBuilder
             .setEventType(type(of: event).label)
             .setSource(event.noHintsSourcePlayerId)
@@ -56,25 +48,10 @@ class MatchFeedSystem: System {
 
         let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
         addToMatchFeed(message: matchFeedMessage)
-
-        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
-    }
-
-    private lazy var deactivateNoHintsDisruptorHandler
-    = { [self] (eventManager: EventManagable, event: DeactivateNoHintsDisruptorEvent) -> Void in
-        let message = messageBuilder
-            .setEventType(type(of: event).label)
-            .setTarget(event.noHintsTargetPlayerId)
-            .build()
-
-        let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
-        addToMatchFeed(message: matchFeedMessage)
-
-        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
     private lazy var deathHandler
-    = { [self] (eventManager: EventManagable, event: DeathEvent) -> Void in
+    = { [self] (_: EventManagable, event: DeathEvent) -> Void in
         let message = messageBuilder
             .setEventType(type(of: event).label)
             .setSource(event.diedPlayerId)
@@ -82,12 +59,10 @@ class MatchFeedSystem: System {
 
         let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
         addToMatchFeed(message: matchFeedMessage)
-
-        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
     private lazy var lostlifeHandler
-    = { [self] (eventManager: EventManagable, event: LostLifeEvent) -> Void in
+    = { [self] (_: EventManagable, event: LostLifeEvent) -> Void in
         let message = messageBuilder
             .setEventType(type(of: event).label)
             .setSource(event.lostLifePlayerId)
@@ -95,8 +70,6 @@ class MatchFeedSystem: System {
 
         let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)
         addToMatchFeed(message: matchFeedMessage)
-
-        eventManager.add(event: AnnounceFeedEvent(timestamp: Date().timeIntervalSince1970, message: message))
     }
 
     private func addToMatchFeed(message: MatchFeedMessage) {
@@ -111,18 +84,11 @@ class MatchFeedSystem: System {
                                              messageConfig: SpawnBombDisruptorMessageConfig())
         messageBuilder.addEventMessageConfig(eventType: ActivateNoHintsDisruptorEvent.label,
                                              messageConfig: ActivateNoHintsDisruptorMessageConfig())
-        messageBuilder.addEventMessageConfig(eventType: DeactivateNoHintsDisruptorEvent.label,
-                                             messageConfig: DeactivateNoHintsDisruptorMessageConfig())
         messageBuilder.addEventMessageConfig(eventType: DeathEvent.label,
                                              messageConfig: DeathMessageConfig())
         messageBuilder.addEventMessageConfig(eventType: LostLifeEvent.label,
                                              messageConfig: LostLifeMessageConfig())
     }
-}
-
-struct AnnounceFeedEvent: Event {
-    var timestamp: Double
-    var message: String
 }
 
 struct MatchFeedMessage {

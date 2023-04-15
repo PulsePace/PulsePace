@@ -96,7 +96,6 @@ class GameViewModel: ObservableObject, RenderSystem {
     var leaderboard: DictAsArray = []
 
     private lazy var gameEnder: () -> Void = { [weak self] in
-        print("Game ended")
         self?.stopGameplay()
         self?.gameEnded = true
     }

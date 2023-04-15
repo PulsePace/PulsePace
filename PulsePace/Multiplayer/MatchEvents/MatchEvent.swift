@@ -98,11 +98,6 @@ struct ActivateNoHintsDisruptorEvent: Event {
     var duration: Double
 }
 
-struct DeactivateNoHintsDisruptorEvent: Event {
-    var timestamp: Double
-    var noHintsTargetPlayerId: String
-}
-
 struct UpdateComboEvent: Event {
     var timestamp: Double
     var comboCount: Int
