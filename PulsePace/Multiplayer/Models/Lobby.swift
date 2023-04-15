@@ -50,7 +50,9 @@ class Lobby {
         self.lobbyDataChangeHandler = lobbyDataChangeHandler
         self.roomSetting = roomSetting
         self.modeName = modeName
-        self.dataManager = LobbyDataManager(databaseAdapter: FirebaseDatabase<Lobby>(),
+        self.dataManager = LobbyDataManager(lobbyDatabase: FirebaseDatabase<Lobby>(),
+                                            lobbyListener: FirebaseListener<Lobby>(),
+                                            playersListener: FirebaseListener<Player>(),
                                             lobbyDataChangeHandler: lobbyDataChangeHandler)
     }
 

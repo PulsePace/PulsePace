@@ -16,10 +16,13 @@ class LobbyDataManager {
 
     private var lobbyDataChangeHandler: (() -> Void)? = {}
 
-    init(databaseAdapter: any DatabaseAdapter<Lobby>, lobbyDataChangeHandler: (() -> Void)? = {}) {
-        self.lobbyDatabase = databaseAdapter
-        self.lobbyListener = FirebaseListener<Lobby>() // TODO: remove @Charisma
-        self.playersListener = FirebaseListener<Player>() // TODO: remove
+    init(lobbyDatabase: any DatabaseAdapter<Lobby>,
+         lobbyListener: any DatabaseListenerAdapter<Lobby>,
+         playersListener: any DatabaseListenerAdapter<Player>,
+         lobbyDataChangeHandler: (() -> Void)? = {}) {
+        self.lobbyDatabase = lobbyDatabase
+        self.lobbyListener = lobbyListener
+        self.playersListener = playersListener
         self.lobbyDataChangeHandler = lobbyDataChangeHandler
     }
 
@@ -41,7 +44,7 @@ class LobbyDataManager {
     func joinLobby(lobby: Lobby, player: Player) {
         self.lobby = lobby
         let gameConfig = lobby.roomSetting
-        // TODO: Combine two queries into one
+
         let lobbyPath = DatabasePath.getPath(fromPaths: [
             DatabasePath.lobbies, lobby.lobbyId
         ])
