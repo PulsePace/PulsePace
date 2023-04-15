@@ -24,6 +24,10 @@ class GameHOVM<T: GameHO>: Identifiable {
 }
 
 class TapGameHOVM: GameHOVM<TapGameHO> {
+    var isBomb: Bool {
+        gameHO as? BombGameHO != nil
+    }
+
     var ringScale: Double {
         2 * fromOptimal
     }

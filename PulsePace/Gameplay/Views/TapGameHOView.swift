@@ -17,8 +17,8 @@ struct TapGameHOView: View {
         let tapGameHO = tapGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * tapGameHOVM.ringScale))
         let color = tapGameHOVM.fromPartner ? Color.orange :
-        tapGameHO.isBomb ? Color(hex: 0x646466) : Color.white // TODO: Make constants for HO colors
-        let tappedColor = tapGameHO.isBomb ? Color.red : Color.purple
+            tapGameHOVM.isBomb ? Color(hex: 0x646466) : Color.white // TODO: Make constants for HO colors
+        let tappedColor = tapGameHOVM.isBomb ? Color.red : Color.purple
 
         return ZStack {
             Circle()

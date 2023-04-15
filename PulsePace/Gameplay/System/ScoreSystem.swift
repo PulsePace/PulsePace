@@ -30,7 +30,7 @@ class ScoreSystem: ModeSystem {
         eventManager.registerHandler(missEventHandler)
     }
 
-    lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
+    private func calculateScore(eventManager: EventManagable, event: HitEvent) {
         let gameHO = event.gameHO
         gameHO.isHit = true
         if gameHO.proximityScore < proximityScoreThreshould[0] {
@@ -61,6 +61,11 @@ class ScoreSystem: ModeSystem {
                                                                 playerScore: scoreManager.score)))
         gameHO.destroyObject()
     }
+
+    lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
+        calculateScore(eventManager: eventManager, event: event)
+    }
+
     lazy var missEventHandler = { [self] (_: EventManagable, event: MissEvent) -> Void in
         let gameHO = event.gameHO
         scoreManager.missCount += 1

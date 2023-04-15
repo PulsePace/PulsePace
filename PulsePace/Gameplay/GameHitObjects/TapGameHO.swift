@@ -9,7 +9,6 @@ import Foundation
 
 class TapGameHO: GameHO {
     var fromPartner = false
-    var isBomb = false
     let wrappingObject: Entity
 
     let position: CGPoint
@@ -30,6 +29,21 @@ class TapGameHO: GameHO {
         self.lifeEnd = tapHO.startTime + preSpawnInterval
     }
 
+    init(wrappingObject: Entity, position: CGPoint, lifeStart: Double, lifeEnd: Double,
+         onLifeEnd: [(TapGameHO) -> Void], proximityScore: Double,
+         lifeStage: LifeStage = LifeStage.startStage,
+         isHit: Bool = false, fromPartner: Bool = false) {
+        self.fromPartner = fromPartner
+        self.wrappingObject = wrappingObject
+        self.position = position
+        self.lifeStart = lifeStart
+        self.lifeEnd = lifeEnd
+        self.lifeStage = lifeStage
+        self.onLifeEnd = onLifeEnd
+        self.isHit = isHit
+        self.proximityScore = proximityScore
+    }
+
     func updateState(currBeat: Double) {
         lifeStage = LifeStage(Lerper.linearFloat(from: 0, to: 1, t: abs(currBeat - lifeStart) / lifeTime))
         if currBeat - lifeStart >= lifeTime {
@@ -43,5 +57,17 @@ class TapGameHO: GameHO {
 
     func checkOnInputEnd(input: InputData) {
         proximityScore += abs(lifeStage.value - lifeOptimal.value) * 2
+    }
+}
+
+class BombGameHO: TapGameHO {
+    let isBomb = true
+
+    convenience init(tapGameHO: TapGameHO) {
+        let bombLifeEnd = tapGameHO.lifeEnd + 5
+
+        self.init(wrappingObject: tapGameHO.wrappingObject, position: tapGameHO.position,
+                  lifeStart: tapGameHO.lifeStart, lifeEnd: bombLifeEnd,
+                  onLifeEnd: tapGameHO.onLifeEnd, proximityScore: tapGameHO.proximityScore)
     }
 }
