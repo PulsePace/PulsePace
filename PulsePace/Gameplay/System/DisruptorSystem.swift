@@ -19,6 +19,7 @@ class DisruptorSystem: ScoreSystem {
     var spawnedDisruptorLocations: [CGPoint] = []
 
     var allScores: [String: Int] = [:]
+    var allRemainingPlayers: [String: Bool] = [:]
 
     override init(_ scoreManager: ScoreManager) {
         guard let userConfigManager = UserConfigManager.instance else {
@@ -27,7 +28,7 @@ class DisruptorSystem: ScoreSystem {
 
         self.selectedTarget = userConfigManager.userId
         super.init(scoreManager)
-        self.scoreManager.livesRemaining = 3
+        self.scoreManager.livesRemaining = Self.defaultLifeCount
     }
 
     override func attachToMatch(_ match: Match) {
@@ -38,6 +39,8 @@ class DisruptorSystem: ScoreSystem {
         selectedTarget = match.players.first(where: { $0.key != userConfigManager.userId })?.key
         ?? userConfigManager.userId
         match.players.forEach({ allScores[$0.key] = 0 })
+        match.players.forEach({ allRemainingPlayers[$0.key] = true })
+
     }
 
     override func reset() {
@@ -49,8 +52,9 @@ class DisruptorSystem: ScoreSystem {
         self.selectedTarget = userConfigManager.userId
         self.selectedDisruptor = .bomb
         self.spawnedDisruptorLocations = []
-        self.scoreManager.livesRemaining = 3
+        self.scoreManager.livesRemaining = Self.defaultLifeCount
         self.allScores = [:]
+        self.allRemainingPlayers = [:]
     }
 
     func setDisruptor(disruptor: Disruptor) {
@@ -67,6 +71,7 @@ class DisruptorSystem: ScoreSystem {
         eventManager.registerHandler(onSpawnBombDisruptorHandler)
         eventManager.registerHandler(bombHitEventHandler)
         eventManager.registerHandler(onUpdateScoreEventHandler)
+        eventManager.registerHandler(onDeathEventHandler)
     }
 
     lazy var updateComboHandler = { [self] (eventManager: EventManagable, event: UpdateComboEvent) -> Void in
@@ -115,6 +120,7 @@ class DisruptorSystem: ScoreSystem {
                                               lostLifePlayerId: userConfigManager.userId))
 
         if self.scoreManager.livesRemaining == 0 {
+            eventManager.add(event: SelfDeathEvent(timestamp: Date().timeIntervalSince1970))
             eventManager.matchEventHandler?.publishMatchEvent(
                 message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
                                            sourceId: userConfigManager.userId,
@@ -125,6 +131,13 @@ class DisruptorSystem: ScoreSystem {
 
     lazy var onUpdateScoreEventHandler = { [self] (_: EventManagable, event: UpdateScoreEvent) -> Void in
         allScores[event.playerId] = event.playerScore
+    }
+
+    lazy var onDeathEventHandler = { [self] (eventManager: EventManagable, event: DeathEvent) -> Void in
+        allRemainingPlayers[event.diedPlayerId] = false
+        if allRemainingPlayers.values.filter({ $0 }).count == 1 {
+            eventManager.add(event: OnlyRemainingPlayerEvent(timestamp: Date().timeIntervalSince1970))
+        }
     }
 }
 

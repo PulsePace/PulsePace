@@ -88,6 +88,7 @@ class HitObjectManager: ModeSystem, EventSource {
             }
         }
     }
+
     // Takes in a BeatMap
     func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
         var gameHOSpawned: [any GameHO] = []

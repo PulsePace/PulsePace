@@ -13,9 +13,9 @@ protocol System: AnyObject {
 }
 
 extension System {
-    func step(deltaTime: Double, songPosition: Double) {
-    }
+    func step(deltaTime: Double, songPosition: Double) {}
 }
+
 // Will be reused hence must have reset function
 protocol ModeSystem: System {
     func reset()
