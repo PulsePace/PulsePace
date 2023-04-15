@@ -120,11 +120,6 @@ class DisruptorSystem: ScoreSystem {
 
         if self.scoreManager.livesRemaining == 0 {
             eventManager.add(event: SelfDeathEvent(timestamp: Date().timeIntervalSince1970))
-            eventManager.matchEventHandler?.publishMatchEvent(
-                message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
-                                           sourceId: userConfigManager.userId,
-                                           event: PublishDeathEvent(timestamp: Date().timeIntervalSince1970,
-                                                                    diedPlayerId: userConfigManager.userId)))
         }
     }
 

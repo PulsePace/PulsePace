@@ -127,3 +127,10 @@ struct UpdateScoreEvent: Event {
     var playerScore: Int
     var playerId: String
 }
+
+extension SelfDeathEvent: MatchRelatedEvent {
+    static func makeMessage(event: SelfDeathEvent, playerId: String) -> MatchEventMessage? {
+        MatchEventMessage(timestamp: event.timestamp, sourceId: playerId,
+                          event: PublishDeathEvent(timestamp: event.timestamp, diedPlayerId: playerId))
+    }
+}
