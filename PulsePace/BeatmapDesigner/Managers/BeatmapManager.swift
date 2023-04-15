@@ -31,7 +31,6 @@ final class BeatmapManager: ObservableObject {
 
     // NOTE: Permits duplicate saves
     func saveBeatmap(namedBeatmap: NamedBeatmap) {
-        let data = try? JSONEncoder().encode(namedBeatmap.serialize())
         beatmapChoices.append(namedBeatmap)
         serialBeatmaps.append(namedBeatmap.serialize())
         beatmapDataManager.save(values: serialBeatmaps, filename: localBeatmapStorage) { result in
