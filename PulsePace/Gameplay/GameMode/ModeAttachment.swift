@@ -143,7 +143,7 @@ final class ModeFactory: Factory {
                      caption: "Tap, Slide, Hold, Win!", page: Page.playPage, metaInfo: defaultMode.modeName))
         gameModes.append(
             GameMode(image: "infinite-mode", category: "Singleplayer", title: "Infinite Mode",
-                     caption: "Hit until you die!", page: Page.playPage, metaInfo: infiniteMode.modeName))
+                     caption: "Play faster until you die!", page: Page.playPage, metaInfo: infiniteMode.modeName))
         gameModes.append(
             GameMode(image: "catch-the-potato", category: "Multiplayer", title: "Catch The Potato",
                      caption: "Make up for your partner's misses!", page: Page.lobbyPage, metaInfo: coopMode.modeName))

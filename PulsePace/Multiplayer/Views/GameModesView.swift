@@ -78,6 +78,17 @@ struct GameModesView: View {
         }
     }
 
+    var infiniteModeInstructions: some View {
+        VStack {
+            Text("Infinite Mode")
+                .font(Fonts.caption)
+            Text("Play until you lose all lives.") +
+            Text("Speed will get faster if you hit 5 objects in a row, and will get slower if you lose a life." +
+                 "(Speed will not go beyond x2 or below x1.)" +
+                 "Try to get as high a score as you can before you lose all 3 lives!")
+        }
+    }
+
     var coopModeInstructions: some View {
         VStack {
             Text("Catch the Potato")
