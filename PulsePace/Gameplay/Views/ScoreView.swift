@@ -16,9 +16,6 @@ struct ScoreView: View {
             VStack(alignment: .trailing) {
                 Text(gameVM.score)
                     .font(Fonts.title)
-                // TODO: Accuracy calculation
-                //            Text(gameVM.accuracy)
-                //                .font(Fonts.title2)
                 Text(gameVM.combo)
                     .font(Fonts.title2)
             }

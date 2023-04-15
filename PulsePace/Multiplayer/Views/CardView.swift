@@ -20,7 +20,7 @@ struct CardView: View {
             path.append(cardDisplayable.page)
         }) {
             VStack {
-                Image(cardDisplayable.image) // TODO: Add image assets
+                Image(cardDisplayable.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 HStack {
@@ -29,7 +29,7 @@ struct CardView: View {
                             .font(.headline)
                             .foregroundColor(.secondary)
                         Text(cardDisplayable.title)
-                            .font(.title)
+                            .font(Fonts.title2)
                             .fontWeight(.black)
                             .foregroundColor(.primary)
                         Text(cardDisplayable.caption)

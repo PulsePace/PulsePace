@@ -59,7 +59,9 @@ class CompetitiveHOManager: HitObjectManager {
             guard let gameHO = spawnGameHitObject(disruptorHO) as? TapGameHO else {
                 continue
             }
+            // TODO: BompTapHitObject
             gameHO.isBomb = true
+            gameHO.lifeEnd += 5
             gameHOSpawned.append(gameHO)
             _ = disruptorsQueue.dequeue()
         }

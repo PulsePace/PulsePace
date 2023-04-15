@@ -22,45 +22,13 @@ struct GameView: View {
                 maxWidth: .infinity,
                 maxHeight: .infinity
             )
-            .overlay(alignment: .topTrailing) {
-                ScoreView()
-                    .ignoresSafeArea()
-            }
-            .overlay(alignment: .topTrailing) {
-                LeaderboardView()
-                    .ignoresSafeArea()
-            }
-            .overlay(alignment: .top) {
-                MatchFeedView()
-                    .ignoresSafeArea()
-            }
-            .overlay(alignment: .topLeading) {
-                LivesCountView()
-            }
-            .overlay(alignment: .bottom) {
-                VStack(alignment: .leading) {
-                    HitStatusView()
-                    DisruptorOptionsView()
-                    GameControlView()
-                }
-            }
+            .modifier(GameViewTopOverlaysModifier())
+            .modifier(GameViewBottomOverlaysModifier())
             .onAppear {
-                if viewModel.gameEngine == nil {
-                    print(beatmapManager.beatmapChoices.count)
-                    viewModel.initEngine(with: beatmapManager.beatmapChoices[4].beatmap)
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    audioManager.startPlayer(track: "test_trim")
-                    viewModel.startGameplay()
-                    if let audioPlayer = audioManager.player {
-                        viewModel.initialisePlayer(audioPlayer: audioPlayer)
-                    }
-                }
+                startGame()
             }
             .onDisappear {
-                audioManager.stopPlayer()
-                viewModel.exitGameplay()
-                viewModel.songPosition = 0
+                stopGame()
             }
             .fullBackground(imageName: viewModel.gameBackground)
             .popup(isPresented: $viewModel.gameEnded) {
@@ -72,6 +40,25 @@ struct GameView: View {
             })
         }
     }
+
+    func startGame() {
+        if viewModel.gameEngine == nil {
+            viewModel.initEngine(with: beatmapManager.beatmapChoices[4].beatmap)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            audioManager.startPlayer(track: "test_trim")
+            viewModel.startGameplay()
+            if let audioPlayer = audioManager.player {
+                viewModel.initialisePlayer(audioPlayer: audioPlayer)
+            }
+        }
+    }
+
+    func stopGame() {
+        audioManager.stopPlayer()
+        viewModel.exitGameplay()
+        viewModel.songPosition = 0
+    }
 }
 
 enum GameViewElement {
@@ -82,4 +69,37 @@ enum GameViewElement {
     case leaderboard
     case matchFeed
     case livesCount
+}
+
+struct GameViewTopOverlaysModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .overlay(alignment: .topTrailing) {
+            ScoreView()
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .topTrailing) {
+            LeaderboardView()
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .top) {
+            MatchFeedView()
+        }
+        .overlay(alignment: .topLeading) {
+            LivesCountView()
+        }
+    }
+}
+
+struct GameViewBottomOverlaysModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .overlay(alignment: .bottom) {
+            VStack(alignment: .leading) {
+                HitStatusView()
+                DisruptorOptionsView()
+                GameControlView()
+            }
+        }
+    }
 }

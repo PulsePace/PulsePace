@@ -7,7 +7,13 @@
 
 class ScoreManager {
     var score: Int
-    var livesRemaining: Int
+    var livesRemaining: Int {
+        didSet {
+            if livesRemaining < oldValue {
+                latestHitStatus = .death
+            }
+        }
+    }
     var perfectCount: Int {
         didSet {
             comboCount += perfectCount - oldValue
