@@ -65,7 +65,6 @@ class MatchFeedSystem: System {
     = { [self] (_: EventManagable, event: LostLifeEvent) -> Void in
         let message = messageBuilder
             .setEventType(type(of: event).label)
-            .setSource(event.lostLifePlayerId)
             .build()
 
         let matchFeedMessage = MatchFeedMessage(message: message, timestamp: Date().timeIntervalSince1970)

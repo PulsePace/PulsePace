@@ -11,36 +11,22 @@ struct NoEvent: Event {
     let timestamp = 0.0
 }
 
-struct LastHitobjectRemovedEvent: Event {
+struct LastHitObjectRemovedEvent: Event {
     var timestamp: Double
 }
 
 struct HitEvent: Event {
     var timestamp: Double
     var gameHO: any GameHO
-
-    init(gameHO: any GameHO, timestamp: Double) {
-        self.gameHO = gameHO
-        self.timestamp = timestamp
-    }
 }
 
 struct MissEvent: Event {
     var timestamp: Double
     var gameHO: any GameHO
-
-    init(gameHO: any GameHO, timestamp: Double) {
-        self.gameHO = gameHO
-        self.timestamp = timestamp
-    }
 }
 
-struct LoseLifeEvent: Event {
+struct LostLifeEvent: Event {
     var timestamp: Double
-
-    init(timestamp: Double) {
-        self.timestamp = timestamp
-    }
 }
 
 extension MissEvent: MatchRelatedEvent {

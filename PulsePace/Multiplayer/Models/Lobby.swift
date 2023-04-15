@@ -33,10 +33,6 @@ class Lobby {
         playerCount >= roomSetting.minPlayerCount && playerCount <= roomSetting.maxPlayerCount
     }
 
-    var isReadyToPlay: Bool {
-        true
-    }
-
     private init(lobbyId: String, hostId: String, roomSetting: RoomSetting,
                  modeName: String, players: [String: Player] = [:],
                  lobbyStatus: LobbyStatus = .waitingForPlayers,

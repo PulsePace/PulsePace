@@ -26,6 +26,6 @@ struct DeathMessageConfig: MessageConfig {
 }
 
 struct LostLifeMessageConfig: MessageConfig {
-    var messageFormat: String = "{sourcePlayer} lost a life"
-    var requiredPlaceholders: [String] = ["{sourcePlayer}"]
+    var messageFormat: String = "You lost a life"
+    var requiredPlaceholders: [String] = []
 }

@@ -30,7 +30,7 @@ class CoopScoreSystem: ScoreSystem {
     }
 
     private lazy var completeGameHandler
-    = { [weak self] (eventManager: EventManagable, event: LastHitobjectRemovedEvent) -> Void in
+    = { [weak self] (eventManager: EventManagable, event: LastHitObjectRemovedEvent) -> Void in
         guard let self = self else {
             fatalError("No coop score system")
         }

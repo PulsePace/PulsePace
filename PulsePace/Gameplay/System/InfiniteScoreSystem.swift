@@ -55,9 +55,9 @@ class InfiniteScoreSystem: ScoreSystem {
         }
         scoreManager.missCount += 1
         scoreManager.livesRemaining -= 1
-        eventManager.add(event: LoseLifeEvent(timestamp: Date().timeIntervalSince1970))
+        eventManager.add(event: LostLifeEvent(timestamp: Date().timeIntervalSince1970))
         if scoreManager.livesRemaining == 0 {
-            eventManager.add(event: DeathEvent(timestamp: Date().timeIntervalSince1970, diedPlayerId: ""))
+            eventManager.add(event: SelfDeathEvent(timestamp: Date().timeIntervalSince1970))
         }
     }
 }

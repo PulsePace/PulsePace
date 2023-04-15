@@ -122,11 +122,6 @@ struct OnlyRemainingPlayerEvent: Event {
     var timestamp: Double
 }
 
-struct LostLifeEvent: Event {
-    var timestamp: Double
-    var lostLifePlayerId: String
-}
-
 struct UpdateScoreEvent: Event {
     var timestamp: Double
     var playerScore: Int
