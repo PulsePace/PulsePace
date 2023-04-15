@@ -30,7 +30,8 @@ struct GameEndView: View {
 
     func getScoreDisplay() -> some View {
         if gameVM.selectedGameMode.modeName == "Classic"
-            || gameVM.selectedGameMode.modeName == "Rhythm Battle" {
+            || gameVM.selectedGameMode.modeName == "Rhythm Battle"
+            || gameVM.selectedGameMode.modeName == "Infinite Mode" {
             return VStack(spacing: 15) {
                 Text("Final Score")
                 Text(gameVM.gameEndScore)

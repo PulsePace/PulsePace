@@ -47,7 +47,7 @@ struct GameView: View {
             .onAppear {
                 if viewModel.gameEngine == nil {
                     print(beatmapManager.beatmapChoices.count)
-                    viewModel.initEngine(with: beatmapManager.beatmapChoices[14].beatmap)
+                    viewModel.initEngine(with: beatmapManager.beatmapChoices[4].beatmap)
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     audioManager.startPlayer(track: "test_trim")
@@ -70,6 +70,9 @@ struct GameView: View {
             .onChange(of: geometry.size, perform: { size in
                 viewModel.initialiseFrame(size: size)
             })
+            .onChange(of: viewModel.playbackRate) { _ in
+                audioManager.setPlaybackRate(viewModel.playbackRate)
+            }
         }
     }
 }
