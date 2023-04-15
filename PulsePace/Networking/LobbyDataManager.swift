@@ -118,10 +118,7 @@ class LobbyDataManager {
         }
 
         self.setLobbyPlayers(lobbyId: lobby.lobbyId)
-        self.observeLobbyStatus(lobbyId: lobby.lobbyId)
-        self.observeHostId(lobbyId: lobby.lobbyId)
-        self.observeGameMode(lobbyId: lobby.lobbyId)
-        self.observePreMatchData(lobbyId: lobby.lobbyId)
+        self.observeLobby(lobbyId: lobby.lobbyId)
     }
 
     private func setLobbyPlayers(lobbyId: String) {
@@ -160,65 +157,14 @@ class LobbyDataManager {
         playersListener.setupRemoveChildListener(in: playersPath, completion: playerLeftHandler)
     }
 
-    private func observeLobbyStatus(lobbyId: String) {
+    private func observeLobby(lobbyId: String) {
         let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
         let lobbyStatusChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
             switch result {
             case .success(let lobby):
                 self?.lobby?.lobbyStatus = lobby.lobbyStatus
-                guard let changeHandler = self?.lobbyDataChangeHandler else {
-                    return
-                }
-                changeHandler()
-            case .failure(let error):
-                print(error)
-                return
-            }
-        }
-        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyStatusChangedHandler)
-    }
-
-    private func observeHostId(lobbyId: String) {
-        let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
-        let lobbyHostChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
-            switch result {
-            case .success(let lobby):
                 self?.lobby?.hostId = lobby.hostId
-                guard let changeHandler = self?.lobbyDataChangeHandler else {
-                    return
-                }
-                changeHandler()
-            case .failure(let error):
-                print(error)
-                return
-            }
-        }
-        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyHostChangedHandler)
-    }
-
-    private func observeGameMode(lobbyId: String) {
-        let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
-        let lobbyGameModeChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
-            switch result {
-            case .success(let lobby):
                 self?.lobby?.modeName = lobby.modeName
-                guard let changeHandler = self?.lobbyDataChangeHandler else {
-                    return
-                }
-                changeHandler()
-            case .failure(let error):
-                print(error)
-                return
-            }
-        }
-        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyGameModeChangedHandler)
-    }
-
-    private func observePreMatchData(lobbyId: String) {
-        let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
-        let lobbyPreMatchDataChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
-            switch result {
-            case .success(let lobby):
                 self?.lobby?.preMatchData = lobby.preMatchData
                 guard let changeHandler = self?.lobbyDataChangeHandler else {
                     return
@@ -229,6 +175,6 @@ class LobbyDataManager {
                 return
             }
         }
-        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyPreMatchDataChangedHandler)
+        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyStatusChangedHandler)
     }
 }
