@@ -69,7 +69,6 @@ class GameEngine {
         }
 
         if evaluator.evaluate() {
-            // Stop game
             gameEnder()
         }
     }
