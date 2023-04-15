@@ -61,6 +61,7 @@ class TapGameHO: GameHO {
 }
 
 class BombGameHO: TapGameHO {
+    static let missedProximityScore: Double = 2
     let isBomb = true
 
     convenience init(tapGameHO: TapGameHO) {
@@ -69,5 +70,9 @@ class BombGameHO: TapGameHO {
         self.init(wrappingObject: tapGameHO.wrappingObject, position: tapGameHO.position,
                   lifeStart: tapGameHO.lifeStart, lifeEnd: bombLifeEnd,
                   onLifeEnd: tapGameHO.onLifeEnd, proximityScore: tapGameHO.proximityScore)
+    }
+
+    override func checkOnInputEnd(input: InputData) {
+        proximityScore = Self.missedProximityScore
     }
 }
