@@ -159,7 +159,7 @@ class LobbyDataManager {
 
     private func observeLobby(lobbyId: String) {
         let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
-        let lobbyStatusChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
+        let lobbyChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
             switch result {
             case .success(let lobby):
                 self?.lobby?.lobbyStatus = lobby.lobbyStatus
@@ -175,6 +175,6 @@ class LobbyDataManager {
                 return
             }
         }
-        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyStatusChangedHandler)
+        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyChangedHandler)
     }
 }
