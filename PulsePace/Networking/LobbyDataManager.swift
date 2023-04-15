@@ -121,6 +121,7 @@ class LobbyDataManager {
         self.observeLobbyStatus(lobbyId: lobby.lobbyId)
         self.observeHostId(lobbyId: lobby.lobbyId)
         self.observeGameMode(lobbyId: lobby.lobbyId)
+        self.observePreMatchData(lobbyId: lobby.lobbyId)
     }
 
     private func setLobbyPlayers(lobbyId: String) {
@@ -211,5 +212,23 @@ class LobbyDataManager {
             }
         }
         lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyGameModeChangedHandler)
+    }
+
+    private func observePreMatchData(lobbyId: String) {
+        let lobbyPath = DatabasePath.getPath(fromPaths: [DatabasePath.lobbies, lobbyId])
+        let lobbyPreMatchDataChangedHandler: (Result<Lobby, Error>) -> Void = { [weak self] result in
+            switch result {
+            case .success(let lobby):
+                self?.lobby?.preMatchData = lobby.preMatchData
+                guard let changeHandler = self?.lobbyDataChangeHandler else {
+                    return
+                }
+                changeHandler()
+            case .failure(let error):
+                print(error)
+                return
+            }
+        }
+        lobbyListener.setupChildValueListener(in: lobbyPath, completion: lobbyPreMatchDataChangedHandler)
     }
 }

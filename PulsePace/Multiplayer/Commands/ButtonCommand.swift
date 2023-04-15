@@ -19,9 +19,11 @@ class CreateLobbyCommand: ButtonCommand {
         super.init(action: action)
     }
 
-    convenience init(modeName: String, receiver: LobbyViewModel) {
+    convenience init(modeName: String, receiver: LobbyViewModel,
+                     selectedBeatmapIndex: Int) {
         self.init { _ in
-            receiver.lobby = Lobby(modeName: modeName, lobbyDataChangeHandler: receiver.onLobbyDataChanged)
+            receiver.lobby = Lobby(modeName: modeName, selectedBeatmapIndex: selectedBeatmapIndex,
+                                   lobbyDataChangeHandler: receiver.onLobbyDataChanged)
         }
     }
 }
