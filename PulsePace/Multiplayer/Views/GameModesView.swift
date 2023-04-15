@@ -12,7 +12,7 @@ struct GameModesView: View {
     @Binding var path: [Page]
     @State var isHowToPlayShown = false
 
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
         VStack(alignment: .center) {
@@ -46,6 +46,7 @@ struct GameModesView: View {
             Text("How to Play")
                 .font(Fonts.title2)
             classicModeInstructions
+            infiniteModeInstructions
             coopModeInstructions
             competitiveModeInstructions
             Button(action: { isHowToPlayShown = false }) {
