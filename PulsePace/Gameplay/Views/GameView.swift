@@ -17,6 +17,7 @@ struct GameView: View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
                 GameplayAreaView()
+                    .disabled($viewModel.gameEnded.wrappedValue)
             }
             .frame(
                 maxWidth: .infinity,
