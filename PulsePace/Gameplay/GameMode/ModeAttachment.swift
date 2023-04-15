@@ -107,7 +107,7 @@ final class ModeFactory: Factory {
             modeName: "Rhythm Battle",
             hOManager: CompetitiveHOManager(),
             scoreSystem: DisruptorSystem(ScoreManager()),
-            evaluator: BattleEvaluator(),
+            evaluator: CompetitiveEvaluator(),
             roomSetting: RoomSettingFactory.competitiveSetting,
             listeningMatchEvents: [
                 PublishBombDisruptorEvent.self, PublishNoHintsDisruptorEvent.self,

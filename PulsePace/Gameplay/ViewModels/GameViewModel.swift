@@ -192,6 +192,7 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     func stopGameplay() {
         audioPlayer?.stop()
+        clear()
     }
 
     func exitGameplay() {
