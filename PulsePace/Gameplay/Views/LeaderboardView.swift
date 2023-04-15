@@ -20,12 +20,13 @@ struct LeaderboardView: View {
                         Spacer()
                         Text("\(player.value)")
                             .font(Fonts.caption)
+                            .fixedSize(horizontal: true, vertical: false)
                     }
                     .foregroundColor(getColorForIndex(index))
                 }
             }
             .padding(20)
-            .frame(maxWidth: 250)
+            .frame(maxWidth: 300)
             .background(.thinMaterial)
         }
     }

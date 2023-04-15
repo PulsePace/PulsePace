@@ -18,6 +18,7 @@ struct LobbyView: View {
 
     var body: some View {
         VStack {
+            renderGameMode()
             renderLobbyControls()
             renderLobbyPlayers(players: viewModel.lobbyPlayers)
             renderMatchControls()
@@ -36,6 +37,12 @@ struct LobbyView: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    private func renderGameMode() -> some View {
+        Text(gameVM.selectedGameMode.modeName)
+            .font(Fonts.title)
     }
 
     @ViewBuilder
@@ -75,7 +82,7 @@ struct LobbyView: View {
                lobby.players.contains(where: { $0.key == userConfigManager.userId }),
                gameVM.selectedGameMode.modeName == lobby.modeName {
                 Text("Lobby Code: \(lobby.playerCount > 0 ? lobby.lobbyId : "Not Found")")
-                    .font(.title)
+                    .font(Fonts.title2)
                 List {
                     ForEach(players, id: \.playerId) { player in
                         HStack {

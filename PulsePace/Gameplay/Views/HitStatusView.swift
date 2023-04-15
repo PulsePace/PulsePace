@@ -49,6 +49,8 @@ struct HitStatusView: View {
             return Color.green
         case .miss:
             return Color.gray
+        case .death:
+            return Color.red
         }
     }
 }

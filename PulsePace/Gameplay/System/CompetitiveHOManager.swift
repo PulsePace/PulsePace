@@ -9,16 +9,20 @@ import Foundation
 
 class CompetitiveHOManager: HitObjectManager {
     private var disruptorsQueue = MyQueue<TapHitObject>()
+    private var isSelfGameActive = true
 
     override func reset() {
         super.reset()
         disruptorsQueue.removeAll()
+        isSelfGameActive = true
     }
 
     override func registerEventHandlers(eventManager: EventManagable) {
         super.registerEventHandlers(eventManager: eventManager)
         eventManager.registerHandler(onSpawnBombHandler)
         eventManager.registerHandler(onActivateNoHintsHandler)
+        eventManager.registerHandler(onSelfDeathHandler)
+        eventManager.registerHandler(onOnlyRemainingPlayerHandler)
     }
 
     lazy var onSpawnBombHandler
@@ -52,18 +56,30 @@ class CompetitiveHOManager: HitObjectManager {
         }
     }
 
+    lazy var onSelfDeathHandler = { [weak self] (_: EventManagable, _: SelfDeathEvent) -> Void in
+        self?.isSelfGameActive = false
+    }
+
+    lazy var onOnlyRemainingPlayerHandler = { [weak self] (_: EventManagable, _: OnlyRemainingPlayerEvent) -> Void in
+        self?.isSelfGameActive = false
+    }
+
     override func checkBeatMap(_ currBeat: Double) -> [any GameHO] {
+        guard isSelfGameActive else {
+            return []
+        }
         var gameHOSpawned = super.checkBeatMap(currBeat)
         while let disruptorHO = disruptorsQueue.peek() {
             disruptorHO.startTime = ceil(currBeat)
             guard let gameHO = spawnGameHitObject(disruptorHO) as? TapGameHO else {
                 continue
             }
+            // TODO: BompTapHitObject
             gameHO.isBomb = true
+            gameHO.lifeEnd += 5
             gameHOSpawned.append(gameHO)
             _ = disruptorsQueue.dequeue()
         }
-
         return gameHOSpawned
     }
 }

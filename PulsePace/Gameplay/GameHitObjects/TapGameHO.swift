@@ -15,7 +15,7 @@ class TapGameHO: GameHO {
     let position: CGPoint
     let lifeStart: Double
     let lifeOptimal = LifeStage(0.5)
-    let lifeEnd: Double
+    var lifeEnd: Double
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage = LifeStage.startStage
     var onLifeEnd: [(TapGameHO) -> Void] = []

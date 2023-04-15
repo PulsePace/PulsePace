@@ -119,6 +119,14 @@ struct DeathEvent: Event {
     var diedPlayerId: String
 }
 
+struct SelfDeathEvent: Event {
+    var timestamp: Double
+}
+
+struct OnlyRemainingPlayerEvent: Event {
+    var timestamp: Double
+}
+
 struct LostLifeEvent: Event {
     var timestamp: Double
     var lostLifePlayerId: String

@@ -11,7 +11,7 @@ struct DisruptorOptionsView: View {
     @EnvironmentObject var gameVM: GameViewModel
 
     @State private var selectedTarget = ""
-    @State private var selectedDisruptor = "Bomb"
+    @State private var selectedDisruptor = ""
 
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.purple)
@@ -47,7 +47,11 @@ struct DisruptorOptionsView: View {
         }
         .onAppear {
             if !gameVM.otherPlayers.isEmpty {
-                selectedTarget = gameVM.otherPlayers[0].key
+                selectedTarget = gameVM.otherPlayers.randomElement()?.key ??
+                    gameVM.otherPlayers[0].key
+                selectedDisruptor = gameVM.disruptors.randomElement() ?? "Bomb"
+                SelectTargetCommand(receiver: gameVM).executeAction(inputData: selectedTarget)
+                SelectDisruptorCommand(receiver: gameVM).executeAction(inputData: selectedDisruptor)
             }
         }
     }

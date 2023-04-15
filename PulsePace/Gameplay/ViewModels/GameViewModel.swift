@@ -40,10 +40,6 @@ class GameViewModel: ObservableObject, RenderSystem {
         return String(scoreSystem.getGameEndScore())
     }
 
-    var accuracy: String {
-        String(Double(round(100 * 82.3883) / 100)) + "%"
-    }
-
     var combo: String {
         guard let scoreManager = gameEngine?.scoreSystem?.scoreManager else {
             return String(0)
@@ -71,6 +67,8 @@ class GameViewModel: ObservableObject, RenderSystem {
             count = "x" + String(scoreManager.goodCount)
         case .miss:
             count = "x" + String(scoreManager.missCount)
+        default:
+            count = ""
         }
         return latestHitStatus.description + count
     }
@@ -200,6 +198,7 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     func stopGameplay() {
         audioPlayer?.stop()
+        clear()
     }
 
     func exitGameplay() {
