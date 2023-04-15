@@ -50,6 +50,8 @@ struct DisruptorOptionsView: View {
                 selectedTarget = gameVM.otherPlayers.randomElement()?.key ??
                     gameVM.otherPlayers[0].key
                 selectedDisruptor = gameVM.disruptors.randomElement() ?? "Bomb"
+                SelectTargetCommand(receiver: gameVM).executeAction(inputData: selectedTarget)
+                SelectDisruptorCommand(receiver: gameVM).executeAction(inputData: selectedDisruptor)
             }
         }
     }
