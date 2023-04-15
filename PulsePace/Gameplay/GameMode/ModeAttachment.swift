@@ -85,53 +85,53 @@ final class ModeFactory: Factory {
         matchEventRelay: nil,
         gameViewElements: [.gameplayArea, .playbackControls, .scoreBoard]
     )
+    private static var infiniteMode = ModeAttachment(
+        modeName: "Infinite Mode",
+        hOManager: InfiniteHOManager(),
+        scoreSystem: InfiniteScoreSystem(ScoreManager()), conductor: InfiniteConductor(),
+        evaluator: InfiniteEvaluator(),
+        roomSetting: RoomSettingFactory.defaultSetting,
+        listeningMatchEvents: [],
+        matchEventRelay: nil,
+        gameViewElements: [.gameplayArea, .scoreBoard, .livesCount]
+    )
+
+    private static var coopMode = ModeAttachment(
+        modeName: "Basic Coop",
+        hOManager: CoopHOManager(),
+        scoreSystem: CoopScoreSystem(ScoreManager()), conductor: Conductor(),
+        evaluator: CoopEvaluator(),
+        roomSetting: RoomSettingFactory.baseCoopSetting,
+        listeningMatchEvents: [
+            PublishMissTapEvent.self, PublishMissHoldEvent.self,
+            PublishMissSlideEvent.self, PublishScoreEvent.self,
+            PublishGameCompleteEvent.self
+        ],
+        matchEventRelay: CoopMatchEventRelay(),
+        gameViewElements: [.gameplayArea, .scoreBoard]
+    )
+
+    private static var competitiveMode = ModeAttachment(
+        modeName: "Rhythm Battle",
+        hOManager: CompetitiveHOManager(),
+        scoreSystem: DisruptorSystem(ScoreManager()), conductor: Conductor(),
+        evaluator: CompetitiveEvaluator(),
+        roomSetting: RoomSettingFactory.competitiveSetting,
+        listeningMatchEvents: [
+            PublishBombDisruptorEvent.self, PublishNoHintsDisruptorEvent.self,
+            PublishDeathEvent.self, PublishScoreEvent.self
+        ],
+        matchEventRelay: CompetitiveMatchEventRelay(),
+        gameViewElements: [
+            .gameplayArea, .disruptorOptions, .matchFeed, .leaderboard, .livesCount
+        ]
+    )
 
     static func populate() {
         if isPopulated {
             return
         }
         isPopulated = true
-        let infiniteMode = ModeAttachment(
-            modeName: "Infinite Mode",
-            hOManager: InfiniteHOManager(),
-            scoreSystem: InfiniteScoreSystem(ScoreManager()), conductor: InfiniteConductor(),
-            evaluator: InfiniteEvaluator(),
-            roomSetting: RoomSettingFactory.defaultSetting,
-            listeningMatchEvents: [],
-            matchEventRelay: nil,
-            gameViewElements: [.gameplayArea, .scoreBoard, .livesCount]
-        )
-
-        let coopMode = ModeAttachment(
-            modeName: "Basic Coop",
-            hOManager: CoopHOManager(),
-            scoreSystem: CoopScoreSystem(ScoreManager()), conductor: Conductor(),
-            evaluator: CoopEvaluator(),
-            roomSetting: RoomSettingFactory.baseCoopSetting,
-            listeningMatchEvents: [
-                PublishMissTapEvent.self, PublishMissHoldEvent.self,
-                PublishMissSlideEvent.self, PublishScoreEvent.self,
-                PublishGameCompleteEvent.self
-            ],
-            matchEventRelay: CoopMatchEventRelay(),
-            gameViewElements: [.gameplayArea, .scoreBoard]
-        )
-
-        let competitiveMode = ModeAttachment(
-            modeName: "Rhythm Battle",
-            hOManager: CompetitiveHOManager(),
-            scoreSystem: DisruptorSystem(ScoreManager()), conductor: Conductor(),
-            evaluator: BattleEvaluator(),
-            roomSetting: RoomSettingFactory.competitiveSetting,
-            listeningMatchEvents: [
-                PublishBombDisruptorEvent.self, PublishNoHintsDisruptorEvent.self,
-                PublishDeathEvent.self, PublishScoreEvent.self
-            ],
-            matchEventRelay: CompetitiveMatchEventRelay(),
-            gameViewElements: [
-                .gameplayArea, .disruptorOptions, .matchFeed, .leaderboard, .livesCount
-            ]
-        )
 
         assemblies[defaultMode.modeName] = defaultMode
         assemblies[coopMode.modeName] = coopMode

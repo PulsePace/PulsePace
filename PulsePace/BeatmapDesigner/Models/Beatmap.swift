@@ -23,8 +23,8 @@ struct Beatmap {
     var songDuration: Double
 
     init(bpm: Double, offset: Double,
-         hitObjects: [any HitObject], preSpawnInterval: Double = 2,
-         sliderSpeed: Double = 100, songDuration: Double) {
+         hitObjects: [any HitObject], songDuration: Double, preSpawnInterval: Double = 2,
+         sliderSpeed: Double = 100) {
         self.bpm = bpm
         self.offset = offset
         self.hitObjects = hitObjects
@@ -68,7 +68,7 @@ struct SerializedBeatmap: Deserializable {
             HOTypeFactory.assemble(hOTypeLabel: stringifiedHO.typeLabel, data: stringifiedHO.data).deserialize()
         }
         return Beatmap(bpm: bpm, offset: offset,
-                       hitObjects: deserializedHOs,
-                       preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed, songDuration: songDuration)
+                       hitObjects: deserializedHOs, songDuration: songDuration,
+                       preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed)
     }
 }
