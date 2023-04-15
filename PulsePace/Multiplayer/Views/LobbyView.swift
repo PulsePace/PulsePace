@@ -11,8 +11,8 @@ import Combine
 struct LobbyView: View {
     @StateObject var viewModel = LobbyViewModel()
     @State private var lobbyCode: String = ""
-    @Binding var path: [Page]
     @EnvironmentObject var gameVM: GameViewModel
+    @EnvironmentObject var pageList: PageList
     @EnvironmentObject var userConfigManager: UserConfigManager
     @Environment(\.dismiss) private var dismiss
 
@@ -117,7 +117,7 @@ struct LobbyView: View {
                 if status == .matchStarted && gameVM.selectedGameMode.modeName == lobby.modeName {
                     let match = Match(lobby)
                     gameVM.assignMatch(match)
-                    self.path.append(Page.playPage)
+                    self.pageList.navigate(to: .playPage)
                 }
             }
             .padding(20)

@@ -11,7 +11,7 @@ struct GameView: View {
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
-    @Binding var path: [Page]
+    @EnvironmentObject var pageList: PageList
 
     var body: some View {
         GeometryReader { geometry in
@@ -102,5 +102,32 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
                 GameControlView()
             }
         }
+        .onAppear {
+            if viewModel.gameEngine == nil {
+                viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                if let track = viewModel.songData?.track {
+                    audioManager.startPlayer(track: track)
+                } else {
+                    audioManager.startPlayer(track: "track_1")
+                }
+                viewModel.startGameplay()
+                if let audioPlayer = audioManager.player {
+                    viewModel.initialisePlayer(audioPlayer: audioPlayer)
+                }
+                audioManager.player?.play()
+            }
+        }
+        .onDisappear {
+            audioManager.stopPlayer()
+            viewModel.exitGameplay()
+            viewModel.songPosition = 0
+        }
+        .fullBackground(imageName: viewModel.gameBackground)
+        .popup(isPresented: $viewModel.gameEnded) {
+            GameEndView()
+        }
+        .navigationBarBackButtonHidden(viewModel.match != nil)
     }
 }

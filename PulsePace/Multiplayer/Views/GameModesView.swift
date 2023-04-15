@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameModesView: View {
+    @EnvironmentObject var pageList: PageList
     @StateObject var viewModel = GameModesViewModel()
     @Binding var path: [Page]
     @State var isHowToPlayShown = false

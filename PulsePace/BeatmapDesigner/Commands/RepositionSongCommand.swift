@@ -23,7 +23,6 @@ class RepositionSongCommand: InputCommand {
             completion: { _ in
                 player.currentTime = receiver.sliderValue
                 receiver.isEditing = false
-                player.play()
             }
         )
     }

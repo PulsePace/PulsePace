@@ -45,7 +45,6 @@ struct PlaybackControlView: View {
                     if editing {
                         player.pause()
                     } else {
-                        player.play()
                         player.currentTime = beatmapDesigner.sliderValue
                     }
                 }

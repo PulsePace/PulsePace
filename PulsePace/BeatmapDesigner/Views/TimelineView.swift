@@ -33,7 +33,6 @@ struct TimelineView: View {
             }
             .frame(height: 60)
             .background(Color(hex: 0x310067))
-//            .background(.black.opacity(0.6))
             .mask(LinearGradient(
                 gradient: Gradient(colors: [.clear] + Array(repeating: Color.black, count: 16) + [.clear]),
                 startPoint: .leading,
