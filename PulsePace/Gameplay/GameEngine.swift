@@ -110,8 +110,8 @@ struct GameEndEvent: Event {
     var timestamp: Double
     var finalScore: Int
 
-    init(timestamp: Double = Date().timeIntervalSince1970, finalScore: Int) {
-        self.timestamp = timestamp
+    init(finalScore: Int, timestamp: Double = Date().timeIntervalSince1970) {
         self.finalScore = finalScore
+        self.timestamp = timestamp
     }
 }

@@ -96,7 +96,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     var beatmap: Beatmap {
         // TODO: Assumes beatmap retrieved only once
         guard let songData = songData else {
-            return Beatmap(songData: .init(), hitObjects: [], songDuration: player?.duration ?? 0)
+            return Beatmap(songDuration: player?.duration ?? 0, songData: .init(), hitObjects: [])
         }
         var hitObjectS2B: [any HitObject] = []
         let spb = 1 / bps
@@ -118,7 +118,7 @@ class BeatmapDesignerViewModel: ObservableObject {
                 )
             }
         }
-        return Beatmap(songData: songData, hitObjects: hitObjectS2B, songDuration: player?.duration ?? 0)
+        return Beatmap(songDuration: player?.duration ?? 0, songData: songData, hitObjects: hitObjectS2B)
     }
 
     init() {

@@ -38,21 +38,15 @@ class ScoreSystem: ModeSystem {
             scoreManager.perfectCount += 1
             scoreManager.score += score
             eventManager.add(event: UpdateComboEvent(
-                timestamp: Date().timeIntervalSince1970,
-                comboCount: scoreManager.comboCount,
-                lastLocation: gameHO.position,
-                score: score
-            ))
+                timestamp: Date().timeIntervalSince1970, comboCount: scoreManager.comboCount,
+                lastLocation: gameHO.position, score: score))
         } else if gameHO.proximityScore < proximityScoreThreshould[1] {
             let score = 50
             scoreManager.goodCount += 1
             scoreManager.score += score
             eventManager.add(event: UpdateComboEvent(
-                timestamp: Date().timeIntervalSince1970,
-                comboCount: scoreManager.comboCount,
-                lastLocation: gameHO.position,
-                score: score
-            ))
+                timestamp: Date().timeIntervalSince1970, comboCount: scoreManager.comboCount,
+                lastLocation: gameHO.position, score: score))
         } else {
             scoreManager.missCount += 1
         }
@@ -66,6 +60,7 @@ class ScoreSystem: ModeSystem {
                                                                 playerScore: scoreManager.score)))
         gameHO.destroyObject()
     }
+
     lazy var defaultMissEventHandler = { [self] (_: EventManagable, event: MissEvent) -> Void in
         let gameHO = event.gameHO
         scoreManager.missCount += 1

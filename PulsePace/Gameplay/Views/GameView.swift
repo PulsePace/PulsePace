@@ -18,23 +18,7 @@ struct GameView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .center) {
-                GameplayAreaView()
-                    .disabled($viewModel.gameEnded.wrappedValue)
-            }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
-            .modifier(GameViewTopOverlaysModifier())
-            .modifier(GameViewBottomOverlaysModifier())
-            .onAppear {
-                startGame()
-            }
-            .onDisappear {
-                stopGame()
-            }
-            .fullBackground(imageName: viewModel.gameBackground)
+            renderGameplayAreaView(geometry: geometry)
             .popup(isPresented: $viewModel.gameEnded) {
                 GameEndView()
             } customize: {
@@ -43,13 +27,34 @@ struct GameView: View {
                     .animation(.spring())
                     .dragToDismiss(false)
             }
-            .navigationBarBackButtonHidden(viewModel.match != nil)
-            .onChange(of: geometry.size, perform: { size in
-                viewModel.initialiseFrame(size: size)
-            })
-            .onChange(of: viewModel.playbackRate) { _ in
-                audioManager.setPlaybackRate(viewModel.playbackRate)
-            }
+        }
+    }
+
+    @ViewBuilder
+    private func renderGameplayAreaView(geometry: GeometryProxy) -> some View {
+        ZStack(alignment: .center) {
+            GameplayAreaView()
+                .disabled($viewModel.gameEnded.wrappedValue)
+        }
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity
+        )
+        .modifier(GameViewTopOverlaysModifier())
+        .modifier(GameViewBottomOverlaysModifier())
+        .onAppear {
+            startGame()
+        }
+        .onDisappear {
+            stopGame()
+        }
+        .fullBackground(imageName: viewModel.gameBackground)
+        .navigationBarBackButtonHidden(viewModel.match != nil)
+        .onChange(of: geometry.size, perform: { size in
+            viewModel.initialiseFrame(size: size)
+        })
+        .onChange(of: viewModel.playbackRate) { _ in
+            audioManager.setPlaybackRate(viewModel.playbackRate)
         }
     }
 
