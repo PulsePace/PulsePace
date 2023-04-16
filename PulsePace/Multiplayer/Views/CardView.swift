@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct CardView: View {
-    @Binding var path: [Page]
+    @EnvironmentObject var pageList: PageList
     @EnvironmentObject var gameVM: GameViewModel
 
     var cardDisplayable: CardDisplayable
@@ -17,7 +17,7 @@ struct CardView: View {
     var body: some View {
         Button(action: {
             gameVM.selectedGameMode = ModeFactory.getModeAttachment(cardDisplayable.metaInfo)
-            path.append(cardDisplayable.page)
+            pageList.navigate(to: cardDisplayable.page)
         }) {
             VStack {
                 Image(cardDisplayable.image)

@@ -13,20 +13,19 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var sliderValue: Double = 0
     @Published var hitObjects: PriorityQueue<any HitObject>
     @Published var isEditing = false
-    @Published var bpm: Double = 123.482 // TODO: parameterise
-    @Published var offset: Double = 0
     @Published var zoom: Double = 128
     @Published var divisorIndex: Double = 0
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
     @Published var gestureHandler: any GestureHandler
+    var frame: CGSize = .zero
+    var songData: SongData?
     var achievementManager: AchievementManager?
+    var eventManager: EventManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
-    var frame: CGSize = .zero
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
-    private var songTitle: String
 
     var gestureHandlerList: [any GestureHandler] = []
 
@@ -58,6 +57,14 @@ class BeatmapDesignerViewModel: ObservableObject {
         mainBeatSpacing / divisor
     }
 
+    var bpm: Double {
+        songData?.bpm ?? 0
+    }
+
+    var offset: Double {
+        songData?.offset ?? 0
+    }
+
     var bps: Double {
         bpm / 60
     }
@@ -74,17 +81,26 @@ class BeatmapDesignerViewModel: ObservableObject {
         interval * quantisedBeat
     }
 
+    var songTitle: String {
+        get async {
+            await songData?.title ?? ""
+        }
+    }
+
     var namedBeatmap: NamedBeatmap {
-        NamedBeatmap(songTitle: songTitle, beatmap: beatmap)
+        get async {
+            NamedBeatmap(songTitle: await songTitle, beatmap: beatmap)
+        }
     }
 
     var beatmap: Beatmap {
         // TODO: Assumes beatmap retrieved only once
+        guard let songData = songData else {
+            return Beatmap(songDuration: player?.duration ?? 0, songData: .init(), hitObjects: [])
+        }
         var hitObjectS2B: [any HitObject] = []
-        let spb = 60 / bpm
-        let songDuration = player?.duration ?? 0
+        let spb = 1 / bps
         hitObjects.toArray().forEach { hitObject in
-
             if hitObject is TapHitObject {
                 hitObjectS2B.append(TapHitObject(position: hitObject.position, startTime: hitObject.startTime / spb))
             } else if hitObject is HoldHitObject {
@@ -102,11 +118,10 @@ class BeatmapDesignerViewModel: ObservableObject {
                 )
             }
         }
-        return Beatmap(bpm: bpm, offset: offset, hitObjects: hitObjectS2B, songDuration: songDuration)
+        return Beatmap(songDuration: player?.duration ?? 0, songData: songData, hitObjects: hitObjectS2B)
     }
 
-    init(songTitle: String = "Unravel") {
-        self.songTitle = songTitle
+    init() {
         hitObjects = PriorityQueue(sortBy: Self.hitObjectPriority)
         gestureHandler = TapGestureHandler()
         gestureHandlerList = [
@@ -114,12 +129,15 @@ class BeatmapDesignerViewModel: ObservableObject {
             HoldGestureHandler(),
             SlideGestureHandler()
         ]
-        createDisplayLink()
     }
 
-    private func createDisplayLink() {
+    func createDisplayLink() {
         self.displayLink = CADisplayLink(target: self, selector: #selector(step))
         displayLink?.add(to: .current, forMode: .default)
+    }
+
+    func invalidateDisplayLink() {
+        self.displayLink?.invalidate()
     }
 
     @objc func step(displaylink: CADisplayLink) {
@@ -127,6 +145,8 @@ class BeatmapDesignerViewModel: ObservableObject {
             return
         }
         sliderValue = player.currentTime
+        eventManager?.handleAllEvents()
+        achievementManager?.updateAchievementsProgress()
     }
 
     func virtualisePosition(_ position: CGPoint) -> CGPoint {
@@ -172,14 +192,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.enqueue(hitObject)
         previewHitObject = nil
-        incrementHitObjectsProperty()
-    }
-
-    private func incrementHitObjectsProperty() {
-        if let objectsPlacedUpdater = achievementManager?
-            .getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self) {
-            objectsPlacedUpdater.increment()
-        }
+        eventManager?.add(event: PlaceHitObjectEvent(timestamp: Date().timeIntervalSince1970))
     }
 
     static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {

@@ -17,8 +17,11 @@ final class BeatmapManager: ObservableObject {
     init() {
         let beatmapDataManager = LocalDataManager<[SerializedNamedBeatmap]>()
         self.beatmapDataManager = beatmapDataManager
-        self.beatmapDataManager.load(filename: localBeatmapStorage,
-                                     bundlePath: bundledBeatmaps, initData: []) { [weak self] result in
+        self.beatmapDataManager.load(
+            filename: localBeatmapStorage,
+            bundlePath: bundledBeatmaps,
+            initData: []
+        ) { [weak self] result in
             switch result {
             case .failure(let error):
                 fatalError(error.localizedDescription)

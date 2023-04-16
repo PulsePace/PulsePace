@@ -6,51 +6,70 @@
 //
 
 import SwiftUI
+import PopupView
 
 struct GameView: View {
+    @EnvironmentObject var propertyStorage: PropertyStorage
+    @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
-    @Binding var path: [Page]
+    @EnvironmentObject var pageList: PageList
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .center) {
-                GameplayAreaView()
-                    .disabled($viewModel.gameEnded.wrappedValue)
-            }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
-            .modifier(GameViewTopOverlaysModifier())
-            .modifier(GameViewBottomOverlaysModifier())
-            .onAppear {
-                startGame()
-            }
-            .onDisappear {
-                stopGame()
-            }
-            .fullBackground(imageName: viewModel.gameBackground)
+            renderGameplayAreaView(geometry: geometry)
             .popup(isPresented: $viewModel.gameEnded) {
-                GameEndView(path: $path)
-            }
-            .navigationBarBackButtonHidden(viewModel.match != nil)
-            .onChange(of: geometry.size, perform: { size in
-                viewModel.initialiseFrame(size: size)
-            })
-            .onChange(of: viewModel.playbackRate) { _ in
-                audioManager.setPlaybackRate(viewModel.playbackRate)
+                GameEndView()
+            } customize: {
+                $0
+                    .type(.default)
+                    .animation(.spring())
+                    .dragToDismiss(false)
             }
         }
     }
 
-    func startGame() {
-        if viewModel.gameEngine == nil {
-            viewModel.initEngine(with: beatmapManager.beatmapChoices[4].beatmap)
+    @ViewBuilder
+    private func renderGameplayAreaView(geometry: GeometryProxy) -> some View {
+        ZStack(alignment: .center) {
+            GameplayAreaView()
+                .disabled($viewModel.gameEnded.wrappedValue)
         }
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity
+        )
+        .modifier(GameViewTopOverlaysModifier())
+        .modifier(GameViewBottomOverlaysModifier())
+        .onAppear {
+            startGame()
+        }
+        .onDisappear {
+            stopGame()
+        }
+        .fullBackground(imageName: viewModel.gameBackground)
+        .navigationBarBackButtonHidden(viewModel.match != nil)
+        .onChange(of: geometry.size, perform: { size in
+            viewModel.initialiseFrame(size: size)
+        })
+        .onChange(of: viewModel.playbackRate) { _ in
+            audioManager.setPlaybackRate(viewModel.playbackRate)
+        }
+    }
+
+    private func startGame() {
+        if viewModel.gameEngine == nil {
+            viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
+        }
+        guard let gameEngine = viewModel.gameEngine else {
+            return
+        }
+        propertyStorage.registerEventHandlers(eventManager: gameEngine.eventManager)
+        gameEngine.achievementManager = achievementManager
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            audioManager.startPlayer(track: "test_trim")
+            audioManager.startPlayer(track: beatmapManager.beatmapChoices[0].beatmap.songData.track)
             viewModel.startGameplay()
             if let audioPlayer = audioManager.player {
                 viewModel.initialisePlayer(audioPlayer: audioPlayer)
@@ -58,7 +77,7 @@ struct GameView: View {
         }
     }
 
-    func stopGame() {
+    private func stopGame() {
         audioManager.stopPlayer()
         viewModel.exitGameplay()
         viewModel.songPosition = 0

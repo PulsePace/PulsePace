@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GameEndView: View {
     @EnvironmentObject var gameVM: GameViewModel
-    @Binding var path: [Page]
+    @EnvironmentObject var pageList: PageList
 
     var body: some View {
         getScoreDisplay()
@@ -35,13 +35,14 @@ struct GameEndView: View {
             return VStack(spacing: 15) {
                 Text("Final Score")
                 Text(gameVM.gameEndScore)
-                StyledButton(action: { path.removeAll() }, text: "MENU", color: .orange)
+                // TODO: abstract pages removeAll
+                StyledButton(action: { pageList.pages.removeAll() }, text: "MENU", color: .orange)
             }
         } else if gameVM.selectedGameMode.modeName == "Basic Coop" {
             return VStack(spacing: 15) {
                 Text("Coop Score")
                 Text(gameVM.gameEndScore)
-                StyledButton(action: { path.removeAll() }, text: "MENU", color: .orange)
+                StyledButton(action: { pageList.pages.removeAll() }, text: "MENU", color: .orange)
             }
         } else {
             fatalError("Mode not supported")

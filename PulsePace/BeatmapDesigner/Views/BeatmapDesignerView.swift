@@ -9,12 +9,13 @@ import SwiftUI
 import AVKit
 
 struct BeatmapDesignerView: View {
+    @EnvironmentObject var propertyStorage: PropertyStorage
     @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
     @EnvironmentObject var gameViewModel: GameViewModel
-    @StateObject var viewModel = BeatmapDesignerViewModel()
-    @Binding var path: [Page]
+    @EnvironmentObject var viewModel: BeatmapDesignerViewModel
+    @EnvironmentObject var pageList: PageList
 
     var body: some View {
         VStack(spacing: 0) {
@@ -57,19 +58,26 @@ struct BeatmapDesignerView: View {
             )
         )
         .onAppear {
-            audioManager.startPlayer(track: "test_trim")
+            if let track = viewModel.songData?.track {
+                audioManager.startPlayer(track: track)
+            }
             if let player = audioManager.player {
                 viewModel.initialisePlayer(player: player)
             }
             viewModel.achievementManager = achievementManager
+            viewModel.eventManager = EventManager()
+            viewModel.createDisplayLink()
 
-            let openedPropertyUpdater = achievementManager
-                .getPropertyUpdater(for: TotalBeatmapDesignerOpenedProperty.self)
-            openedPropertyUpdater.increment()
+            if let eventManager = viewModel.eventManager {
+                propertyStorage.registerEventHandlers(eventManager: eventManager)
+                eventManager.add(event: OpenBeatmapDesignerEvent(timestamp: Date().timeIntervalSince1970))
+            }
         }
         .onDisappear {
             audioManager.stopPlayer()
+            viewModel.invalidateDisplayLink()
             viewModel.sliderValue = 0
+            viewModel.eventManager = nil
         }
         .environmentObject(viewModel)
     }
@@ -77,9 +85,10 @@ struct BeatmapDesignerView: View {
     @ViewBuilder
     private func renderStartButton() -> some View {
         Button(action: {
-            path.append(Page.playPage)
+            gameViewModel.songData = viewModel.songData
             gameViewModel.selectedGameMode = ModeFactory.defaultMode
             gameViewModel.initEngine(with: viewModel.beatmap)
+            pageList.navigate(to: .playPage)
         }) {
             Text("Start")
                 .foregroundColor(.white)
@@ -90,11 +99,21 @@ struct BeatmapDesignerView: View {
     @ViewBuilder
     private func renderSaveButton() -> some View {
         Button(action: {
-            beatmapManager.saveBeatmap(namedBeatmap: viewModel.namedBeatmap)
+            Task {
+                beatmapManager.saveBeatmap(namedBeatmap: await viewModel.namedBeatmap)
+            }
         }) {
             Text("Save")
                 .foregroundColor(.white)
                 .font(.title2)
         }
     }
+}
+
+struct OpenBeatmapDesignerEvent: Event {
+    var timestamp: Double
+}
+
+struct PlaceHitObjectEvent: Event {
+    var timestamp: Double
 }

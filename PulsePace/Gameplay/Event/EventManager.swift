@@ -5,7 +5,9 @@
 //  Created by Yuanxi Zhu on 26/3/23.
 //
 
-class EventManager: EventManagable {
+import Foundation
+
+class EventManager: EventManagable, ObservableObject {
     var eventHandlerMap: [String: [EventHandler]] = [:]
     var eventQueue = PriorityQueue<Event> { a, b in
         a.timestamp < b.timestamp

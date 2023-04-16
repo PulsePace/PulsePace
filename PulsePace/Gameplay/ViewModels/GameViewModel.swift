@@ -16,6 +16,7 @@ protocol RenderSystem {
 class GameViewModel: ObservableObject, RenderSystem {
     private var displayLink: CADisplayLink?
     var gameEngine: GameEngine?
+    var songData: SongData?
     private var audioPlayer: AVAudioPlayer?
     @Published var slideGameHOs: [SlideGameHOVM] = []
     @Published var holdGameHOs: [HoldGameHOVM] = []
@@ -174,7 +175,11 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     func initEngine(with beatmap: Beatmap) {
         selectedGameMode.clean()
-        gameEngine = GameEngine(modeAttachment: selectedGameMode, gameEnder: gameEnder, match: match)
+        gameEngine = GameEngine(
+            modeAttachment: selectedGameMode,
+            gameEnder: gameEnder,
+            match: match
+        )
         gameEngine?.load(beatmap)
     }
 

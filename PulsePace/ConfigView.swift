@@ -10,21 +10,36 @@ import SwiftUI
 
 struct ConfigView: View {
     @EnvironmentObject var userConfigManager: UserConfigManager
+    @EnvironmentObject var propertyStorage: PropertyStorage
 
     var body: some View {
-        VStack(alignment: .center) {
-            Text("Settings")
-                .font(Fonts.title)
-            ScrollView(.vertical) {
+        ScrollView {
+            VStack {
                 HStack {
                     TextField("Name", text: $userConfigManager.userConfig.name)
                         .frame(maxWidth: 300)
                         .textFieldStyle(.roundedBorder)
 
-                    StyledButton(action: { userConfigManager.save() }, text: "Save Name")
+                    StyledButton(action: { userConfigManager.save() }, text: "Save")
+                }
+                VStack {
+                    ForEach(propertyStorage.properties, id: \.name) { property in
+                        renderProperty(property)
+                    }
                 }
             }
+            .padding(.init(top: 0, leading: 160, bottom: 0, trailing: 160))
         }
+    }
+
+    @ViewBuilder
+    private func renderProperty(_ property: any Property) -> some View {
+        HStack {
+            Text(property.name)
+            Spacer()
+            Text(property.displayValue)
+        }
+        .frame(height: 80)
     }
 }
 

@@ -7,35 +7,45 @@
 
 import Foundation
 
-class AchievementManager: ObservableObject {
-    private var properties: [any Property]
-    private var achievements: [any Achievement]
+class AchievementManager: ObservableObject, AchievementUpdateDelegate {
+    private(set) var achievements: [any Achievement]
+    @Published var isNotifying = false
+    @Published var notifyingAchievement: Achievement?
 
     init() {
-        properties = [
-            TotalHitObjectsPlacedProperty(),
-            TotalBeatmapDesignerOpenedProperty()
-        ]
         achievements = [
             NoviceBeatmapDesignerAchievement(),
-            ExpertBeatmapDesignerAchievement()
+            ExpertBeatmapDesignerAchievement(),
+            SwiftFingersAchievement()
         ]
-        registerProperties()
+        bindUpdateDelegate()
     }
 
-    private func registerProperties() {
+    private func bindUpdateDelegate() {
         for achievement in achievements {
-            achievement.initialiseConstraints(properties: properties)
+            achievement.delegate = self
         }
     }
 
-    func getPropertyUpdater<T: Property>(for propertyType: T.Type) -> T.S {
-        guard let property = properties.first(where: { type(of: $0) == propertyType }) else {
-            fatalError("Property for property \(propertyType) not found")
+    func updateAchievementsProgress() {
+        for achievement in achievements {
+            achievement.updateProgress()
         }
-        guard let updater = property.updater as? T.S else {
-            fatalError("Updater for property \(propertyType) not found")
+    }
+
+    func registerPropertyStorage(_ propertyStorage: PropertyStorage) {
+        for achievement in achievements {
+            achievement.propertyStorage = propertyStorage
         }
-        return updater
+    }
+
+    func notifyUnlockedAchievement(_ achievement: Achievement) {
+        isNotifying = true
+        notifyingAchievement = achievement
+    }
+
+    func unnotifyUnlockedAchievement() {
+        isNotifying = false
+        notifyingAchievement = nil
     }
 }
