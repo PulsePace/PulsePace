@@ -29,7 +29,7 @@ final class BeatmapManager: ObservableObject {
             }
 
         if !preloadedBeatmapChoices.isEmpty {
-            if let firstSong = preloadedBeatmapChoices.keys.first,
+            if let firstSong = preloadedBeatmapChoices.keys.min(),
                 let beatmapGroup = preloadedBeatmapChoices[firstSong] {
                 defaultBeatmapChoice = beatmapGroup.get(0)
             }
