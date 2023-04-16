@@ -48,7 +48,7 @@ final class UserConfigManager: ObservableObject {
         let fallbackUserConfig = UserConfig()
         self.userConfigDataManager = userConfigDataManager
         self.userConfig = fallbackUserConfig
-        userConfigDataManager.load(filename: localConfigStorage, bundlePath: nil,
+        userConfigDataManager.load(filename: localConfigStorage,
                                    initData: fallbackUserConfig) { [weak self] result in
             switch result {
             case .failure(let error):

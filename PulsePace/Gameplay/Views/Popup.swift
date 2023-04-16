@@ -60,10 +60,10 @@ struct Popup<PopupContent>: ViewModifier where PopupContent: View {
     func sheet() -> some View {
         ZStack {
             self.view()
-                .simultaneousGesture(
-                    TapGesture().onEnded {
-                        dismiss()
-                    })
+//                .simultaneousGesture(
+//                    TapGesture().onEnded {
+//                        dismiss()
+//                    })
                 .frameGetter($sheetContentRect)
                 .frame(width: screenWidth)
                 .offset(x: 0, y: currentOffset)

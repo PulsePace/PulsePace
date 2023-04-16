@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CardView: View {
     @EnvironmentObject var pageList: PageList
+    @EnvironmentObject var beatmapManager: BeatmapManager
     @EnvironmentObject var gameVM: GameViewModel
 
     var cardDisplayable: CardDisplayable
@@ -17,6 +18,12 @@ struct CardView: View {
     var body: some View {
         Button(action: {
             gameVM.selectedGameMode = ModeFactory.getModeAttachment(cardDisplayable.metaInfo)
+            if cardDisplayable.category == "Singleplayer" {
+                beatmapManager.isPreloadedOnly = false
+            } else {
+                beatmapManager.isPreloadedOnly = true
+            }
+
             pageList.navigate(to: cardDisplayable.page)
         }) {
             VStack {

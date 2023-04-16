@@ -20,6 +20,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var gestureHandler: any GestureHandler
 //    @Published var isShowing = true
     var songData: SongData?
+    var mapTitle: String?
     var achievementManager: AchievementManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
@@ -89,7 +90,8 @@ class BeatmapDesignerViewModel: ObservableObject {
 
     var namedBeatmap: NamedBeatmap {
         get async {
-            NamedBeatmap(songTitle: await songTitle, beatmap: beatmap)
+            let mapTitle = self.mapTitle ?? ""
+            return await NamedBeatmap(mapTitle: mapTitle, songTitle: songTitle, beatmap: beatmap)
         }
     }
 

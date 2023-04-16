@@ -44,11 +44,11 @@ struct GameView: View {
             }
         }
         .onAppear {
-            if viewModel.gameEngine == nil {
-                viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
+            if viewModel.gameEngine == nil, let selectedBeatmap = beatmapManager.selectedBeatmap {
+                viewModel.initEngine(with: selectedBeatmap)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                if let track = viewModel.songData?.track {
+                if let track = beatmapManager.selectedBeatmap?.songData.track {
                     audioManager.startPlayer(track: track)
                 } else {
                     audioManager.startPlayer(track: "track_1")

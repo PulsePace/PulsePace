@@ -49,6 +49,8 @@
 		6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */; };
 		6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACE29C125CA00FAA79E /* TapGameHO.swift */; };
 		6A97526E29DAD994004230C0 /* MatchEventRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97526D29DAD994004230C0 /* MatchEventRelay.swift */; };
+		6A9BDD7129EBAC5100728C42 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9BDD7029EBAC5100728C42 /* List.swift */; };
+		6A9BDD7329EBF2AB00728C42 /* LevelSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9BDD7229EBF2AB00728C42 /* LevelSelectionView.swift */; };
 		6A9E5BEC29E3D42B003D6FA5 /* CoopScoreSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BEB29E3D42B003D6FA5 /* CoopScoreSystem.swift */; };
 		6A9E5BEE29E3F525003D6FA5 /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BED29E3F525003D6FA5 /* Popup.swift */; };
 		6A9E5BF029E3F585003D6FA5 /* FrameGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */; };
@@ -266,6 +268,8 @@
 		6A96AACE29C125CA00FAA79E /* TapGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapGameHO.swift; sourceTree = "<group>"; };
 		6A96AAD429C1272500FAA79E /* SlideHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideHitObject.swift; sourceTree = "<group>"; };
 		6A97526D29DAD994004230C0 /* MatchEventRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchEventRelay.swift; sourceTree = "<group>"; };
+		6A9BDD7029EBAC5100728C42 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		6A9BDD7229EBF2AB00728C42 /* LevelSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectionView.swift; sourceTree = "<group>"; };
 		6A9E5BEB29E3D42B003D6FA5 /* CoopScoreSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoopScoreSystem.swift; sourceTree = "<group>"; };
 		6A9E5BED29E3F525003D6FA5 /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
 		6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameGetter.swift; sourceTree = "<group>"; };
@@ -726,6 +730,7 @@
 				6A9E5BF129E3F5B1003D6FA5 /* GameEndView.swift */,
 				6A9E5BED29E3F525003D6FA5 /* Popup.swift */,
 				6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */,
+				6A9BDD7229EBF2AB00728C42 /* LevelSelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -841,6 +846,7 @@
 				C7D1AF2629BF895D00244EF5 /* Queue.swift */,
 				C7D1AF2429BF844A00244EF5 /* PriorityQueue.swift */,
 				C7D1AF2829BF8A9300244EF5 /* Heap.swift */,
+				6A9BDD7029EBAC5100728C42 /* List.swift */,
 			);
 			path = DataStructures;
 			sourceTree = "<group>";
@@ -1316,6 +1322,7 @@
 				C7CC5EF729D6069E001DB28E /* MatchEvent.swift in Sources */,
 				D0CD999329D2FFCF00E40BFA /* TenHitObjectsPlacedConstraint.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
+				6A9BDD7129EBAC5100728C42 /* List.swift in Sources */,
 				D0EC6EA929D7352100E457CE /* PropertyUpdater.swift in Sources */,
 				6A9E5BEE29E3F525003D6FA5 /* Popup.swift in Sources */,
 				D081DDB429C2BB91006B11B4 /* HitObjectViewFactory.swift in Sources */,
@@ -1329,6 +1336,7 @@
 				C7908E4E29B93137006F7423 /* GameView.swift in Sources */,
 				460652F429E2CCC200AE06D5 /* GestureAnimation.swift in Sources */,
 				D081DDBE29C32AF2006B11B4 /* CGVector+Utility.swift in Sources */,
+				6A9BDD7329EBF2AB00728C42 /* LevelSelectionView.swift in Sources */,
 				C7FD9A4829C2358700191F03 /* DragInput.swift in Sources */,
 				C7CC5EF929D60D29001DB28E /* DatabaseListenerAdapter.swift in Sources */,
 				173DE15029D3370D0005876E /* InputEvent.swift in Sources */,

@@ -60,6 +60,8 @@ struct MenuView: View {
             ConfigView()
         } else if page == Page.songSelectPage {
             SongSelectView()
+        } else if page == Page.beatmapSelectPage {
+            LevelSelectionView()
         } else {
             Text("Error 404 Not Found :(`")
         }
