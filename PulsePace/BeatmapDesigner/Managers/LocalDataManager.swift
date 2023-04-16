@@ -16,10 +16,7 @@ final class LocalDataManager<T: Codable> {
            .appendingPathComponent(filename)
     }
 
-    func readDefault(bundlePath: String?, initData: T) -> T {
-        if bundlePath == nil {
-            return initData
-        }
+    func readDefault(bundlePath: String, initData: T) -> T {
         if let url = Bundle.main.url(forResource: bundlePath, withExtension: "json"),
             let data = try? Data(contentsOf: url) {
                 let decoder = JSONDecoder()
@@ -30,14 +27,11 @@ final class LocalDataManager<T: Codable> {
         return initData
     }
 
-    func load(filename: String, bundlePath: String?, initData: T, completion: @escaping (Result<T, Error>) -> Void) {
+    func load(filename: String, initData: T, completion: @escaping (Result<T, Error>) -> Void) {
           DispatchQueue.global(qos: .background).async {
               do {
                   let fileURL = try LocalDataManager.fileURL(filename)
                   guard let file = try? FileHandle(forReadingFrom: fileURL) else {
-                      DispatchQueue.main.async {
-                          completion(.success(self.readDefault(bundlePath: bundlePath, initData: initData)))
-                      }
                       return
                   }
                   let values = try JSONDecoder().decode(T.self, from: file.availableData)

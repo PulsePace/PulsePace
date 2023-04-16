@@ -7,15 +7,17 @@
 
 import SwiftUI
 import AVKit
+import PopupView
 
 struct BeatmapDesignerView: View {
     @EnvironmentObject var propertyStorage: PropertyStorage
     @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var audioManager: AudioManager
-    @EnvironmentObject var beatmapManager: BeatmapManager
     @EnvironmentObject var gameViewModel: GameViewModel
     @EnvironmentObject var viewModel: BeatmapDesignerViewModel
+    @EnvironmentObject var beatmapManager: BeatmapManager
     @EnvironmentObject var pageList: PageList
+    @State private var isSavingAs = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -45,6 +47,10 @@ struct BeatmapDesignerView: View {
                 CanvasView()
                 ToolButtonsView()
             }
+            .popup(isPresented: $isSavingAs) { SaveAsView(isSavingAs: $isSavingAs)
+            } customize: { $0
+            }
+
             PlaybackControlView()
         }
         .background(
@@ -79,7 +85,6 @@ struct BeatmapDesignerView: View {
             viewModel.sliderValue = 0
             viewModel.eventManager = nil
         }
-        .environmentObject(viewModel)
     }
 
     @ViewBuilder
@@ -99,9 +104,7 @@ struct BeatmapDesignerView: View {
     @ViewBuilder
     private func renderSaveButton() -> some View {
         Button(action: {
-            Task {
-                beatmapManager.saveBeatmap(namedBeatmap: await viewModel.namedBeatmap)
-            }
+            isSavingAs.toggle()
         }) {
             Text("Save")
                 .foregroundColor(.white)
@@ -116,4 +119,49 @@ struct OpenBeatmapDesignerEvent: Event {
 
 struct PlaceHitObjectEvent: Event {
     var timestamp: Double
+}
+
+struct SaveAsView: View {
+    @EnvironmentObject var beatmapManager: BeatmapManager
+    @EnvironmentObject var viewModel: BeatmapDesignerViewModel
+    @Binding var isSavingAs: Bool
+    @State private var mapTitle = ""
+
+    var body: some View {
+        VStack(spacing: 20) {
+            TextField("Beatmap Name", text: $mapTitle)
+                .padding(5)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color(hex: 0xD3D3D3), lineWidth: 2)
+                )
+                .frame(width: 250)
+                .foregroundColor(.white)
+                .onAppear { print("Save as popup appeared") }
+
+            Button(action: {
+                if !mapTitle.isEmpty {
+                    viewModel.mapTitle = mapTitle
+                    isSavingAs.toggle()
+                    Task {
+                        await beatmapManager.saveBeatmap(namedBeatmap: viewModel.namedBeatmap)
+                    }
+                }
+            }) {
+                Text("Confirm")
+                    .foregroundColor(.white)
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(.orange)
+                    .cornerRadius(10)
+            }
+        }
+        .padding(.horizontal, 30)
+        .padding(.vertical, 20)
+        .background(Color(hex: 0x008081))
+        .cornerRadius(10)
+        .shadow(radius: 10)
+    }
 }

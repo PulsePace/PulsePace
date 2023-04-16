@@ -48,6 +48,9 @@
 		6A96AAD229C125CA00FAA79E /* HitObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACD29C125CA00FAA79E /* HitObjectManager.swift */; };
 		6A96AAD329C125CA00FAA79E /* TapGameHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A96AACE29C125CA00FAA79E /* TapGameHO.swift */; };
 		6A97526E29DAD994004230C0 /* MatchEventRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A97526D29DAD994004230C0 /* MatchEventRelay.swift */; };
+		6A9BDD7129EBAC5100728C42 /* RefArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9BDD7029EBAC5100728C42 /* RefArray.swift */; };
+		6A9BDD7329EBF2AB00728C42 /* LevelSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9BDD7229EBF2AB00728C42 /* LevelSelectionView.swift */; };
+		6A9BDD7529EC3A0B00728C42 /* preloadedBeatmaps.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A9BDD7429EC3A0B00728C42 /* preloadedBeatmaps.json */; };
 		6A9E5BEC29E3D42B003D6FA5 /* CoopScoreSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BEB29E3D42B003D6FA5 /* CoopScoreSystem.swift */; };
 		6A9E5BF029E3F585003D6FA5 /* FrameGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */; };
 		6A9E5BF229E3F5B1003D6FA5 /* GameEndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BF129E3F5B1003D6FA5 /* GameEndView.swift */; };
@@ -88,7 +91,6 @@
 		C77C95A729E24530005D8245 /* LivesCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C95A629E24530005D8245 /* LivesCountView.swift */; };
 		C788083F29D9869B00107A32 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788083D29D9869B00107A32 /* LocalDataManager.swift */; };
 		C788084029D9869B00107A32 /* BeatmapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788083E29D9869B00107A32 /* BeatmapManager.swift */; };
-		C788084229D986F900107A32 /* preloadedBeatmaps.json in Resources */ = {isa = PBXBuildFile; fileRef = C788084129D986F900107A32 /* preloadedBeatmaps.json */; };
 		C788084429D9878C00107A32 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788084329D9878C00107A32 /* Serializable.swift */; };
 		C788084629D98C8400107A32 /* CompetitiveHOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788084529D98C8400107A32 /* CompetitiveHOManager.swift */; };
 		C788084829D99AB700107A32 /* DisruptorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788084729D99AB700107A32 /* DisruptorSystem.swift */; };
@@ -263,6 +265,9 @@
 		6A96AACE29C125CA00FAA79E /* TapGameHO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapGameHO.swift; sourceTree = "<group>"; };
 		6A96AAD429C1272500FAA79E /* SlideHitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideHitObject.swift; sourceTree = "<group>"; };
 		6A97526D29DAD994004230C0 /* MatchEventRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchEventRelay.swift; sourceTree = "<group>"; };
+		6A9BDD7029EBAC5100728C42 /* RefArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefArray.swift; sourceTree = "<group>"; };
+		6A9BDD7229EBF2AB00728C42 /* LevelSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectionView.swift; sourceTree = "<group>"; };
+		6A9BDD7429EC3A0B00728C42 /* preloadedBeatmaps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = preloadedBeatmaps.json; sourceTree = "<group>"; };
 		6A9E5BEB29E3D42B003D6FA5 /* CoopScoreSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoopScoreSystem.swift; sourceTree = "<group>"; };
 		6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameGetter.swift; sourceTree = "<group>"; };
 		6A9E5BF129E3F5B1003D6FA5 /* GameEndView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEndView.swift; sourceTree = "<group>"; };
@@ -297,7 +302,6 @@
 		C77C95A629E24530005D8245 /* LivesCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivesCountView.swift; sourceTree = "<group>"; };
 		C788083D29D9869B00107A32 /* LocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		C788083E29D9869B00107A32 /* BeatmapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatmapManager.swift; sourceTree = "<group>"; };
-		C788084129D986F900107A32 /* preloadedBeatmaps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = preloadedBeatmaps.json; sourceTree = "<group>"; };
 		C788084329D9878C00107A32 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		C788084529D98C8400107A32 /* CompetitiveHOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompetitiveHOManager.swift; sourceTree = "<group>"; };
 		C788084729D99AB700107A32 /* DisruptorSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptorSystem.swift; sourceTree = "<group>"; };
@@ -721,6 +725,7 @@
 				C77C95A629E24530005D8245 /* LivesCountView.swift */,
 				6A9E5BF129E3F5B1003D6FA5 /* GameEndView.swift */,
 				6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */,
+				6A9BDD7229EBF2AB00728C42 /* LevelSelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -784,7 +789,7 @@
 				D0F34A2029E5D03100474D88 /* track_1.m4a */,
 				D0F34A2C29E5FE3800474D88 /* track_2.m4a */,
 				D0F34A2A29E5FD8D00474D88 /* track_3.m4a */,
-				C788084129D986F900107A32 /* preloadedBeatmaps.json */,
+				6A9BDD7429EC3A0B00728C42 /* preloadedBeatmaps.json */,
 				C7069F4A29D4B7900039C906 /* GoogleService-Info.plist */,
 				C7CD9BDA29B7514E00ABEE8F /* Preview Content */,
 			);
@@ -837,6 +842,7 @@
 				C7D1AF2629BF895D00244EF5 /* Queue.swift */,
 				C7D1AF2429BF844A00244EF5 /* PriorityQueue.swift */,
 				C7D1AF2829BF8A9300244EF5 /* Heap.swift */,
+				6A9BDD7029EBAC5100728C42 /* RefArray.swift */,
 			);
 			path = DataStructures;
 			sourceTree = "<group>";
@@ -1207,12 +1213,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7CD9BDC29B7514E00ABEE8F /* Preview Assets.xcassets in Resources */,
-				C7069F4B29D4B7900039C906 /* GoogleService-Info.plist in Resources */,
-				C788084229D986F900107A32 /* preloadedBeatmaps.json in Resources */,
-				C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */,
-				C7CD9BD929B7514E00ABEE8F /* Assets.xcassets in Resources */,
-				D0F34A2129E5D03100474D88 /* track_1.m4a in Resources */,
 				D0F34A2D29E5FE3800474D88 /* track_2.m4a in Resources */,
+				6A9BDD7529EC3A0B00728C42 /* preloadedBeatmaps.json in Resources */,
+				C7F6B00B29B7C12800D97E5F /* swiftlint.yml in Resources */,
+				D0F34A2129E5D03100474D88 /* track_1.m4a in Resources */,
+				C7069F4B29D4B7900039C906 /* GoogleService-Info.plist in Resources */,
+				C7CD9BD929B7514E00ABEE8F /* Assets.xcassets in Resources */,
 				D0F34A2B29E5FD8E00474D88 /* track_3.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1310,6 +1316,8 @@
 				C77A7D8D29D089180082458E /* UserConfig.swift in Sources */,
 				C7CC5EF729D6069E001DB28E /* MatchEvent.swift in Sources */,
 				C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */,
+				6A9BDD7129EBAC5100728C42 /* RefArray.swift in Sources */,
+				6A9E5BEE29E3F525003D6FA5 /* Popup.swift in Sources */,
 				D081DDB429C2BB91006B11B4 /* HitObjectViewFactory.swift in Sources */,
 				D081DDA929C2060E006B11B4 /* TimelineView.swift in Sources */,
 				C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */,
@@ -1321,6 +1329,7 @@
 				C7908E4E29B93137006F7423 /* GameView.swift in Sources */,
 				460652F429E2CCC200AE06D5 /* GestureAnimation.swift in Sources */,
 				D081DDBE29C32AF2006B11B4 /* CGVector+Utility.swift in Sources */,
+				6A9BDD7329EBF2AB00728C42 /* LevelSelectionView.swift in Sources */,
 				C7FD9A4829C2358700191F03 /* DragInput.swift in Sources */,
 				C7CC5EF929D60D29001DB28E /* DatabaseListenerAdapter.swift in Sources */,
 				173DE15029D3370D0005876E /* InputEvent.swift in Sources */,

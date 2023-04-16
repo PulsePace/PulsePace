@@ -20,6 +20,7 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var gestureHandler: any GestureHandler
     var frame: CGSize = .zero
     var songData: SongData?
+    var mapTitle: String?
     var achievementManager: AchievementManager?
     var eventManager: EventManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
@@ -89,7 +90,8 @@ class BeatmapDesignerViewModel: ObservableObject {
 
     var namedBeatmap: NamedBeatmap {
         get async {
-            NamedBeatmap(songTitle: await songTitle, beatmap: beatmap)
+            let mapTitle = self.mapTitle ?? ""
+            return await NamedBeatmap(mapTitle: mapTitle, songTitle: songTitle, beatmap: beatmap)
         }
     }
 
@@ -148,6 +150,10 @@ class BeatmapDesignerViewModel: ObservableObject {
         eventManager?.handleAllEvents()
         achievementManager?.updateAchievementsProgress()
     }
+
+//    func initialiseConfig() {
+//        isShowing = true
+//    }
 
     func virtualisePosition(_ position: CGPoint) -> CGPoint {
         let virtualXOffset = (position.x - gridOffset.width) * 40 / gridSpacing
