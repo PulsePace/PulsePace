@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CoopHOManager: HitObjectManager {
+class CoopHOSysytem: HitObjectSystem {
     private var rearrangedMissedHO = PriorityQueue<any HitObject> { a, b in a.startTime < b.startTime }
     let minMissSpawnDelay = 5.0
     let maxMissSpawnDelay = 9.0

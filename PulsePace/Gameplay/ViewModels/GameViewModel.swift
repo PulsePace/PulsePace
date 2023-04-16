@@ -238,7 +238,7 @@ class GameViewModel: ObservableObject, RenderSystem {
 
     private func updateLeaderboard() {
         leaderboard = []
-        (gameEngine?.scoreSystem as? DisruptorSystem)?.allScores.forEach({
+        (gameEngine?.scoreSystem as? CompetitiveScoreSystem)?.allScores.forEach({
             leaderboard.append((key: match?.players[$0.key] ?? "Anonymous",
                                 value: String(format: "%06d", $0.value)))
             leaderboard.sort(by: { x, y in Int(x.value) ?? 0 > Int(y.value) ?? 0 })

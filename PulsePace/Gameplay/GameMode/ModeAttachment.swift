@@ -9,7 +9,7 @@ import Foundation
 
 final class ModeAttachment {
     let modeName: String
-    var hOManager: HitObjectManager
+    var hOManager: HitObjectSystem
     var evaluator: Evaluator
     var scoreSystem: ScoreSystem
     var conductor: Conductor
@@ -18,7 +18,7 @@ final class ModeAttachment {
     var roomSetting: RoomSetting
     var gameViewElements: [GameViewElement]
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, conductor: Conductor,
+    init(modeName: String, hOManager: HitObjectSystem, scoreSystem: ScoreSystem, conductor: Conductor,
          evaluator: Evaluator, roomSetting: RoomSetting,
          listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?,
          gameViewElements: [GameViewElement]) {
@@ -77,7 +77,7 @@ final class ModeFactory: Factory {
     static var assemblies: [String: ModeAttachment] = [:]
     static var defaultMode = ModeAttachment(
         modeName: "Classic",
-        hOManager: HitObjectManager(),
+        hOManager: HitObjectSystem(),
         scoreSystem: ScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: DefaultEvaluator(),
         roomSetting: RoomSettingFactory.defaultSetting,
@@ -87,7 +87,7 @@ final class ModeFactory: Factory {
     )
     private static var infiniteMode = ModeAttachment(
         modeName: "Infinite Mode",
-        hOManager: InfiniteHOManager(),
+        hOManager: InfiniteHOSystem(),
         scoreSystem: InfiniteScoreSystem(ScoreManager()), conductor: InfiniteConductor(),
         evaluator: InfiniteEvaluator(),
         roomSetting: RoomSettingFactory.defaultSetting,
@@ -98,7 +98,7 @@ final class ModeFactory: Factory {
 
     private static var coopMode = ModeAttachment(
         modeName: "Basic Coop",
-        hOManager: CoopHOManager(),
+        hOManager: CoopHOSysytem(),
         scoreSystem: CoopScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: CoopEvaluator(),
         roomSetting: RoomSettingFactory.baseCoopSetting,
@@ -114,7 +114,7 @@ final class ModeFactory: Factory {
     private static var competitiveMode = ModeAttachment(
         modeName: "Rhythm Battle",
         hOManager: CompetitiveHOManager(),
-        scoreSystem: DisruptorSystem(ScoreManager()), conductor: Conductor(),
+        scoreSystem: CompetitiveScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: CompetitiveEvaluator(),
         roomSetting: RoomSettingFactory.competitiveSetting,
         listeningMatchEvents: [
