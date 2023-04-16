@@ -9,6 +9,7 @@ import SwiftUI
 import AVKit
 
 struct BeatmapDesignerView: View {
+    @EnvironmentObject var propertyStorage: PropertyStorage
     @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var gameViewModel: GameViewModel
@@ -68,14 +69,19 @@ struct BeatmapDesignerView: View {
                 viewModel.initialisePlayer(player: player)
             }
             viewModel.achievementManager = achievementManager
+            viewModel.eventManager = EventManager()
+            viewModel.createDisplayLink()
 
-            let openedPropertyUpdater = achievementManager
-                .getPropertyUpdater(for: TotalBeatmapDesignerOpenedProperty.self)
-            openedPropertyUpdater.increment()
+            if let eventManager = viewModel.eventManager {
+                propertyStorage.registerEventHandlers(eventManager: eventManager)
+                eventManager.add(event: OpenBeatmapDesignerEvent(timestamp: Date().timeIntervalSince1970))
+            }
         }
         .onDisappear {
             audioManager.stopPlayer()
+            viewModel.invalidateDisplayLink()
             viewModel.sliderValue = 0
+            viewModel.eventManager = nil
         }
     }
 
@@ -84,8 +90,7 @@ struct BeatmapDesignerView: View {
         Button(action: {
             gameViewModel.songData = viewModel.songData
             gameViewModel.selectedGameMode = ModeFactory.defaultMode
-            beatmapManager.selectedBeatmap = viewModel.beatmap
-            beatmapManager.isPreloadedOnly = false
+            gameViewModel.initEngine(with: viewModel.beatmap)
             pageList.navigate(to: .playPage)
         }) {
             Text("Start")
@@ -104,6 +109,14 @@ struct BeatmapDesignerView: View {
                 .font(.title2)
         }
     }
+}
+
+struct OpenBeatmapDesignerEvent: Event {
+    var timestamp: Double
+}
+
+struct PlaceHitObjectEvent: Event {
+    var timestamp: Double
 }
 
 struct SaveAsView: View {

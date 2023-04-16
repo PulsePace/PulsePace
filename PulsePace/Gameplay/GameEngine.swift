@@ -16,6 +16,7 @@ class GameEngine {
         return scoreSystem.scoreManager
     }
 
+    var achievementManager: AchievementManager?
     var hitObjectManager: HitObjectManager?
     var matchFeedSystem: MatchFeedSystem?
     var evaluator: Evaluator?
@@ -27,7 +28,11 @@ class GameEngine {
     var eventManager = EventManager()
     var systems: [System] = []
 
-    init(modeAttachment: ModeAttachment, gameEnder: @escaping () -> Void, match: Match? = nil) {
+    init(
+        modeAttachment: ModeAttachment,
+        gameEnder: @escaping () -> Void,
+        match: Match? = nil
+    ) {
         self.gameEnder = gameEnder
         if let match = match {
             self.match = match
@@ -62,8 +67,6 @@ class GameEngine {
             return
         }
         systems.forEach({ $0.step(deltaTime: deltaTime, songPosition: conductor.songPosition) })
-        eventManager.handleAllEvents()
-
         guard let evaluator = evaluator else {
             fatalError("No active evaluator")
         }
@@ -71,6 +74,8 @@ class GameEngine {
         if evaluator.evaluate() {
             gameEnder()
         }
+        eventManager.handleAllEvents()
+        achievementManager?.updateAchievementsProgress()
     }
 
     func setTarget(targetId: String) {
@@ -101,4 +106,14 @@ extension GameEngine: MatchEventHandler {
 protocol MatchEventHandler: AnyObject {
     func publishMatchEvent(message: MatchEventMessage)
     func subscribeMatchEvents()
+}
+
+struct GameEndEvent: Event {
+    var timestamp: Double
+    var finalScore: Int
+
+    init(finalScore: Int, timestamp: Double = Date().timeIntervalSince1970) {
+        self.finalScore = finalScore
+        self.timestamp = timestamp
+    }
 }

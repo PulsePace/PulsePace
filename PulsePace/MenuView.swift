@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MenuView: View {
+    @StateObject private var propertyStorage = PropertyStorage()
     @StateObject private var achievementManager = AchievementManager()
     @StateObject private var audioManager = AudioManager()
     @StateObject private var beatmapManager = BeatmapManager()
-    @StateObject var userConfigManager = UserConfigManager()
+    @StateObject private var userConfigManager = UserConfigManager()
     @StateObject private var gameVM = GameViewModel()
     @StateObject private var beatmapDesignerVM = BeatmapDesignerViewModel()
     @StateObject private var pageList = PageList()
@@ -22,13 +23,14 @@ struct MenuView: View {
                 VStack {
                     HStack {
                         Spacer()
+                        StyledIconButton(action: { pageList.navigate(to: Page.achievementsPage) }, icon: "trophy.fill")
                         StyledIconButton(action: { pageList.navigate(to: Page.configPage) }, icon: "gear")
                     }
                     Spacer()
                 }
                 VStack(spacing: 30) {
-                    Text("PulsePace")
-                        .font(.largeTitle)
+                    Image("app-header")
+                        .resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 600)
                     StyledMenuButton(page: Page.gameModesPage, text: "Play")
                     StyledMenuButton(page: Page.songSelectPage, text: "Design")
                 }
@@ -37,6 +39,25 @@ struct MenuView: View {
                 renderDestination(page: page)
             }
         }
+        .onAppear {
+            achievementManager.registerPropertyStorage(propertyStorage)
+        }
+        .popup(isPresented: $achievementManager.isNotifying) {
+            if let achievement = achievementManager.notifyingAchievement {
+                AchievementPopupView(achievement: achievement)
+            }
+        } customize: {
+            $0
+                .type(.floater())
+                .position(.bottom)
+                .animation(.spring())
+                .dragToDismiss(true)
+                .autohideIn(5)
+                .dismissCallback {
+                    achievementManager.unnotifyUnlockedAchievement()
+                }
+        }
+        .environmentObject(propertyStorage)
         .environmentObject(achievementManager)
         .environmentObject(audioManager)
         .environmentObject(beatmapManager)
@@ -60,8 +81,10 @@ struct MenuView: View {
             ConfigView()
         } else if page == Page.songSelectPage {
             SongSelectView()
+        } else if page == Page.achievementsPage {
+            AchievementsView()
         } else if page == Page.beatmapSelectPage {
-            LevelSelectionView()
+            LevelSelectionView()  
         } else {
             Text("Error 404 Not Found :(`")
         }

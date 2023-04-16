@@ -38,6 +38,7 @@ struct GameModesView: View {
         }
         .popup(isPresented: $isHowToPlayShown) {
             howToPlay
+        } customize: { $0
         }
     }
 

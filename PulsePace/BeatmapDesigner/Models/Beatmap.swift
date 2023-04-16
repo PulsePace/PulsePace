@@ -21,14 +21,18 @@ struct Beatmap {
     }
     var songDuration: Double
 
-    init(songData: SongData,
-         hitObjects: [any HitObject], songDuration: Double, preSpawnInterval: Double = 2,
-         sliderSpeed: Double = 100) {
+    init(
+        songDuration: Double,
+        songData: SongData,
+        hitObjects: [any HitObject],
+        preSpawnInterval: Double = 2,
+        sliderSpeed: Double = 100
+    ) {
+        self.songDuration = songDuration
         self.songData = songData
         self.hitObjects = hitObjects
         self.preSpawnInterval = preSpawnInterval
         self.sliderSpeed = sliderSpeed
-        self.songDuration = songDuration
     }
 }
 
@@ -44,9 +48,13 @@ extension Beatmap: Serializable {
                 fatalError(error.localizedDescription)
             }
         }
-        return SerializedBeatmap(songData: songData.serialize(), preSpawnInterval: preSpawnInterval,
-                                 sliderSpeed: sliderSpeed,
-                                 stringifiedHOs: stringifiedHOs, songDuration: songDuration)
+        return SerializedBeatmap(
+            songData: songData.serialize(),
+            preSpawnInterval: preSpawnInterval,
+            sliderSpeed: sliderSpeed,
+            stringifiedHOs: stringifiedHOs,
+            songDuration: songDuration
+        )
     }
 }
 
@@ -63,8 +71,11 @@ struct SerializedBeatmap: Deserializable {
         let deserializedHOs = stringifiedHOs.map { stringifiedHO in
             HOTypeFactory.assemble(hOTypeLabel: stringifiedHO.typeLabel, data: stringifiedHO.data).deserialize()
         }
-        return Beatmap(songData: songData.deserialize(),
-                       hitObjects: deserializedHOs, songDuration: songDuration,
-                       preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed)
+        return Beatmap(
+            songDuration: songDuration,
+            songData: songData.deserialize(),
+            hitObjects: deserializedHOs,
+            sliderSpeed: sliderSpeed
+        )
     }
 }

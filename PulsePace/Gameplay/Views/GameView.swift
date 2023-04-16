@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import PopupView
 
 struct GameView: View {
+    @EnvironmentObject var propertyStorage: PropertyStorage
     @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
@@ -16,32 +18,14 @@ struct GameView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .center) {
-                GameplayAreaView()
-                    .disabled($viewModel.gameEnded.wrappedValue)
-            }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
-            .modifier(GameViewTopOverlaysModifier())
-            .modifier(GameViewBottomOverlaysModifier())
-            .onAppear {
-                startGame()
-            }
-            .onDisappear {
-                stopGame()
-            }
-            .fullBackground(imageName: viewModel.gameBackground)
+            renderGameplayAreaView(geometry: geometry)
             .popup(isPresented: $viewModel.gameEnded) {
                 GameEndView()
-            }
-            .navigationBarBackButtonHidden(viewModel.match != nil)
-            .onChange(of: geometry.size, perform: { size in
-                viewModel.initialiseFrame(size: size)
-            })
-            .onChange(of: viewModel.playbackRate) { _ in
-                audioManager.setPlaybackRate(viewModel.playbackRate)
+            } customize: {
+                $0
+                    .type(.default)
+                    .animation(.spring())
+                    .dragToDismiss(false)
             }
         }
     }
@@ -82,6 +66,8 @@ struct GameView: View {
                 } else if let defaultBeatmapChoice = beatmapManager.defaultBeatmapChoice {
                     viewModel.initEngine(with: defaultBeatmapChoice.beatmap)
                 }
+                propertyStorage.registerEventHandlers(eventManager: gameEngine.eventManager)
+                gameEngine.achievementManager = achievementManager
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 if let track = beatmapManager.selectedBeatmap?.songData.track {

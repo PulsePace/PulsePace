@@ -18,13 +18,13 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
     @Published var gestureHandler: any GestureHandler
-//    @Published var isShowing = true
+    var frame: CGSize = .zero
     var songData: SongData?
     var mapTitle: String?
     var achievementManager: AchievementManager?
+    var eventManager: EventManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
-    var frame: CGSize = .zero
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
 
@@ -98,11 +98,10 @@ class BeatmapDesignerViewModel: ObservableObject {
     var beatmap: Beatmap {
         // TODO: Assumes beatmap retrieved only once
         guard let songData = songData else {
-            return Beatmap(songData: .init(), hitObjects: [], songDuration: 0)
+            return Beatmap(songDuration: player?.duration ?? 0, songData: .init(), hitObjects: [])
         }
         var hitObjectS2B: [any HitObject] = []
-        let spb = 60 / bpm
-        let songDuration = player?.duration ?? 0
+        let spb = 1 / bps
         hitObjects.toArray().forEach { hitObject in
             if hitObject is TapHitObject {
                 hitObjectS2B.append(TapHitObject(position: hitObject.position, startTime: hitObject.startTime / spb))
@@ -121,7 +120,7 @@ class BeatmapDesignerViewModel: ObservableObject {
                 )
             }
         }
-        return Beatmap(songData: songData, hitObjects: hitObjectS2B, songDuration: songDuration)
+        return Beatmap(songDuration: player?.duration ?? 0, songData: songData, hitObjects: hitObjectS2B)
     }
 
     init() {
@@ -132,12 +131,15 @@ class BeatmapDesignerViewModel: ObservableObject {
             HoldGestureHandler(),
             SlideGestureHandler()
         ]
-        createDisplayLink()
     }
 
-    private func createDisplayLink() {
+    func createDisplayLink() {
         self.displayLink = CADisplayLink(target: self, selector: #selector(step))
         displayLink?.add(to: .current, forMode: .default)
+    }
+
+    func invalidateDisplayLink() {
+        self.displayLink?.invalidate()
     }
 
     @objc func step(displaylink: CADisplayLink) {
@@ -145,6 +147,8 @@ class BeatmapDesignerViewModel: ObservableObject {
             return
         }
         sliderValue = player.currentTime
+        eventManager?.handleAllEvents()
+        achievementManager?.updateAchievementsProgress()
     }
 
 //    func initialiseConfig() {
@@ -194,14 +198,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.enqueue(hitObject)
         previewHitObject = nil
-        incrementHitObjectsProperty()
-    }
-
-    private func incrementHitObjectsProperty() {
-        if let objectsPlacedUpdater = achievementManager?
-            .getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self) {
-            objectsPlacedUpdater.increment()
-        }
+        eventManager?.add(event: PlaceHitObjectEvent(timestamp: Date().timeIntervalSince1970))
     }
 
     static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {
