@@ -42,6 +42,21 @@ struct MenuView: View {
         .onAppear {
             achievementManager.registerPropertyStorage(propertyStorage)
         }
+        .popup(isPresented: $achievementManager.isNotifying) {
+            if let achievement = achievementManager.notifyingAchievement {
+                AchievementPopupView(achievement: achievement)
+            }
+        } customize: {
+            $0
+                .type(.floater())
+                .position(.bottom)
+                .animation(.spring())
+                .dragToDismiss(true)
+                .autohideIn(5)
+                .dismissCallback {
+                    achievementManager.unnotifyUnlockedAchievement()
+                }
+        }
         .environmentObject(propertyStorage)
         .environmentObject(achievementManager)
         .environmentObject(audioManager)

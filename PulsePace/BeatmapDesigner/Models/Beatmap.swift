@@ -27,7 +27,8 @@ struct Beatmap {
         songData: SongData,
         hitObjects: [any HitObject],
         preSpawnInterval: Double = 2,
-        sliderSpeed: Double = 100
+        sliderSpeed: Double = 100,
+        songDuration: Double
     ) {
         self.songData = songData
         self.hitObjects = hitObjects
@@ -53,7 +54,8 @@ extension Beatmap: Serializable {
             songData: songData.serialize(),
             preSpawnInterval: preSpawnInterval,
             sliderSpeed: sliderSpeed,
-            stringifiedHOs: stringifiedHOs
+            stringifiedHOs: stringifiedHOs,
+            songDuration: songDuration
         )
     }
 }
@@ -74,7 +76,8 @@ struct SerializedBeatmap: Deserializable {
         return Beatmap(
             songData: songData.deserialize(),
             hitObjects: deserializedHOs,
-            sliderSpeed: sliderSpeed
+            sliderSpeed: sliderSpeed,
+            songDuration: songDuration
         )
     }
 }

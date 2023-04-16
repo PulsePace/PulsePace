@@ -27,7 +27,7 @@ class Conductor: ModeSystem {
     }
 
     func feedBeatmap(beatmap: Beatmap) {
-        bpm = beatmap.bpm
+        bpm = beatmap.songData.bpm
         songDuration = beatmap.songDuration
     }
 

@@ -36,7 +36,12 @@ struct GameView: View {
             }
             .fullBackground(imageName: viewModel.gameBackground)
             .popup(isPresented: $viewModel.gameEnded) {
-                GameEndView(path: $path)
+                GameEndView()
+            } customize: {
+                $0
+                    .type(.default)
+                    .animation(.spring())
+                    .dragToDismiss(false)
             }
             .navigationBarBackButtonHidden(viewModel.match != nil)
             .onChange(of: geometry.size, perform: { size in
@@ -48,12 +53,17 @@ struct GameView: View {
         }
     }
 
-    func startGame() {
+    private func startGame() {
         if viewModel.gameEngine == nil {
-            viewModel.initEngine(with: beatmapManager.beatmapChoices[4].beatmap)
+            viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
         }
+        guard let gameEngine = viewModel.gameEngine else {
+            return
+        }
+        propertyStorage.registerEventHandlers(eventManager: gameEngine.eventManager)
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            audioManager.startPlayer(track: "test_trim")
+            audioManager.startPlayer(track: beatmapManager.beatmapChoices[0].beatmap.songData.track)
             viewModel.startGameplay()
             if let audioPlayer = audioManager.player {
                 viewModel.initialisePlayer(audioPlayer: audioPlayer)
@@ -61,7 +71,7 @@ struct GameView: View {
         }
     }
 
-    func stopGame() {
+    private func stopGame() {
         audioManager.stopPlayer()
         viewModel.exitGameplay()
         viewModel.songPosition = 0
@@ -108,40 +118,5 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
                 GameControlView()
             }
         }
-        .onAppear {
-            if viewModel.gameEngine == nil {
-                viewModel.initEngine(with: beatmapManager.beatmapChoices[0].beatmap)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                if let track = viewModel.songData?.track {
-                    audioManager.startPlayer(track: track)
-                } else {
-                    audioManager.startPlayer(track: "track_1")
-                }
-                viewModel.startGameplay()
-                if let audioPlayer = audioManager.player {
-                    viewModel.initialisePlayer(audioPlayer: audioPlayer)
-                }
-                audioManager.player?.play()
-            }
-            if let eventManager = viewModel.gameEngine?.eventManager {
-                propertyStorage.registerEventHandlers(eventManager: eventManager)
-            }
-        }
-        .onDisappear {
-            audioManager.stopPlayer()
-            viewModel.exitGameplay()
-            viewModel.songPosition = 0
-        }
-        .fullBackground(imageName: viewModel.gameBackground)
-        .popup(isPresented: $viewModel.gameEnded) {
-            GameEndView()
-        } customize: {
-            $0
-                .type(.default)
-                .animation(.spring())
-                .dragToDismiss(false)
-        }
-        .navigationBarBackButtonHidden(viewModel.match != nil)
     }
 }

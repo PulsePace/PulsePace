@@ -11,10 +11,12 @@ import Foundation
 protocol Achievement: AnyObject {
     var title: String { get }
     var description: String { get }
+    var imageName: String { get }
     var propertyStorage: PropertyStorage? { get set }
     var isUnlocked: Bool { get set }
     var areConstraintsSatisfied: Bool { get }
     var progress: Double { get }
+    var delegate: AchievementUpdateDelegate? { get set }
 }
 
 extension Achievement {
@@ -23,6 +25,7 @@ extension Achievement {
             return
         }
         isUnlocked = true
+        delegate?.notifyUnlockedAchievement(self)
         print("Unlocked \(title)")
     }
 }

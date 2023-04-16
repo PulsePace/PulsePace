@@ -9,9 +9,11 @@ import Foundation
 
 class SwiftFingersAchievement: Achievement {
     let title: String = "Swift Fingers"
-    let description: String = "Obtain a lifetime score of 5,000"
+    let description: String = "Obtain a lifetime score of 5,000."
+    let imageName: String = "swift-fingers-achievement"
     var propertyStorage: PropertyStorage?
     var isUnlocked = false
+    weak var delegate: AchievementUpdateDelegate?
 
     private let lifetimeScoreRequirement = 5_000
 
@@ -19,7 +21,9 @@ class SwiftFingersAchievement: Achievement {
         guard let lifetimeScore = propertyStorage?.lifetimeScore.value else {
             return 0
         }
-        let lifetimeScoreRatio = Double(lifetimeScore) / Double(lifetimeScoreRequirement)
+        let lifetimeScoreRatio = min(
+            Double(lifetimeScore) / Double(lifetimeScoreRequirement), 1
+        )
         return lifetimeScoreRatio
     }
 

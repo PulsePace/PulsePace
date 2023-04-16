@@ -94,10 +94,10 @@
             filePath = "PulsePace/Gameplay/Views/GameView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "startGame()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

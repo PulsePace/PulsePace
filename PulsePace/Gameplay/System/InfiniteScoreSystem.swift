@@ -27,18 +27,24 @@ class InfiniteScoreSystem: ScoreSystem {
         gameHO.isHit = true
         if gameHO.proximityScore < proximityScoreThreshould[0] {
             scoreManager.perfectCount += 1
-            scoreManager.score += 100
-            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
-                                                     comboCount: scoreManager.comboCount,
-                                                     lastLocation: gameHO.position
-                                                    ))
+            let score = 100
+            scoreManager.score += score
+            eventManager.add(event: UpdateComboEvent(
+                timestamp: Date().timeIntervalSince1970,
+                comboCount: scoreManager.comboCount,
+                lastLocation: gameHO.position,
+                score: score
+            ))
         } else if gameHO.proximityScore < proximityScoreThreshould[1] {
             scoreManager.goodCount += 1
-            scoreManager.score += 50
-            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
-                                                     comboCount: scoreManager.comboCount,
-                                                     lastLocation: gameHO.position
-                                                    ))
+            let score = 50
+            scoreManager.score += score
+            eventManager.add(event: UpdateComboEvent(
+                timestamp: Date().timeIntervalSince1970,
+                comboCount: scoreManager.comboCount,
+                lastLocation: gameHO.position,
+                score: score
+            ))
         } else {
             handleMiss(eventManager: eventManager)
         }
