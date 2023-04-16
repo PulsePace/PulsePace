@@ -11,9 +11,11 @@ protocol GameHO: Component, AnyObject {
     var fromPartner: Bool { get set }
 
     var position: CGPoint { get }
-    var lifeStart: Double { get }
+
     // lifestage is clamped between 0 and 1, 0.5 being the optimal
     var lifeStage: LifeStage { get }
+
+    var lifeStart: Double { get }
     var lifeEnd: Double { get }
 
     var isHit: Bool { get set }
@@ -34,13 +36,11 @@ extension GameHO {
 
 protocol Component {
     var wrappingObject: Entity { get }
-//    var onLifeEnd: () -> Void { get }
 }
 
 extension Component {
     func destroyObject() {
         wrappingObject.destroy()
-//        onLifeEnd()
     }
 }
 

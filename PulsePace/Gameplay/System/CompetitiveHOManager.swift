@@ -10,11 +10,18 @@ import Foundation
 class CompetitiveHOManager: HitObjectManager {
     private var disruptorsQueue = MyQueue<TapHitObject>()
     private var isSelfGameActive = true
+    private var originalPreSpawnInterval = 0.0
+
+    override func feedBeatmap(beatmap: Beatmap) {
+        super.feedBeatmap(beatmap: beatmap)
+        self.originalPreSpawnInterval = preSpawnInterval
+    }
 
     override func reset() {
         super.reset()
         disruptorsQueue.removeAll()
         isSelfGameActive = true
+        originalPreSpawnInterval = preSpawnInterval
     }
 
     override func registerEventHandlers(eventManager: EventManagable) {
@@ -39,7 +46,7 @@ class CompetitiveHOManager: HitObjectManager {
     }
 
     lazy var onActivateNoHintsHandler
-    = { [weak self] (eventManager: EventManagable, event: ActivateNoHintsDisruptorEvent) -> Void in
+    = { [weak self] (_: EventManagable, event: ActivateNoHintsDisruptorEvent) -> Void in
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
         }
@@ -47,12 +54,9 @@ class CompetitiveHOManager: HitObjectManager {
         guard event.noHintsTargetPlayerId == userConfigManager.userId else {
             return
         }
-        let originalPreSpawnInterval = self?.preSpawnInterval
         self?.preSpawnInterval = event.preSpawnInterval
         DispatchQueue.main.asyncAfter(deadline: .now() + event.duration) {
-            self?.preSpawnInterval = originalPreSpawnInterval ?? 0.0
-            eventManager.add(event: DeactivateNoHintsDisruptorEvent(timestamp: Date().timeIntervalSince1970,
-                                                                    noHintsTargetPlayerId: event.noHintsTargetPlayerId))
+            self?.preSpawnInterval = self?.originalPreSpawnInterval ?? 0.0
         }
     }
 
@@ -74,10 +78,8 @@ class CompetitiveHOManager: HitObjectManager {
             guard let gameHO = spawnGameHitObject(disruptorHO) as? TapGameHO else {
                 continue
             }
-            // TODO: BompTapHitObject
-            gameHO.isBomb = true
-            gameHO.lifeEnd += 5
-            gameHOSpawned.append(gameHO)
+            let bomb = BombGameHO(tapGameHO: gameHO)
+            gameHOSpawned.append(bomb)
             _ = disruptorsQueue.dequeue()
         }
         return gameHOSpawned

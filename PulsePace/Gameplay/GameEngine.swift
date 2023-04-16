@@ -36,27 +36,24 @@ class GameEngine {
             if let matchFeedSystem = matchFeedSystem {
                 systems.append(matchFeedSystem)
             }
-            print("Match id \(match.matchId)")
-        } else {
-            print("No match attached to engine")
         }
-
-        systems.append(InputSystem())
 
         modeAttachment.configEngine(self)
-        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem, let evaluator = evaluator else {
+        guard let hitObjectManager = hitObjectManager, let scoreSystem = scoreSystem,
+              let evaluator = evaluator, let conductor = conductor else {
             fatalError("Mode attachment should have initialized hit object manager, score system and evaluator")
         }
-
+        systems.append(InputSystem())
         systems.append(hitObjectManager)
         systems.append(scoreSystem)
         systems.append(evaluator)
+        systems.append(conductor)
         systems.forEach { $0.registerEventHandlers(eventManager: self.eventManager) }
     }
 
     func load(_ beatmap: Beatmap) {
-        hitObjectManager?.feedBeatmap(beatmap: beatmap, eventManager: self.eventManager)
-        self.conductor = Conductor(bpm: beatmap.songData.bpm)
+        hitObjectManager?.feedBeatmap(beatmap: beatmap)
+        conductor?.feedBeatmap(beatmap: beatmap)
     }
 
     func step(_ deltaTime: Double) {
@@ -64,7 +61,6 @@ class GameEngine {
             print("Cannot advance engine state without conductor")
             return
         }
-        conductor.step(deltaTime)
         systems.forEach({ $0.step(deltaTime: deltaTime, songPosition: conductor.songPosition) })
         eventManager.handleAllEvents()
 
@@ -73,7 +69,6 @@ class GameEngine {
         }
 
         if evaluator.evaluate() {
-            // Stop game
             gameEnder()
         }
     }

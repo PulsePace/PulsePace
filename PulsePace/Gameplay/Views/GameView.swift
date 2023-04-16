@@ -14,67 +14,13 @@ struct GameView: View {
     @EnvironmentObject var pageList: PageList
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .center) {
-                GameplayAreaView()
-                    .disabled($viewModel.gameEnded.wrappedValue)
-            }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
-            .modifier(GameViewTopOverlaysModifier())
-            .modifier(GameViewBottomOverlaysModifier())
-            .onAppear {
-                startGame()
-            }
-            .onDisappear {
-                stopGame()
-            }
-            .fullBackground(imageName: viewModel.gameBackground)
-            .popup(isPresented: $viewModel.gameEnded) {
-                GameEndView(path: $path)
-            }
-            .navigationBarBackButtonHidden(viewModel.match != nil)
-            .onChange(of: geometry.size, perform: { size in
-                viewModel.initialiseFrame(size: size)
-            })
+        ZStack(alignment: .center) {
+            GameplayAreaView()
         }
-    }
-
-    func startGame() {
-        if viewModel.gameEngine == nil {
-            viewModel.initEngine(with: beatmapManager.beatmapChoices[4].beatmap)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            audioManager.startPlayer(track: "test_trim")
-            viewModel.startGameplay()
-            if let audioPlayer = audioManager.player {
-                viewModel.initialisePlayer(audioPlayer: audioPlayer)
-            }
-        }
-    }
-
-    func stopGame() {
-        audioManager.stopPlayer()
-        viewModel.exitGameplay()
-        viewModel.songPosition = 0
-    }
-}
-
-enum GameViewElement {
-    case playbackControls
-    case gameplayArea
-    case disruptorOptions
-    case scoreBoard
-    case leaderboard
-    case matchFeed
-    case livesCount
-}
-
-struct GameViewTopOverlaysModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity
+        )
         .overlay(alignment: .topTrailing) {
             ScoreView()
                 .ignoresSafeArea()
@@ -85,16 +31,11 @@ struct GameViewTopOverlaysModifier: ViewModifier {
         }
         .overlay(alignment: .top) {
             MatchFeedView()
+                .ignoresSafeArea()
         }
         .overlay(alignment: .topLeading) {
             LivesCountView()
         }
-    }
-}
-
-struct GameViewBottomOverlaysModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
         .overlay(alignment: .bottom) {
             VStack(alignment: .leading) {
                 HitStatusView()
@@ -130,4 +71,14 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
         }
         .navigationBarBackButtonHidden(viewModel.match != nil)
     }
+}
+
+enum GameViewElement {
+    case playbackControls
+    case gameplayArea
+    case disruptorOptions
+    case scoreBoard
+    case leaderboard
+    case matchFeed
+    case livesCount
 }

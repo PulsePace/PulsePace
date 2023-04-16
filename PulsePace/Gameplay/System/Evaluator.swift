@@ -47,13 +47,13 @@ extension Evaluator {
 }
 
 class DefaultEvaluator: Evaluator {
-    let andEventCriterias = [LastHitobjectRemovedEvent.label: 1]
+    let andEventCriterias = [LastHitObjectRemovedEvent.label: 1]
     let orEventCriterias: [String: Int] = [:]
     var andEventCount: [String: Int] = [:]
     var orEventCount: [String: Int] = [:]
 
     init() {
-        andEventCount[LastHitobjectRemovedEvent.label] = 0
+        andEventCount[LastHitObjectRemovedEvent.label] = 0
     }
 
     func registerEventHandlers(eventManager: EventManagable) {
@@ -61,15 +61,15 @@ class DefaultEvaluator: Evaluator {
     }
 
     private lazy var markLastObjectRemovedHandler
-    = { [weak self] (_: EventManagable, _: LastHitobjectRemovedEvent) -> Void in
+    = { [weak self] (_: EventManagable, _: LastHitObjectRemovedEvent) -> Void in
         guard let self = self else {
             fatalError("No active evaluator")
         }
 
-        guard let targetEventCount = self.andEventCount[LastHitobjectRemovedEvent.label] else {
-            fatalError("\(LastHitobjectRemovedEvent.label) not found in evaluator ledger")
+        guard let targetEventCount = self.andEventCount[LastHitObjectRemovedEvent.label] else {
+            fatalError("\(LastHitObjectRemovedEvent.label) not found in evaluator ledger")
         }
-        self.andEventCount[LastHitobjectRemovedEvent.label] = targetEventCount + 1
+        self.andEventCount[LastHitObjectRemovedEvent.label] = targetEventCount + 1
     }
 }
 
@@ -102,14 +102,14 @@ class CoopEvaluator: Evaluator {
 class CompetitiveEvaluator: Evaluator {
     let andEventCriterias: [String: Int] = [:]
     let orEventCriterias = [SelfDeathEvent.label: 1,
-                            LastHitobjectRemovedEvent.label: 1,
+                            LastHitObjectRemovedEvent.label: 1,
                             OnlyRemainingPlayerEvent.label: 1]
     var andEventCount: [String: Int] = [:]
     var orEventCount: [String: Int] = [:]
 
     init() {
         orEventCount[SelfDeathEvent.label] = 0
-        orEventCount[LastHitobjectRemovedEvent.label] = 0
+        orEventCount[LastHitObjectRemovedEvent.label] = 0
         orEventCount[OnlyRemainingPlayerEvent.label] = 0
     }
 
@@ -131,15 +131,15 @@ class CompetitiveEvaluator: Evaluator {
     }
 
     private lazy var markLastObjectRemovedHandler
-    = { [weak self] (_: EventManagable, _: LastHitobjectRemovedEvent) -> Void in
+    = { [weak self] (_: EventManagable, _: LastHitObjectRemovedEvent) -> Void in
         guard let self = self else {
             fatalError("No active evaluator")
         }
 
-        guard let targetEventCount = self.orEventCount[LastHitobjectRemovedEvent.label] else {
-            fatalError("\(LastHitobjectRemovedEvent.label) not found in evaluator ledger")
+        guard let targetEventCount = self.orEventCount[LastHitObjectRemovedEvent.label] else {
+            fatalError("\(LastHitObjectRemovedEvent.label) not found in evaluator ledger")
         }
-        self.orEventCount[LastHitobjectRemovedEvent.label] = targetEventCount + 1
+        self.orEventCount[LastHitObjectRemovedEvent.label] = targetEventCount + 1
     }
 
     private lazy var markOnlyRemainingPlayerHandler
@@ -152,5 +152,31 @@ class CompetitiveEvaluator: Evaluator {
             fatalError("\(OnlyRemainingPlayerEvent.label) not found in evaluator ledger")
         }
         self.orEventCount[OnlyRemainingPlayerEvent.label] = targetEventCount + 1
+    }
+}
+
+class InfiniteEvaluator: Evaluator {
+    let andEventCriterias = [SelfDeathEvent.label: 1]
+    let orEventCriterias: [String: Int] = [:]
+    var andEventCount: [String: Int] = [:]
+    var orEventCount: [String: Int] = [:]
+
+    init() {
+        andEventCount[SelfDeathEvent.label] = 0
+    }
+
+    func registerEventHandlers(eventManager: EventManagable) {
+        eventManager.registerHandler(markSelfDeathHandler)
+    }
+
+    private lazy var markSelfDeathHandler = { [weak self] (_: EventManagable, _: SelfDeathEvent) -> Void in
+        guard let self = self else {
+            fatalError("No active evaluator")
+        }
+
+        guard let targetEventCount = self.andEventCount[SelfDeathEvent.label] else {
+            fatalError("\(SelfDeathEvent.label) not found in evaluator ledger")
+        }
+        self.andEventCount[SelfDeathEvent.label] = targetEventCount + 1
     }
 }

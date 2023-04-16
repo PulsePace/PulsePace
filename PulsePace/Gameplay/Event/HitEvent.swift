@@ -11,28 +11,22 @@ struct NoEvent: Event {
     let timestamp = 0.0
 }
 
-struct LastHitobjectRemovedEvent: Event {
+struct LastHitObjectRemovedEvent: Event {
     var timestamp: Double
 }
 
 struct HitEvent: Event {
     var timestamp: Double
     var gameHO: any GameHO
-
-    init(gameHO: any GameHO, timestamp: Double) {
-        self.gameHO = gameHO
-        self.timestamp = timestamp
-    }
 }
 
 struct MissEvent: Event {
     var timestamp: Double
     var gameHO: any GameHO
+}
 
-    init(gameHO: any GameHO, timestamp: Double) {
-        self.gameHO = gameHO
-        self.timestamp = timestamp
-    }
+struct LostLifeEvent: Event {
+    var timestamp: Double
 }
 
 extension MissEvent: MatchRelatedEvent {
@@ -43,7 +37,6 @@ extension MissEvent: MatchRelatedEvent {
 
         let timeStamp = Date().timeIntervalSince1970
         if let tapGameHO = event.gameHO as? TapGameHO {
-            print("Tap missed sending to partner")
             return MatchEventMessage(
                 timestamp: timeStamp,
                 sourceId: playerId,
@@ -51,7 +44,6 @@ extension MissEvent: MatchRelatedEvent {
                                            tapHO: SerializedTapHO(tapGameHO: tapGameHO),
                                            sourceId: playerId))
         } else if let slideGameHO = event.gameHO as? SlideGameHO {
-            print("Slide missed sending to partner")
             return MatchEventMessage(
                 timestamp: timeStamp,
                 sourceId: playerId,
@@ -59,7 +51,6 @@ extension MissEvent: MatchRelatedEvent {
                                              slideHO: SerializedSlideHO(slideGameHO: slideGameHO),
                                              sourceId: playerId))
         } else if let holdGameHO = event.gameHO as? HoldGameHO {
-            print("Hold missed sending to partner")
             return MatchEventMessage(
                 timestamp: timeStamp,
                 sourceId: playerId,

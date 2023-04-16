@@ -30,7 +30,7 @@ final class AudioManager: ObservableObject {
         guard let player = player else {
             return
         }
-        player.rate = min(1, player.rate + 0.25)
+        player.rate = min(2, player.rate + 0.25)
     }
 
     func decreasePlaybackRate() {
@@ -40,6 +40,13 @@ final class AudioManager: ObservableObject {
         player.rate = max(0.25, player.rate - 0.25)
     }
 
+    func setPlaybackRate(_ rate: Double) {
+        guard let player = player else {
+            return
+        }
+        player.rate = Float(Math.clamp(num: rate, minimum: 0.25, maximum: 2))
+    }
+
     private func initialisePlayer(player: AVAudioPlayer?) {
         guard let player = player else {
             return
@@ -47,6 +54,8 @@ final class AudioManager: ObservableObject {
         player.enableRate = true
         player.prepareToPlay()
         player.rate = 1
+        player.numberOfLoops = -1
+        player.play()
     }
 
     func stopPlayer() {

@@ -17,10 +17,6 @@ class FirebaseListener<T: Codable>: DatabaseListenerAdapter {
         self.databaseReference = Database.database().reference()
     }
 
-    deinit {
-//        observedPaths.forEach({ databaseReference.child($0).removeAllObservers() })
-    }
-
     func setupAddChildListener(in path: String, completion: @escaping (Result<Data, Error>) -> Void) {
         observedPaths.insert(path)
         databaseReference.child(path).observe(.childAdded, with: { snapshot in

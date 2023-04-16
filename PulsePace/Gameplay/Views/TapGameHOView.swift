@@ -16,9 +16,10 @@ struct TapGameHOView: View {
     var body: some View {
         let tapGameHO = tapGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * tapGameHOVM.ringScale))
-        let color = tapGameHOVM.fromPartner ? Color.orange :
-        tapGameHO.isBomb ? Color(hex: 0x646466) : Color.white // TODO: Make constants for HO colors
-        let tappedColor = tapGameHO.isBomb ? Color.red : Color.purple
+        let color = tapGameHOVM.fromPartner ? GameHOColors.fromPartnerColor :
+            tapGameHOVM.isBomb ? GameHOColors.bombColor : GameHOColors.defaultColor
+        let tappedColor = tapGameHOVM.isBomb ? GameHOColors.bombTappedColor :
+            GameHOColors.interactedColor
 
         return ZStack {
             Circle()
@@ -61,11 +62,12 @@ struct SlideGameHOView: View {
     var body: some View {
         let slideGameHO = slideGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * slideGameHOVM.ringScale))
-        let color = slideGameHOVM.fromPartner ? Color.orange : Color.white
+        let color = slideGameHOVM.fromPartner ? GameHOColors.fromPartnerColor : GameHOColors.defaultColor
 
         return ZStack {
             DrawShapeBorder(points: [slideGameHO.position] + slideGameHO.vertices).stroked(
-                strokeColor: isInteractedWith ? .purple : .blue, strokeWidth: 100 + scale, borderWidth: 10
+                strokeColor: isInteractedWith ? GameHOColors.interactedColor :
+                    GameHOColors.slideStrokeColor, strokeWidth: 100 + scale, borderWidth: 10
             )
 
             Circle()
@@ -82,7 +84,7 @@ struct SlideGameHOView: View {
 
             if let lastVertex = slideGameHO.vertices.last {
                 Circle()
-                    .fill(.white)
+                    .fill(GameHOColors.defaultColor)
                     .frame(width: 100 + scale, height: 100 + scale)
                     .position(x: lastVertex.x,
                               y: lastVertex.y)
@@ -126,7 +128,7 @@ struct HoldGameHOView: View {
     var body: some View {
         let holdGameHO = holdGameHOVM.gameHO
         let ringDiameter: CGFloat = min(800, max(100, 100 + 200 * holdGameHOVM.ringScale))
-        let color = holdGameHOVM.fromPartner ? Color.orange : Color.white
+        let color = holdGameHOVM.fromPartner ? GameHOColors.fromPartnerColor : GameHOColors.defaultColor
 
         return ZStack {
             Circle()
@@ -136,7 +138,7 @@ struct HoldGameHOView: View {
                           y: holdGameHO.position.y)
 
             Circle()
-                .fill(isInteractedWith ? .purple : color)
+                .fill(isInteractedWith ? GameHOColors.interactedColor : color)
                 .frame(width: 100 + scale, height: 100 + scale)
                 .position(x: holdGameHO.position.x,
                           y: holdGameHO.position.y)
@@ -146,7 +148,7 @@ struct HoldGameHOView: View {
                                   y: holdGameHO.position.y)
 
             Text("HOLD")
-                .foregroundColor(.gray)
+                .foregroundColor(GameHOColors.textColor)
                 .font(Fonts.caption)
                 .position(x: holdGameHO.position.x,
                           y: holdGameHO.position.y)
@@ -175,13 +177,13 @@ struct CircularProgressView: View {
         ZStack {
             Circle()
                 .stroke(
-                    Color.purple.opacity(0.5),
+                    GameHOColors.holdStrokeColor,
                     lineWidth: 5
                 )
             Circle()
                 .trim(from: 0, to: progress)
                 .stroke(
-                    Color.purple,
+                    GameHOColors.holdProgressColor,
                     style: StrokeStyle(lineWidth: 5, lineCap: .round)
                 )
 
@@ -215,4 +217,16 @@ extension Color {
             opacity: Double(a) / 255
         )
     }
+}
+
+enum GameHOColors {
+    static let defaultColor = Color.white
+    static let interactedColor = Color.purple
+    static let fromPartnerColor = Color.orange
+    static let bombColor = Color(hex: 0x646466)
+    static let bombTappedColor = Color.red
+    static let slideStrokeColor = Color.blue
+    static let holdStrokeColor = Color.purple.opacity(0.5)
+    static let holdProgressColor = Color.purple
+    static let textColor = Color.gray
 }

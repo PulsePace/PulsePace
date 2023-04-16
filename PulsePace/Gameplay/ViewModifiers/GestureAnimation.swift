@@ -27,13 +27,3 @@ struct GestureAnimation<T: TouchInput>: ViewModifier where T.InputGesture.Value:
             )
     }
 }
-
-extension View {
-//    func dragEvents(onPress: @escaping (() -> Void), onRelease: @escaping (() -> Void)) -> some View {
-//        modifier(DragAnimation(onPress: {
-//            onPress()
-//        }, onRelease: {
-//            onRelease()
-//        }))
-//    }
-}

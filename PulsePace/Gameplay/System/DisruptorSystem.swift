@@ -116,16 +116,10 @@ class DisruptorSystem: ScoreSystem {
         self.scoreManager.livesRemaining -= 1
         self.spawnedDisruptorLocations.removeAll(where: { $0 == event.gameHO.position })
 
-        eventManager.add(event: LostLifeEvent(timestamp: Date().timeIntervalSince1970,
-                                              lostLifePlayerId: userConfigManager.userId))
+        eventManager.add(event: LostLifeEvent(timestamp: Date().timeIntervalSince1970))
 
         if self.scoreManager.livesRemaining == 0 {
             eventManager.add(event: SelfDeathEvent(timestamp: Date().timeIntervalSince1970))
-            eventManager.matchEventHandler?.publishMatchEvent(
-                message: MatchEventMessage(timestamp: Date().timeIntervalSince1970,
-                                           sourceId: userConfigManager.userId,
-                                           event: PublishDeathEvent(timestamp: Date().timeIntervalSince1970,
-                                                                    diedPlayerId: userConfigManager.userId)))
         }
     }
 

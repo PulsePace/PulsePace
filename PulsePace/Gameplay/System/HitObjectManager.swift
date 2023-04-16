@@ -11,7 +11,7 @@ class HitObjectManager: ModeSystem, EventSource {
     var eventManager: EventManagable?
     private var counter = 0
     private var remover: ((Entity) -> Void)?
-    private var queuedHitObjects: MyQueue<any HitObject>
+    private(set) var queuedHitObjects: MyQueue<any HitObject>
     var offset = 0.0
     private var slideSpeed = 0.0
     var preSpawnInterval = 0.0
@@ -31,7 +31,7 @@ class HitObjectManager: ModeSystem, EventSource {
             }
 
             if !removedGameHO.isHit {
-                eventManager.add(event: MissEvent(gameHO: removedGameHO, timestamp: Date().timeIntervalSince1970))
+                eventManager.add(event: MissEvent(timestamp: Date().timeIntervalSince1970, gameHO: removedGameHO))
             }
         }
     }
@@ -57,6 +57,7 @@ class HitObjectManager: ModeSystem, EventSource {
         }
         eventManager.registerHandler(noHandler)
         self.eventManager = eventManager
+        self.remover = objRemover(eventManager)
     }
 
     init(_ songEndBuffer: Double = 5) {
@@ -66,15 +67,17 @@ class HitObjectManager: ModeSystem, EventSource {
         allObjects = Set()
     }
 
-    func feedBeatmap(beatmap: Beatmap, eventManager: EventManagable) {
-        self.remover = objRemover(eventManager)
+    func feedBeatmap(beatmap: Beatmap) {
         self.preSpawnInterval = beatmap.preSpawnInterval
         self.offset = beatmap.songData.offset
         self.slideSpeed = beatmap.sliderSpeed
         self.songEndBeat = beatmap.endBeat
-        beatmap.hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
+        enqueueObjects(beatmap: beatmap)
     }
 
+    func enqueueObjects(beatmap: Beatmap) {
+        beatmap.hitObjects.forEach { hitObject in queuedHitObjects.enqueue(hitObject) }
+    }
     func step(deltaTime: Double, songPosition: Double) {
         let spawnGameHOs = checkBeatMap(songPosition)
         spawnGameHOs.forEach { gameHOAdder($0) }
@@ -106,7 +109,7 @@ class HitObjectManager: ModeSystem, EventSource {
                 fatalError("No event manager attached")
             }
             // Conductor should be paused here to prevent step
-            eventManager.add(event: LastHitobjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
+            eventManager.add(event: LastHitObjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
             lastHitObjectRemoved = true
         }
 

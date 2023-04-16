@@ -38,7 +38,6 @@ final class BombDisruptorMessageDecoder: MessageHandler {
                                                         bombSourcePlayerId: message.sourceId,
                                                         bombTargetPlayerId: matchEvent.bombTargetId,
                                                         bombLocation: matchEvent.bombLocation))
-        print("bomb disruptor event")
     }
 }
 
@@ -60,7 +59,6 @@ final class NoHintsDisruptorMessageDecoder: MessageHandler {
                                                               noHintsTargetPlayerId: matchEvent.noHintsTargetId,
                                                               preSpawnInterval: matchEvent.preSpawnInterval,
                                                               duration: matchEvent.duration))
-        print("no hints disruptor event")
     }
 }
 
@@ -78,7 +76,6 @@ final class MissTapMessageDecoder: MessageHandler {
             return
         }
 
-        print("Checking if should spawn tap object")
         // Spawned only on other player's device
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
@@ -87,7 +84,6 @@ final class MissTapMessageDecoder: MessageHandler {
             return
         }
 
-        print("Adding tap hold object event to queue")
         eventManager.add(event: SpawnHOEvent(timestamp: Date().timeIntervalSince1970,
                                              hitObject: matchEvent.tapHO.deserialize()))
     }
@@ -107,7 +103,6 @@ final class MissHoldMessageDecoder: MessageHandler {
             return
         }
 
-        print("Checking if should spawn hold object")
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
         }
@@ -115,7 +110,6 @@ final class MissHoldMessageDecoder: MessageHandler {
             return
         }
 
-        print("Adding spawn hold object event to queue")
         eventManager.add(event: SpawnHOEvent(
             timestamp: Date().timeIntervalSince1970,
             hitObject: matchEvent.holdHO.deserialize()
@@ -137,7 +131,6 @@ final class MissSlideMessageDecoder: MessageHandler {
             return
         }
 
-        print("Checking if should spawn slide object")
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
         }
@@ -145,7 +138,6 @@ final class MissSlideMessageDecoder: MessageHandler {
             return
         }
 
-        print("Adding spawn slide object event to queue")
         eventManager.add(event: SpawnHOEvent(
             timestamp: Date().timeIntervalSince1970,
             hitObject: matchEvent.slideHO.deserialize()

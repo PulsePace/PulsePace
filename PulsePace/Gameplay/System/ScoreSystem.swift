@@ -26,11 +26,11 @@ class ScoreSystem: ModeSystem {
     func attachToMatch(_ match: Match) {}
 
     func registerEventHandlers(eventManager: EventManagable) {
-        eventManager.registerHandler(hitEventHandler)
-        eventManager.registerHandler(missEventHandler)
+        eventManager.registerHandler(defaultHitEventHandler)
+        eventManager.registerHandler(defaultMissEventHandler)
     }
 
-    lazy var hitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
+    lazy var defaultHitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
         let gameHO = event.gameHO
         gameHO.isHit = true
         if gameHO.proximityScore < proximityScoreThreshould[0] {
@@ -61,7 +61,7 @@ class ScoreSystem: ModeSystem {
                                                                 playerScore: scoreManager.score)))
         gameHO.destroyObject()
     }
-    lazy var missEventHandler = { [self] (_: EventManagable, event: MissEvent) -> Void in
+    lazy var defaultMissEventHandler = { [self] (_: EventManagable, event: MissEvent) -> Void in
         let gameHO = event.gameHO
         scoreManager.missCount += 1
     }
