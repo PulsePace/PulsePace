@@ -8,44 +8,80 @@
 import SwiftUI
 
 struct GameView: View {
+    @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
     @EnvironmentObject var pageList: PageList
 
     var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .center) {
+                GameplayAreaView()
+                    .disabled($viewModel.gameEnded.wrappedValue)
+            }
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity
+            )
+            .modifier(GameViewTopOverlaysModifier())
+            .modifier(GameViewBottomOverlaysModifier())
+            .onAppear {
+                startGame()
+            }
+            .onDisappear {
+                stopGame()
+            }
+            .fullBackground(imageName: viewModel.gameBackground)
+            .popup(isPresented: $viewModel.gameEnded) {
+                GameEndView()
+            }
+            .navigationBarBackButtonHidden(viewModel.match != nil)
+            .onChange(of: geometry.size, perform: { size in
+                viewModel.initialiseFrame(size: size)
+            })
+            .onChange(of: viewModel.playbackRate) { _ in
+                audioManager.setPlaybackRate(viewModel.playbackRate)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func renderGameplayAreaView(geometry: GeometryProxy) -> some View {
         ZStack(alignment: .center) {
             GameplayAreaView()
+                .disabled($viewModel.gameEnded.wrappedValue)
         }
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity
         )
-        .overlay(alignment: .topTrailing) {
-            ScoreView()
-                .ignoresSafeArea()
-        }
-        .overlay(alignment: .topTrailing) {
-            LeaderboardView()
-                .ignoresSafeArea()
-        }
-        .overlay(alignment: .top) {
-            MatchFeedView()
-                .ignoresSafeArea()
-        }
-        .overlay(alignment: .topLeading) {
-            LivesCountView()
-        }
-        .overlay(alignment: .bottom) {
-            VStack(alignment: .leading) {
-                HitStatusView()
-                DisruptorOptionsView()
-                GameControlView()
-            }
-        }
+        .modifier(GameViewTopOverlaysModifier())
+        .modifier(GameViewBottomOverlaysModifier())
         .onAppear {
-            if viewModel.gameEngine == nil, let selectedBeatmap = beatmapManager.selectedBeatmap {
-                viewModel.initEngine(with: selectedBeatmap)
+            startGame()
+        }
+        .onDisappear {
+            stopGame()
+        }
+        .fullBackground(imageName: viewModel.gameBackground)
+        .navigationBarBackButtonHidden(viewModel.match != nil)
+        .onChange(of: geometry.size, perform: { size in
+            viewModel.initialiseFrame(size: size)
+        })
+        .onChange(of: viewModel.playbackRate) { _ in
+            audioManager.setPlaybackRate(viewModel.playbackRate)
+        }
+    }
+
+    private func startGame() {
+        if viewModel.gameEngine == nil {
+            if viewModel.gameEngine == nil {
+                if let selectedBeatmap = beatmapManager.selectedBeatmap {
+                    viewModel.initEngine(with: selectedBeatmap)
+                } else if let defaultBeatmapChoice = beatmapManager.defaultBeatmapChoice {
+                    viewModel.initEngine(with: defaultBeatmapChoice.beatmap)
+                }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 if let track = beatmapManager.selectedBeatmap?.songData.track {
@@ -60,16 +96,12 @@ struct GameView: View {
                 audioManager.player?.play()
             }
         }
-        .onDisappear {
-            audioManager.stopPlayer()
-            viewModel.exitGameplay()
-            viewModel.songPosition = 0
-        }
-        .fullBackground(imageName: viewModel.gameBackground)
-        .popup(isPresented: $viewModel.gameEnded) {
-            GameEndView()
-        }
-        .navigationBarBackButtonHidden(viewModel.match != nil)
+    }
+
+    private func stopGame() {
+        audioManager.stopPlayer()
+        viewModel.exitGameplay()
+        viewModel.songPosition = 0
     }
 }
 
@@ -82,3 +114,104 @@ enum GameViewElement {
     case matchFeed
     case livesCount
 }
+
+struct GameViewTopOverlaysModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .overlay(alignment: .topTrailing) {
+            ScoreView()
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .topTrailing) {
+            LeaderboardView()
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .top) {
+            MatchFeedView()
+        }
+        .overlay(alignment: .topLeading) {
+            LivesCountView()
+        }
+    }
+}
+
+struct GameViewBottomOverlaysModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .overlay(alignment: .bottom) {
+            VStack(alignment: .leading) {
+                HitStatusView()
+                DisruptorOptionsView()
+                GameControlView()
+            }
+        }
+    }
+}
+//
+// import SwiftUI
+//
+// struct GameView: View {
+//    @EnvironmentObject var viewModel: GameViewModel
+//    @EnvironmentObject var audioManager: AudioManager
+//    @EnvironmentObject var beatmapManager: BeatmapManager
+//    @EnvironmentObject var pageList: PageList
+//
+//    var body: some View {
+//        ZStack(alignment: .center) {
+//            GameplayAreaView()
+//        }
+//        .frame(
+//            maxWidth: .infinity,
+//            maxHeight: .infinity
+//        )
+//        .overlay(alignment: .topTrailing) {
+//            ScoreView()
+//                .ignoresSafeArea()
+//        }
+//        .overlay(alignment: .topTrailing) {
+//            LeaderboardView()
+//                .ignoresSafeArea()
+//        }
+//        .overlay(alignment: .top) {
+//            MatchFeedView()
+//                .ignoresSafeArea()
+//        }
+//        .overlay(alignment: .topLeading) {
+//            LivesCountView()
+//        }
+//        .overlay(alignment: .bottom) {
+//            VStack(alignment: .leading) {
+//                HitStatusView()
+//                DisruptorOptionsView()
+//                GameControlView()
+//            }
+//        }
+//        .onAppear {
+//            if viewModel.gameEngine == nil, let selectedBeatmap = beatmapManager.selectedBeatmap {
+//                viewModel.initEngine(with: selectedBeatmap)
+//            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                if let track = beatmapManager.selectedBeatmap?.songData.track {
+//                    audioManager.startPlayer(track: track)
+//                } else {
+//                    audioManager.startPlayer(track: "track_1")
+//                }
+//                viewModel.startGameplay()
+//                if let audioPlayer = audioManager.player {
+//                    viewModel.initialisePlayer(audioPlayer: audioPlayer)
+//                }
+//                audioManager.player?.play()
+//            }
+//        }
+//        .onDisappear {
+//            audioManager.stopPlayer()
+//            viewModel.exitGameplay()
+//            viewModel.songPosition = 0
+//        }
+//        .fullBackground(imageName: viewModel.gameBackground)
+//        .popup(isPresented: $viewModel.gameEnded) {
+//            GameEndView()
+//        }
+//        .navigationBarBackButtonHidden(viewModel.match != nil)
+//    }
+// }

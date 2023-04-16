@@ -44,7 +44,8 @@ extension Beatmap: Serializable {
                 fatalError(error.localizedDescription)
             }
         }
-        return SerializedBeatmap(songData: songData.serialize(), preSpawnInterval: preSpawnInterval, sliderSpeed: sliderSpeed,
+        return SerializedBeatmap(songData: songData.serialize(), preSpawnInterval: preSpawnInterval,
+                                 sliderSpeed: sliderSpeed,
                                  stringifiedHOs: stringifiedHOs, songDuration: songDuration)
     }
 }

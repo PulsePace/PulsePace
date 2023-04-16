@@ -1,5 +1,5 @@
 //
-//  List.swift
+//  RefArray.swift
 //  PulsePace
 //
 //  Created by James Chiu on 16/4/23.
@@ -29,6 +29,13 @@ final class RefArray<T> {
 
     func removeAt(_ index: Int) {
         items.remove(at: index)
+    }
+
+    func get(_ index: Int) -> T? {
+        if index < 0 || index >= items.count {
+            return nil
+        }
+        return items[index]
     }
 
     func map<U>(_ transform: @escaping (T) -> U) -> RefArray<U> {

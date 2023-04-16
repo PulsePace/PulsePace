@@ -11,6 +11,7 @@ import Foundation
 final class BeatmapManager: ObservableObject {
     @Published var beatmapChoices: [String: RefArray<NamedBeatmap>] = [:]
     @Published var preloadedBeatmapChoices: [String: RefArray<NamedBeatmap>] = [:]
+    var defaultBeatmapChoice: NamedBeatmap?
     var selectedBeatmap: Beatmap?
     var isPreloadedOnly = false
     var serialBeatmapsTable: [String: RefArray<SerializedNamedBeatmap>] = [:]
@@ -26,6 +27,13 @@ final class BeatmapManager: ObservableObject {
             .readDefault(bundlePath: bundledBeatmaps, initData: [:]).mapValues { preloadSongGroup in
                 preloadSongGroup.map { $0.deserialize() }
             }
+
+        if !preloadedBeatmapChoices.isEmpty {
+            if let firstSong = preloadedBeatmapChoices.keys.first,
+                let beatmapGroup = preloadedBeatmapChoices[firstSong] {
+                defaultBeatmapChoice = beatmapGroup.get(0)
+            }
+        }
 
         self.beatmapDataManager.load(filename: localBeatmapStorage,
                                      initData: [:]) { [weak self] result in
