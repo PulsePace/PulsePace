@@ -16,8 +16,6 @@ class DisruptorSystem: ScoreSystem {
         scoreManager.comboCount > 0 && scoreManager.comboCount.isMultiple(of: 5)
     }
 
-    var spawnedDisruptorLocations: [CGPoint] = []
-
     var allScores: [String: Int] = [:]
     var allRemainingPlayers: [String: Bool] = [:]
 
@@ -37,7 +35,7 @@ class DisruptorSystem: ScoreSystem {
         }
 
         selectedTarget = match.players.first(where: { $0.key != userConfigManager.userId })?.key
-        ?? userConfigManager.userId
+            ?? userConfigManager.userId
         match.players.forEach({ allScores[$0.key] = 0 })
         match.players.forEach({ allRemainingPlayers[$0.key] = true })
 
@@ -51,7 +49,6 @@ class DisruptorSystem: ScoreSystem {
         super.reset()
         self.selectedTarget = userConfigManager.userId
         self.selectedDisruptor = .bomb
-        self.spawnedDisruptorLocations = []
         self.scoreManager.livesRemaining = Self.defaultLifeCount
         self.allScores = [:]
         self.allRemainingPlayers = [:]
@@ -68,7 +65,6 @@ class DisruptorSystem: ScoreSystem {
     override func registerEventHandlers(eventManager: EventManagable) {
         super.registerEventHandlers(eventManager: eventManager)
         eventManager.registerHandler(updateComboHandler)
-        eventManager.registerHandler(onSpawnBombDisruptorHandler)
         eventManager.registerHandler(bombHitEventHandler)
         eventManager.registerHandler(onUpdateScoreEventHandler)
         eventManager.registerHandler(onDeathEventHandler)
@@ -90,23 +86,8 @@ class DisruptorSystem: ScoreSystem {
                                                             )))
     }
 
-    lazy var onSpawnBombDisruptorHandler = { [self] (_: EventManagable, event: SpawnBombDisruptorEvent) -> Void in
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
-        guard event.bombTargetPlayerId == userConfigManager.userId else {
-            return
-        }
-        spawnedDisruptorLocations.append(event.bombLocation)
-    }
-
     lazy var bombHitEventHandler = { [self] (eventManager: EventManagable, event: HitEvent) -> Void in
-        guard let userConfigManager = UserConfigManager.instance else {
-            fatalError("No user config manager")
-        }
-
-        guard !spawnedDisruptorLocations.allSatisfy({ event.gameHO.position != $0 }),
+        guard let bomb = event.gameHO as? BombGameHO,
               self.scoreManager.livesRemaining > 0
         else {
             return
@@ -114,7 +95,6 @@ class DisruptorSystem: ScoreSystem {
 
         self.scoreManager.comboCount = 0
         self.scoreManager.livesRemaining -= 1
-        self.spawnedDisruptorLocations.removeAll(where: { $0 == event.gameHO.position })
 
         eventManager.add(event: LostLifeEvent(timestamp: Date().timeIntervalSince1970))
 
