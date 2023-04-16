@@ -11,6 +11,7 @@ protocol AchievementUpdateDelegate: AnyObject {
     var isNotifying: Bool { get set }
     var notifyingAchievement: Achievement? { get set }
 
+    func updateAchievementsProgress()
     func notifyUnlockedAchievement(_ achievement: Achievement)
     func unnotifyUnlockedAchievement()
 }

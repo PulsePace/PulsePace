@@ -66,6 +66,7 @@ struct GameView: View {
             return
         }
         propertyStorage.registerEventHandlers(eventManager: gameEngine.eventManager)
+        gameEngine.achievementManager = achievementManager
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             audioManager.startPlayer(track: beatmapManager.beatmapChoices[0].beatmap.songData.track)

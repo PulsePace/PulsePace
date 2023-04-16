@@ -15,7 +15,7 @@ class SwiftFingersAchievement: Achievement {
     var isUnlocked = false
     weak var delegate: AchievementUpdateDelegate?
 
-    private let lifetimeScoreRequirement = 5_000
+    private let lifetimeScoreRequirement = 400
 
     var progress: Double {
         guard let lifetimeScore = propertyStorage?.lifetimeScore.value else {
@@ -31,6 +31,6 @@ class SwiftFingersAchievement: Achievement {
         guard let propertyStorage = propertyStorage else {
             return false
         }
-        return propertyStorage.lifetimeScore.value >= 5_000
+        return propertyStorage.lifetimeScore.value >= lifetimeScoreRequirement
     }
 }

@@ -31,6 +31,6 @@ class NoviceBeatmapDesignerAchievement: Achievement {
         guard let propertyStorage = propertyStorage else {
             return false
         }
-        return propertyStorage.beatmapDesignerOpened.value >= 2
+        return propertyStorage.beatmapDesignerOpened.value >= beatmapDesignerOpenedRequirement
     }
 }

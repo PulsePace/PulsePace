@@ -11,8 +11,6 @@ struct Beatmap {
     typealias SerialType = SerializedBeatmap
     /// All the "time units" are in beats
     let songData: SongData
-//    let bpm: Double
-//    let offset: Double
     let preSpawnInterval: Double
     let sliderSpeed: Double
     var hitObjects: [any HitObject]

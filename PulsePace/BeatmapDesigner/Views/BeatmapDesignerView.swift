@@ -66,6 +66,7 @@ struct BeatmapDesignerView: View {
             }
             viewModel.achievementManager = achievementManager
             viewModel.eventManager = EventManager()
+            viewModel.createDisplayLink()
 
             if let eventManager = viewModel.eventManager {
                 propertyStorage.registerEventHandlers(eventManager: eventManager)
@@ -74,6 +75,7 @@ struct BeatmapDesignerView: View {
         }
         .onDisappear {
             audioManager.stopPlayer()
+            viewModel.invalidateDisplayLink()
             viewModel.sliderValue = 0
             viewModel.eventManager = nil
         }

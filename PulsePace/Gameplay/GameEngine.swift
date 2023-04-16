@@ -16,6 +16,7 @@ class GameEngine {
         return scoreSystem.scoreManager
     }
 
+    var achievementManager: AchievementManager?
     var hitObjectManager: HitObjectManager?
     var matchFeedSystem: MatchFeedSystem?
     var evaluator: Evaluator?
@@ -74,6 +75,7 @@ class GameEngine {
             gameEnder()
         }
         eventManager.handleAllEvents()
+        achievementManager?.updateAchievementsProgress()
     }
 
     func setTarget(targetId: String) {

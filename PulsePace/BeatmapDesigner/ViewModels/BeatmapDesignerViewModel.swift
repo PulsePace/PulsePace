@@ -129,12 +129,15 @@ class BeatmapDesignerViewModel: ObservableObject {
             HoldGestureHandler(),
             SlideGestureHandler()
         ]
-        createDisplayLink()
     }
 
-    private func createDisplayLink() {
+    func createDisplayLink() {
         self.displayLink = CADisplayLink(target: self, selector: #selector(step))
         displayLink?.add(to: .current, forMode: .default)
+    }
+
+    func invalidateDisplayLink() {
+        self.displayLink?.invalidate()
     }
 
     @objc func step(displaylink: CADisplayLink) {

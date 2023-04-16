@@ -36,7 +36,7 @@ class ExpertBeatmapDesignerAchievement: Achievement {
         guard let propertyStorage = propertyStorage else {
             return false
         }
-        return propertyStorage.beatmapDesignerOpened.value >= 5
-            && propertyStorage.hitObjectsPlaced.value >= 10
+        return propertyStorage.beatmapDesignerOpened.value >= beatmapDesignerOpenedRequirement
+            && propertyStorage.hitObjectsPlaced.value >= hitObjectsPlacedRequirement
     }
 }

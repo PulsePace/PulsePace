@@ -12,17 +12,13 @@ struct GameProperty<T>: Property {
     var value: T
 }
 
-protocol Property: Identifiable {
+protocol Property {
     associatedtype T
     var name: String { get }
     var value: T { get set }
 }
 
 extension Property {
-    var id: String {
-        name
-    }
-
     var displayValue: String {
         if let value = value as? CustomStringConvertible {
             return value.description
