@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MenuView: View {
+    @StateObject private var propertyStorage = PropertyStorage()
     @StateObject private var achievementManager = AchievementManager()
     @StateObject private var audioManager = AudioManager()
     @StateObject private var beatmapManager = BeatmapManager()
-    @StateObject var userConfigManager = UserConfigManager()
+    @StateObject private var userConfigManager = UserConfigManager()
     @StateObject private var gameVM = GameViewModel()
     @StateObject private var beatmapDesignerVM = BeatmapDesignerViewModel()
     @StateObject private var pageList = PageList()
@@ -22,6 +23,7 @@ struct MenuView: View {
                 VStack {
                     HStack {
                         Spacer()
+                        StyledIconButton(action: { pageList.navigate(to: Page.achievementsPage) }, icon: "trophy.fill")
                         StyledIconButton(action: { pageList.navigate(to: Page.configPage) }, icon: "gear")
                     }
                     Spacer()
@@ -37,6 +39,10 @@ struct MenuView: View {
                 renderDestination(page: page)
             }
         }
+        .onAppear {
+            achievementManager.registerPropertyStorage(propertyStorage)
+        }
+        .environmentObject(propertyStorage)
         .environmentObject(achievementManager)
         .environmentObject(audioManager)
         .environmentObject(beatmapManager)
@@ -60,6 +66,8 @@ struct MenuView: View {
             ConfigView()
         } else if page == Page.songSelectPage {
             SongSelectView()
+        } else if page == Page.achievementsPage {
+            AchievementsView()
         } else {
             Text("Error 404 Not Found :(`")
         }

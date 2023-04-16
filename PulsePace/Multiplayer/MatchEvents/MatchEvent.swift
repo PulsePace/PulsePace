@@ -102,6 +102,7 @@ struct UpdateComboEvent: Event {
     var timestamp: Double
     var comboCount: Int
     var lastLocation: CGPoint
+    var score: Int
 }
 
 struct SpawnHOEvent: Event {

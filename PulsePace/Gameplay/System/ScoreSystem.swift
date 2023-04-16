@@ -34,20 +34,25 @@ class ScoreSystem: ModeSystem {
         let gameHO = event.gameHO
         gameHO.isHit = true
         if gameHO.proximityScore < proximityScoreThreshould[0] {
+            let score = 100
             scoreManager.perfectCount += 1
-            scoreManager.score += 100
-            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
-                                                     comboCount: scoreManager.comboCount,
-                                                     lastLocation: gameHO.position
-                                                    ))
+            scoreManager.score += score
+            eventManager.add(event: UpdateComboEvent(
+                timestamp: Date().timeIntervalSince1970,
+                comboCount: scoreManager.comboCount,
+                lastLocation: gameHO.position,
+                score: score
+            ))
         } else if gameHO.proximityScore < proximityScoreThreshould[1] {
+            let score = 50
             scoreManager.goodCount += 1
-            scoreManager.score += 50
-            eventManager.add(event: UpdateComboEvent(timestamp: Date().timeIntervalSince1970,
-                                                     comboCount: scoreManager.comboCount,
-                                                     lastLocation: gameHO.position
-                                                    ))
-            gameHO.isHit = true
+            scoreManager.score += score
+            eventManager.add(event: UpdateComboEvent(
+                timestamp: Date().timeIntervalSince1970,
+                comboCount: scoreManager.comboCount,
+                lastLocation: gameHO.position,
+                score: score
+            ))
         } else {
             scoreManager.missCount += 1
         }

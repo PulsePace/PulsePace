@@ -7,58 +7,22 @@
 
 import Foundation
 
-protocol Achievement: Observer {
+// TODO: property storage type as T
+protocol Achievement: AnyObject {
     var title: String { get }
-    var constraints: [any Constraint] { get }
+    var description: String { get }
+    var propertyStorage: PropertyStorage? { get set }
+    var isUnlocked: Bool { get set }
+    var areConstraintsSatisfied: Bool { get }
+    var progress: Double { get }
 }
 
 extension Achievement {
-    var remainingConstraints: [any Constraint] {
-        constraints.filter { !$0.isSatisfied }
-    }
-
-    var isUnlocked: Bool {
-        remainingConstraints.isEmpty
-    }
-
-    func handleUnlock() {
-        guard isUnlocked else {
+    func updateProgress() {
+        guard !isUnlocked, areConstraintsSatisfied else {
             return
         }
+        isUnlocked = true
         print("Unlocked \(title)")
-    }
-
-    func update<T: Observable>(with observable: T) {
-        guard let property = observable as? any Property else {
-            return
-        }
-        handleUnsubscribe(property: property)
-        handleUnlock()
-    }
-
-    private func handleUnsubscribe(property: any Property) {
-        let hasRemainingConstraint = remainingConstraints.contains(where: {
-            $0.checkProperty(property: property)
-        })
-        if !hasRemainingConstraint {
-            property.removeObserver(self)
-        }
-    }
-
-    func initialiseConstraints(properties: [any Property]) {
-        bindProperties(properties: properties)
-        subscribe()
-    }
-
-    private func bindProperties(properties: [any Property]) {
-        for constraint in constraints {
-            constraint.bindProperty(from: properties)
-        }
-    }
-
-    private func subscribe() {
-        for constraint in remainingConstraints {
-            constraint.subscribeAchievement(self)
-        }
     }
 }

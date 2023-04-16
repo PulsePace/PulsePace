@@ -9,6 +9,7 @@ import SwiftUI
 import AVKit
 
 struct BeatmapDesignerView: View {
+    @EnvironmentObject var propertyStorage: PropertyStorage
     @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
@@ -64,14 +65,17 @@ struct BeatmapDesignerView: View {
                 viewModel.initialisePlayer(player: player)
             }
             viewModel.achievementManager = achievementManager
+            viewModel.eventManager = EventManager()
 
-            let openedPropertyUpdater = achievementManager
-                .getPropertyUpdater(for: TotalBeatmapDesignerOpenedProperty.self)
-            openedPropertyUpdater.increment()
+            if let eventManager = viewModel.eventManager {
+                propertyStorage.registerEventHandlers(eventManager: eventManager)
+                eventManager.add(event: OpenBeatmapDesignerEvent(timestamp: Date().timeIntervalSince1970))
+            }
         }
         .onDisappear {
             audioManager.stopPlayer()
             viewModel.sliderValue = 0
+            viewModel.eventManager = nil
         }
         .environmentObject(viewModel)
     }
@@ -102,4 +106,12 @@ struct BeatmapDesignerView: View {
                 .font(.title2)
         }
     }
+}
+
+struct OpenBeatmapDesignerEvent: Event {
+    var timestamp: Double
+}
+
+struct PlaceHitObjectEvent: Event {
+    var timestamp: Double
 }

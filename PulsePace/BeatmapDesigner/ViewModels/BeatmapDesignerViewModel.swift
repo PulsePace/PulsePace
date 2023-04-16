@@ -18,12 +18,12 @@ class BeatmapDesignerViewModel: ObservableObject {
     @Published var playbackRateIndex: Double = 3
     @Published var previewHitObject: (any HitObject)?
     @Published var gestureHandler: any GestureHandler
-//    @Published var isShowing = true
+    var frame: CGSize = .zero
     var songData: SongData?
     var achievementManager: AchievementManager?
+    var eventManager: EventManager?
     let playbackRateList: [Double] = [0.25, 0.5, 0.75, 1]
     let divisorList: [Double] = [3, 4, 6, 8, 12, 16]
-    var frame: CGSize = .zero
     private var player: AVAudioPlayer?
     private var displayLink: CADisplayLink?
 
@@ -142,11 +142,9 @@ class BeatmapDesignerViewModel: ObservableObject {
             return
         }
         sliderValue = player.currentTime
+        eventManager?.handleAllEvents()
+        achievementManager?.updateAchievementsProgress()
     }
-
-//    func initialiseConfig() {
-//        isShowing = true
-//    }
 
     func virtualisePosition(_ position: CGPoint) -> CGPoint {
         let virtualXOffset = (position.x - gridOffset.width) * 40 / gridSpacing
@@ -191,14 +189,7 @@ class BeatmapDesignerViewModel: ObservableObject {
         }
         hitObjects.enqueue(hitObject)
         previewHitObject = nil
-        incrementHitObjectsProperty()
-    }
-
-    private func incrementHitObjectsProperty() {
-        if let objectsPlacedUpdater = achievementManager?
-            .getPropertyUpdater(for: TotalHitObjectsPlacedProperty.self) {
-            objectsPlacedUpdater.increment()
-        }
+        eventManager?.add(event: PlaceHitObjectEvent(timestamp: Date().timeIntervalSince1970))
     }
 
     static func hitObjectPriority(_ firstHitObject: any HitObject, _ secondHitObject: any HitObject) -> Bool {

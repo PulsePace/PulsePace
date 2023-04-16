@@ -30,6 +30,7 @@ struct Page: Hashable {
     static let playPage = Page(name: "play")
     static let songSelectPage = Page(name: "songSelect")
     static let configPage = Page(name: "config")
+    static let achievementsPage = Page(name: "achievements")
     let name: String
     // Data from the page, e.g. gameModesPage contains selected gamemode that should be accessed by lobby page
     var data: Data?

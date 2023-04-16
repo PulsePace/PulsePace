@@ -8,34 +8,25 @@
 import Foundation
 
 class AchievementManager: ObservableObject {
-    private var properties: [any Property]
-    private var achievements: [any Achievement]
+    private(set) var achievements: [any Achievement]
 
     init() {
-        properties = [
-            TotalHitObjectsPlacedProperty(),
-            TotalBeatmapDesignerOpenedProperty()
-        ]
         achievements = [
             NoviceBeatmapDesignerAchievement(),
-            ExpertBeatmapDesignerAchievement()
+            ExpertBeatmapDesignerAchievement(),
+            SwiftFingersAchievement()
         ]
-        registerProperties()
     }
 
-    private func registerProperties() {
+    func updateAchievementsProgress() {
         for achievement in achievements {
-            achievement.initialiseConstraints(properties: properties)
+            achievement.updateProgress()
         }
     }
 
-    func getPropertyUpdater<T: Property>(for propertyType: T.Type) -> T.S {
-        guard let property = properties.first(where: { type(of: $0) == propertyType }) else {
-            fatalError("Property for property \(propertyType) not found")
+    func registerPropertyStorage(_ propertyStorage: PropertyStorage) {
+        for achievement in achievements {
+            achievement.propertyStorage = propertyStorage
         }
-        guard let updater = property.updater as? T.S else {
-            fatalError("Updater for property \(propertyType) not found")
-        }
-        return updater
     }
 }

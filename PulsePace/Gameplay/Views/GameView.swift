@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import PopupView
 
 struct GameView: View {
+    @EnvironmentObject var propertyStorage: PropertyStorage
+    @EnvironmentObject var achievementManager: AchievementManager
     @EnvironmentObject var viewModel: GameViewModel
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var beatmapManager: BeatmapManager
@@ -121,6 +124,9 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
                 }
                 audioManager.player?.play()
             }
+            if let eventManager = viewModel.gameEngine?.eventManager {
+                propertyStorage.registerEventHandlers(eventManager: eventManager)
+            }
         }
         .onDisappear {
             audioManager.stopPlayer()
@@ -130,6 +136,11 @@ struct GameViewBottomOverlaysModifier: ViewModifier {
         .fullBackground(imageName: viewModel.gameBackground)
         .popup(isPresented: $viewModel.gameEnded) {
             GameEndView()
+        } customize: {
+            $0
+                .type(.default)
+                .animation(.spring())
+                .dragToDismiss(false)
         }
         .navigationBarBackButtonHidden(viewModel.match != nil)
     }
