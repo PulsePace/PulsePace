@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CompetitiveHOManager: HitObjectManager {
+class CompetitiveHOManager: HitObjectSystem {
     private var disruptorsQueue = MyQueue<TapHitObject>()
     private var isSelfGameActive = true
     private var originalPreSpawnInterval = 0.0

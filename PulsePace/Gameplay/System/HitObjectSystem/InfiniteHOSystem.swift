@@ -5,7 +5,7 @@
 //  Created by Yuanxi Zhu on 11/4/23.
 //
 
-class InfiniteHOManager: HitObjectManager {
+class InfiniteHOSystem: HitObjectSystem {
     var beatmap: Beatmap?
     private var lastHitObject: (any HitObject)?
     private var shouldStopSpwaning = false
