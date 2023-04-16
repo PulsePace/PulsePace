@@ -10,6 +10,7 @@ enum DatabasePath {
     static let players = "players"
     static let lobbyStatus = "lobbyStatus"
     static let modeName = "modeName"
+    static let preMatchData = "preMatchData"
 
     static let matches = "matches"
     static let events = "events"

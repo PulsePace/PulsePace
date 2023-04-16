@@ -15,7 +15,6 @@ class HoldCommand: InputCommand {
             action: { inputData in
                 var inputData = inputData
                 inputData.timeReceived = timeReceived
-                print("hold")
                 eventManager.add(event: InputEvent(inputData: inputData,
                                                    gameHO: receiver,
                                                    timestamp: timeReceived,

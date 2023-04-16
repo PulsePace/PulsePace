@@ -50,7 +50,7 @@ struct LobbyView: View {
         HStack {
             if viewModel.lobby == nil {
                 StyledLobbyButton(command: CreateLobbyCommand(modeName: gameVM.selectedGameMode.modeName,
-                                                              receiver: viewModel),
+                                                              receiver: viewModel, selectedBeatmapIndex: 4),
                                   text: "Create New Lobby")
                 Spacer()
                 Text("OR")

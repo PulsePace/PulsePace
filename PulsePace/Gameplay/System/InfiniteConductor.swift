@@ -11,7 +11,7 @@ class InfiniteConductor: Conductor {
     private let playbackRateUpdateComboCount = 5
 
     override func registerEventHandlers(eventManager: EventManagable) {
-        eventManager.registerHandler(loseLifeEventHandler)
+        eventManager.registerHandler(lostLifeEventHandler)
         eventManager.registerHandler(updateComboEventHandler)
     }
     override func step(deltaTime: Double, songPosition: Double) {
@@ -26,7 +26,7 @@ class InfiniteConductor: Conductor {
         playbackScale = 1
     }
 
-    private lazy var loseLifeEventHandler = { [weak self] (_: EventManagable, _: LoseLifeEvent) -> Void in
+    private lazy var lostLifeEventHandler = { [weak self] (_: EventManagable, _: LostLifeEvent) -> Void in
         guard let self = self else {
             return
         }

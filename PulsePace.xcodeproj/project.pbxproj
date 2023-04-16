@@ -54,6 +54,7 @@
 		6A9E5BEE29E3F525003D6FA5 /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BED29E3F525003D6FA5 /* Popup.swift */; };
 		6A9E5BF029E3F585003D6FA5 /* FrameGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */; };
 		6A9E5BF229E3F5B1003D6FA5 /* GameEndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E5BF129E3F5B1003D6FA5 /* GameEndView.swift */; };
+		BC9EB86B29EA70A6005A6FD5 /* PreMatchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9EB86A29EA70A6005A6FD5 /* PreMatchData.swift */; };
 		C7069F3229D48CBA0039C906 /* GameModesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069F3129D48CBA0039C906 /* GameModesView.swift */; };
 		C7069F3529D494210039C906 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069F3429D494210039C906 /* CardView.swift */; };
 		C7069F3729D49D540039C906 /* GameModesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069F3629D49D540039C906 /* GameModesViewModel.swift */; };
@@ -64,7 +65,6 @@
 		C7069F4B29D4B7900039C906 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7069F4A29D4B7900039C906 /* GoogleService-Info.plist */; };
 		C7069F4F29D4C1FB0039C906 /* NanoID.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069F4E29D4C1FB0039C906 /* NanoID.swift */; };
 		C71DA8FD29E684F700B38363 /* track_2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C71DA8FC29E684F600B38363 /* track_2.m4a */; };
-		C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73CF95229C6797000C3E017 /* View+Conditional.swift */; };
 		C748C9EA29BB036F00CB8C7A /* Locatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9E929BB036F00CB8C7A /* Locatable.swift */; };
 		C748C9EC29BB039600CB8C7A /* InputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C748C9EB29BB039600CB8C7A /* InputData.swift */; };
 		C75FCA8A29DF380700C4EE1C /* TapGameHOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75FCA8929DF380700C4EE1C /* TapGameHOView.swift */; };
@@ -101,7 +101,6 @@
 		C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3129B7D8CD006F7423 /* TapInput.swift */; };
 		C7908E3429B7D8D6006F7423 /* SlideInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3329B7D8D6006F7423 /* SlideInput.swift */; };
 		C7908E3829B7D8E9006F7423 /* HoldInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3729B7D8E9006F7423 /* HoldInput.swift */; };
-		C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3929B7DD74006F7423 /* SpinInput.swift */; };
 		C7908E3E29B92657006F7423 /* TouchInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E3D29B92657006F7423 /* TouchInput.swift */; };
 		C7908E4929B92E4E006F7423 /* GestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4829B92E4E006F7423 /* GestureModifier.swift */; };
 		C7908E4E29B93137006F7423 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7908E4D29B93137006F7423 /* GameView.swift */; };
@@ -137,7 +136,6 @@
 		C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */; };
 		C7FD9A5129C336CE00191F03 /* GameplayAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */; };
 		C7FD9A5429C35BF000191F03 /* InputCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5329C35BF000191F03 /* InputCommand.swift */; };
-		C7FD9A5629C36B3200191F03 /* SpinCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5529C36B3200191F03 /* SpinCommand.swift */; };
 		C7FD9A5829C39ECB00191F03 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5729C39ECB00191F03 /* ScoreView.swift */; };
 		C7FD9A5C29C3ACE200191F03 /* GameControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */; };
 		C7FD9A5E29C3AF7700191F03 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD9A5D29C3AF7700191F03 /* Fonts.swift */; };
@@ -268,6 +266,7 @@
 		6A9E5BED29E3F525003D6FA5 /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
 		6A9E5BEF29E3F585003D6FA5 /* FrameGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameGetter.swift; sourceTree = "<group>"; };
 		6A9E5BF129E3F5B1003D6FA5 /* GameEndView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEndView.swift; sourceTree = "<group>"; };
+		BC9EB86A29EA70A6005A6FD5 /* PreMatchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreMatchData.swift; sourceTree = "<group>"; };
 		C7069F3129D48CBA0039C906 /* GameModesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModesView.swift; sourceTree = "<group>"; };
 		C7069F3429D494210039C906 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		C7069F3629D49D540039C906 /* GameModesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModesViewModel.swift; sourceTree = "<group>"; };
@@ -278,7 +277,6 @@
 		C7069F4A29D4B7900039C906 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C7069F4E29D4C1FB0039C906 /* NanoID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoID.swift; sourceTree = "<group>"; };
 		C71DA8FC29E684F600B38363 /* track_2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = track_2.m4a; sourceTree = "<group>"; };
-		C73CF95229C6797000C3E017 /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
 		C748C9E929BB036F00CB8C7A /* Locatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locatable.swift; sourceTree = "<group>"; };
 		C748C9EB29BB039600CB8C7A /* InputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputData.swift; sourceTree = "<group>"; };
 		C75FCA8729DF0AE200C4EE1C /* MatchEventRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchEventRelay.swift; sourceTree = "<group>"; };
@@ -308,7 +306,6 @@
 		C7908E3129B7D8CD006F7423 /* TapInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapInput.swift; sourceTree = "<group>"; };
 		C7908E3329B7D8D6006F7423 /* SlideInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInput.swift; sourceTree = "<group>"; };
 		C7908E3729B7D8E9006F7423 /* HoldInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldInput.swift; sourceTree = "<group>"; };
-		C7908E3929B7DD74006F7423 /* SpinInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinInput.swift; sourceTree = "<group>"; };
 		C7908E3D29B92657006F7423 /* TouchInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchInput.swift; sourceTree = "<group>"; };
 		C7908E4829B92E4E006F7423 /* GestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModifier.swift; sourceTree = "<group>"; };
 		C7908E4D29B93137006F7423 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -346,7 +343,6 @@
 		C7FD9A4E29C269CB00191F03 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		C7FD9A5029C336CE00191F03 /* GameplayAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayAreaView.swift; sourceTree = "<group>"; };
 		C7FD9A5329C35BF000191F03 /* InputCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputCommand.swift; sourceTree = "<group>"; };
-		C7FD9A5529C36B3200191F03 /* SpinCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinCommand.swift; sourceTree = "<group>"; };
 		C7FD9A5729C39ECB00191F03 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		C7FD9A5B29C3ACE200191F03 /* GameControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControlView.swift; sourceTree = "<group>"; };
 		C7FD9A5D29C3AF7700191F03 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -525,7 +521,6 @@
 				6A96AAC129C1259900FAA79E /* TapCommand.swift */,
 				6A96AAC429C1259900FAA79E /* SlideCommand.swift */,
 				6A96AAC329C1259900FAA79E /* HoldCommand.swift */,
-				C7FD9A5529C36B3200191F03 /* SpinCommand.swift */,
 				C77C95A029E145FA005D8245 /* PickerCommand.swift */,
 			);
 			path = Commands;
@@ -570,6 +565,7 @@
 				C77A6A2B29D937F3007AB023 /* RoomSetting.swift */,
 				C77A7D8C29D089180082458E /* UserConfig.swift */,
 				C7069F3A29D4A79F0039C906 /* GameMode.swift */,
+				BC9EB86A29EA70A6005A6FD5 /* PreMatchData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -633,7 +629,6 @@
 			isa = PBXGroup;
 			children = (
 				C77572E929BDE4C100367053 /* View+FullBackground.swift */,
-				C73CF95229C6797000C3E017 /* View+Conditional.swift */,
 			);
 			path = ViewExtensions;
 			sourceTree = "<group>";
@@ -700,7 +695,6 @@
 				C7908E3129B7D8CD006F7423 /* TapInput.swift */,
 				C7908E3329B7D8D6006F7423 /* SlideInput.swift */,
 				C7908E3729B7D8E9006F7423 /* HoldInput.swift */,
-				C7908E3929B7DD74006F7423 /* SpinInput.swift */,
 			);
 			path = Inputs;
 			sourceTree = "<group>";
@@ -1264,7 +1258,6 @@
 				C7D1AF2E29BF947B00244EF5 /* MenuView.swift in Sources */,
 				C77C95A729E24530005D8245 /* LivesCountView.swift in Sources */,
 				D0D7D14429C4F6FB00676F12 /* SlideGestureHandler.swift in Sources */,
-				C73CF95329C6797000C3E017 /* View+Conditional.swift in Sources */,
 				C7908E3229B7D8CD006F7423 /* TapInput.swift in Sources */,
 				17A4828629D1C8E3006C5DB9 /* EventManagable.swift in Sources */,
 				D070B47129C4497900E55693 /* HoldHitObject.swift in Sources */,
@@ -1340,7 +1333,7 @@
 				D070B47329C4521E00E55693 /* CGPoint+Hashable.swift in Sources */,
 				C7FD9A4F29C269CB00191F03 /* GameViewModel.swift in Sources */,
 				D0CD998B29D21CAC00E40BFA /* Constraint.swift in Sources */,
-				C7908E3A29B7DD74006F7423 /* SpinInput.swift in Sources */,
+				BC9EB86B29EA70A6005A6FD5 /* PreMatchData.swift in Sources */,
 				D00235C129BF0115006858D3 /* BeatmapDesignerViewModel.swift in Sources */,
 				C7069F3529D494210039C906 /* CardView.swift in Sources */,
 				D0D7D14029C4F6CC00676F12 /* TapGestureHandler.swift in Sources */,
@@ -1350,7 +1343,6 @@
 				173DE14E29D336C90005876E /* InputSystem.swift in Sources */,
 				6A96AAB829C1254D00FAA79E /* GameHO.swift in Sources */,
 				C788084829D99AB700107A32 /* DisruptorSystem.swift in Sources */,
-				C7FD9A5629C36B3200191F03 /* SpinCommand.swift in Sources */,
 				C7CC5EFE29D61FE4001DB28E /* MatchDataManager.swift in Sources */,
 				C77A7D7E29D047A10082458E /* FirebaseDatabase.swift in Sources */,
 				460652F629E2E35200AE06D5 /* HitStatusView.swift in Sources */,
@@ -1586,7 +1578,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = 8379FJ4AB3;
+				DEVELOPMENT_TEAM = P3QLTH5V5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = PulsePace;
@@ -1623,7 +1615,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PulsePace/Preview Content\"";
-				DEVELOPMENT_TEAM = 8379FJ4AB3;
+				DEVELOPMENT_TEAM = P3QLTH5V5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PulsePace/Info.plist;

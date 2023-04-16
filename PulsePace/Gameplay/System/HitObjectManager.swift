@@ -31,7 +31,7 @@ class HitObjectManager: ModeSystem, EventSource {
             }
 
             if !removedGameHO.isHit {
-                eventManager.add(event: MissEvent(gameHO: removedGameHO, timestamp: Date().timeIntervalSince1970))
+                eventManager.add(event: MissEvent(timestamp: Date().timeIntervalSince1970, gameHO: removedGameHO))
             }
         }
     }
@@ -109,7 +109,7 @@ class HitObjectManager: ModeSystem, EventSource {
                 fatalError("No event manager attached")
             }
             // Conductor should be paused here to prevent step
-            eventManager.add(event: LastHitobjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
+            eventManager.add(event: LastHitObjectRemovedEvent(timestamp: Date().timeIntervalSince1970))
             lastHitObjectRemoved = true
         }
 

@@ -36,9 +36,6 @@ class GameEngine {
             if let matchFeedSystem = matchFeedSystem {
                 systems.append(matchFeedSystem)
             }
-            print("Match id \(match.matchId)")
-        } else {
-            print("No match attached to engine")
         }
 
         modeAttachment.configEngine(self)
@@ -72,7 +69,6 @@ class GameEngine {
         }
 
         if evaluator.evaluate() {
-            // Stop game
             gameEnder()
         }
     }

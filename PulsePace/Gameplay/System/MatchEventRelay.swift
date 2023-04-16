@@ -76,18 +76,20 @@ class CompetitiveMatchEventRelay: MatchEventRelay {
         guard let userConfigManager = UserConfigManager.instance else {
             fatalError("No user config manager")
         }
-
         self.userId = userConfigManager.userId
     }
 
     func registerEventHandlers(eventManager: EventManagable) {
-        eventManager.registerHandler(otherRelay)
+        eventManager.registerHandler(selfDeathEventRelay)
     }
 
-    private lazy var otherRelay = { [weak self] (_: EventManagable, _: DeathEvent) -> Void in
+    private lazy var selfDeathEventRelay = { [weak self] (_: EventManagable, event: SelfDeathEvent) -> Void in
         guard let self = self else {
             fatalError("No active match event relay")
         }
-        print(self.publisher ?? "") // TODO: MatchEvents - `makeMessage()` can be done by the other system
+        guard let matchEventMessage = SelfDeathEvent.makeMessage(event: event, playerId: userId) else {
+            return
+        }
+        self.publisher?(matchEventMessage)
     }
 }

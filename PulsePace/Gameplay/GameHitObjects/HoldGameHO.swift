@@ -66,6 +66,5 @@ class HoldGameHO: GameHO {
 
     func checkOnInputEnd(input: InputData) {
         proximityScore += abs(input.timeReceived - optimalEnd) / optimalLife
-        print(proximityScore)
     }
 }

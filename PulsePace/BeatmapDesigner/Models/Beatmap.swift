@@ -63,7 +63,6 @@ struct SerializedBeatmap: Deserializable {
     let songDuration: Double
 
     func deserialize() -> Beatmap {
-        print("deserialize")
         let deserializedHOs = stringifiedHOs.map { stringifiedHO in
             HOTypeFactory.assemble(hOTypeLabel: stringifiedHO.typeLabel, data: stringifiedHO.data).deserialize()
         }

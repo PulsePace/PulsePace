@@ -98,11 +98,6 @@ struct ActivateNoHintsDisruptorEvent: Event {
     var duration: Double
 }
 
-struct DeactivateNoHintsDisruptorEvent: Event {
-    var timestamp: Double
-    var noHintsTargetPlayerId: String
-}
-
 struct UpdateComboEvent: Event {
     var timestamp: Double
     var comboCount: Int
@@ -127,13 +122,15 @@ struct OnlyRemainingPlayerEvent: Event {
     var timestamp: Double
 }
 
-struct LostLifeEvent: Event {
-    var timestamp: Double
-    var lostLifePlayerId: String
-}
-
 struct UpdateScoreEvent: Event {
     var timestamp: Double
     var playerScore: Int
     var playerId: String
+}
+
+extension SelfDeathEvent: MatchRelatedEvent {
+    static func makeMessage(event: SelfDeathEvent, playerId: String) -> MatchEventMessage? {
+        MatchEventMessage(timestamp: event.timestamp, sourceId: playerId,
+                          event: PublishDeathEvent(timestamp: event.timestamp, diedPlayerId: playerId))
+    }
 }
