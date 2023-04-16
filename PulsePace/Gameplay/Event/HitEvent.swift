@@ -79,3 +79,56 @@ extension GameCompleteEvent: MatchRelatedEvent {
                                             sourceId: playerId, finalScore: event.finalScore))
     }
 }
+
+struct SpawnBombDisruptorEvent: Event {
+    var timestamp: Double
+    var bombSourcePlayerId: String
+    var bombTargetPlayerId: String
+    var bombLocation: CGPoint
+}
+
+struct ActivateNoHintsDisruptorEvent: Event {
+    var timestamp: Double
+    var noHintsSourcePlayerId: String
+    var noHintsTargetPlayerId: String
+    var preSpawnInterval: Double
+    var duration: Double
+}
+
+struct UpdateComboEvent: Event {
+    var timestamp: Double
+    var comboCount: Int
+    var lastLocation: CGPoint
+    var score: Int
+}
+
+struct SpawnHOEvent: Event {
+    var timestamp = 0.0
+    var hitObject: any HitObject
+}
+
+struct DeathEvent: Event {
+    var timestamp: Double
+    var diedPlayerId: String
+}
+
+struct SelfDeathEvent: Event {
+    var timestamp: Double
+}
+
+extension SelfDeathEvent: MatchRelatedEvent {
+    static func makeMessage(event: SelfDeathEvent, playerId: String) -> MatchEventMessage? {
+        MatchEventMessage(timestamp: event.timestamp, sourceId: playerId,
+                          event: PublishDeathEvent(timestamp: event.timestamp, diedPlayerId: playerId))
+    }
+}
+
+struct OnlyRemainingPlayerEvent: Event {
+    var timestamp: Double
+}
+
+struct UpdateScoreEvent: Event {
+    var timestamp: Double
+    var playerScore: Int
+    var playerId: String
+}
