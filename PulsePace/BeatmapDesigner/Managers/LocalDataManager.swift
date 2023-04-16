@@ -31,7 +31,6 @@ final class LocalDataManager<T: Codable> {
           DispatchQueue.global(qos: .background).async {
               do {
                   let fileURL = try LocalDataManager.fileURL(filename)
-                  print(fileURL)
                   guard let file = try? FileHandle(forReadingFrom: fileURL) else {
                       return
                   }

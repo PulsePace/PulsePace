@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVKit
+import PopupView
 
 struct BeatmapDesignerView: View {
     @EnvironmentObject var propertyStorage: PropertyStorage
@@ -47,6 +48,7 @@ struct BeatmapDesignerView: View {
                 ToolButtonsView()
             }
             .popup(isPresented: $isSavingAs) { SaveAsView(isSavingAs: $isSavingAs)
+            } customize: { $0
             }
 
             PlaybackControlView()

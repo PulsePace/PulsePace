@@ -60,27 +60,29 @@ struct GameView: View {
 
     private func startGame() {
         if viewModel.gameEngine == nil {
-            if viewModel.gameEngine == nil {
-                if let selectedBeatmap = beatmapManager.selectedBeatmap {
-                    viewModel.initEngine(with: selectedBeatmap)
-                } else if let defaultBeatmapChoice = beatmapManager.defaultBeatmapChoice {
-                    viewModel.initEngine(with: defaultBeatmapChoice.beatmap)
-                }
-                propertyStorage.registerEventHandlers(eventManager: gameEngine.eventManager)
-                gameEngine.achievementManager = achievementManager
+            if let selectedBeatmap = beatmapManager.selectedBeatmap {
+                viewModel.initEngine(with: selectedBeatmap)
+            } else if let defaultBeatmapChoice = beatmapManager.defaultBeatmapChoice {
+                viewModel.initEngine(with: defaultBeatmapChoice.beatmap)
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                if let track = beatmapManager.selectedBeatmap?.songData.track {
-                    audioManager.startPlayer(track: track)
-                } else {
-                    audioManager.startPlayer(track: "track_1")
-                }
-                viewModel.startGameplay()
-                if let audioPlayer = audioManager.player {
-                    viewModel.initialisePlayer(audioPlayer: audioPlayer)
-                }
-                audioManager.player?.play()
+
+            guard let gameEngine = viewModel.gameEngine else {
+                return
             }
+            propertyStorage.registerEventHandlers(eventManager: gameEngine.eventManager)
+            gameEngine.achievementManager = achievementManager
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if let track = beatmapManager.selectedBeatmap?.songData.track {
+                audioManager.startPlayer(track: track)
+            } else {
+                audioManager.startPlayer(track: "track_1")
+            }
+            viewModel.startGameplay()
+            if let audioPlayer = audioManager.player {
+                viewModel.initialisePlayer(audioPlayer: audioPlayer)
+            }
+            audioManager.player?.play()
         }
     }
 

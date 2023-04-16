@@ -84,7 +84,7 @@ struct MenuView: View {
         } else if page == Page.achievementsPage {
             AchievementsView()
         } else if page == Page.beatmapSelectPage {
-            LevelSelectionView()  
+            LevelSelectionView()
         } else {
             Text("Error 404 Not Found :(`")
         }
