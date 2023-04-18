@@ -101,8 +101,8 @@ final class ModeFactory: Factory {
     )
 
     private static var coopMode = ModeAttachment(
-        modeName: "Basic Coop",
-        hOManager: CoopHOSystem(),
+        modeName: "Basic Coop", isMulti: true,
+        hOManager: CoopHOSysytem(),
         scoreSystem: CoopScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: CoopEvaluator(),
         roomSetting: RoomSettingFactory.baseCoopSetting,
