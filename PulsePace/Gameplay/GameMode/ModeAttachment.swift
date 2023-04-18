@@ -9,6 +9,7 @@ import Foundation
 
 final class ModeAttachment {
     let modeName: String
+    let isMulti: Bool
     var hOManager: HitObjectManager
     var evaluator: Evaluator
     var scoreSystem: ScoreSystem
@@ -18,11 +19,12 @@ final class ModeAttachment {
     var roomSetting: RoomSetting
     var gameViewElements: [GameViewElement]
 
-    init(modeName: String, hOManager: HitObjectManager, scoreSystem: ScoreSystem, conductor: Conductor,
+    init(modeName: String, isMulti: Bool, hOManager: HitObjectManager, scoreSystem: ScoreSystem, conductor: Conductor,
          evaluator: Evaluator, roomSetting: RoomSetting,
          listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?,
          gameViewElements: [GameViewElement]) {
         self.modeName = modeName
+        self.isMulti = isMulti
         self.hOManager = hOManager
         self.evaluator = evaluator
         self.scoreSystem = scoreSystem
@@ -77,6 +79,7 @@ final class ModeFactory: Factory {
     static var assemblies: [String: ModeAttachment] = [:]
     static var defaultMode = ModeAttachment(
         modeName: "Classic",
+        isMulti: false,
         hOManager: HitObjectManager(),
         scoreSystem: ScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: DefaultEvaluator(),
@@ -87,6 +90,7 @@ final class ModeFactory: Factory {
     )
     private static var infiniteMode = ModeAttachment(
         modeName: "Infinite Mode",
+        isMulti: false,
         hOManager: InfiniteHOManager(),
         scoreSystem: InfiniteScoreSystem(ScoreManager()), conductor: InfiniteConductor(),
         evaluator: InfiniteEvaluator(),
@@ -98,6 +102,7 @@ final class ModeFactory: Factory {
 
     private static var coopMode = ModeAttachment(
         modeName: "Basic Coop",
+        isMulti: true,
         hOManager: CoopHOManager(),
         scoreSystem: CoopScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: CoopEvaluator(),
@@ -113,6 +118,7 @@ final class ModeFactory: Factory {
 
     private static var competitiveMode = ModeAttachment(
         modeName: "Rhythm Battle",
+        isMulti: true,
         hOManager: CompetitiveHOManager(),
         scoreSystem: DisruptorSystem(ScoreManager()), conductor: Conductor(),
         evaluator: CompetitiveEvaluator(),
