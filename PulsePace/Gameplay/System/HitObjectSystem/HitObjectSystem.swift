@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HitObjectManager: ModeSystem, EventSource {
+class HitObjectSystem: ModeSystem, EventSource {
     var eventManager: EventManagable?
     private var counter = 0
     private var remover: ((Entity) -> Void)?

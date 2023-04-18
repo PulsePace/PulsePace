@@ -17,7 +17,7 @@ class GameEngine {
     }
 
     var achievementManager: AchievementManager?
-    var hitObjectManager: HitObjectManager?
+    var hitObjectManager: HitObjectSystem?
     var matchFeedSystem: MatchFeedSystem?
     var evaluator: Evaluator?
     var gameEnder: () -> Void
@@ -79,14 +79,14 @@ class GameEngine {
     }
 
     func setTarget(targetId: String) {
-        guard let disruptorSystem = scoreSystem as? DisruptorSystem else {
+        guard let disruptorSystem = scoreSystem as? CompetitiveScoreSystem else {
            return
         }
         disruptorSystem.setTarget(targetId: targetId)
     }
 
     func setDisruptor(disruptor: Disruptor) {
-        guard let disruptorSystem = scoreSystem as? DisruptorSystem else {
+        guard let disruptorSystem = scoreSystem as? CompetitiveScoreSystem else {
            return
         }
         disruptorSystem.setDisruptor(disruptor: disruptor)

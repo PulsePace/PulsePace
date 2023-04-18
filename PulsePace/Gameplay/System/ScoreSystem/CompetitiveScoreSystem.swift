@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DisruptorSystem: ScoreSystem {
+class CompetitiveScoreSystem: ScoreSystem {
     static let defaultLifeCount = 3
     var selectedTarget: String
     var selectedDisruptor: Disruptor = .bomb

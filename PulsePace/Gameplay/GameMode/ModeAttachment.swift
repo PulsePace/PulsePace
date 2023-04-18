@@ -10,7 +10,7 @@ import Foundation
 final class ModeAttachment {
     let modeName: String
     let isMulti: Bool
-    var hOManager: HitObjectManager
+    var hOManager: HitObjectSystem
     var evaluator: Evaluator
     var scoreSystem: ScoreSystem
     var conductor: Conductor
@@ -19,7 +19,7 @@ final class ModeAttachment {
     var roomSetting: RoomSetting
     var gameViewElements: [GameViewElement]
 
-    init(modeName: String, isMulti: Bool, hOManager: HitObjectManager, scoreSystem: ScoreSystem, conductor: Conductor,
+    init(modeName: String, isMulti: Bool, hOManager: HitObjectSystem, scoreSystem: ScoreSystem, conductor: Conductor,
          evaluator: Evaluator, roomSetting: RoomSetting,
          listeningMatchEvents: [any MatchEvent.Type], matchEventRelay: MatchEventRelay?,
          gameViewElements: [GameViewElement]) {
@@ -80,7 +80,7 @@ final class ModeFactory: Factory {
     static var defaultMode = ModeAttachment(
         modeName: "Classic",
         isMulti: false,
-        hOManager: HitObjectManager(),
+        hOManager: HitObjectSystem(),
         scoreSystem: ScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: DefaultEvaluator(),
         roomSetting: RoomSettingFactory.defaultSetting,
@@ -91,7 +91,7 @@ final class ModeFactory: Factory {
     private static var infiniteMode = ModeAttachment(
         modeName: "Infinite Mode",
         isMulti: false,
-        hOManager: InfiniteHOManager(),
+        hOManager: InfiniteHOSystem(),
         scoreSystem: InfiniteScoreSystem(ScoreManager()), conductor: InfiniteConductor(),
         evaluator: InfiniteEvaluator(),
         roomSetting: RoomSettingFactory.defaultSetting,
@@ -102,8 +102,7 @@ final class ModeFactory: Factory {
 
     private static var coopMode = ModeAttachment(
         modeName: "Basic Coop",
-        isMulti: true,
-        hOManager: CoopHOManager(),
+        hOManager: CoopHOSystem(),
         scoreSystem: CoopScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: CoopEvaluator(),
         roomSetting: RoomSettingFactory.baseCoopSetting,
@@ -120,7 +119,7 @@ final class ModeFactory: Factory {
         modeName: "Rhythm Battle",
         isMulti: true,
         hOManager: CompetitiveHOManager(),
-        scoreSystem: DisruptorSystem(ScoreManager()), conductor: Conductor(),
+        scoreSystem: CompetitiveScoreSystem(ScoreManager()), conductor: Conductor(),
         evaluator: CompetitiveEvaluator(),
         roomSetting: RoomSettingFactory.competitiveSetting,
         listeningMatchEvents: [
