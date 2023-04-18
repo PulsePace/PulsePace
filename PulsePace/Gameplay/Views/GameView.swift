@@ -60,10 +60,12 @@ struct GameView: View {
 
     private func startGame() {
         if viewModel.gameEngine == nil {
+            if viewModel.selectedGameMode.isMulti {
+                beatmapManager.selectedBeatmap = beatmapManager.defaultBeatmapChoice?.beatmap
+            }
+
             if let selectedBeatmap = beatmapManager.selectedBeatmap {
                 viewModel.initEngine(with: selectedBeatmap)
-            } else if let defaultBeatmapChoice = beatmapManager.defaultBeatmapChoice {
-                viewModel.initEngine(with: defaultBeatmapChoice.beatmap)
             }
 
             guard let gameEngine = viewModel.gameEngine else {
