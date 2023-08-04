@@ -3,7 +3,9 @@
 <img src="https://github.com/PulsePace/PulsePace/workflows/SwiftLint/badge.svg" alt="SwiftLint" />
 
 <p align="center">
-  <img src="https://i.imgur.com/pvXT9Lq.gif" alt="PulsePace Cover Page" width="400" />
+  <a href="https://youtu.be/8BrOF35VesY" target="_blank">
+    <img src="https://i.imgur.com/pvXT9Lq.gif" alt="PulsePace Cover Page" width="400" />
+  </a>
 </p>
 
 ## Overview
